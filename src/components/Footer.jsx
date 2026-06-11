@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 
 const links = [
-  { name: 'Home', path: '/' },
-  { name: 'Research', path: '/research' },
-  { name: 'News', path: '/news' },
-  { name: 'Members', path: '/members' },
+  { name: 'Home',      path: '/'          },
+  { name: 'Research',  path: '/research'  },
+  { name: 'News',      path: '/news'      },
+  { name: 'Book',      path: '/book'      },
+  { name: 'Members',   path: '/members'   },
   { name: 'Professor', path: '/professor' },
 ]
 
@@ -15,9 +16,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div>
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-black text-white text-sm">
-                DT
-              </div>
+              <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-black text-white text-sm">DT</div>
               <span className="font-bold text-lg text-white tracking-tight">
                 Lab<span className="text-indigo-400">.</span>
               </span>
@@ -26,21 +25,19 @@ export default function Footer() {
               Digital Transformation Laboratory<br />
               Kumoh National Institute of Technology
             </p>
-            <p className="text-xs text-gray-600 mt-3">
-              경북 구미시 대학로 61 (산동면)<br />
-              금오공과대학교 디지털전환연구실
+            <p className="text-xs text-gray-600 mt-3 leading-relaxed">
+              금오공과대학교 산업공학부<br />
+              경북 구미시 대학로 61
             </p>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-widest">Navigation</h4>
+            <h4 className="text-white font-semibold text-xs mb-5 uppercase tracking-widest">Navigation</h4>
             <ul className="space-y-2">
               {links.map(link => (
                 <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-sm text-gray-400 hover:text-indigo-400 transition-colors"
-                  >
+                  <Link to={link.path}
+                    className="text-sm text-gray-400 hover:text-indigo-400 transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -49,18 +46,27 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-widest">Contact</h4>
+            <h4 className="text-white font-semibold text-xs mb-5 uppercase tracking-widest">Contact</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="mailto:bonggwon.kang@kumoh.ac.kr"
-                  className="text-gray-400 hover:text-indigo-400 transition-colors"
-                >
-                  bonggwon.kang@kumoh.ac.kr
+                <a href="mailto:kbk@kumoh.ac.kr"
+                  className="text-gray-400 hover:text-indigo-400 transition-colors">
+                  kbk@kumoh.ac.kr
                 </a>
               </li>
-              <li className="text-gray-600 text-xs mt-4">
-                Research collaboration & inquiries welcome.
+              <li className="text-gray-500">+82-54-478-7665</li>
+              <li className="mt-4 flex gap-3">
+                <a href="https://scholar.google.com/citations?user=QLqVgY0AAAAJ&hl=ko"
+                  target="_blank" rel="noreferrer"
+                  className="text-xs text-gray-600 hover:text-indigo-400 transition-colors">
+                  Google Scholar
+                </a>
+                <span className="text-gray-800">·</span>
+                <a href="https://www.researchgate.net/profile/Bonggwon-Kang"
+                  target="_blank" rel="noreferrer"
+                  className="text-xs text-gray-600 hover:text-indigo-400 transition-colors">
+                  ResearchGate
+                </a>
               </li>
             </ul>
           </div>

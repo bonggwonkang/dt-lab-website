@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import ResearchPage from './pages/ResearchPage'
 import NewsPage from './pages/NewsPage'
+import BookPage from './pages/BookPage'
 import MembersPage from './pages/MembersPage'
 import ProfessorPage from './pages/ProfessorPage'
 
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/research" element={<ResearchPage />} />
             <Route path="/news" element={<NewsPage />} />
+            <Route path="/book" element={<BookPage />} />
             <Route path="/members" element={<MembersPage />} />
             <Route path="/professor" element={<ProfessorPage />} />
           </Routes>

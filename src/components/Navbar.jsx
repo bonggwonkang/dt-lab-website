@@ -3,10 +3,11 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
-  { name: 'Home', path: '/' },
-  { name: 'Research', path: '/research' },
-  { name: 'News', path: '/news' },
-  { name: 'Members', path: '/members' },
+  { name: 'Home',      path: '/'          },
+  { name: 'Research',  path: '/research'  },
+  { name: 'News',      path: '/news'      },
+  { name: 'Book',      path: '/book'      },
+  { name: 'Members',   path: '/members'   },
   { name: 'Professor', path: '/professor' },
 ]
 
@@ -39,12 +40,10 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2.5 group">
+          <Link to="/" className="flex items-center gap-2.5">
             <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm transition-colors ${
               transparent ? 'bg-white/20 text-white' : 'bg-indigo-600 text-white'
-            }`}>
-              DT
-            </div>
+            }`}>DT</div>
             <span className={`font-bold text-lg tracking-tight transition-colors ${
               transparent ? 'text-white' : 'text-gray-900'
             }`}>
@@ -56,25 +55,20 @@ export default function Navbar() {
             {navLinks.map(link => {
               const active = location.pathname === link.path
               return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                <Link key={link.path} to={link.path}
+                  className={`relative px-3.5 py-2 text-sm font-medium rounded-lg transition-colors ${
                     active
                       ? transparent ? 'text-white' : 'text-indigo-600'
                       : transparent
                         ? 'text-white/70 hover:text-white hover:bg-white/10'
                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                  }`}
-                >
+                  }`}>
                   {link.name}
                   {active && (
-                    <motion.div
-                      layoutId="nav-indicator"
+                    <motion.div layoutId="nav-indicator"
                       className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full ${
                         transparent ? 'bg-white' : 'bg-indigo-600'
-                      }`}
-                    />
+                      }`} />
                   )}
                 </Link>
               )
@@ -107,15 +101,12 @@ export default function Navbar() {
             className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
             {navLinks.map(link => (
-              <Link
-                key={link.path}
-                to={link.path}
+              <Link key={link.path} to={link.path}
                 className={`block px-6 py-3.5 text-sm font-medium border-l-2 transition-colors ${
                   location.pathname === link.path
                     ? 'text-indigo-600 border-indigo-600 bg-indigo-50'
                     : 'text-gray-700 border-transparent hover:bg-gray-50'
-                }`}
-              >
+                }`}>
                 {link.name}
               </Link>
             ))}
