@@ -11,12 +11,11 @@ const topics = [
     num: 'I',
     color: 'indigo',
     title: 'System Modeling & Analysis',
-    summary: 'High-fidelity simulation models for digital twin applications across complex industrial environments.',
+    summary: 'High-fidelity simulation modeling and analysis for digital twin applications across complex industrial environments.',
     details: [
       'Development of discrete-event simulation (DES) models that faithfully replicate production floor operations.',
-      'Digital twin construction for semiconductor fabs, distribution centers, and container terminals.',
+      'Systematic bottleneck identification through workload analysis and sensitivity studies.',
       'Scenario-based analysis for facility design and layout optimization.',
-      'Real-time operational planning and control using live model synchronization.',
     ],
     keywords: ['Discrete-Event Simulation', 'Digital Twin', 'Facility Design', 'Operational Planning'],
     video: { src: 'Small Size FAB Simulation.mp4', title: 'Automated material handling system in a semiconductor fab' },
@@ -25,12 +24,11 @@ const topics = [
     num: 'II',
     color: 'teal',
     title: 'Model Optimization',
-    summary: 'Model-based optimization frameworks for efficient material handling and proactive dispatching in semiconductor fabs.',
+    summary: 'Simulation optimization for digital twin-based prescriptions in production and logistics systems.',
     details: [
-      'Construction and validation of an Automated Material Handling System (AMHS) simulation model.',
-      'Systematic bottleneck identification through workload analysis and sensitivity studies.',
-      'Surrogate-assisted optimization to reduce the computational cost of simulation-based search.',
-      'Proactive vehicle dispatching policy derived from a model-based optimization framework.',
+      'Tatical layout design under uncertain customer demands.',
+      'Periodic operational planning and real-time control in fast evolving systems',
+      'Surrogate-based optimization to reduce the cost of simulation experiments.',
     ],
     keywords: ['AMHS', 'Surrogate Modeling', 'Bottleneck Analysis', 'Vehicle Dispatching', 'Semiconductor Fab'],
     video: { src: '반도체생산시스템.mp4', title: 'Semiconductor production line simulation' },
@@ -43,7 +41,6 @@ const topics = [
     details: [
       'Identification and quantification of model discrepancy between simulation and physical systems.',
       'Bayesian inference framework for learning calibration parameters from sparse observations.',
-      'Active learning strategies for selecting maximally informative experiments.',
       'Uncertainty quantification in model predictions to support reliable decision-making.',
     ],
     keywords: ['Bayesian Calibration', 'Model Discrepancy', 'Uncertainty Quantification', 'Active Learning'],
@@ -128,60 +125,10 @@ function PageHeader() {
   )
 }
 
-const pipeline = [
-  { step: '01', label: 'Collect', sub: 'Real-world operational data from production & logistics systems', color: 'bg-gray-700/60 text-gray-300 border-gray-600/60' },
-  { step: '02', label: 'Model', sub: 'Discrete-event simulation capturing underlying system mechanisms', color: 'bg-indigo-950/60 text-indigo-300 border-indigo-800/60' },
-  { step: '03', label: 'Optimize', sub: 'Surrogate-based model optimization for operational decisions', color: 'bg-teal-950/60 text-teal-300 border-teal-800/60' },
-  { step: '04', label: 'Calibrate', sub: 'Bayesian calibration aligning the model with real-world observations', color: 'bg-violet-950/60 text-violet-300 border-violet-800/60' },
-  { step: '05', label: 'Decide', sub: 'Data-driven decisions fed back to the physical system', color: 'bg-rose-950/60 text-rose-300 border-rose-800/60' },
-]
-
-function ResearchConcept() {
-  return (
-    <section className="py-16 bg-gray-950 border-b border-white/10 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
-        }}
-      />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
-          <motion.p variants={fadeUp} className="text-xs font-semibold text-gray-600 tracking-[0.2em] uppercase text-center mb-8">
-            Research Pipeline
-          </motion.p>
-          <div className="flex flex-col md:flex-row items-stretch gap-0">
-            {pipeline.map((p, i) => (
-              <div key={p.step} className="flex md:flex-col items-center flex-1 min-w-0">
-                <motion.div variants={fadeUp}
-                  className={`flex-1 w-full rounded-2xl border p-4 md:p-5 ${p.color} flex md:flex-col items-center md:items-start gap-4 md:gap-2`}>
-                  <span className="text-2xl font-black opacity-40 flex-shrink-0 md:mb-1">{p.step}</span>
-                  <div>
-                    <p className="font-bold text-sm">{p.label}</p>
-                    <p className="text-xs opacity-60 leading-relaxed mt-0.5 hidden md:block">{p.sub}</p>
-                  </div>
-                </motion.div>
-                {i < pipeline.length - 1 && (
-                  <div className="flex-shrink-0 flex items-center justify-center w-6 h-6 md:rotate-90 my-1 md:my-0 mx-1 md:mx-0">
-                    <svg className="w-3 h-3 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
 export default function ResearchPage() {
   return (
     <>
       <PageHeader />
-      <ResearchConcept />
 
       {/* Topics */}
       <section className="py-24 bg-gray-900">

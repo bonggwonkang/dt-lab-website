@@ -99,7 +99,7 @@ export default function BookPage() {
                   생산물류시스템: 시뮬레이션 모델링
                 </h2>
                 <p className="text-gray-500 text-sm mb-1">Production Logistics System: Simulation Modeling</p>
-                <p className="text-indigo-400 font-medium text-sm">Bonggwon Kang (강봉권)</p>
+                <p className="text-indigo-400 font-medium text-sm">Bonggwon Kang (강봉권), Soondo Hong (홍순도)</p>
               </div>
 
               <div>

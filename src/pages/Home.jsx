@@ -130,7 +130,7 @@ const colorMap = {
 
 function DTConcept() {
   return (
-    <section className="py-28 bg-gray-900 relative overflow-hidden">
+    <section className="py-14 bg-gray-900 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.04]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -143,10 +143,8 @@ function DTConcept() {
           <motion.div variants={fadeUp} className="text-center mb-16">
             <div className="flex items-center justify-center gap-3 mb-4">
               <span className="h-px w-8 bg-indigo-500/50" />
-              <span className="text-indigo-400 text-xs font-semibold tracking-[0.2em] uppercase">Methodology</span>
-              <span className="h-px w-8 bg-indigo-500/50" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Digital Transformation Concept</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Our Digital Transformation Concept</h2>
             <p className="text-gray-400 text-sm mt-3 max-w-xl mx-auto leading-relaxed">
               We close the loop between physical systems and digital models — building, optimizing, and calibrating
               high-fidelity simulations to enable better operational decisions.
