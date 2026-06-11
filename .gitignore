@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# 원본 영상 폴더 (public/videos/ 에 복사본 있음)
+src/videos/
+
+# 158MB 초과 대형 파일은 git에서 제외
+public/videos/3D SVSRS.mp4
