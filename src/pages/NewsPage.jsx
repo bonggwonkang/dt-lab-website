@@ -6,40 +6,32 @@ const fadeUp = {
 }
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }
 
-// img: filename inside public/images/ — null if no photo
 const items = [
   // ── 2025 ──────────────────────────────────────────────────────────────────
   { date: '2025.09', type: 'journal',
     title: 'New paper has been accepted for publication in Technometrics',
     desc: '"Active Learning of Piecewise Gaussian Process Surrogates" accepted. Focus on Jump GPs for discontinuous design spaces in applications like autonomous materials design and smart factory systems.',
-    url: 'https://www.tandfonline.com/doi/full/10.1080/00401706.2025.2561746',
-    img: 'New paper has been accepted for publication in Technometrics.png' },
+    url: 'https://www.tandfonline.com/doi/full/10.1080/00401706.2025.2561746' },
   { date: '2025.09', type: 'book',
     title: 'New Book Publication Announcement',
     desc: '"Production Logistics System: Simulation Modeling" published. Covers discrete-event simulation with applications to manufacturing and logistics.',
-    url: 'https://ebook-product.kyobobook.co.kr/dig/epd/ebook/E000011944783',
-    img: 'New Book Publication Announcement.jpg' },
+    url: 'https://ebook-product.kyobobook.co.kr/dig/epd/ebook/E000011944783' },
   { date: '2025.06', type: 'conference',
     title: 'Presentation at the 2025 Spring KIIE Conference',
-    desc: 'Presented "Bias-aware simulation calibration for an automated material handling system in a semiconductor fab" in Seoul, South Korea.',
-    img: 'Presentation at the 2025 Spring KIIE Conference.jpg' },
+    desc: 'Presented "Bias-aware simulation calibration for an automated material handling system in a semiconductor fab" in Seoul, South Korea.' },
   { date: '2025.04', type: 'journal',
     title: 'New paper has been accepted for publication in Journal of Manufacturing Systems',
     desc: '"A digital twin calibration for an automated material handling system in a semiconductor fab" — addresses parameter uncertainty and model bias.',
-    url: 'https://www.sciencedirect.com/science/article/pii/S0278612525001049',
-    img: 'New paper has been accepted for publication in Journal of Manufacturing Systems.png' },
+    url: 'https://www.sciencedirect.com/science/article/pii/S0278612525001049' },
   { date: '2025.03', type: 'journal',
     title: 'Paper publication in the Journal of the Korean Society of Supply Chain Management',
-    desc: '"A Comparative Study of Surrogate Models for Simulation-based Yard Template Planning in a Container Terminal"',
-    img: 'Paper publication in the Journal of the Korean Society of Supply Chain Management.png' },
+    desc: '"A Comparative Study of Surrogate Models for Simulation-based Yard Template Planning in a Container Terminal"' },
   { date: '2025.02', type: 'patent',
     title: 'Patent Registration Update',
-    desc: '"Method and Apparatus for Deriving Management Policy of Vehicles" — Patent holders: S. Hong, B. Kang. Registered March 2025.',
-    img: 'Patent Registration Update.png' },
+    desc: '"Method and Apparatus for Deriving Management Policy of Vehicles" — Patent holders: S. Hong, B. Kang. Registered March 2025.' },
   { date: '2025.01.31–02.06', type: 'collaboration',
     title: 'The 4th Joint Workshop on the Recent Digital Twin and Production Logistics Research at the University of Washington',
-    desc: 'Collaborative meeting on digital twin research and simulation education.',
-    img: 'The 4th Joint Workshop on the Recent Digital Twin and Production Logistics Research at the University of Washington.jpg' },
+    desc: 'Collaborative meeting on digital twin research and simulation education.' },
   // ── 2024 ──────────────────────────────────────────────────────────────────
   { date: '2024.12', type: 'journal',
     title: 'Paper publication in the Journal of the Korean Society of Supply Chain Management',
@@ -89,8 +81,7 @@ const items = [
     url: 'https://ieeexplore.ieee.org/document/10278155' },
   { date: '2023.09', type: 'journal',
     title: 'New paper has been accepted for publication in Journal of the Korea Society for Simulation',
-    desc: '"A Simulation-based Optimization for Scheduling in a Fab: Comparative Study on Different Sampling Methods"',
-    img: 'Paper publication in the Journal of Journal of the Korea Society for Simulation.png' },
+    desc: '"A Simulation-based Optimization for Scheduling in a Fab: Comparative Study on Different Sampling Methods"' },
   { date: '2023.09.07', type: 'conference',
     title: 'Presentation at the 11th International Conference on Logistics and Maritime Systems',
     desc: 'Presented "A case study of data-driven yard template planning with feature engineering" in Busan, Korea.' },
@@ -141,13 +132,13 @@ const items = [
 ]
 
 const typeStyle = {
-  journal:       { dot: 'bg-indigo-500',  badge: 'bg-indigo-50 text-indigo-700'  },
-  conference:    { dot: 'bg-teal-500',    badge: 'bg-teal-50 text-teal-700'      },
-  book:          { dot: 'bg-amber-500',   badge: 'bg-amber-50 text-amber-700'    },
-  patent:        { dot: 'bg-violet-500',  badge: 'bg-violet-50 text-violet-700'  },
-  funding:       { dot: 'bg-green-500',   badge: 'bg-green-50 text-green-700'    },
-  collaboration: { dot: 'bg-rose-400',    badge: 'bg-rose-50 text-rose-700'      },
-  preprint:      { dot: 'bg-gray-400',    badge: 'bg-gray-100 text-gray-600'     },
+  journal:       { dot: 'bg-indigo-500',  badge: 'bg-indigo-950/60 text-indigo-400 border border-indigo-800/50'  },
+  conference:    { dot: 'bg-teal-500',    badge: 'bg-teal-950/60 text-teal-400 border border-teal-800/50'        },
+  book:          { dot: 'bg-amber-500',   badge: 'bg-amber-950/60 text-amber-400 border border-amber-800/50'     },
+  patent:        { dot: 'bg-violet-500',  badge: 'bg-violet-950/60 text-violet-400 border border-violet-800/50'  },
+  funding:       { dot: 'bg-green-500',   badge: 'bg-green-950/60 text-green-400 border border-green-800/50'     },
+  collaboration: { dot: 'bg-rose-400',    badge: 'bg-rose-950/60 text-rose-400 border border-rose-800/50'        },
+  preprint:      { dot: 'bg-gray-500',    badge: 'bg-gray-800/60 text-gray-400 border border-gray-700/50'        },
 }
 
 const grouped = items.reduce((acc, p) => {
@@ -160,13 +151,14 @@ const years = Object.keys(grouped).sort((a, b) => b - a)
 
 function PageHeader() {
   return (
-    <section className="pt-32 pb-20 bg-gradient-to-b from-gray-950 to-white relative overflow-hidden">
+    <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
           backgroundSize: '48px 48px',
         }}
       />
+      <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial="hidden" animate="visible" variants={stagger}>
           <motion.div variants={fadeUp} className="flex items-center gap-3 mb-5">
@@ -184,14 +176,11 @@ function PageHeader() {
 }
 
 export default function NewsPage() {
-  const base = import.meta.env.BASE_URL
-  const imgSrc = (name) => `${base}images/${encodeURIComponent(name)}`
-
   return (
     <>
       <PageHeader />
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Legend */}
           <motion.div initial="hidden" animate="visible" variants={stagger}
@@ -212,49 +201,37 @@ export default function NewsPage() {
                 variants={stagger}
               >
                 <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8">
-                  <span className="text-3xl font-black text-gray-900">{year}</span>
-                  <span className="flex-1 h-px bg-gray-100" />
-                  <span className="text-xs text-gray-400">{grouped[year].length} item{grouped[year].length > 1 ? 's' : ''}</span>
+                  <span className="text-3xl font-black text-white">{year}</span>
+                  <span className="flex-1 h-px bg-white/10" />
+                  <span className="text-xs text-gray-600">{grouped[year].length} item{grouped[year].length > 1 ? 's' : ''}</span>
                 </motion.div>
 
-                <div className="space-y-4 pl-4 border-l-2 border-gray-100">
+                <div className="space-y-4 pl-4 border-l-2 border-white/10">
                   {grouped[year].map((p, i) => {
                     const s = typeStyle[p.type] || typeStyle.journal
                     return (
                       <motion.div key={i} variants={fadeUp} className="relative pl-6">
-                        <span className={`absolute -left-[9px] top-3 w-3.5 h-3.5 rounded-full border-2 border-white ${s.dot}`} />
+                        <span className={`absolute -left-[9px] top-3 w-3.5 h-3.5 rounded-full border-2 border-gray-900 ${s.dot}`} />
 
-                        <div className="bg-white rounded-xl border border-gray-100 hover:border-indigo-100 hover:shadow-md hover:shadow-indigo-50/40 transition-all duration-200 overflow-hidden">
-                          {/* Photo if available */}
-                          {p.img && (
-                            <div className="w-full h-44 bg-gray-50 overflow-hidden">
-                              <img
-                                src={imgSrc(p.img)}
-                                alt={p.title}
-                                className="w-full h-full object-cover"
-                                onError={e => { e.target.parentElement.style.display = 'none' }}
-                              />
-                            </div>
-                          )}
-
+                        <div className="bg-gray-800/50 rounded-xl border border-white/10 hover:border-indigo-500/30 hover:bg-gray-800/80 transition-all duration-200">
                           <div className="p-5">
                             <div className="flex flex-wrap items-center gap-2 mb-2">
                               <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${s.badge}`}>
                                 {p.type}
                               </span>
-                              <span className="text-xs text-gray-400">{p.date}</span>
+                              <span className="text-xs text-gray-600">{p.date}</span>
                             </div>
 
                             {p.url ? (
                               <a href={p.url} target="_blank" rel="noreferrer"
-                                className="font-semibold text-gray-900 text-sm leading-snug hover:text-indigo-600 transition-colors inline-flex items-start gap-1 group">
+                                className="font-semibold text-gray-200 text-sm leading-snug hover:text-indigo-400 transition-colors inline-flex items-start gap-1 group">
                                 {p.title}
                                 <svg className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>
                               </a>
                             ) : (
-                              <p className="font-semibold text-gray-900 text-sm leading-snug">{p.title}</p>
+                              <p className="font-semibold text-gray-200 text-sm leading-snug">{p.title}</p>
                             )}
 
                             {p.desc && <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">{p.desc}</p>}

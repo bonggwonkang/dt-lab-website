@@ -7,62 +7,7 @@ const fadeUp = {
 }
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }
 
-function useScrollAnim() {
-  return {
-    initial: 'hidden',
-    whileInView: 'visible',
-    viewport: { once: true, margin: '-80px' },
-    variants: stagger,
-  }
-}
-
-const topics = [
-  {
-    num: 'I',
-    color: 'indigo',
-    title: 'System Modeling & Analysis',
-    desc: 'We develop computer models that capture the underlying mechanisms of real-world operations and generate quantitative insights for complex production and logistics systems.',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-          d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
-      </svg>
-    ),
-  },
-  {
-    num: 'II',
-    color: 'teal',
-    title: 'Model Optimization',
-    desc: 'We develop a model-based optimization framework for proactive vehicle dispatching for future transport demand in automated material handling systems.',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
-  },
-  {
-    num: 'III',
-    color: 'violet',
-    title: 'Model Calibration',
-    desc: 'We develop a Bayesian calibration framework that learns and corrects model discrepancy using limited real-world data.',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-          d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-      </svg>
-    ),
-  },
-]
-
-const colorStyle = {
-  indigo: { icon: 'bg-indigo-100 text-indigo-600', badge: 'bg-indigo-50 text-indigo-600', hover: 'hover:border-indigo-200 hover:shadow-indigo-50' },
-  teal:   { icon: 'bg-teal-100 text-teal-600',     badge: 'bg-teal-50 text-teal-600',     hover: 'hover:border-teal-200 hover:shadow-teal-50'   },
-  violet: { icon: 'bg-violet-100 text-violet-600', badge: 'bg-violet-50 text-violet-600', hover: 'hover:border-violet-200 hover:shadow-violet-50' },
-}
-
 const domains = ['Semiconductor / Display Fabs', 'Distribution Centers', 'Container Terminals']
-
-// ─── Sections ─────────────────────────────────────────────────────────────────
 
 function Hero() {
   return (
@@ -104,7 +49,7 @@ function Hero() {
 
           <motion.p variants={fadeUp} className="text-sm text-gray-500 max-w-2xl leading-relaxed mb-10">
             We integrate model-based decision-making with statistical approaches, emphasizing surrogate modeling
-            and active design of experiments to support efficient decision-making.
+            and active design of experiments to support autonomous manufacturing and logistics systems.
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
@@ -134,66 +79,21 @@ function Hero() {
         </motion.div>
       </motion.div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent" />
     </section>
   )
 }
 
 function DomainsBar() {
   return (
-    <section className="py-5 bg-white border-b border-gray-100">
+    <section className="py-5 bg-gray-900 border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Application Domains</span>
+          <span className="text-xs font-semibold text-gray-600 uppercase tracking-widest">Application Domains</span>
           {domains.map(d => (
-            <span key={d} className="text-sm text-gray-500 font-medium">{d}</span>
+            <span key={d} className="text-sm text-gray-400 font-medium">{d}</span>
           ))}
         </div>
-      </div>
-    </section>
-  )
-}
-
-function ResearchTopics() {
-  const anim = useScrollAnim()
-  return (
-    <section className="section-padding bg-white">
-      <div className="container-width">
-        <motion.div {...anim}>
-          <motion.div variants={fadeUp} className="text-center mb-16">
-            <span className="text-indigo-600 text-xs font-semibold tracking-[0.2em] uppercase">Research</span>
-            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Core Research Topics</h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {topics.map(t => {
-              const s = colorStyle[t.color]
-              return (
-                <motion.div key={t.num} variants={fadeUp}
-                  className={`group bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-all duration-300 ${s.hover}`}>
-                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-5 ${s.icon}`}>
-                    {t.icon}
-                  </div>
-                  <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold mb-3 ${s.badge}`}>
-                    Topic {t.num}
-                  </span>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 leading-snug">{t.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{t.desc}</p>
-                </motion.div>
-              )
-            })}
-          </div>
-
-          <motion.div variants={fadeUp} className="text-center mt-10">
-            <Link to="/research"
-              className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-semibold text-sm transition-colors">
-              View full research overview
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   )
@@ -241,7 +141,6 @@ export default function Home() {
     <>
       <Hero />
       <DomainsBar />
-      <ResearchTopics />
       <Contact />
     </>
   )
