@@ -15,9 +15,9 @@ const experience = [
 ]
 
 const teaching = [
-  { course: 'Facilities Planning and Material Handling Systems', term: 'Spring 2025', uni: 'Kumoh National Institute of Technology' },
-  { course: 'Digital Twin and Simulation Modeling',             term: 'Spring 2025', uni: 'Kumoh National Institute of Technology' },
-  { course: 'Introduction to Digital Twins',                    term: '2026',        uni: 'Kumoh National Institute of Technology' },
+  { course: 'Facilities Planning and Material Handling Systems', term: 'Spring 2025', uni: 'Pusan National University' },
+  { course: 'Digital Twin and Simulation Modeling',             term: 'Spring 2025', uni: 'Pukyong National University' },
+  { course: 'Introduction to Digital Twins',                    term: '2026',        uni: 'University of Washington (invited lectures over two weeks)' },
   { course: 'Probability and Statistics',                       term: 'Spring 2026', uni: 'Kumoh National Institute of Technology' },
   { course: 'Creative Thinking for Engineering',                term: 'Spring 2026', uni: 'Kumoh National Institute of Technology' },
   { course: 'Affective Quality Engineering',                    term: 'Spring 2026', uni: 'Kumoh National Institute of Technology' },
@@ -139,7 +139,7 @@ export default function ProfessorPage() {
                 <div className="relative pl-6 border-l-2 border-white/10 space-y-6">
                   {experience.map((e, i) => (
                     <div key={i} className="relative">
-                      <span className="absolute -left-[9px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-gray-900 bg-indigo-500" />
+                      <span className="absolute -left-4 top-2 w-3 h-3 rounded-full border-2 border-gray-900 bg-indigo-500" />
                       <p className="text-xs font-semibold text-indigo-400 mb-0.5">{e.year}</p>
                       <p className="font-semibold text-white text-sm leading-snug">{e.title}</p>
                       <p className="text-sm text-gray-400">{e.org}</p>
