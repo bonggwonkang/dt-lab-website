@@ -62,13 +62,6 @@ const colorStyle = {
 
 const domains = ['Semiconductor / Display Fabs', 'Distribution Centers', 'Container Terminals']
 
-const videos = [
-  { id: 1, title: 'FAB Simulation',       src: 'Small Size FAB Simulation.mp4' },
-  { id: 2, title: '반도체 생산 시스템',        src: '반도체생산시스템.mp4' },
-  { id: 3, title: 'AMHS Animation I',     src: '[3D] FAB AMHS Animation 2.mp4' },
-  { id: 4, title: 'AMHS Animation II',    src: '[3D] FAB AMHS Animation 3.mp4' },
-]
-
 // ─── Sections ─────────────────────────────────────────────────────────────────
 
 function Hero() {
@@ -206,38 +199,6 @@ function ResearchTopics() {
   )
 }
 
-function Videos() {
-  const anim = useScrollAnim()
-  const base = import.meta.env.BASE_URL
-  return (
-    <section className="section-padding bg-gray-50">
-      <div className="container-width">
-        <motion.div {...anim}>
-          <motion.div variants={fadeUp} className="text-center mb-16">
-            <span className="text-teal-600 text-xs font-semibold tracking-[0.2em] uppercase">Lab in Action</span>
-            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Simulations & Animations</h2>
-          </motion.div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {videos.map(v => (
-              <motion.div key={v.id} variants={fadeUp}
-                className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-teal-100 hover:shadow-lg hover:shadow-teal-50 transition-all duration-300">
-                <div className="aspect-video bg-gray-900">
-                  <video className="w-full h-full object-contain" controls preload="metadata"
-                    src={`${base}videos/${v.src}`} />
-                </div>
-                <div className="px-5 py-4 flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-teal-400 flex-shrink-0" />
-                  <h3 className="text-sm font-semibold text-gray-800">{v.title}</h3>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
 function Contact() {
   return (
     <section className="py-20 bg-gradient-to-br from-indigo-600 via-indigo-700 to-teal-700 relative overflow-hidden">
@@ -281,7 +242,6 @@ export default function Home() {
       <Hero />
       <DomainsBar />
       <ResearchTopics />
-      <Videos />
       <Contact />
     </>
   )
