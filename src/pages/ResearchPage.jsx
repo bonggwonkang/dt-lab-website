@@ -94,8 +94,7 @@ const domains = [
     title: 'Container Terminals',
     desc: 'Large-scale port terminal simulation for crane scheduling, vehicle routing, and yard management.',
     icon: '🚢',
-    video: null,
-    videoNote: 'Container terminal simulation video (coming soon)',
+    video: { src: 'container terminal.mp4', title: 'Container Terminal Simulation' },
   },
 ]
 
