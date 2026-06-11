@@ -5,11 +5,7 @@ const fadeUp = {
   hidden: { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 }
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-}
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }
 
 function useScrollAnim() {
   return {
@@ -20,14 +16,12 @@ function useScrollAnim() {
   }
 }
 
-// ─── Data ────────────────────────────────────────────────────────────────────
-
 const topics = [
   {
     num: 'I',
     color: 'indigo',
     title: 'System Modeling & Analysis',
-    desc: 'Creates high-fidelity computer models that capture real-world operations for digital twin applications, facility design, operational planning, and real-time control.',
+    desc: 'We develop computer models that capture the underlying mechanisms of real-world operations and generate quantitative insights for complex production and logistics systems.',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
@@ -39,7 +33,7 @@ const topics = [
     num: 'II',
     color: 'teal',
     title: 'Model Optimization',
-    desc: 'Focuses on efficient material handling in semiconductor fabs. We developed an AMHS model, identified system bottlenecks, and proposed a model-based optimization framework for proactive vehicle dispatching.',
+    desc: 'We develop a model-based optimization framework for proactive vehicle dispatching for future transport demand in automated material handling systems.',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -50,7 +44,7 @@ const topics = [
     num: 'III',
     color: 'violet',
     title: 'Model Calibration',
-    desc: 'Addresses predictive accuracy through a Bayesian calibration framework that learns and corrects model discrepancy using limited real-world data, bridging the gap between simulation and reality.',
+    desc: 'We develop a Bayesian calibration framework that learns and corrects model discrepancy using limited real-world data.',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
@@ -61,63 +55,18 @@ const topics = [
 ]
 
 const colorStyle = {
-  indigo: {
-    badge: 'bg-indigo-50 text-indigo-600',
-    icon: 'bg-indigo-100 text-indigo-600',
-    border: 'hover:border-indigo-200 hover:shadow-indigo-50',
-  },
-  teal: {
-    badge: 'bg-teal-50 text-teal-600',
-    icon: 'bg-teal-100 text-teal-600',
-    border: 'hover:border-teal-200 hover:shadow-teal-50',
-  },
-  violet: {
-    badge: 'bg-violet-50 text-violet-600',
-    icon: 'bg-violet-100 text-violet-600',
-    border: 'hover:border-violet-200 hover:shadow-violet-50',
-  },
+  indigo: { icon: 'bg-indigo-100 text-indigo-600', badge: 'bg-indigo-50 text-indigo-600', hover: 'hover:border-indigo-200 hover:shadow-indigo-50' },
+  teal:   { icon: 'bg-teal-100 text-teal-600',     badge: 'bg-teal-50 text-teal-600',     hover: 'hover:border-teal-200 hover:shadow-teal-50'   },
+  violet: { icon: 'bg-violet-100 text-violet-600', badge: 'bg-violet-50 text-violet-600', hover: 'hover:border-violet-200 hover:shadow-violet-50' },
 }
 
-// public/videos/ 에 있는 파일명과 일치해야 합니다
+const domains = ['Semiconductor / Display Fabs', 'Distribution Centers', 'Container Terminals']
+
 const videos = [
-  { id: 1, title: 'FAB Simulation',        src: 'Small Size FAB Simulation.mp4' },
-  { id: 2, title: '반도체 생산 시스템',         src: '반도체생산시스템.mp4' },
-  { id: 3, title: 'AMHS Animation I',      src: '[3D] FAB AMHS Animation 2.mp4' },
-  { id: 4, title: 'AMHS Animation II',     src: '[3D] FAB AMHS Animation 3.mp4' },
-]
-
-const publications = [
-  {
-    type: 'journal',
-    title: 'A Model-based Optimization Framework for Proactive Vehicle Dispatching in AMHS',
-    venue: 'IEEE Transactions on Automation Science and Engineering',
-    year: '2024',
-  },
-  {
-    type: 'journal',
-    title: 'Bayesian Calibration Framework for Large-Scale Production System Models',
-    venue: 'Journal of Manufacturing Systems',
-    year: '2023',
-  },
-  {
-    type: 'conference',
-    title: 'Surrogate Modeling Approach for Semiconductor FAB Simulation',
-    venue: '2024 INFORMS Annual Meeting',
-    year: '2024',
-  },
-  {
-    type: 'conference',
-    title: 'Digital Twin Application for AMHS Optimization in Semiconductor Manufacturing',
-    venue: '2023 INFORMS Annual Meeting, Phoenix, AZ',
-    year: '2023',
-  },
-]
-
-const domains = [
-  'Semiconductor Manufacturing',
-  'Display Manufacturing',
-  'Distribution Centers',
-  'Container Terminals',
+  { id: 1, title: 'FAB Simulation',       src: 'Small Size FAB Simulation.mp4' },
+  { id: 2, title: '반도체 생산 시스템',        src: '반도체생산시스템.mp4' },
+  { id: 3, title: 'AMHS Animation I',     src: '[3D] FAB AMHS Animation 2.mp4' },
+  { id: 4, title: 'AMHS Animation II',    src: '[3D] FAB AMHS Animation 3.mp4' },
 ]
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
@@ -125,16 +74,14 @@ const domains = [
 function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gray-950">
-      {/* Subtle grid */}
       <div className="absolute inset-0 opacity-[0.07]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
           backgroundSize: '48px 48px',
         }}
       />
-      {/* Gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-teal-500/15 rounded-full blur-3xl" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
         <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl">
@@ -147,29 +94,25 @@ function Hero() {
 
           <motion.h1 variants={fadeUp}
             className="text-5xl md:text-7xl font-black text-white leading-[1.05] mb-6 tracking-tight">
-            Digital<br />
+            Welcome to the<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-teal-400">
-              Transformation
+              Digital Transformation
             </span><br />
-            Laboratory
+            Lab!
           </motion.h1>
 
           <motion.p variants={fadeUp}
-            className="text-lg md:text-xl text-gray-400 max-w-2xl leading-relaxed mb-10">
-            Developing rigorous methodologies for{' '}
-            <span className="text-gray-200 font-medium">modeling, analyzing, optimizing,</span> and{' '}
-            <span className="text-gray-200 font-medium">calibrating</span>{' '}
+            className="text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed mb-10">
+            At the Digital Transformation Lab, we develop advanced methodologies for{' '}
+            <span className="text-white font-medium">modeling, analyzing, optimizing,</span> and{' '}
+            <span className="text-white font-medium">calibrating</span>{' '}
             large-scale production and material handling systems.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex flex-wrap gap-2 mb-12">
-            {['Surrogate Modeling', 'Design of Experiments', 'Model-based Decision Making', 'Statistical Calibration'].map(tag => (
-              <span key={tag}
-                className="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/5 text-gray-400 border border-white/10">
-                {tag}
-              </span>
-            ))}
-          </motion.div>
+          <motion.p variants={fadeUp} className="text-sm text-gray-500 max-w-2xl leading-relaxed mb-10">
+            We integrate model-based decision-making with statistical approaches, emphasizing surrogate modeling
+            and active design of experiments to support efficient decision-making.
+          </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
             <Link to="/research"
@@ -185,24 +128,18 @@ function Hero() {
             </Link>
           </motion.div>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600"
-        >
-          <span className="text-xs tracking-widest uppercase">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.4 }}
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-            </svg>
-          </motion.div>
-        </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600">
+        <span className="text-xs tracking-widest uppercase">Scroll</span>
+        <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.4 }}>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+          </svg>
+        </motion.div>
+      </motion.div>
 
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent" />
     </section>
@@ -214,12 +151,9 @@ function DomainsBar() {
     <section className="py-5 bg-white border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Research Domains</span>
-          {domains.map((d, i) => (
-            <div key={d} className="flex items-center gap-2 text-sm text-gray-500 font-medium">
-              {i > 0 && <span className="text-gray-200 hidden sm:inline">·</span>}
-              {d}
-            </div>
+          <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Application Domains</span>
+          {domains.map(d => (
+            <span key={d} className="text-sm text-gray-500 font-medium">{d}</span>
           ))}
         </div>
       </div>
@@ -234,11 +168,8 @@ function ResearchTopics() {
       <div className="container-width">
         <motion.div {...anim}>
           <motion.div variants={fadeUp} className="text-center mb-16">
-            <span className="text-indigo-600 text-xs font-semibold tracking-[0.2em] uppercase">What We Do</span>
+            <span className="text-indigo-600 text-xs font-semibold tracking-[0.2em] uppercase">Research</span>
             <h2 className="mt-3 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Core Research Topics</h2>
-            <p className="mt-4 text-base text-gray-500 max-w-xl mx-auto leading-relaxed">
-              We integrate statistical methods with simulation-based decision-making to solve complex industrial systems challenges.
-            </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -246,7 +177,7 @@ function ResearchTopics() {
               const s = colorStyle[t.color]
               return (
                 <motion.div key={t.num} variants={fadeUp}
-                  className={`group relative bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-all duration-300 ${s.border}`}>
+                  className={`group bg-white rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-all duration-300 ${s.hover}`}>
                   <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-5 ${s.icon}`}>
                     {t.icon}
                   </div>
@@ -278,7 +209,6 @@ function ResearchTopics() {
 function Videos() {
   const anim = useScrollAnim()
   const base = import.meta.env.BASE_URL
-
   return (
     <section className="section-padding bg-gray-50">
       <div className="container-width">
@@ -286,22 +216,14 @@ function Videos() {
           <motion.div variants={fadeUp} className="text-center mb-16">
             <span className="text-teal-600 text-xs font-semibold tracking-[0.2em] uppercase">Lab in Action</span>
             <h2 className="mt-3 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Simulations & Animations</h2>
-            <p className="mt-4 text-base text-gray-500 max-w-xl mx-auto">
-              Visual demonstrations of our semiconductor FAB simulation models and AMHS vehicle animations.
-            </p>
           </motion.div>
-
           <div className="grid md:grid-cols-2 gap-6">
             {videos.map(v => (
               <motion.div key={v.id} variants={fadeUp}
                 className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-teal-100 hover:shadow-lg hover:shadow-teal-50 transition-all duration-300">
                 <div className="aspect-video bg-gray-900">
-                  <video
-                    className="w-full h-full object-contain"
-                    controls
-                    preload="metadata"
-                    src={`${base}videos/${v.src}`}
-                  />
+                  <video className="w-full h-full object-contain" controls preload="metadata"
+                    src={`${base}videos/${v.src}`} />
                 </div>
                 <div className="px-5 py-4 flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-teal-400 flex-shrink-0" />
@@ -316,58 +238,7 @@ function Videos() {
   )
 }
 
-function Publications() {
-  const anim = useScrollAnim()
-  return (
-    <section className="section-padding bg-white">
-      <div className="container-width">
-        <motion.div {...anim}>
-          <motion.div variants={fadeUp} className="text-center mb-16">
-            <span className="text-violet-600 text-xs font-semibold tracking-[0.2em] uppercase">Publications</span>
-            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Recent Work</h2>
-          </motion.div>
-
-          <div className="max-w-3xl mx-auto space-y-3">
-            {publications.map((p, i) => (
-              <motion.div key={i} variants={fadeUp}
-                className="flex gap-5 items-start p-5 rounded-xl border border-gray-100 hover:border-indigo-100 hover:shadow-md hover:shadow-indigo-50/50 transition-all duration-200 group">
-                <div className={`mt-1.5 flex-shrink-0 w-2.5 h-2.5 rounded-full ${
-                  p.type === 'journal' ? 'bg-indigo-500' : 'bg-teal-500'
-                }`} />
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-900 text-sm leading-snug">{p.title}</p>
-                  <p className="text-xs text-gray-500 mt-1">{p.venue}</p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                      p.type === 'journal'
-                        ? 'bg-indigo-50 text-indigo-600'
-                        : 'bg-teal-50 text-teal-600'
-                    }`}>
-                      {p.type === 'journal' ? 'Journal' : 'Conference'}
-                    </span>
-                    <span className="text-xs text-gray-400">{p.year}</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div variants={fadeUp} className="text-center mt-10">
-            <Link to="/news"
-              className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-semibold text-sm transition-colors">
-              View all publications & news
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-function CTA() {
+function Contact() {
   return (
     <section className="py-20 bg-gradient-to-br from-indigo-600 via-indigo-700 to-teal-700 relative overflow-hidden">
       <div className="absolute inset-0 opacity-10"
@@ -377,27 +248,26 @@ function CTA() {
         }}
       />
       <div className="relative max-w-3xl mx-auto px-4 text-center">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-        >
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
           <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Interested in Collaboration?
+            Join the Digital Transformation Lab!
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-indigo-100 text-base md:text-lg mb-8 max-w-lg mx-auto">
-            We welcome industry partnerships and research collaboration inquiries from companies and institutions.
+          <motion.p variants={fadeUp} className="text-indigo-100 text-base mb-8 max-w-lg mx-auto">
+            The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.
           </motion.p>
-          <motion.div variants={fadeUp}>
-            <a href="mailto:bonggwon.kang@kumoh.ac.kr"
+          <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
+            <a href="mailto:kbk@kumoh.ac.kr"
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-indigo-700 font-bold rounded-xl hover:bg-indigo-50 transition-colors shadow-xl shadow-indigo-900/30">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              Get in Touch
+              Contact Us
             </a>
+            <Link to="/members"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white/15 text-white font-bold rounded-xl border border-white/30 hover:bg-white/25 transition-colors">
+              Meet the Team
+            </Link>
           </motion.div>
         </motion.div>
       </div>
@@ -412,8 +282,7 @@ export default function Home() {
       <DomainsBar />
       <ResearchTopics />
       <Videos />
-      <Publications />
-      <CTA />
+      <Contact />
     </>
   )
 }

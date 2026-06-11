@@ -6,13 +6,19 @@ const fadeUp = {
 }
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
+const activities = [
+  'Exploration of technology trends and job market opportunities',
+  'Conference attendance and poster presentations',
+  'Competition participation',
+  'KCI journal paper preparation',
+]
+
 const professor = {
-  name: 'Bonggwon Kang',
-  nameKo: '강봉권',
+  name: 'Bonggwon Kang',  nameKo: '강봉권',
   role: 'Principal Investigator · Assistant Professor',
   affiliation: 'Dept. of Industrial Engineering\nKumoh National Institute of Technology',
   email: 'kbk@kumoh.ac.kr',
-  photo: '/images/professor.jpg',
+  photo: 'professor.jpg',
   interests: ['Simulation Optimization', 'Digital Twin', 'Bayesian Calibration', 'AMHS'],
   links: [
     { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=QLqVgY0AAAAJ&hl=ko' },
@@ -22,43 +28,34 @@ const professor = {
 
 const students = [
   {
-    name: '오가영',
-    nameEn: 'Gayoung Oh',
+    name: '오가영', nameEn: 'Gayoung Oh',
     degree: 'Undergraduate Researcher',
     research: 'Surrogate-based decision-making',
     email: 'oh050316@kumoh.ac.kr',
-    photo: '/images/member-oh.jpg',
+    photo: 'member-oh.jpg',
   },
   {
-    name: '이승빈',
-    nameEn: 'Seungbin Lee',
+    name: '이승빈', nameEn: 'Seungbin Lee',
     degree: 'Undergraduate Researcher',
     research: 'Digital twin applications for material handling systems',
     email: 'hctoto2005@kumoh.ac.kr',
-    photo: '/images/member-lee.jpg',
+    photo: 'member-lee.jpg',
   },
 ]
 
-const alumni = []
-
-function Avatar({ photo, name, size = 'lg' }) {
-  const dim   = size === 'lg' ? 'w-24 h-24 text-2xl' : 'w-16 h-16 text-sm'
+function MemberPhoto({ file, name, size = 'lg' }) {
+  const base = import.meta.env.BASE_URL
+  const dim  = size === 'lg' ? 'w-24 h-24 text-2xl' : 'w-16 h-16 text-sm'
   const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
-
   return (
     <div className={`${dim} rounded-full overflow-hidden bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center font-bold text-indigo-600 ring-4 ring-white shadow-md flex-shrink-0`}>
       <img
-        src={photo}
+        src={`${base}images/${file}`}
         alt={name}
         className="w-full h-full object-cover"
-        onError={e => {
-          e.target.style.display = 'none'
-          e.target.nextSibling.style.display = 'flex'
-        }}
+        onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex' }}
       />
-      <span className="w-full h-full items-center justify-center" style={{ display: 'none' }}>
-        {initials}
-      </span>
+      <span className="w-full h-full items-center justify-center hidden text-inherit">{initials}</span>
     </div>
   )
 }
@@ -82,9 +79,6 @@ function PageHeader() {
             className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
             Members
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-gray-400 text-lg max-w-xl">
-            The people behind the research.
-          </motion.p>
         </motion.div>
       </div>
     </section>
@@ -96,18 +90,43 @@ export default function MembersPage() {
     <>
       <PageHeader />
 
+      {/* Lab intro */}
+      <section className="py-16 bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
+            className="max-w-3xl">
+            <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+              Join the Digital Transformation Lab!
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-gray-600 leading-relaxed mb-6">
+              The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.
+            </motion.p>
+            <motion.div variants={fadeUp}>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Student Activities</p>
+              <ul className="space-y-2">
+                {activities.map(a => (
+                  <li key={a} className="flex items-start gap-3 text-sm text-gray-600">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-400 flex-shrink-0" />
+                    {a}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Professor */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
             <motion.h2 variants={fadeUp}
-              className="text-xs font-semibold text-indigo-600 tracking-[0.2em] uppercase mb-10">
+              className="text-xs font-semibold text-indigo-600 tracking-[0.2em] uppercase mb-8">
               Principal Investigator
             </motion.h2>
-
             <motion.div variants={fadeUp}
               className="flex flex-col sm:flex-row gap-8 items-start bg-white rounded-2xl border border-gray-100 p-8 hover:shadow-xl hover:shadow-indigo-50 transition-all duration-300 max-w-2xl">
-              <Avatar photo={professor.photo} name={professor.nameEn || professor.name} size="lg" />
+              <MemberPhoto file={professor.photo} name="Bonggwon Kang" size="lg" />
               <div className="flex-1">
                 <div className="flex items-baseline gap-3 flex-wrap mb-1">
                   <h3 className="text-xl font-bold text-gray-900">{professor.name}</h3>
@@ -116,7 +135,7 @@ export default function MembersPage() {
                 <p className="text-indigo-600 font-medium text-sm mb-0.5">{professor.role}</p>
                 <p className="text-gray-500 text-sm whitespace-pre-line mb-3">{professor.affiliation}</p>
                 <a href={`mailto:${professor.email}`}
-                  className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-4">
+                  className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-3">
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -148,24 +167,15 @@ export default function MembersPage() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
-            <motion.div variants={fadeUp} className="flex items-center justify-between mb-10 flex-wrap gap-4">
-              <h2 className="text-xs font-semibold text-teal-600 tracking-[0.2em] uppercase">
-                Graduate & Undergraduate Researchers
-              </h2>
-              <a href="mailto:kbk@kumoh.ac.kr"
-                className="inline-flex items-center gap-2 text-xs font-semibold text-indigo-600 hover:text-indigo-700 transition-colors">
-                Join our lab
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-            </motion.div>
-
+            <motion.h2 variants={fadeUp}
+              className="text-xs font-semibold text-teal-600 tracking-[0.2em] uppercase mb-10">
+              Researchers
+            </motion.h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {students.map(s => (
                 <motion.div key={s.name} variants={fadeUp}
                   className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-teal-100 hover:shadow-lg hover:shadow-teal-50 transition-all duration-300 flex flex-col items-center text-center">
-                  <Avatar photo={s.photo} name={s.nameEn} size="md" />
+                  <MemberPhoto file={s.photo} name={s.nameEn} size="md" />
                   <div className="mt-4">
                     <h3 className="font-bold text-gray-900">{s.name}</h3>
                     <p className="text-xs text-gray-400 mt-0.5">{s.nameEn}</p>
@@ -173,61 +183,33 @@ export default function MembersPage() {
                       {s.degree}
                     </span>
                     <p className="text-xs text-gray-500 mt-2 leading-relaxed">{s.research}</p>
-                    {s.email && (
-                      <a href={`mailto:${s.email}`}
-                        className="mt-3 inline-block text-xs text-gray-400 hover:text-indigo-500 transition-colors">
-                        {s.email}
-                      </a>
-                    )}
+                    <a href={`mailto:${s.email}`}
+                      className="mt-2 inline-block text-xs text-gray-400 hover:text-indigo-500 transition-colors">
+                      {s.email}
+                    </a>
                   </div>
                 </motion.div>
               ))}
 
-              {/* Recruiting card */}
+              {/* Recruiting */}
               <motion.div variants={fadeUp}
-                className="bg-white rounded-2xl p-6 border-2 border-dashed border-gray-200 hover:border-indigo-200 transition-all duration-300 flex flex-col items-center justify-center text-center min-h-[200px]">
+                className="bg-white rounded-2xl p-6 border-2 border-dashed border-gray-200 hover:border-indigo-200 transition-all duration-300 flex flex-col items-center justify-center text-center min-h-[220px]">
                 <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mb-3">
                   <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
                 <p className="text-sm font-semibold text-gray-500">Recruiting</p>
-                <p className="text-xs text-gray-400 mt-1">We are looking for motivated students.</p>
+                <p className="text-xs text-gray-400 mt-1 max-w-[140px]">Motivated students welcome.</p>
                 <a href="mailto:kbk@kumoh.ac.kr"
                   className="mt-3 text-xs text-indigo-600 font-medium hover:underline">
-                  Contact PI
+                  kbk@kumoh.ac.kr
                 </a>
               </motion.div>
             </div>
           </motion.div>
         </div>
       </section>
-
-      {alumni.length > 0 && (
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
-              <motion.h2 variants={fadeUp}
-                className="text-xs font-semibold text-violet-600 tracking-[0.2em] uppercase mb-10">Alumni</motion.h2>
-              <div className="space-y-3 max-w-2xl">
-                {alumni.map((a, i) => (
-                  <motion.div key={i} variants={fadeUp}
-                    className="flex items-center justify-between p-4 rounded-xl border border-gray-100 bg-white">
-                    <div>
-                      <span className="font-semibold text-gray-900 text-sm">{a.name}</span>
-                      <span className="text-gray-400 text-xs ml-2">{a.nameEn}</span>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xs text-gray-500">{a.degree}</p>
-                      {a.current && <p className="text-xs text-gray-400">{a.current}</p>}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      )}
     </>
   )
 }
