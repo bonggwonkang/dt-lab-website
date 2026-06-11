@@ -145,7 +145,7 @@ function DTConcept() {
               <span className="h-px w-8 bg-indigo-500/50" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Our Digital Transformation Concept</h2>
-            <p className="text-gray-400 text-sm mt-3 max-w-xl mx-auto leading-relaxed">
+            <p className="text-gray-300 text-base mt-3 max-w-xl mx-auto leading-relaxed">
               We close the loop between physical systems and digital models — building, optimizing, and calibrating
               high-fidelity simulations to enable better operational decisions.
             </p>
@@ -163,12 +163,7 @@ function DTConcept() {
                       {dtNodes[0].icon}
                     </div>
                     <h3 className={`font-bold text-base mb-1 ${c.label}`}>{dtNodes[0].label}</h3>
-                    <p className="text-xs text-gray-500 leading-relaxed">{dtNodes[0].sub}</p>
-                    <div className="mt-4 flex flex-wrap justify-center gap-2">
-                      {['Semiconductor Fabs', 'Distribution Centers', 'Container Terminals'].map(d => (
-                        <span key={d} className="px-2 py-0.5 bg-gray-900/60 rounded-full text-xs text-gray-500 border border-white/10">{d}</span>
-                      ))}
-                    </div>
+                    <p className="text-sm text-gray-300 leading-relaxed">{dtNodes[0].sub}</p>
                   </div>
                 )
               })()}
@@ -183,7 +178,7 @@ function DTConcept() {
                   <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-[10px] text-gray-600 text-center whitespace-nowrap">Real-time data</span>
+              <span className="text-xs text-gray-300 text-center whitespace-nowrap">Real-time data</span>
               {/* Left arrow */}
               <div className="flex items-center gap-1">
                 <svg className="w-4 h-4 text-violet-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -191,7 +186,7 @@ function DTConcept() {
                 </svg>
                 <div className="w-16 h-px bg-gradient-to-r from-violet-500/80 to-indigo-500/30" />
               </div>
-              <span className="text-[10px] text-gray-600 text-center whitespace-nowrap">Decision signals</span>
+              <span className="text-xs text-gray-300 text-center whitespace-nowrap">Decision-making</span>
             </motion.div>
 
             {/* Digital stack */}
@@ -203,7 +198,7 @@ function DTConcept() {
                     <div className={`flex-shrink-0 ${c.icon}`}>{node.icon}</div>
                     <div>
                       <h4 className={`font-semibold text-sm ${c.label}`}>{node.label}</h4>
-                      <p className="text-xs text-gray-500 mt-0.5">{node.sub}</p>
+                      <p className="text-sm text-gray-300 mt-0.5">{node.sub}</p>
                     </div>
                   </div>
                 )
@@ -215,7 +210,7 @@ function DTConcept() {
           <motion.div variants={fadeUp} className="text-center">
             <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gray-800/60 border border-white/10">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
-              <span className="text-xs text-gray-400 font-medium">Continuous model refinement through physical ↔ digital feedback loop</span>
+              <span className="text-sm text-gray-300 font-medium">Continuous model refinement through physical ↔ digital feedback loop</span>
             </div>
           </motion.div>
         </motion.div>
