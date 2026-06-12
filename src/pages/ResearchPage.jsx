@@ -63,7 +63,7 @@ const ChipIcon = () => (
 
 const domains = [
   {
-    title: 'Semiconductor & Display',
+    title: 'Semiconductor & Display Fabs',
     desc: 'Modeling and optimization of wafer fabrication processes and AMHS in semiconductor fabs.',
     icon: <ChipIcon />,
     video: { src: '[3D] FAB AMHS Animation 3.mp4', title: '3D Semiconductor Fab AMHS Simulation' },
