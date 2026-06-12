@@ -88,7 +88,7 @@ export default function MembersPage() {
       <PageHeader />
 
       {/* Lab intro */}
-      <section className="py-16 bg-gray-900 border-b border-white/10">
+      <section className="py-8 bg-gray-900 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
             className="max-w-3xl">
@@ -114,7 +114,7 @@ export default function MembersPage() {
       </section>
 
       {/* Professor */}
-      <section className="py-20 bg-gray-900">
+      <section className="py-10 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
             <motion.h2 variants={fadeUp}
@@ -161,7 +161,7 @@ export default function MembersPage() {
       </section>
 
       {/* Students */}
-      <section className="py-20 bg-gray-950">
+      <section className="py-10 bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
             <motion.h2 variants={fadeUp}
