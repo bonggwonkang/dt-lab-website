@@ -72,10 +72,6 @@ function PageHeader() {
       <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial="hidden" animate="visible" variants={stagger}>
-          <motion.div variants={fadeUp} className="flex items-center gap-3 mb-5">
-            <span className="h-px w-8 bg-indigo-500" />
-            <span className="text-indigo-400 text-xs font-semibold tracking-[0.2em] uppercase">DT Lab.</span>
-          </motion.div>
           <motion.h1 variants={fadeUp}
             className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
             Members

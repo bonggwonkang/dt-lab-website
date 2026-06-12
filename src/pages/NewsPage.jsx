@@ -164,10 +164,6 @@ function PageHeader() {
       <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial="hidden" animate="visible" variants={stagger}>
-          <motion.div variants={fadeUp} className="flex items-center gap-3 mb-5">
-            <span className="h-px w-8 bg-indigo-500" />
-            <span className="text-indigo-400 text-xs font-semibold tracking-[0.2em] uppercase">DT Lab.</span>
-          </motion.div>
           <motion.h1 variants={fadeUp}
             className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
             News
@@ -193,10 +189,10 @@ export default function NewsPage() {
           <div className="flex flex-wrap gap-2 mb-14">
             <button
               onClick={() => setActiveFilter('all')}
-              className={`px-3 py-1 rounded-full text-xs font-semibold border transition-colors ${
+              className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition-colors ${
                 activeFilter === 'all'
                   ? 'bg-white/15 text-white border-white/30'
-                  : 'text-gray-500 border-white/10 hover:text-gray-300 hover:border-white/20'
+                  : 'text-gray-400 border-white/10 hover:text-gray-200 hover:border-white/20'
               }`}
             >
               All
@@ -205,11 +201,11 @@ export default function NewsPage() {
               <button
                 key={k}
                 onClick={() => setActiveFilter(k)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-colors capitalize ${
-                  activeFilter === k ? v.badge : 'text-gray-500 border-white/10 hover:text-gray-300 hover:border-white/20'
+                className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold border transition-colors capitalize ${
+                  activeFilter === k ? v.badge : 'text-gray-400 border-white/10 hover:text-gray-200 hover:border-white/20'
                 }`}
               >
-                <span className={`w-2 h-2 rounded-full ${v.dot}`} />
+                <span className={`w-2.5 h-2.5 rounded-full ${v.dot}`} />
                 {k}
               </button>
             ))}

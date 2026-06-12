@@ -21,8 +21,7 @@ function Hero() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
         <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl">
-          <motion.div variants={fadeUp} className="flex items-center gap-3 mb-8">
-            <span className="h-px w-10 bg-indigo-500" />
+          <motion.div variants={fadeUp} className="mb-8">
             <span className="text-indigo-400 text-xs font-semibold tracking-[0.2em] uppercase">
               Kumoh National Institute of Technology
             </span>
