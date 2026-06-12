@@ -30,7 +30,7 @@ const topics = [
       'Periodic operational planning and real-time control in fast evolving systems',
       'Surrogate-based optimization to reduce the cost of simulation experiments.',
     ],
-    keywords: ['AMHS', 'Surrogate Modeling', 'Bottleneck Analysis', 'Vehicle Dispatching', 'Semiconductor Fab'],
+    keywords: ['AMHS', 'Surrogate Modeling', 'Bottleneck Analysis', 'Semiconductor Fab'],
     video: { src: '반도체생산시스템.mp4', title: 'Semiconductor production line simulation' },
   },
   {
@@ -57,7 +57,7 @@ const colorStyle = {
 const domains = [
   {
     title: 'Semiconductor & Display Manufacturing',
-    desc: 'Modeling and optimization of wafer fabrication processes and AMHS vehicle dispatching in semiconductor fabs.',
+    desc: 'Modeling and optimization of wafer fabrication processes and AMHS in semiconductor fabs.',
     icon: '💡',
     video: { src: '[3D] FAB AMHS Animation 3.mp4', title: '3D FAB AMHS Animation' },
   },
