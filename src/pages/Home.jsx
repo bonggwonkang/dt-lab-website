@@ -9,7 +9,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } }
 
 function Hero() {
   return (
-    <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-gray-950">
+    <section className="relative flex items-center overflow-hidden bg-gray-950">
       <div className="absolute inset-0 opacity-[0.07]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -19,7 +19,7 @@ function Hero() {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
         <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl">
           <motion.div variants={fadeUp} className="flex items-center gap-3 mb-8">
             <span className="h-px w-10 bg-indigo-500" />
@@ -38,10 +38,12 @@ function Hero() {
           </motion.h1>
 
           <motion.p variants={fadeUp}
-            className="text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed mb-10">
-            At the Digital Transformation Lab, we develop advanced methodologies for{' '}
-            <span className="text-white font-medium">modeling, analyzing, optimizing,</span> and{' '}
-            <span className="text-white font-medium">calibrating</span>{' '}
+            className="text-xl md:text-2xl text-white max-w-2xl leading-relaxed mb-10 font-light">
+            We develop advanced methodologies for{' '}
+            <span className="text-indigo-400 font-semibold">modeling</span>,{' '}
+            <span className="text-indigo-400 font-semibold">analyzing</span>,{' '}
+            <span className="text-teal-400 font-semibold">optimizing</span>, and{' '}
+            <span className="text-teal-400 font-semibold">calibrating</span>{' '}
             large-scale production and material handling systems.
           </motion.p>
 

@@ -17,7 +17,7 @@ const topics = [
       'Systematic bottleneck identification through workload analysis and sensitivity studies.',
       'Scenario-based analysis for facility design and layout optimization.',
     ],
-    keywords: ['Discrete-event simulation', 'Bottleneck analysis', 'Material handling operations', 'Scheduling'],
+    keywords: ['Discrete-event simulation', 'Bottleneck analysis', 'Material handling operations'],
     video: { src: 'Small Size FAB Simulation.mp4', title: 'Automated material handling system in a semiconductor fab' },
   },
   {
@@ -30,7 +30,7 @@ const topics = [
       'Periodic operational planning and real-time control in fast evolving systems',
       'Surrogate-based optimization to reduce the cost of simulation experiments.',
     ],
-    keywords: ['Statistical surrogates', 'Simulation optimization', 'OR approaches', 'Design of experiments'],
+    keywords: ['Statistical surrogates', 'Simulation optimization', 'Design of experiments'],
     video: { src: '반도체생산시스템.mp4', title: 'Semiconductor production line simulation' },
   },
   {
@@ -43,7 +43,7 @@ const topics = [
       'Bayesian inference framework for learning calibration parameters from sparse observations.',
       'Uncertainty quantification in model predictions to support reliable decision-making.',
     ],
-    keywords: ['Uncertainty quantification', 'Parameter estimation', 'Discrepancy modeling', 'Active learning'],
+    keywords: ['Uncertainty quantification', 'Parameter estimation', 'Discrepancy modeling'],
     video: { src: '[3D] FAB AMHS Animation 2.mp4', title: '3D automated material handling system in a semiconductor fab' },
   },
 ]
@@ -115,9 +115,12 @@ function PageHeader() {
             className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
             Research
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-gray-400 text-lg max-w-2xl leading-relaxed">
-            Our work spans three interconnected themes, modeling complex systems, optimizing their operations,
-            and calibrating their predictive accuracy, unified by a statistical model-based digital transformation.
+          <motion.p variants={fadeUp} className="text-gray-200 text-lg max-w-2xl leading-relaxed">
+            Our work spans three interconnected themes —{' '}
+            <span className="text-indigo-400 font-medium">modeling</span> complex systems,{' '}
+            <span className="text-teal-400 font-medium">optimizing</span> their operations, and{' '}
+            <span className="text-violet-400 font-medium">calibrating</span> their predictive accuracy —
+            unified by a statistical model-based digital transformation.
           </motion.p>
         </motion.div>
       </div>
