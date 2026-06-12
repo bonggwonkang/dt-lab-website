@@ -19,7 +19,7 @@ const professor = {
   affiliation: 'Dept. of Industrial Engineering\nKumoh National Institute of Technology',
   email: 'kbk@kumoh.ac.kr',
   photo: 'professor.jpg',
-  interests: ['Simulation modeling', 'Analysis', 'Optimization', 'Calibration'],
+  interests: ['Simulation modeling, analysis, optimization, and calibration'],
   links: [
     { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=QLqVgY0AAAAJ&hl=ko' },
     { label: 'ResearchGate',   url: 'https://www.researchgate.net/profile/Bonggwon-Kang' },
