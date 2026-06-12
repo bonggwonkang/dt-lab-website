@@ -68,7 +68,7 @@ export default function ProfessorPage() {
                 <img
                   src={`${base}images/professor.jpg`}
                   alt="Bonggwon Kang"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                   onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex' }}
                 />
                 <div className="w-full h-full items-center justify-center hidden">

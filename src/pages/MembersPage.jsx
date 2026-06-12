@@ -43,7 +43,7 @@ const students = [
   },
 ]
 
-function MemberPhoto({ file, name, size = 'lg' }) {
+function MemberPhoto({ file, name, size = 'lg', objectPos = 'object-center' }) {
   const base = import.meta.env.BASE_URL
   const dim  = size === 'lg' ? 'w-24 h-24 text-2xl' : 'w-16 h-16 text-sm'
   const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
@@ -52,7 +52,7 @@ function MemberPhoto({ file, name, size = 'lg' }) {
       <img
         src={`${base}images/${file}`}
         alt={name}
-        className="w-full h-full object-cover"
+        className={`w-full h-full object-cover ${objectPos}`}
         onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex' }}
       />
       <span className="w-full h-full items-center justify-center hidden text-inherit">{initials}</span>
@@ -123,7 +123,7 @@ export default function MembersPage() {
             </motion.h2>
             <motion.div variants={fadeUp}
               className="flex flex-col sm:flex-row gap-8 items-start bg-gray-800/50 rounded-2xl border border-white/10 p-8 hover:border-indigo-500/30 transition-all duration-300 max-w-2xl">
-              <MemberPhoto file={professor.photo} name="Bonggwon Kang" size="lg" />
+              <MemberPhoto file={professor.photo} name="Bonggwon Kang" size="lg" objectPos="object-top" />
               <div className="flex-1">
                 <div className="flex items-baseline gap-3 flex-wrap mb-1">
                   <h3 className="text-xl font-bold text-white">{professor.name}</h3>
