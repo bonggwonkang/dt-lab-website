@@ -228,7 +228,7 @@ export default function NewsPage() {
                 <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8">
                   <span className="text-3xl font-black text-white">{year}</span>
                   <span className="flex-1 h-px bg-white/10" />
-                  <span className="text-xs text-gray-600">{grouped[year].length} item{grouped[year].length > 1 ? 's' : ''}</span>
+                  <span className="text-sm text-gray-500">{grouped[year].length} item{grouped[year].length > 1 ? 's' : ''}</span>
                 </motion.div>
 
                 <div className="space-y-4 pl-4 border-l-2 border-white/10">
@@ -244,22 +244,22 @@ export default function NewsPage() {
                               <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${s.badge}`}>
                                 {p.type}
                               </span>
-                              <span className="text-xs text-gray-600">{p.date}</span>
+                              <span className="text-sm text-gray-400">{p.date}</span>
                             </div>
 
                             {p.url ? (
                               <a href={p.url} target="_blank" rel="noreferrer"
-                                className="font-semibold text-gray-200 text-sm leading-snug hover:text-indigo-400 transition-colors inline-flex items-start gap-1 group">
+                                className="font-semibold text-gray-100 text-base leading-snug hover:text-indigo-400 transition-colors inline-flex items-start gap-1 group">
                                 {p.title}
                                 <svg className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>
                               </a>
                             ) : (
-                              <p className="font-semibold text-gray-200 text-sm leading-snug">{p.title}</p>
+                              <p className="font-semibold text-gray-100 text-base leading-snug">{p.title}</p>
                             )}
 
-                            {p.desc && <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">{p.desc}</p>}
+                            {p.desc && <p className="text-sm text-gray-400 mt-2 leading-relaxed">{p.desc}</p>}
                           </div>
                         </div>
                       </motion.div>

@@ -39,12 +39,12 @@ function Hero() {
 
           <motion.p variants={fadeUp}
             className="text-xl md:text-2xl text-white max-w-2xl leading-relaxed mb-10 font-light">
-            We develop advanced methodologies for{' '}
+            We develop advanced digital transformation methodologies for{' '}
             <span className="text-indigo-400 font-semibold">modeling</span>,{' '}
             <span className="text-indigo-400 font-semibold">analyzing</span>,{' '}
             <span className="text-teal-400 font-semibold">optimizing</span>, and{' '}
             <span className="text-teal-400 font-semibold">calibrating</span>{' '}
-            large-scale production and material handling systems.
+            production and material handling system simulations.
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4">

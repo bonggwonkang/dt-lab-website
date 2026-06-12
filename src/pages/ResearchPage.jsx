@@ -54,18 +54,25 @@ const colorStyle = {
   violet: { bar: 'bg-violet-500', tag: 'bg-violet-950/60 text-violet-400 border-violet-800/60', num: 'text-violet-400' },
 }
 
+const ChipIcon = () => (
+  <svg className="w-6 h-6 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="7" y="7" width="10" height="10" rx="1" />
+    <path d="M9 7V4M12 7V4M15 7V4M9 17v3M12 17v3M15 17v3M7 9H4M7 12H4M7 15H4M17 9h3M17 12h3M17 15h3" />
+  </svg>
+)
+
 const domains = [
   {
     title: 'Semiconductor & Display Manufacturing',
     desc: 'Modeling and optimization of wafer fabrication processes and AMHS in semiconductor fabs.',
-    icon: '💡',
-    video: { src: '[3D] FAB AMHS Animation 3.mp4', title: '3D FAB AMHS Animation' },
+    icon: <ChipIcon />,
+    video: { src: '[3D] FAB AMHS Animation 3.mp4', title: '3D Semiconductor Fab AMHS Simulation' },
   },
   {
     title: 'Distribution Centers',
     desc: 'Simulation-based design and operational analysis of automated warehouse and logistics systems.',
     icon: '📦',
-    video: { src: '3D SVSRS.mp4', title: '3D Autonomous Vehicle Storage & Retrieval System (AVSRS)' },
+    video: { src: '3D SVSRS.mp4', title: '3D Shuttle-based Storage and Retrieval System Simulation' },
   },
   {
     title: 'Container Terminals',
@@ -134,7 +141,7 @@ export default function ResearchPage() {
       <PageHeader />
 
       {/* Topics */}
-      <section className="py-24 bg-gray-900">
+      <section className="pt-24 pb-12 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-28">
             {topics.map((t, idx) => {
@@ -187,7 +194,7 @@ export default function ResearchPage() {
       </section>
 
       {/* Application Domains */}
-      <section className="py-24 bg-gray-950">
+      <section className="pt-12 pb-24 bg-gray-950">
         <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
           style={{
             backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -201,17 +208,18 @@ export default function ResearchPage() {
             viewport={{ once: true, margin: '-60px' }}
             variants={stagger}
           >
-            <motion.div variants={fadeUp} className="text-center mb-16">
-              <span className="text-teal-400 text-xs font-semibold tracking-[0.2em] uppercase">Where We Apply</span>
-              <h2 className="mt-3 text-3xl md:text-4xl font-bold text-white tracking-tight">Application Domains</h2>
+            <motion.div variants={fadeUp} className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Application Domains</h2>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-6">
               {domains.map(d => (
                 <motion.div key={d.title} variants={fadeUp} className="flex flex-col gap-4">
                   <div className="bg-gray-800/50 rounded-2xl p-6 border border-white/10 hover:border-indigo-500/40 hover:bg-gray-800/80 transition-all duration-300">
-                    <div className="text-3xl mb-3">{d.icon}</div>
-                    <h3 className="font-bold text-white mb-2 leading-snug">{d.title}</h3>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="flex-shrink-0 text-2xl leading-none">{d.icon}</span>
+                      <h3 className="font-bold text-white leading-snug">{d.title}</h3>
+                    </div>
                     <p className="text-sm text-gray-400 leading-relaxed">{d.desc}</p>
                   </div>
 
