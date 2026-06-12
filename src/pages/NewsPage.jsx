@@ -86,10 +86,6 @@ const items = [
   { date: '2023.09.07', type: 'conference',
     title: 'Presentation at the 11th International Conference on Logistics and Maritime Systems',
     desc: 'Presented "A case study of data-driven yard template planning with feature engineering" in Busan, Korea.' },
-  { date: '2023.06.25', type: 'preprint',
-    title: 'Active Learning of Piecewise Gaussian Process Surrogates — Preprint',
-    desc: 'International collaborative research with Chiwoo Park, Robert Waelder, Benji Maruyama, Soondo Hong, Robert Gramacy.',
-    url: 'https://arxiv.org/abs/2301.08789' },
   { date: '2023.06.16', type: 'collaboration',
     title: 'Surrogate model-based simulation optimization international joint research workshop',
     desc: 'Workshop held June 16, 2023. Attendees: Bonggwon Kang, Soondo Hong, Chiwoo Park.' },
@@ -139,7 +135,6 @@ const typeStyle = {
   patent:        { dot: 'bg-violet-500',  badge: 'bg-violet-950/60 text-violet-400 border border-violet-800/50'  },
   funding:       { dot: 'bg-green-500',   badge: 'bg-green-950/60 text-green-400 border border-green-800/50'     },
   collaboration: { dot: 'bg-rose-400',    badge: 'bg-rose-950/60 text-rose-400 border border-rose-800/50'        },
-  preprint:      { dot: 'bg-gray-500',    badge: 'bg-gray-800/60 text-gray-400 border border-gray-700/50'        },
 }
 
 function groupByYear(list) {
@@ -211,14 +206,13 @@ export default function NewsPage() {
             ))}
           </div>
 
-          <div className="space-y-14">
+          <div key={activeFilter} className="space-y-14">
             {years.length === 0 && (
               <p className="text-gray-500 text-sm text-center py-12">No items for this filter.</p>
             )}
             {years.map(year => (
               <motion.div key={year}
-                initial="hidden" whileInView="visible"
-                viewport={{ once: true, margin: '-40px' }}
+                initial="hidden" animate="visible"
                 variants={stagger}
               >
                 <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8">
