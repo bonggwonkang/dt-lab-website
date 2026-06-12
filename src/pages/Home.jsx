@@ -9,7 +9,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } }
 
 function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gray-950">
+    <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-gray-950">
       <div className="absolute inset-0 opacity-[0.07]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -43,11 +43,6 @@ function Hero() {
             <span className="text-white font-medium">modeling, analyzing, optimizing,</span> and{' '}
             <span className="text-white font-medium">calibrating</span>{' '}
             large-scale production and material handling systems.
-          </motion.p>
-
-          <motion.p variants={fadeUp} className="text-sm text-gray-500 max-w-2xl leading-relaxed mb-10">
-            We integrate model-based decision-making with statistical approaches, emphasizing surrogate modeling
-            and active design of experiments to support efficient decision-making.
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4">

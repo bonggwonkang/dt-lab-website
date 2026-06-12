@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 
 const fadeUp = {
@@ -141,13 +142,15 @@ const typeStyle = {
   preprint:      { dot: 'bg-gray-500',    badge: 'bg-gray-800/60 text-gray-400 border border-gray-700/50'        },
 }
 
-const grouped = items.reduce((acc, p) => {
-  const y = p.date.slice(0, 4)
-  if (!acc[y]) acc[y] = []
-  acc[y].push(p)
-  return acc
-}, {})
-const years = Object.keys(grouped).sort((a, b) => b - a)
+function groupByYear(list) {
+  const acc = list.reduce((g, p) => {
+    const y = p.date.slice(0, 4)
+    if (!g[y]) g[y] = []
+    g[y].push(p)
+    return g
+  }, {})
+  return { grouped: acc, years: Object.keys(acc).sort((a, b) => b - a) }
+}
 
 function PageHeader() {
   return (
@@ -176,24 +179,46 @@ function PageHeader() {
 }
 
 export default function NewsPage() {
+  const [activeFilter, setActiveFilter] = useState('all')
+  const filtered = activeFilter === 'all' ? items : items.filter(p => p.type === activeFilter)
+  const { grouped, years } = groupByYear(filtered)
+
   return (
     <>
       <PageHeader />
 
       <section className="py-24 bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Legend */}
-          <motion.div initial="hidden" animate="visible" variants={stagger}
-            className="flex flex-wrap gap-x-5 gap-y-2 mb-14">
+          {/* Filter bar */}
+          <div className="flex flex-wrap gap-2 mb-14">
+            <button
+              onClick={() => setActiveFilter('all')}
+              className={`px-3 py-1 rounded-full text-xs font-semibold border transition-colors ${
+                activeFilter === 'all'
+                  ? 'bg-white/15 text-white border-white/30'
+                  : 'text-gray-500 border-white/10 hover:text-gray-300 hover:border-white/20'
+              }`}
+            >
+              All
+            </button>
             {Object.entries(typeStyle).map(([k, v]) => (
-              <motion.div key={k} variants={fadeUp} className="flex items-center gap-2">
-                <span className={`w-2.5 h-2.5 rounded-full ${v.dot}`} />
-                <span className="text-xs text-gray-500 font-medium capitalize">{k}</span>
-              </motion.div>
+              <button
+                key={k}
+                onClick={() => setActiveFilter(k)}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-colors capitalize ${
+                  activeFilter === k ? v.badge : 'text-gray-500 border-white/10 hover:text-gray-300 hover:border-white/20'
+                }`}
+              >
+                <span className={`w-2 h-2 rounded-full ${v.dot}`} />
+                {k}
+              </button>
             ))}
-          </motion.div>
+          </div>
 
           <div className="space-y-14">
+            {years.length === 0 && (
+              <p className="text-gray-500 text-sm text-center py-12">No items for this filter.</p>
+            )}
             {years.map(year => (
               <motion.div key={year}
                 initial="hidden" whileInView="visible"

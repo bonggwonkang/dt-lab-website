@@ -17,7 +17,7 @@ const topics = [
       'Systematic bottleneck identification through workload analysis and sensitivity studies.',
       'Scenario-based analysis for facility design and layout optimization.',
     ],
-    keywords: ['Discrete-Event Simulation', 'Digital Twin', 'Facility Design', 'Operational Planning'],
+    keywords: ['Discrete-event simulation', 'Bottleneck analysis', 'Material handling operations', 'Scheduling'],
     video: { src: 'Small Size FAB Simulation.mp4', title: 'Automated material handling system in a semiconductor fab' },
   },
   {
@@ -30,7 +30,7 @@ const topics = [
       'Periodic operational planning and real-time control in fast evolving systems',
       'Surrogate-based optimization to reduce the cost of simulation experiments.',
     ],
-    keywords: ['AMHS', 'Surrogate Modeling', 'Bottleneck Analysis', 'Semiconductor Fab'],
+    keywords: ['Statistical surrogates', 'Simulation optimization', 'OR approaches', 'Design of experiments'],
     video: { src: '반도체생산시스템.mp4', title: 'Semiconductor production line simulation' },
   },
   {
@@ -43,7 +43,7 @@ const topics = [
       'Bayesian inference framework for learning calibration parameters from sparse observations.',
       'Uncertainty quantification in model predictions to support reliable decision-making.',
     ],
-    keywords: ['Bayesian Calibration', 'Model Discrepancy', 'Uncertainty Quantification', 'Active Learning'],
+    keywords: ['Uncertainty quantification', 'Parameter estimation', 'Discrepancy modeling', 'Active learning'],
     video: { src: '[3D] FAB AMHS Animation 2.mp4', title: '3D automated material handling system in a semiconductor fab' },
   },
 ]
