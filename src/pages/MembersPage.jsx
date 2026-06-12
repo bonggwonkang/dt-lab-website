@@ -19,7 +19,7 @@ const professor = {
   affiliation: 'Dept. of Industrial Engineering\nKumoh National Institute of Technology',
   email: 'kbk@kumoh.ac.kr',
   photo: 'professor.jpg',
-  interests: ['Simulation Optimization', 'Digital Twin', 'Bayesian Calibration', 'AMHS'],
+  interests: ['Simulation modeling', 'Analysis', 'Optimization', 'Calibration'],
   links: [
     { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=QLqVgY0AAAAJ&hl=ko' },
     { label: 'ResearchGate',   url: 'https://www.researchgate.net/profile/Bonggwon-Kang' },
@@ -149,7 +149,7 @@ export default function MembersPage() {
                 <div className="flex gap-2">
                   {professor.links.map(l => (
                     <a key={l.label} href={l.url} target="_blank" rel="noreferrer"
-                      className="px-3 py-1 rounded-lg bg-gray-700 hover:bg-indigo-950/60 text-gray-400 hover:text-indigo-400 text-xs font-medium transition-colors border border-white/10">
+                      className="px-3 py-1 rounded-lg bg-rose-950/60 hover:bg-rose-900/60 text-rose-400 hover:text-rose-300 text-xs font-medium transition-colors border border-rose-800/50">
                       {l.label}
                     </a>
                   ))}
