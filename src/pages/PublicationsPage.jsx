@@ -77,6 +77,7 @@ const koreanJournals = [
     volume: '34(1)',
     pages: '1-12',
     year: '2025',
+    doi: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003192378',
   },
   {
     authors: 'J. Choi, J. Lee, B. Kang*, S. Hong',
@@ -85,6 +86,7 @@ const koreanJournals = [
     volume: '24(3)',
     pages: '13-23',
     year: '2024',
+    doi: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003152808',
   },
   {
     authors: 'H. Yoon, G. Han, B. Kang, S. Hong',
@@ -93,6 +95,7 @@ const koreanJournals = [
     volume: '32(3)',
     pages: '67-74',
     year: '2023',
+    doi: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003004230',
   },
   {
     authors: 'B. Kang, B.M. Kang, S. Hong',
