@@ -15,8 +15,6 @@ const internationalJournals = [
     journal: 'International Journal of Production Research',
     year: '2026',
     note: 'Accepted',
-    doi: null,
-    pdf: null,
   },
   {
     authors: 'Park, C., Kang, B., & others',
@@ -109,27 +107,45 @@ const koreanJournals = [
   },
 ]
 
-const sectionColors = {
-  indigo: { header: 'text-indigo-400 border-indigo-800/40', journal: 'text-indigo-300' },
-  blue:   { header: 'text-blue-400 border-blue-800/40',     journal: 'text-blue-300'   },
-}
-
-function SectionHeader({ label, color = 'indigo' }) {
-  const cls = sectionColors[color]?.header || sectionColors.indigo.header
+function highlightKang(text) {
+  const kang = 'Kang, B.'
+  const idx = text.indexOf(kang)
+  if (idx === -1) return <span className="text-gray-400">{text}</span>
   return (
-    <motion.div variants={fadeUp} className={`flex items-center gap-4 mb-8 pb-3 border-b ${cls}`}>
-      <h2 className={`text-xs font-bold tracking-[0.2em] uppercase ${cls.split(' ')[0]}`}>{label}</h2>
-    </motion.div>
+    <span className="text-gray-400">
+      {text.slice(0, idx)}
+      <span className="text-green-400 font-semibold">Kang, B.</span>
+      {text.slice(idx + kang.length)}
+    </span>
   )
 }
 
 function Authors({ str }) {
-  if (!str.startsWith('Kang,')) return <span className="text-gray-400">{str}</span>
-  const rest = str.slice('Kang, B.'.length)
+  const lastAmpIdx = str.lastIndexOf(' & ')
+  const hasAmp = lastAmpIdx >= 0
+  const prefixStr = hasAmp ? str.slice(0, lastAmpIdx + 3) : ''
+  const lastStr = hasAmp ? str.slice(lastAmpIdx + 3) : str
+  const addStar = lastStr !== 'others' && lastStr !== 'et al.'
+
   return (
-    <span className="text-gray-400">
-      <span className="text-green-400 font-semibold">Kang, B.</span>{rest}
-    </span>
+    <>
+      {prefixStr && highlightKang(prefixStr)}
+      {highlightKang(lastStr)}
+      {addStar && <sup className="text-gray-500 ml-0.5">*</sup>}
+    </>
+  )
+}
+
+function SectionHeader({ label, color = 'indigo' }) {
+  const styles = {
+    indigo: 'text-indigo-400 border-indigo-800/40',
+    blue:   'text-blue-400 border-blue-800/40',
+  }
+  const cls = styles[color] || styles.indigo
+  return (
+    <motion.div variants={fadeUp} className={`flex items-center gap-4 mb-8 pb-3 border-b ${cls}`}>
+      <h2 className={`text-xs font-bold tracking-[0.2em] uppercase ${cls.split(' ')[0]}`}>{label}</h2>
+    </motion.div>
   )
 }
 
@@ -207,8 +223,7 @@ function PageHeader() {
             Publications
           </motion.h1>
           <motion.p variants={fadeUp} className="text-gray-400 text-lg max-w-2xl leading-relaxed">
-            Peer-reviewed articles and other scholarly works.{' '}
-            <span className="text-green-400 font-medium">Corresponding/first author</span> highlighted in green.
+            Peer-reviewed articles and other scholarly works.
           </motion.p>
         </motion.div>
       </div>
@@ -242,6 +257,7 @@ export default function PublicationsPage() {
                 <JournalEntry key={i} num={koreanJournals.length - i} item={item} journalColor="text-blue-300" />
               ))}
             </div>
+            <p className="text-xs text-gray-600 mt-6">* corresponding author</p>
           </motion.div>
 
         </div>
