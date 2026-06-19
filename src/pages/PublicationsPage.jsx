@@ -13,7 +13,7 @@ const internationalJournals = [
     authors: 'Kang, B., Lee, T., Sun, Z., & Hong, S.',
     title: 'Uncertainty-aware simulation optimization for yard template planning in transshipment hubs',
     journal: 'International Journal of Production Research',
-    year: '2025',
+    year: '2026',
     note: 'Accepted',
     doi: null,
     pdf: null,
@@ -136,91 +136,11 @@ const bookChapters = [
   },
 ]
 
-const intlConferences = [
-  {
-    authors: 'Kang, B.',
-    title: 'Modular Calibration of a Digital Twin Model for Planning-Level Decision-Making in a Semiconductor Fab\'s AMHS',
-    venue: '2024 INFORMS Annual Meeting',
-    location: 'Seattle, WA, USA',
-    year: '2024',
-  },
-  {
-    authors: 'Kang, B.',
-    title: 'A case study of data-driven yard template planning with feature engineering',
-    venue: '11th International Conference on Logistics and Maritime Systems (LOGMS)',
-    location: 'Busan, Korea',
-    year: '2023',
-  },
-  {
-    authors: 'Kang, B.',
-    title: 'Surrogate model-based simulation optimization of vehicle positioning strategy in a semiconductor fab',
-    venue: '2023 INFORMS Annual Meeting',
-    location: 'Phoenix, AZ, USA',
-    year: '2023',
-  },
-]
-
-const koreanConferences = [
-  {
-    authors: 'Kang, B.',
-    title: 'Bias-aware simulation calibration for an automated material handling system in a semiconductor fab',
-    venue: '2025 Spring KIIE Conference',
-    location: 'Seoul, Korea',
-    year: '2025',
-  },
-  {
-    authors: 'Kang, B.',
-    title: 'Discrete-event Simulation Calibration for a Large-scale Material Handling System: A Case Study of a Semiconductor Fab',
-    venue: '2024 Fall KIIE Conference',
-    location: 'Seoul, Korea',
-    year: '2024',
-  },
-  {
-    authors: 'Kang, B.',
-    title: 'Gaussian process-based yard template planning under vehicle congestion and container rehandling: a case study of Busan Port Terminal',
-    venue: '2024 Spring KIIE Conference',
-    location: 'Yeosu, Korea',
-    year: '2024',
-  },
-  {
-    authors: 'Kang, B.',
-    title: 'Simulation-based optimization alternatives for large-scale material handling systems',
-    venue: 'Semiconductor Smart Manufacturing Working Group, KIIE',
-    location: 'Korea',
-    year: '2023',
-  },
-  {
-    authors: 'Kang, B.',
-    title: 'Simulation-based decision making in large-scale simulations',
-    venue: 'Grand PNU Performance Exchange Programme',
-    location: 'Busan, Korea',
-    year: '2023',
-  },
-]
-
-const invitedTalks = [
-  {
-    authors: 'Kang, B.',
-    title: 'Recent Research on Digital Twin Construction: A Perspective of Management Science',
-    venue: 'Hanwha Ocean',
-    location: 'Geoje, Korea',
-    year: '2024',
-  },
-  {
-    authors: 'Kang, B.',
-    title: 'Simulation-based decision-making in large-scale material handling systems',
-    venue: 'Smart Manufacturing Forum, SEMICON KOREA',
-    location: 'Seoul, Korea',
-    year: '2024',
-    doi: 'https://www.semiconkorea.org/ko/node/9166',
-  },
-]
-
 const misc = [
   {
     category: 'Funding',
     items: [
-      'Korea Research Foundation Grant (\'24.09–\'27.08): "AI-integrated Simulation Optimization for Smart Storage/Retrieval Systems" — ₩180M as Principal Investigator.',
+      'Korea Research Foundation Grant (\'24.09–\'27.08): "AI-integrated Simulation Optimization for Smart Storage/Retrieval Systems", ₩180M as Principal Investigator.',
     ],
   },
   {
@@ -241,13 +161,12 @@ function SectionHeader({ label, color = 'indigo' }) {
   const colors = {
     indigo: 'text-indigo-400 border-indigo-800/40',
     teal:   'text-teal-400 border-teal-800/40',
-    violet: 'text-violet-400 border-violet-800/40',
     amber:  'text-amber-400 border-amber-800/40',
-    rose:   'text-rose-400 border-rose-800/40',
   }
+  const cls = colors[color] || colors.indigo
   return (
-    <motion.div variants={fadeUp} className={`flex items-center gap-4 mb-8 pb-3 border-b ${colors[color]}`}>
-      <h2 className={`text-xs font-bold tracking-[0.2em] uppercase ${colors[color].split(' ')[0]}`}>{label}</h2>
+    <motion.div variants={fadeUp} className={`flex items-center gap-4 mb-8 pb-3 border-b ${cls}`}>
+      <h2 className={`text-xs font-bold tracking-[0.2em] uppercase ${cls.split(' ')[0]}`}>{label}</h2>
     </motion.div>
   )
 }
@@ -259,7 +178,6 @@ function PdfIcon() {
       <polyline points="14 2 14 8 20 8" />
       <line x1="16" y1="13" x2="8" y2="13" />
       <line x1="16" y1="17" x2="8" y2="17" />
-      <polyline points="10 9 9 9 8 9" />
     </svg>
   )
 }
@@ -275,7 +193,7 @@ function LinkIcon() {
 
 function JournalEntry({ num, item }) {
   return (
-    <motion.div variants={fadeUp} className="flex gap-4 group">
+    <motion.div variants={fadeUp} className="flex gap-4">
       <span className="text-gray-600 text-sm font-mono w-6 shrink-0 pt-0.5 text-right">{num}.</span>
       <div className="flex-1">
         <p className="text-sm text-gray-300 leading-relaxed">
@@ -310,7 +228,7 @@ function JournalEntry({ num, item }) {
   )
 }
 
-function PaperEntry({ num, item }) {
+function BookEntry({ num, item }) {
   return (
     <motion.div variants={fadeUp} className="flex gap-4">
       <span className="text-gray-600 text-sm font-mono w-6 shrink-0 pt-0.5 text-right">{num}.</span>
@@ -319,42 +237,12 @@ function PaperEntry({ num, item }) {
           <span className="text-gray-400">{item.authors}</span>
           {' '}
           <span className="text-white font-medium">"{item.title}"</span>
-          {'. '}
-          <em className="text-teal-300 not-italic">{item.venue || item.journal}</em>
+          {'. In '}
+          <em className="text-teal-300 not-italic">{item.venue}</em>
           {item.publisher && <span className="text-gray-400">, {item.publisher}</span>}
           {', '}
           <span className="text-gray-400">{item.year}</span>
           {'.'}
-        </p>
-        {item.doi && (
-          <div className="mt-1.5">
-            <a href={item.doi} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-gray-800/70 text-gray-400 border border-white/10 hover:text-gray-200 hover:border-white/20 transition-colors">
-              <LinkIcon /> Link
-            </a>
-          </div>
-        )}
-      </div>
-    </motion.div>
-  )
-}
-
-function TalkEntry({ num, item }) {
-  return (
-    <motion.div variants={fadeUp} className="flex gap-4">
-      <span className="text-gray-600 text-sm font-mono w-6 shrink-0 pt-0.5 text-right">{num}.</span>
-      <div className="flex-1">
-        <p className="text-sm text-gray-300 leading-relaxed">
-          <span className="text-gray-400">{item.authors}</span>
-          {' '}
-          <span className="text-white font-medium">"{item.title}"</span>
-          {'. '}
-          <em className="text-violet-300 not-italic">{item.venue}</em>
-          {', '}
-          <span className="text-gray-400">{item.location}</span>
-          {' ('}
-          <span className="text-gray-400">{item.year}</span>
-          {').'}
         </p>
         {item.doi && (
           <div className="mt-1.5">
@@ -386,7 +274,7 @@ function PageHeader() {
             Publications
           </motion.h1>
           <motion.p variants={fadeUp} className="text-gray-400 text-lg max-w-2xl leading-relaxed">
-            Peer-reviewed articles, conference papers, and other scholarly works.
+            Peer-reviewed articles, book chapters, and other scholarly works.
           </motion.p>
         </motion.div>
       </div>
@@ -417,7 +305,7 @@ export default function PublicationsPage() {
             <SectionHeader label="Korean Journals" color="teal" />
             <div className="space-y-5">
               {koreanJournals.map((item, i) => (
-                <PaperEntry key={i} num={koreanJournals.length - i} item={item} />
+                <JournalEntry key={i} num={koreanJournals.length - i} item={{ ...item, journal: item.journal }} />
               ))}
             </div>
           </motion.div>
@@ -427,37 +315,7 @@ export default function PublicationsPage() {
             <SectionHeader label="Peer-reviewed Book Chapters & Conference Proceedings" color="amber" />
             <div className="space-y-5">
               {bookChapters.map((item, i) => (
-                <PaperEntry key={i} num={bookChapters.length - i} item={item} />
-              ))}
-            </div>
-          </motion.div>
-
-          {/* International Conferences */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
-            <SectionHeader label="Presentations at International Conferences" color="violet" />
-            <div className="space-y-5">
-              {intlConferences.map((item, i) => (
-                <TalkEntry key={i} num={intlConferences.length - i} item={item} />
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Korean Conferences */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
-            <SectionHeader label="Presentations at Korean Conferences" color="teal" />
-            <div className="space-y-5">
-              {koreanConferences.map((item, i) => (
-                <TalkEntry key={i} num={koreanConferences.length - i} item={item} />
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Industry-Invited Talks */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
-            <SectionHeader label="Industry-Invited Talks" color="rose" />
-            <div className="space-y-5">
-              {invitedTalks.map((item, i) => (
-                <TalkEntry key={i} num={invitedTalks.length - i} item={item} />
+                <BookEntry key={i} num={bookChapters.length - i} item={item} />
               ))}
             </div>
           </motion.div>

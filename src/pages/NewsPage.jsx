@@ -8,10 +8,20 @@ const fadeUp = {
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }
 
 const items = [
-  // ── 2025 ──────────────────────────────────────────────────────────────────
-  { date: '2025', type: 'journal',
+  // ── 2026 ──────────────────────────────────────────────────────────────────
+  { date: '2026', type: 'journal',
     title: 'New paper accepted in International Journal of Production Research',
-    desc: '"Uncertainty-aware simulation optimization for yard template planning in transshipment hubs" — Authors: Kang, Bonggwon; Lee, Taehoon; Sun, Zhuo; Hong, Soondo.' },
+    desc: '"Uncertainty-aware simulation optimization for yard template planning in transshipment hubs", authors: Kang, Bonggwon; Lee, Taehoon; Sun, Zhuo; Hong, Soondo.' },
+  { date: '2026.06', type: 'conference',
+    title: 'Presentation at the 2026 Spring KIIE Conference',
+    desc: 'Presented research on digital twin and simulation optimization at the Korean Institute of Industrial Engineers Spring Conference.' },
+  { date: '2026.05', type: 'conference',
+    title: 'Invited Talk at Korean Reliability Engineering Society (신진연구자 초청발표)',
+    desc: 'Invited presentation on simulation-based calibration methods for automated material handling systems at the Korean Reliability Engineering Society emerging researcher session.' },
+  { date: '2026.05', type: 'conference',
+    title: 'Presentation at Korean Institute of Industrial and Systems Engineering (KIISE) Conference',
+    desc: 'Presented research on simulation optimization for production and logistics systems at the Korean Institute of Industrial and Systems Engineering Conference.' },
+  // ── 2025 ──────────────────────────────────────────────────────────────────
   { date: '2025.09', type: 'journal',
     title: 'New paper has been accepted for publication in Technometrics',
     desc: '"Active Learning of Piecewise Gaussian Process Surrogates" accepted. Focus on Jump GPs for discontinuous design spaces in applications like autonomous materials design and smart factory systems.',
@@ -25,14 +35,14 @@ const items = [
     desc: 'Presented "Bias-aware simulation calibration for an automated material handling system in a semiconductor fab" in Seoul, South Korea.' },
   { date: '2025.04', type: 'journal',
     title: 'New paper has been accepted for publication in Journal of Manufacturing Systems',
-    desc: '"A digital twin calibration for an automated material handling system in a semiconductor fab" — addresses parameter uncertainty and model bias.',
+    desc: '"A digital twin calibration for an automated material handling system in a semiconductor fab", addressing parameter uncertainty and model bias.',
     url: 'https://www.sciencedirect.com/science/article/pii/S0278612525001049' },
   { date: '2025.03', type: 'journal',
     title: 'Paper publication in the Journal of the Korean Society of Supply Chain Management',
     desc: '"A Comparative Study of Surrogate Models for Simulation-based Yard Template Planning in a Container Terminal"' },
   { date: '2025.02', type: 'patent',
     title: 'Patent Registration Update',
-    desc: '"Method and Apparatus for Deriving Management Policy of Vehicles" — Patent holders: S. Hong, B. Kang. Registered March 2025.' },
+    desc: '"Method and Apparatus for Deriving Management Policy of Vehicles", patent holders: S. Hong, B. Kang. Registered March 2025.' },
   { date: '2025.01.31–02.06', type: 'collaboration',
     title: 'The 4th Joint Workshop on the Recent Digital Twin and Production Logistics Research at the University of Washington',
     desc: 'Collaborative meeting on digital twin research and simulation education.' },
@@ -54,7 +64,7 @@ const items = [
     desc: 'Collaborative workshop with discussions on digital twin calibration approaches. Attendees: Bonggwon Kang, Bosung Kim, Soondo Hong, Chiwoo Park.' },
   { date: '2024.09', type: 'funding',
     title: 'New Research Project Funded by Korea Research Foundation (\'24.09–\'27.08)',
-    desc: 'Project: "AI-integrated Simulation Optimization for Smart Storage/Retrieval Systems" — ₩180 million research grant as Principal Investigator.' },
+    desc: 'Project: "AI-integrated Simulation Optimization for Smart Storage/Retrieval Systems", ₩180 million research grant as Principal Investigator.' },
   { date: '2024.08.11–16', type: 'collaboration',
     title: 'The 2nd Joint Workshop on the Recent Digital Twin and Production Logistics Research at the University of Washington',
     desc: 'Collaborative research discussions on warehouse and semiconductor industries. Attendees: Bonggwon Kang, Gwangheon Lee, Soondo Hong, Chiwoo Park.' },
@@ -98,7 +108,7 @@ const items = [
   // ── 2022 ──────────────────────────────────────────────────────────────────
   { date: '2022.10', type: 'conference',
     title: 'Presentation at Winter Simulation Conference',
-    desc: '"Yard Template Planning in a Transshipment Hub: Gaussian Process Regression" — Authors: Bonggwon Kang, Permata Vallentino Eko Joatiko, Jungtae Park, Soondo Hong.',
+    desc: '"Yard Template Planning in a Transshipment Hub: Gaussian Process Regression", authors: Bonggwon Kang, Permata Vallentino Eko Joatiko, Jungtae Park, Soondo Hong.',
     url: 'https://ieeexplore.ieee.org/abstract/document/10015251' },
   { date: '2022.10', type: 'journal',
     title: 'Paper publication in Journal of Korean Institute of Industrial Engineers',
