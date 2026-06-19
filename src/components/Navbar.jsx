@@ -3,12 +3,12 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
-  { name: 'Home',      path: '/'          },
-  { name: 'Research',  path: '/research'  },
-  { name: 'News',      path: '/news'      },
-  { name: 'Book',      path: '/book'      },
-  { name: 'Members',      path: '/members'      },
+  { name: 'Home',         path: '/'             },
+  { name: 'Research',     path: '/research'     },
   { name: 'Publications', path: '/publications' },
+  { name: 'News',         path: '/news'         },
+  { name: 'Book',         path: '/book'         },
+  { name: 'Members',      path: '/members'      },
   { name: 'Professor',    path: '/professor'    },
 ]
 

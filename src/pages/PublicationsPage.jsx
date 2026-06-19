@@ -109,65 +109,27 @@ const koreanJournals = [
   },
 ]
 
-const bookChapters = [
-  {
-    authors: 'Kang, B., & Hong, S.',
-    title: 'Sequential optimization of a temporary storage location for cooperative twin overhead shuttles in a rail-based automated container terminal',
-    venue: 'Smart Manufacturing and Logistics Systems: Turning Ideas into Action',
-    publisher: 'Springer',
-    year: '2022',
-    doi: 'https://link.springer.com/chapter/10.1007/978-3-031-16407-1_34',
-  },
-  {
-    authors: 'Kang, B., Joatiko, P. V. E., Park, J., & Hong, S.',
-    title: 'Yard Template Planning in a Transshipment Hub: Gaussian Process Regression',
-    venue: '2022 Winter Simulation Conference',
-    publisher: 'IEEE',
-    year: '2022',
-    doi: 'https://ieeexplore.ieee.org/abstract/document/10015251',
-  },
-  {
-    authors: 'Kang, B., & Hong, S.',
-    title: 'A Simulation Study of a Storage Policy for a Container Terminal',
-    venue: 'Dynamics in Logistics',
-    publisher: 'Springer',
-    year: '2020',
-    doi: 'https://link.springer.com/chapter/10.1007/978-3-030-44783-0_6',
-  },
-]
-
-const misc = [
-  {
-    category: 'Funding',
-    items: [
-      'Korea Research Foundation Grant (\'24.09–\'27.08): "AI-integrated Simulation Optimization for Smart Storage/Retrieval Systems", ₩180M as Principal Investigator.',
-    ],
-  },
-  {
-    category: 'Book',
-    items: [
-      'Kang, B. (2025). Production Logistics System: Simulation Modeling. Kyobo eBook.',
-    ],
-  },
-  {
-    category: 'Patent',
-    items: [
-      'Hong, S., & Kang, B. (2025). Method and Apparatus for Deriving Management Policy of Vehicles. Registered March 2025.',
-    ],
-  },
-]
+const sectionColors = {
+  indigo: { header: 'text-indigo-400 border-indigo-800/40', journal: 'text-indigo-300' },
+  blue:   { header: 'text-blue-400 border-blue-800/40',     journal: 'text-blue-300'   },
+}
 
 function SectionHeader({ label, color = 'indigo' }) {
-  const colors = {
-    indigo: 'text-indigo-400 border-indigo-800/40',
-    teal:   'text-teal-400 border-teal-800/40',
-    amber:  'text-amber-400 border-amber-800/40',
-  }
-  const cls = colors[color] || colors.indigo
+  const cls = sectionColors[color]?.header || sectionColors.indigo.header
   return (
     <motion.div variants={fadeUp} className={`flex items-center gap-4 mb-8 pb-3 border-b ${cls}`}>
       <h2 className={`text-xs font-bold tracking-[0.2em] uppercase ${cls.split(' ')[0]}`}>{label}</h2>
     </motion.div>
+  )
+}
+
+function Authors({ str }) {
+  if (!str.startsWith('Kang,')) return <span className="text-gray-400">{str}</span>
+  const rest = str.slice('Kang, B.'.length)
+  return (
+    <span className="text-gray-400">
+      <span className="text-green-400 font-semibold">Kang, B.</span>{rest}
+    </span>
   )
 }
 
@@ -191,17 +153,17 @@ function LinkIcon() {
   )
 }
 
-function JournalEntry({ num, item }) {
+function JournalEntry({ num, item, journalColor = 'text-indigo-300' }) {
   return (
     <motion.div variants={fadeUp} className="flex gap-4">
       <span className="text-gray-600 text-sm font-mono w-6 shrink-0 pt-0.5 text-right">{num}.</span>
       <div className="flex-1">
         <p className="text-sm text-gray-300 leading-relaxed">
-          <span className="text-gray-400">{item.authors}</span>
+          <Authors str={item.authors} />
           {' '}
           <span className="text-white font-medium">"{item.title}"</span>
           {'. '}
-          <em className="text-indigo-300 not-italic">{item.journal}</em>
+          <em className={`${journalColor} not-italic`}>{item.journal}</em>
           {item.volume && <span className="text-gray-400">, {item.volume}</span>}
           {item.pages && <span className="text-gray-400">, pp. {item.pages}</span>}
           {', '}
@@ -228,35 +190,6 @@ function JournalEntry({ num, item }) {
   )
 }
 
-function BookEntry({ num, item }) {
-  return (
-    <motion.div variants={fadeUp} className="flex gap-4">
-      <span className="text-gray-600 text-sm font-mono w-6 shrink-0 pt-0.5 text-right">{num}.</span>
-      <div className="flex-1">
-        <p className="text-sm text-gray-300 leading-relaxed">
-          <span className="text-gray-400">{item.authors}</span>
-          {' '}
-          <span className="text-white font-medium">"{item.title}"</span>
-          {'. In '}
-          <em className="text-teal-300 not-italic">{item.venue}</em>
-          {item.publisher && <span className="text-gray-400">, {item.publisher}</span>}
-          {', '}
-          <span className="text-gray-400">{item.year}</span>
-          {'.'}
-        </p>
-        {item.doi && (
-          <div className="mt-1.5">
-            <a href={item.doi} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-gray-800/70 text-gray-400 border border-white/10 hover:text-gray-200 hover:border-white/20 transition-colors">
-              <LinkIcon /> Link
-            </a>
-          </div>
-        )}
-      </div>
-    </motion.div>
-  )
-}
-
 function PageHeader() {
   return (
     <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
@@ -274,7 +207,8 @@ function PageHeader() {
             Publications
           </motion.h1>
           <motion.p variants={fadeUp} className="text-gray-400 text-lg max-w-2xl leading-relaxed">
-            Peer-reviewed articles, book chapters, and other scholarly works.
+            Peer-reviewed articles and other scholarly works.{' '}
+            <span className="text-green-400 font-medium">Corresponding/first author</span> highlighted in green.
           </motion.p>
         </motion.div>
       </div>
@@ -295,47 +229,17 @@ export default function PublicationsPage() {
             <SectionHeader label="International Journals" color="indigo" />
             <div className="space-y-5">
               {internationalJournals.map((item, i) => (
-                <JournalEntry key={i} num={internationalJournals.length - i} item={item} />
+                <JournalEntry key={i} num={internationalJournals.length - i} item={item} journalColor="text-indigo-300" />
               ))}
             </div>
           </motion.div>
 
           {/* Korean Journals */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
-            <SectionHeader label="Korean Journals" color="teal" />
+            <SectionHeader label="Korean Journals" color="blue" />
             <div className="space-y-5">
               {koreanJournals.map((item, i) => (
-                <JournalEntry key={i} num={koreanJournals.length - i} item={{ ...item, journal: item.journal }} />
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Book Chapters & Proceedings */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
-            <SectionHeader label="Peer-reviewed Book Chapters & Conference Proceedings" color="amber" />
-            <div className="space-y-5">
-              {bookChapters.map((item, i) => (
-                <BookEntry key={i} num={bookChapters.length - i} item={item} />
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Misc */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
-            <SectionHeader label="Funding, Book & Patents" color="amber" />
-            <div className="space-y-6">
-              {misc.map(group => (
-                <motion.div key={group.category} variants={fadeUp}>
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{group.category}</p>
-                  <ul className="space-y-2">
-                    {group.items.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
+                <JournalEntry key={i} num={koreanJournals.length - i} item={item} journalColor="text-blue-300" />
               ))}
             </div>
           </motion.div>
