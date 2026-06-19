@@ -160,8 +160,8 @@ function SectionHeader({ label, color = 'indigo' }) {
   }
   const cls = styles[color] || styles.indigo
   return (
-    <motion.div variants={fadeUp} className={`flex items-center gap-4 mb-8 pb-3 border-b ${cls}`}>
-      <h2 className={`text-xs font-bold tracking-[0.2em] uppercase ${cls.split(' ')[0]}`}>{label}</h2>
+    <motion.div variants={fadeUp} className={`flex items-center gap-4 mb-8 pb-4 border-b ${cls}`}>
+      <h2 className={`text-xl font-bold tracking-tight ${cls.split(' ')[0]}`}>{label}</h2>
     </motion.div>
   )
 }
