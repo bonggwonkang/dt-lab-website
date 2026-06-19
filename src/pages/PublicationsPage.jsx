@@ -10,49 +10,60 @@ const base = import.meta.env.BASE_URL
 
 const internationalJournals = [
   {
-    authors: 'Kang, B., Lee, T., Sun, Z., & Hong, S.',
+    authors: 'B. Kang, T. Lee, Z. Sun, S. Hong',
     title: 'Uncertainty-aware simulation optimization for yard template planning in transshipment hubs',
     journal: 'International Journal of Production Research',
     year: '2026',
     note: 'Accepted',
   },
   {
-    authors: 'Park, C., Kang, B., & others',
-    title: 'Active Learning of Piecewise Gaussian Process Surrogates',
+    authors: 'C. Park, R. Waelder, B. Kang, B. Maruyama, S. Hong, R.B. Gramacy',
+    title: 'Active learning of piecewise Gaussian process surrogates',
     journal: 'Technometrics',
-    year: '2025',
+    volume: '68(1)',
+    pages: '186-201',
+    year: '2026',
     doi: 'https://www.tandfonline.com/doi/full/10.1080/00401706.2025.2561746',
     pdf: `${base}publications/park-2025-piecewise-gp.pdf`,
   },
   {
-    authors: 'Kang, B., Kim, B., Park, C., & Hong, S.',
+    authors: 'B. Kang, C. Park, H. Kim, S. Hong',
     title: 'A digital twin calibration for an automated material handling system in a semiconductor fab',
     journal: 'Journal of Manufacturing Systems',
+    volume: '80',
+    pages: '1013-1028',
     year: '2025',
     doi: 'https://www.sciencedirect.com/science/article/pii/S0278612525001049',
     pdf: `${base}publications/kang-2025-digital-twin-calibration.pdf`,
   },
   {
-    authors: 'Kang, B., Park, J., & Hong, S.',
-    title: 'Bayesian optimization for the vehicle dwelling policy in an automated material handling system',
+    authors: 'B. Kang, C. Park, H. Kim, S. Hong',
+    title: 'Bayesian optimization for the vehicle dwelling policy in a semiconductor wafer fab',
     journal: 'IEEE Transactions on Automation Science and Engineering',
+    volume: '21(4)',
+    pages: '5942-5952',
     year: '2024',
     doi: 'https://ieeexplore.ieee.org/document/10278155',
     pdf: `${base}publications/kang-2024-bayesian-optimization.pdf`,
   },
   {
-    authors: 'Kang, B., Park, J., & Hong, S.',
+    authors: 'B. Kang, B. Kim, S. Hong',
     title: 'Simulation optimization of collaborative handshake operations for twin overhead shuttle cranes in a rail-based automated container terminal under demand uncertainty',
     journal: 'IEEE Access',
+    volume: '11',
+    pages: '113437-113449',
     year: '2023',
     doi: 'https://ieeexplore.ieee.org/document/10285297',
     pdf: `${base}publications/kang-2023-twin-cranes.pdf`,
   },
   {
-    authors: 'Fibrianto, H. Y., Kang, B., Park, J., & Hong, S.',
+    authors: 'H.Y. Fibrianto*, B. Kang*, S. Hong',
     title: 'A job sequencing problem of an overhead shuttle crane in a rail-based automated container terminal',
     journal: 'IEEE Access',
+    volume: '8',
+    pages: '156362-156377',
     year: '2020',
+    coNote: '*co-first authors',
     doi: 'https://ieeexplore.ieee.org/abstract/document/9174991',
     pdf: `${base}publications/fibrianto-2020-job-sequencing.pdf`,
   },
@@ -60,79 +71,82 @@ const internationalJournals = [
 
 const koreanJournals = [
   {
-    authors: 'Kang, B., & Hong, S.',
-    title: 'A Comparative Study of Surrogate Models for Simulation-based Yard Template Planning in a Container Terminal',
-    journal: 'Journal of the Korean Society of Supply Chain Management',
+    authors: 'J. Kim, W. Choo, B. Kang*, S. Hong',
+    title: 'Surrogate-based decision-making procedure for yard template planning in a container terminal: A comparative study of surrogate models',
+    journal: 'Journal of the Korea Society for Simulation',
+    volume: '34(1)',
+    pages: '1-12',
     year: '2025',
   },
   {
-    authors: 'Kang, B., & Hong, S.',
-    title: 'A Simulation Study of the Vehicle Repositioning Policy with the Minimum and Maximum Service Levels in a Demand Responsive Transit System',
+    authors: 'J. Choi, J. Lee, B. Kang*, S. Hong',
+    title: 'A simulation study of the vehicle repositioning policy with the minimum and maximum service levels in a demand responsive transit system',
     journal: 'Journal of the Korean Society of Supply Chain Management',
+    volume: '24(3)',
+    pages: '13-23',
     year: '2024',
   },
   {
-    authors: 'Kang, B., & Hong, S.',
-    title: 'A Simulation-based Optimization for Scheduling in a Fab: Comparative Study on Different Sampling Methods',
+    authors: 'H. Yoon, G. Han, B. Kang, S. Hong',
+    title: 'A simulation-based optimization for scheduling in a fab: a comparative study on different sampling methods',
     journal: 'Journal of the Korea Society for Simulation',
+    volume: '32(3)',
+    pages: '67-74',
     year: '2023',
   },
   {
-    authors: 'Kang, B., & Hong, S.',
-    title: 'A GA-based Optimization of a Weighted Lot Targeting Rule in a Semiconductor Wafer Fab',
-    journal: 'Journal of Korean Institute of Industrial Engineers',
-    year: '2022',
-    doi: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002887365',
-  },
-  {
-    authors: 'Kang, B., & Hong, S.',
-    title: 'A Dynamic OHT Routing Algorithm in Automated Material Handling Systems',
+    authors: 'B. Kang, B.M. Kang, S. Hong',
+    title: 'A dynamic OHT routing algorithm in automated material handling systems',
     journal: 'Journal of Korean Society of Industrial and Systems Engineering',
+    volume: '45(3)',
+    pages: '40-48',
     year: '2022',
     doi: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002881508',
   },
   {
-    authors: 'Kang, B., & Hong, S.',
-    title: 'A Study of a Video-based Simulation Input Modeling Procedure in a Construction Equipment Assembly Line',
-    journal: 'Korea Journal of BigData',
+    authors: 'G. Han, B. Kang, H. Kim, S. Hong',
+    title: 'A GA-based optimization of a weighted lot targeting rule in a semiconductor wafer fab',
+    journal: 'Journal of the Korean Institute of Industrial Engineers',
+    volume: '48(5)',
+    pages: '477-485',
     year: '2022',
-    doi: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002855671',
+    doi: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002887365',
   },
   {
-    authors: 'Kang, B., & Hong, S.',
-    title: 'A Simulation-based Genetic Algorithm for a Dispatching Rule in a Flexible Flow Shop with Rework Process',
-    journal: 'Korea Journal of BigData',
+    authors: 'G.H. Lee, G. Han, B. Kang, S.H. Lee, S. Hong',
+    title: 'A simulation-based genetic algorithm for a dispatching rule in a flexible flow shop with rework process',
+    journal: 'The Korea Journal of Bigdata',
+    volume: '7(1)',
+    pages: '99-111',
     year: '2022',
     doi: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002855661',
+  },
+  {
+    authors: 'H. Kim, T. Lee, B. Kang, J. Lee, S. Hong',
+    title: 'A study of a video-based simulation input modeling procedure in a construction equipment assembly line',
+    journal: 'The Korea Journal of Bigdata',
+    volume: '7(1)',
+    pages: '75-87',
+    year: '2022',
+    doi: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002855671',
   },
 ]
 
 function highlightKang(text) {
-  const kang = 'Kang, B.'
-  const idx = text.indexOf(kang)
-  if (idx === -1) return <span className="text-gray-400">{text}</span>
+  const marker = 'B. Kang'
+  const parts = text.split(marker)
+  if (parts.length === 1) return <span className="text-gray-400">{text}</span>
   return (
     <span className="text-gray-400">
-      {text.slice(0, idx)}
-      <span className="text-green-400 font-semibold">Kang, B.</span>
-      {text.slice(idx + kang.length)}
+      {parts.map((part, i) => (
+        <span key={i}>
+          {part}
+          {i < parts.length - 1 && (
+            <span className="text-green-400 font-semibold">B. Kang</span>
+          )}
+        </span>
+      ))}
     </span>
-  )
-}
-
-function Authors({ str }) {
-  const lastAmpIdx = str.lastIndexOf(' & ')
-  const hasAmp = lastAmpIdx >= 0
-  const prefixStr = hasAmp ? str.slice(0, lastAmpIdx + 3) : ''
-  const lastStr = hasAmp ? str.slice(lastAmpIdx + 3) : str
-  const addStar = lastStr !== 'others' && lastStr !== 'et al.'
-
-  return (
-    <>
-      {prefixStr && highlightKang(prefixStr)}
-      {highlightKang(lastStr)}
-      {addStar && <sup className="text-gray-500 ml-0.5">*</sup>}
-    </>
   )
 }
 
@@ -175,18 +189,20 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-300' }) {
       <span className="text-gray-600 text-sm font-mono w-6 shrink-0 pt-0.5 text-right">{num}.</span>
       <div className="flex-1">
         <p className="text-sm text-gray-300 leading-relaxed">
-          <Authors str={item.authors} />
-          {' '}
+          {highlightKang(item.authors)}
+          <span className="text-gray-400">, </span>
           <span className="text-white font-medium">"{item.title}"</span>
-          {'. '}
+          <span className="text-gray-400">, </span>
           <em className={`${journalColor} not-italic`}>{item.journal}</em>
           {item.volume && <span className="text-gray-400">, {item.volume}</span>}
-          {item.pages && <span className="text-gray-400">, pp. {item.pages}</span>}
-          {', '}
-          <span className="text-gray-400">{item.year}</span>
+          {item.pages && <span className="text-gray-400">, {item.pages}</span>}
+          <span className="text-gray-400">, {item.year}</span>
           {item.note && <span className="text-gray-500 italic"> ({item.note})</span>}
-          {'.'}
+          <span className="text-gray-400">.</span>
         </p>
+        {item.coNote && (
+          <p className="text-xs text-gray-500 italic mt-0.5">{item.coNote}</p>
+        )}
         <div className="flex gap-2 mt-1.5 flex-wrap">
           {item.pdf && (
             <a href={item.pdf} target="_blank" rel="noreferrer"
