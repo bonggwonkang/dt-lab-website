@@ -7,8 +7,9 @@ const navLinks = [
   { name: 'Research',  path: '/research'  },
   { name: 'News',      path: '/news'      },
   { name: 'Book',      path: '/book'      },
-  { name: 'Members',   path: '/members'   },
-  { name: 'Professor', path: '/professor' },
+  { name: 'Members',      path: '/members'      },
+  { name: 'Publications', path: '/publications' },
+  { name: 'Professor',    path: '/professor'    },
 ]
 
 export default function Navbar() {

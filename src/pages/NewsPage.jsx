@@ -9,6 +9,9 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.07 } }
 
 const items = [
   // ── 2025 ──────────────────────────────────────────────────────────────────
+  { date: '2025', type: 'journal',
+    title: 'New paper accepted in International Journal of Production Research',
+    desc: '"Uncertainty-aware simulation optimization for yard template planning in transshipment hubs" — Authors: Kang, Bonggwon; Lee, Taehoon; Sun, Zhuo; Hong, Soondo.' },
   { date: '2025.09', type: 'journal',
     title: 'New paper has been accepted for publication in Technometrics',
     desc: '"Active Learning of Piecewise Gaussian Process Surrogates" accepted. Focus on Jump GPs for discontinuous design spaces in applications like autonomous materials design and smart factory systems.',
