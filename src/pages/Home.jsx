@@ -51,9 +51,9 @@ function Hero() {
               className="inline-flex items-center px-7 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-indigo-900/40">
               Explore Research
             </Link>
-            <Link to="/professor"
+            <Link to="/news"
               className="inline-flex items-center px-7 py-3.5 bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl border border-white/15 transition-colors">
-              Principal Investigator
+              Read News
             </Link>
           </motion.div>
         </motion.div>
@@ -82,7 +82,7 @@ function Contact() {
             The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.
           </motion.p>
           <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
-            <a href="mailto:kbk@kumoh.ac.kr"
+            <a href="mailto:kbk@kumoh.ac.kr" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-indigo-700 font-bold rounded-xl hover:bg-indigo-50 transition-colors shadow-xl shadow-indigo-900/30">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
