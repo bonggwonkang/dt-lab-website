@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useLang } from '../LanguageContext'
 
 const navLinks = [
   { name: 'Home',         path: '/'             },
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
+  const { lang, setLang } = useLang()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -67,6 +69,15 @@ export default function Navbar() {
             })}
           </div>
 
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setLang(l => l === 'en' ? 'ko' : 'en')}
+              className="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/15 text-xs font-bold text-gray-300 hover:text-white hover:border-white/30 transition-colors"
+            >
+              <span className={lang === 'en' ? 'text-indigo-400' : 'text-gray-500'}>EN</span>
+              <span className="text-gray-600">/</span>
+              <span className={lang === 'ko' ? 'text-indigo-400' : 'text-gray-500'}>한</span>
+            </button>
           <button
             className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
             onClick={() => setMenuOpen(v => !v)}
@@ -79,6 +90,7 @@ export default function Navbar() {
               }
             </svg>
           </button>
+          </div>
         </div>
       </div>
 
@@ -100,6 +112,12 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+            <button
+              onClick={() => setLang(l => l === 'en' ? 'ko' : 'en')}
+              className="block w-full text-left px-6 py-3.5 text-sm font-medium border-l-2 border-transparent text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
+            >
+              {lang === 'en' ? '🇰🇷 한국어로 보기' : '🇺🇸 View in English'}
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

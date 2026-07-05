@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { useLang } from '../LanguageContext'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -8,6 +9,8 @@ const fadeUp = {
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }
 
 function Hero() {
+  const { lang } = useLang()
+  const ko = lang === 'ko'
   return (
     <section className="relative flex items-center overflow-hidden bg-gray-950">
       <div className="absolute inset-0 opacity-[0.07]"
@@ -23,37 +26,62 @@ function Hero() {
         <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl">
           <motion.div variants={fadeUp} className="mb-8">
             <span className="text-indigo-400 text-xs font-semibold tracking-[0.2em] uppercase">
-              Kumoh National Institute of Technology
+              {ko ? '금오공과대학교' : 'Kumoh National Institute of Technology'}
             </span>
           </motion.div>
 
           <motion.h1 variants={fadeUp}
             className="text-5xl md:text-7xl font-black text-white leading-[1.05] mb-6 tracking-tight">
-            Welcome to the<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-teal-400">
-              Digital Transformation
-            </span><br />
-            Lab!
+            {ko ? (
+              <>
+                환영합니다!<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-teal-400">
+                  디지털전환
+                </span><br />
+                연구실에
+              </>
+            ) : (
+              <>
+                Welcome to the<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-teal-400">
+                  Digital Transformation
+                </span><br />
+                Lab!
+              </>
+            )}
           </motion.h1>
 
           <motion.p variants={fadeUp}
             className="text-xl md:text-2xl text-white max-w-2xl leading-relaxed mb-10 font-light">
-            We develop advanced digital transformation methodologies for{' '}
-            <span className="text-indigo-400 font-semibold">modeling</span>,{' '}
-            <span className="text-indigo-400 font-semibold">analyzing</span>,{' '}
-            <span className="text-teal-400 font-semibold">optimizing</span>, and{' '}
-            <span className="text-teal-400 font-semibold">calibrating</span>{' '}
-            production and material handling system simulations.
+            {ko ? (
+              <>
+                저희는 생산 및 물류 시스템 시뮬레이션의{' '}
+                <span className="text-indigo-400 font-semibold">모델링</span>,{' '}
+                <span className="text-indigo-400 font-semibold">분석</span>,{' '}
+                <span className="text-teal-400 font-semibold">최적화</span>, 그리고{' '}
+                <span className="text-teal-400 font-semibold">캘리브레이션</span>을 위한{' '}
+                선진 디지털 전환 방법론을 개발합니다.
+              </>
+            ) : (
+              <>
+                We develop advanced digital transformation methodologies for{' '}
+                <span className="text-indigo-400 font-semibold">modeling</span>,{' '}
+                <span className="text-indigo-400 font-semibold">analyzing</span>,{' '}
+                <span className="text-teal-400 font-semibold">optimizing</span>, and{' '}
+                <span className="text-teal-400 font-semibold">calibrating</span>{' '}
+                production and material handling system simulations.
+              </>
+            )}
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
             <Link to="/research"
               className="inline-flex items-center px-7 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-indigo-900/40">
-              Explore Research
+              {ko ? '연구 살펴보기' : 'Explore Research'}
             </Link>
             <Link to="/news"
               className="inline-flex items-center px-7 py-3.5 bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl border border-white/15 transition-colors">
-              Read News
+              {ko ? '뉴스 보기' : 'Read News'}
             </Link>
           </motion.div>
         </motion.div>
@@ -65,6 +93,8 @@ function Hero() {
 }
 
 function Contact() {
+  const { lang } = useLang()
+  const ko = lang === 'ko'
   return (
     <section className="py-20 bg-gradient-to-br from-indigo-600 via-indigo-700 to-teal-700 relative overflow-hidden">
       <div className="absolute inset-0 opacity-10"
@@ -76,10 +106,12 @@ function Contact() {
       <div className="relative max-w-3xl mx-auto px-4 text-center">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
           <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Join the Digital Transformation Lab!
+            {ko ? '디지털전환 연구실과 함께하세요!' : 'Join the Digital Transformation Lab!'}
           </motion.h2>
           <motion.p variants={fadeUp} className="text-indigo-100 text-base mb-8 max-w-lg mx-auto">
-            The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.
+            {ko
+              ? '디지털전환 연구실은 연구 분야에 관심 있는 열정적인 학생을 환영합니다.'
+              : 'The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.'}
           </motion.p>
           <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
             <a href="mailto:kbk@kumoh.ac.kr" rel="noopener noreferrer"
@@ -88,11 +120,11 @@ function Contact() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              Contact Us
+              {ko ? '문의하기' : 'Contact Us'}
             </a>
             <Link to="/members"
               className="inline-flex items-center gap-2 px-8 py-4 bg-white/15 text-white font-bold rounded-xl border border-white/30 hover:bg-white/25 transition-colors">
-              Meet the Team
+              {ko ? '팀원 보기' : 'Meet the Team'}
             </Link>
           </motion.div>
         </motion.div>

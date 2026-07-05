@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useLang } from '../LanguageContext'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -7,20 +8,63 @@ const fadeUp = {
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
 const experience = [
-  { year: '2026 –',     title: 'Assistant Professor', org: 'Department of Industrial Engineering, Kumoh National Institute of Technology' },
-  { year: '2025',       title: 'Postdoctoral Scholar', org: 'Industrial & Systems Engineering, University of Washington' },
-  { year: '2024',       title: 'Postdoctoral Research Fellow', org: 'Research Institute of Intelligent Logistics Big Data, Pusan National University' },
-  { year: 'Ph.D. 2024', title: 'Department of Industrial Engineering', org: 'Pusan National University' },
-  { year: 'B.S. 2019',  title: 'Department of Industrial Engineering', org: 'Pusan National University' },
+  {
+    year: '2026 –',
+    title: 'Assistant Professor',       titleKo: '조교수',
+    org: 'Department of Industrial Engineering, Kumoh National Institute of Technology',
+    orgKo: '산업공학과, 금오공과대학교',
+  },
+  {
+    year: '2025',
+    title: 'Postdoctoral Scholar',      titleKo: '박사후 연구원',
+    org: 'Industrial & Systems Engineering, University of Washington',
+    orgKo: '산업 및 시스템 공학과, 워싱턴 대학교',
+  },
+  {
+    year: '2024',
+    title: 'Postdoctoral Research Fellow', titleKo: '박사후 연구원',
+    org: 'Research Institute of Intelligent Logistics Big Data, Pusan National University',
+    orgKo: '지능형물류빅데이터 연구소, 부산대학교',
+  },
+  {
+    year: 'Ph.D. 2024',
+    title: 'Department of Industrial Engineering', titleKo: '산업공학과 (공학박사)',
+    org: 'Pusan National University',
+    orgKo: '부산대학교',
+  },
+  {
+    year: 'B.S. 2019',
+    title: 'Department of Industrial Engineering', titleKo: '산업공학과 (공학사)',
+    org: 'Pusan National University',
+    orgKo: '부산대학교',
+  },
 ]
 
 const teaching = [
-  { course: 'Facilities Planning and Material Handling Systems', term: 'Spring 2025', uni: 'Pusan National University' },
-  { course: 'Digital Twin and Simulation Modeling',             term: 'Spring 2025', uni: 'Pukyong National University' },
-  { course: 'Introduction to Digital Twins',                    term: '2026',        uni: 'University of Washington (invited lectures over two weeks)' },
-  { course: 'Probability and Statistics',                       term: 'Spring 2026', uni: 'Kumoh National Institute of Technology' },
-  { course: 'Creative Thinking for Engineering',                term: 'Spring 2026', uni: 'Kumoh National Institute of Technology' },
-  { course: 'Affective Quality Engineering',                    term: 'Spring 2026', uni: 'Kumoh National Institute of Technology' },
+  {
+    course: 'Facilities Planning and Material Handling Systems', courseKo: '설비계획 및 물류 시스템',
+    term: 'Spring 2025', uni: 'Pusan National University', uniKo: '부산대학교',
+  },
+  {
+    course: 'Digital Twin and Simulation Modeling', courseKo: '디지털 트윈과 시뮬레이션 모델링',
+    term: 'Spring 2025', uni: 'Pukyong National University', uniKo: '부경대학교',
+  },
+  {
+    course: 'Introduction to Digital Twins', courseKo: '디지털 트윈 입문',
+    term: '2026', uni: 'University of Washington (invited lectures over two weeks)', uniKo: '워싱턴 대학교 (2주간 초청 강의)',
+  },
+  {
+    course: 'Probability and Statistics', courseKo: '확률 및 통계',
+    term: 'Spring 2026', uni: 'Kumoh National Institute of Technology', uniKo: '금오공과대학교',
+  },
+  {
+    course: 'Creative Thinking for Engineering', courseKo: '창의공학 사고',
+    term: 'Spring 2026', uni: 'Kumoh National Institute of Technology', uniKo: '금오공과대학교',
+  },
+  {
+    course: 'Affective Quality Engineering', courseKo: '감성품질공학',
+    term: 'Spring 2026', uni: 'Kumoh National Institute of Technology', uniKo: '금오공과대학교',
+  },
 ]
 
 const links = [
@@ -29,6 +73,7 @@ const links = [
 ]
 
 function PageHeader() {
+  const { lang } = useLang()
   return (
     <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
@@ -42,7 +87,7 @@ function PageHeader() {
         <motion.div initial="hidden" animate="visible" variants={stagger}>
           <motion.h1 variants={fadeUp}
             className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
-            Professor
+            {lang === 'ko' ? '교수' : 'Professor'}
           </motion.h1>
         </motion.div>
       </div>
@@ -52,6 +97,8 @@ function PageHeader() {
 
 export default function ProfessorPage() {
   const base = import.meta.env.BASE_URL
+  const { lang } = useLang()
+  const ko = lang === 'ko'
   return (
     <>
       <PageHeader />
@@ -79,9 +126,15 @@ export default function ProfessorPage() {
               <div className="text-center md:text-left">
                 <h2 className="text-2xl font-bold text-white">Bonggwon Kang</h2>
                 <p className="text-gray-500 text-sm mt-0.5">강봉권</p>
-                <p className="text-indigo-400 font-semibold text-sm mt-2">Assistant Professor</p>
-                <p className="text-gray-400 text-sm">Department of Industrial Engineering</p>
-                <p className="text-gray-400 text-sm">Kumoh National Institute of Technology</p>
+                <p className="text-indigo-400 font-semibold text-sm mt-2">
+                  {ko ? '조교수' : 'Assistant Professor'}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {ko ? '산업공학과' : 'Department of Industrial Engineering'}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {ko ? '금오공과대학교' : 'Kumoh National Institute of Technology'}
+                </p>
               </div>
 
               <div className="space-y-2 text-sm w-full">
@@ -106,7 +159,10 @@ export default function ProfessorPage() {
                       d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span className="leading-relaxed">Global 577, Daehak-ro, Gumi-si,<br />Gyeongsangbuk-do (39177)</span>
+                  {ko
+                    ? <span className="leading-relaxed">경북 구미시 대학로 577<br />(39177)</span>
+                    : <span className="leading-relaxed">Global 577, Daehak-ro, Gumi-si,<br />Gyeongsangbuk-do (39177)</span>
+                  }
                 </div>
               </div>
 
@@ -130,15 +186,15 @@ export default function ProfessorPage() {
               {/* Education & Experience */}
               <div>
                 <h3 className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-6">
-                  Education &amp; Experience
+                  {ko ? '학력 및 경력' : 'Education & Experience'}
                 </h3>
                 <div className="relative pl-6 border-l-2 border-white/10 space-y-6">
                   {experience.map((e, i) => (
                     <div key={i} className="relative">
                       <span className="absolute -left-4 top-2 w-3 h-3 rounded-full border-2 border-gray-900 bg-indigo-500" />
                       <p className="text-xs font-semibold text-indigo-400 mb-0.5">{e.year}</p>
-                      <p className="font-semibold text-white text-sm leading-snug">{e.title}</p>
-                      <p className="text-sm text-gray-400">{e.org}</p>
+                      <p className="font-semibold text-white text-sm leading-snug">{ko ? e.titleKo : e.title}</p>
+                      <p className="text-sm text-gray-400">{ko ? e.orgKo : e.org}</p>
                     </div>
                   ))}
                 </div>
@@ -146,15 +202,17 @@ export default function ProfessorPage() {
 
               {/* Teaching */}
               <div>
-                <h3 className="text-xs font-semibold text-teal-400 tracking-[0.2em] uppercase mb-6">Teaching</h3>
+                <h3 className="text-xs font-semibold text-teal-400 tracking-[0.2em] uppercase mb-6">
+                  {ko ? '강의' : 'Teaching'}
+                </h3>
                 <div className="space-y-2">
                   {teaching.map((t, i) => (
                     <div key={i} className="flex items-start justify-between gap-4 p-3.5 rounded-xl bg-gray-800/50 border border-white/10 hover:border-teal-500/30 transition-colors">
                       <div className="flex items-start gap-3">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-500 flex-shrink-0" />
                         <div>
-                          <span className="text-sm text-white font-medium">{t.course}</span>
-                          <p className="text-xs text-gray-500 mt-0.5">{t.uni}</p>
+                          <span className="text-sm text-white font-medium">{ko ? t.courseKo : t.course}</span>
+                          <p className="text-xs text-gray-500 mt-0.5">{ko ? t.uniKo : t.uni}</p>
                         </div>
                       </div>
                       <span className="text-xs text-gray-500 whitespace-nowrap flex-shrink-0">{t.term}</span>
