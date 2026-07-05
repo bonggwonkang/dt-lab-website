@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { useLang } from '../LanguageContext'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -7,31 +6,20 @@ const fadeUp = {
 }
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
-const activities = {
-  en: [
-    'Exploration of technology trends and job market opportunities',
-    'Conference attendance and poster presentations',
-    'Competition participation',
-    'KCI journal paper preparation',
-  ],
-  ko: [
-    '기술 트렌드 및 취업 시장 탐색',
-    '학술대회 참가 및 포스터 발표',
-    '공모전 참가',
-    'KCI 저널 논문 작성',
-  ],
-}
+const activities = [
+  'Exploration of technology trends and job market opportunities',
+  'Conference attendance and poster presentations',
+  'Competition participation',
+  'KCI journal paper preparation',
+]
 
 const professor = {
   name: 'Bonggwon Kang',  nameKo: '강봉권',
   role: 'Principal Investigator · Assistant Professor',
-  roleKo: '교신저자 · 조교수',
   affiliation: 'Dept. of Industrial Engineering\nKumoh National Institute of Technology',
-  affiliationKo: '산업공학과\n금오공과대학교',
   email: 'kbk@kumoh.ac.kr',
   photo: 'professor.jpg',
   interests: ['Simulation modeling, analysis, optimization, and calibration'],
-  interestsKo: ['시뮬레이션 모델링, 분석, 최적화 및 캘리브레이션'],
   links: [
     { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=QLqVgY0AAAAJ&hl=ko' },
     { label: 'ResearchGate',   url: 'https://www.researchgate.net/profile/Bonggwon-Kang' },
@@ -42,18 +30,14 @@ const students = [
   {
     name: '오가영', nameEn: 'Gayoung Oh',
     degree: 'Undergraduate Researcher',
-    degreeKo: '학부 연구원',
     research: 'Surrogate-based decision-making',
-    researchKo: '서로게이트 기반 의사결정',
     email: 'oh050316@kumoh.ac.kr',
     photo: 'member-oh.jpg',
   },
   {
     name: '이승빈', nameEn: 'Seungbin Lee',
     degree: 'Undergraduate Researcher',
-    degreeKo: '학부 연구원',
     research: 'Digital twin applications for material handling systems',
-    researchKo: '물류 시스템 디지털 트윈 응용',
     email: 'hctoto2005@kumoh.ac.kr',
     photo: 'member-lee.jpg',
   },
@@ -77,7 +61,6 @@ function MemberPhoto({ file, name, size = 'lg', objectPos = 'object-center' }) {
 }
 
 function PageHeader() {
-  const { lang } = useLang()
   return (
     <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
@@ -91,7 +74,7 @@ function PageHeader() {
         <motion.div initial="hidden" animate="visible" variants={stagger}>
           <motion.h1 variants={fadeUp}
             className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
-            {lang === 'ko' ? '구성원' : 'Members'}
+            Members
           </motion.h1>
         </motion.div>
       </div>
@@ -100,8 +83,6 @@ function PageHeader() {
 }
 
 export default function MembersPage() {
-  const { lang } = useLang()
-  const ko = lang === 'ko'
   return (
     <>
       <PageHeader />
@@ -112,19 +93,15 @@ export default function MembersPage() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
             className="max-w-3xl">
             <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-bold text-white mb-4">
-              {ko ? '디지털전환 연구실과 함께하세요!' : 'Join the Digital Transformation Lab!'}
+              Join the Digital Transformation Lab!
             </motion.h2>
             <motion.p variants={fadeUp} className="text-gray-200 leading-relaxed mb-6 text-base">
-              {ko
-                ? '디지털전환 연구실은 연구 분야에 관심 있는 열정적인 학생을 환영합니다.'
-                : 'The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.'}
+              The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.
             </motion.p>
             <motion.div variants={fadeUp}>
-              <p className="text-xs font-semibold text-gray-300 uppercase tracking-widest mb-3">
-                {ko ? '학생 활동' : 'Student Activities'}
-              </p>
+              <p className="text-xs font-semibold text-gray-300 uppercase tracking-widest mb-3">Student Activities</p>
               <ul className="space-y-2">
-                {(ko ? activities.ko : activities.en).map(a => (
+                {activities.map(a => (
                   <li key={a} className="flex items-start gap-3 text-sm text-gray-200">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0" />
                     {a}
@@ -142,7 +119,7 @@ export default function MembersPage() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
             <motion.h2 variants={fadeUp}
               className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-8">
-              {ko ? '지도교수' : 'Principal Investigator'}
+              Principal Investigator
             </motion.h2>
             <motion.div variants={fadeUp}
               className="flex flex-col sm:flex-row gap-8 items-start bg-gray-800/50 rounded-2xl border border-white/10 p-8 hover:border-indigo-500/30 transition-all duration-300 max-w-2xl">
@@ -152,12 +129,8 @@ export default function MembersPage() {
                   <h3 className="text-xl font-bold text-white">{professor.name}</h3>
                   <span className="text-gray-300 text-sm">{professor.nameKo}</span>
                 </div>
-                <p className="text-indigo-400 font-semibold text-sm mb-0.5">
-                  {ko ? professor.roleKo : professor.role}
-                </p>
-                <p className="text-gray-300 text-sm whitespace-pre-line mb-3">
-                  {ko ? professor.affiliationKo : professor.affiliation}
-                </p>
+                <p className="text-indigo-400 font-semibold text-sm mb-0.5">{professor.role}</p>
+                <p className="text-gray-300 text-sm whitespace-pre-line mb-3">{professor.affiliation}</p>
                 <a href={`mailto:${professor.email}`}
                   className="inline-flex items-center gap-1.5 text-sm text-gray-300 hover:text-indigo-400 transition-colors mb-3">
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,7 +140,7 @@ export default function MembersPage() {
                   {professor.email}
                 </a>
                 <div className="flex flex-wrap gap-2 mb-3">
-                  {(ko ? professor.interestsKo : professor.interests).map(i => (
+                  {professor.interests.map(i => (
                     <span key={i} className="px-2.5 py-1 bg-indigo-950/60 text-indigo-400 text-xs font-medium rounded-lg border border-indigo-800/60">
                       {i}
                     </span>
@@ -193,7 +166,7 @@ export default function MembersPage() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
             <motion.h2 variants={fadeUp}
               className="text-xs font-semibold text-teal-400 tracking-[0.2em] uppercase mb-10">
-              {ko ? '연구원' : 'Researchers'}
+              Researchers
             </motion.h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {students.map(s => (
@@ -204,11 +177,9 @@ export default function MembersPage() {
                     <h3 className="font-bold text-white text-base">{s.name}</h3>
                     <p className="text-sm text-gray-300 mt-0.5">{s.nameEn}</p>
                     <span className="inline-block mt-2 px-2.5 py-0.5 bg-teal-950/60 text-teal-300 text-xs font-medium rounded-full border border-teal-800/60">
-                      {ko ? s.degreeKo : s.degree}
+                      {s.degree}
                     </span>
-                    <p className="text-sm text-gray-300 mt-2 leading-relaxed">
-                      {ko ? s.researchKo : s.research}
-                    </p>
+                    <p className="text-sm text-gray-300 mt-2 leading-relaxed">{s.research}</p>
                     <a href={`mailto:${s.email}`}
                       className="mt-2 inline-block text-xs text-gray-400 hover:text-indigo-400 transition-colors">
                       {s.email}
@@ -225,10 +196,8 @@ export default function MembersPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
-                <p className="text-sm font-semibold text-white">{ko ? '모집 중' : 'Recruiting'}</p>
-                <p className="text-xs text-gray-400 mt-1 max-w-[140px]">
-                  {ko ? '열정 있는 학생을 환영합니다.' : 'Motivated students welcome.'}
-                </p>
+                <p className="text-sm font-semibold text-white">Recruiting</p>
+                <p className="text-xs text-gray-400 mt-1 max-w-[140px]">Motivated students welcome.</p>
                 <a href="mailto:kbk@kumoh.ac.kr"
                   className="mt-3 text-xs text-indigo-400 font-medium hover:underline">
                   kbk@kumoh.ac.kr

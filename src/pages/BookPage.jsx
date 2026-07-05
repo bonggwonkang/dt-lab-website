@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { useLang } from '../LanguageContext'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -7,48 +6,7 @@ const fadeUp = {
 }
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }
 
-const keyTopics = {
-  en: [
-    'Discrete-event simulation (DES) fundamentals and applications',
-    'Digital twin concepts in manufacturing',
-    'Object-based modeling techniques',
-    'SimTalk programming for system interactions',
-    'Statistical input/output analysis',
-  ],
-  ko: [
-    '이산 사건 시뮬레이션(DES) 기초 및 응용',
-    '제조 분야에서의 디지털 트윈 개념',
-    '객체 기반 모델링 기법',
-    '시스템 상호작용을 위한 SimTalk 프로그래밍',
-    '통계적 입출력 분석',
-  ],
-}
-
-const toc = {
-  en: [
-    'Introduction to Discrete-Event Simulation',
-    'Foundational Modeling Concepts',
-    'Object-based Modeling',
-    'SimTalk Programming',
-    'Input Data Modeling & Statistical Methods',
-    'Output Analysis & Experiment Management',
-    'Production & Logistics System Types',
-    'Queuing Theory & Case Studies',
-  ],
-  ko: [
-    '이산 사건 시뮬레이션 입문',
-    '모델링 기초 개념',
-    '객체 기반 모델링',
-    'SimTalk 프로그래밍',
-    '입력 데이터 모델링 및 통계적 방법',
-    '출력 분석 및 실험 관리',
-    '생산 및 물류 시스템 유형',
-    '대기행렬 이론 및 사례 연구',
-  ],
-}
-
 function PageHeader() {
-  const { lang } = useLang()
   return (
     <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
@@ -62,7 +20,7 @@ function PageHeader() {
         <motion.div initial="hidden" animate="visible" variants={stagger}>
           <motion.h1 variants={fadeUp}
             className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
-            {lang === 'ko' ? '도서' : 'Book'}
+            Book
           </motion.h1>
         </motion.div>
       </div>
@@ -72,8 +30,6 @@ function PageHeader() {
 
 export default function BookPage() {
   const base = import.meta.env.BASE_URL
-  const { lang } = useLang()
-  const ko = lang === 'ko'
   return (
     <>
       <PageHeader />
@@ -113,7 +69,7 @@ export default function BookPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
-                  {ko ? '구매하기 (교보문고)' : 'Purchase (교보문고)'}
+                  Purchase (교보문고)
                 </a>
                 <a href="https://simpl-lab.github.io/"
                   target="_blank" rel="noreferrer"
@@ -122,7 +78,7 @@ export default function BookPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
-                  {ko ? '실습 코드 (simpl-lab.github.io)' : 'Practice Code (simpl-lab.github.io)'}
+                  Practice Code (simpl-lab.github.io)
                 </a>
               </div>
             </motion.div>
@@ -131,13 +87,9 @@ export default function BookPage() {
             <motion.div variants={fadeUp} className="md:col-span-2 space-y-10">
               <div>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="px-2.5 py-0.5 bg-amber-950/60 text-amber-400 text-xs font-semibold rounded-full border border-amber-800/50">
-                    {ko ? '교재' : 'Textbook'}
-                  </span>
+                  <span className="px-2.5 py-0.5 bg-amber-950/60 text-amber-400 text-xs font-semibold rounded-full border border-amber-800/50">Textbook</span>
                   <span className="px-2.5 py-0.5 bg-gray-800 text-gray-400 text-xs font-medium rounded-full border border-white/10">2025</span>
-                  <span className="px-2.5 py-0.5 bg-gray-800 text-gray-400 text-xs font-medium rounded-full border border-white/10">
-                    {ko ? '교보문고' : 'Kyobo Book Centre'}
-                  </span>
+                  <span className="px-2.5 py-0.5 bg-gray-800 text-gray-400 text-xs font-medium rounded-full border border-white/10">Kyobo Book Centre</span>
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white leading-snug mb-1">
                   생산물류시스템: 시뮬레이션 모델링
@@ -147,36 +99,25 @@ export default function BookPage() {
               </div>
 
               <div>
-                <h3 className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-4">
-                  {ko ? '소개' : 'About'}
-                </h3>
-                {ko ? (
-                  <>
-                    <p className="text-gray-400 leading-relaxed text-sm mb-3">
-                      이 교재는 반도체, 디스플레이, 자동차 제조 분야의 생산 및 물류 시스템에 초점을 맞추어, Siemens Tecnomatix Plant Simulation을 활용한 이산 사건 시뮬레이션(DES) 모델링을 소개합니다.
-                    </p>
-                    <p className="text-gray-400 leading-relaxed text-sm">
-                      총 8개의 챕터로 구성되며 객체 기반 모델링, SimTalk 프로그래밍, 통계적 입출력 분석, 실제 사례 연구를 다룹니다.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-gray-400 leading-relaxed text-sm mb-3">
-                      This textbook introduces discrete-event simulation (DES) modeling using Siemens Tecnomatix Plant Simulation, focusing on production and logistics systems in semiconductor, display, and automotive manufacturing.
-                    </p>
-                    <p className="text-gray-400 leading-relaxed text-sm">
-                      The book covers object-based modeling, SimTalk programming, statistical input/output analysis, and real-world case studies across 8 chapters.
-                    </p>
-                  </>
-                )}
+                <h3 className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-4">About</h3>
+                <p className="text-gray-400 leading-relaxed text-sm mb-3">
+                  This textbook introduces discrete-event simulation (DES) modeling using Siemens Tecnomatix Plant Simulation, focusing on production and logistics systems in semiconductor, display, and automotive manufacturing.
+                </p>
+                <p className="text-gray-400 leading-relaxed text-sm">
+                  The book covers object-based modeling, SimTalk programming, statistical input/output analysis, and real-world case studies across 8 chapters.
+                </p>
               </div>
 
               <div>
-                <h3 className="text-xs font-semibold text-teal-400 tracking-[0.2em] uppercase mb-4">
-                  {ko ? '주요 내용' : 'Key Topics'}
-                </h3>
+                <h3 className="text-xs font-semibold text-teal-400 tracking-[0.2em] uppercase mb-4">Key Topics</h3>
                 <ul className="space-y-2">
-                  {(ko ? keyTopics.ko : keyTopics.en).map(t => (
+                  {[
+                    'Discrete-event simulation (DES) fundamentals and applications',
+                    'Digital twin concepts in manufacturing',
+                    'Object-based modeling techniques',
+                    'SimTalk programming for system interactions',
+                    'Statistical input/output analysis',
+                  ].map(t => (
                     <li key={t} className="flex items-start gap-3 text-sm text-gray-400">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-500 flex-shrink-0" />
                       {t}
@@ -186,11 +127,18 @@ export default function BookPage() {
               </div>
 
               <div>
-                <h3 className="text-xs font-semibold text-violet-400 tracking-[0.2em] uppercase mb-4">
-                  {ko ? '목차' : 'Table of Contents'}
-                </h3>
+                <h3 className="text-xs font-semibold text-violet-400 tracking-[0.2em] uppercase mb-4">Table of Contents</h3>
                 <div className="grid sm:grid-cols-2 gap-2">
-                  {(ko ? toc.ko : toc.en).map((c, i) => (
+                  {[
+                    'Introduction to Discrete-Event Simulation',
+                    'Foundational Modeling Concepts',
+                    'Object-based Modeling',
+                    'SimTalk Programming',
+                    'Input Data Modeling & Statistical Methods',
+                    'Output Analysis & Experiment Management',
+                    'Production & Logistics System Types',
+                    'Queuing Theory & Case Studies',
+                  ].map((c, i) => (
                     <div key={c} className="flex items-start gap-3 p-3 rounded-lg bg-gray-800/60 border border-white/10">
                       <span className="text-xs font-black text-violet-500 mt-0.5 w-5 flex-shrink-0">
                         {String(i + 1).padStart(2, '0')}
