@@ -20,6 +20,9 @@ const items = [
   { date: '2026.06', type: 'conference', img: '37.jpg',
     title: '2026 KIIE Spring Conference',
     desc: 'Attended the 2026 Spring Conference of the Korean Institute of Industrial Engineers (KIIE), Seoul, Korea.' },
+  { date: '2026.05', type: 'award', img: '40.png',
+    title: 'Best Presentation Paper Award — Korean Reliability Society (KORAS) Spring Conference',
+    desc: 'Received the Best Presentation Paper Award (우수발표 논문상, Award No. 2026-KORAS-017) at the 2026 Spring Conference of the Korean Reliability Society (KORAS). Paper title: "Improving Conformity of Semiconductor Logistics System Digital Twin via Bayesian Calibration" (반도체 물류시스템 디지털트윈의 정합성 개선을 위한 베이지안 보정). Awarded by the Korean Reliability Society in recognition of original research and outstanding contribution to the advancement of reliability theory.' },
   { date: '2026.05', type: 'conference', img: '36.jpg',
     title: 'Invited Talk at the Korean Reliability Society (KORAS) Emerging Researcher Session',
     desc: 'Invited presentation at the Korean Reliability Society (KORAS) emerging researcher session on simulation-based calibration for automated material handling systems.' },
@@ -156,6 +159,7 @@ const typeStyle = {
   patent:        { dot: 'bg-violet-500',  badge: 'bg-violet-950/60 text-violet-400 border border-violet-800/50'  },
   funding:       { dot: 'bg-green-500',   badge: 'bg-green-950/60 text-green-400 border border-green-800/50'     },
   collaboration: { dot: 'bg-rose-400',    badge: 'bg-rose-950/60 text-rose-400 border border-rose-800/50'        },
+  award:         { dot: 'bg-yellow-400',  badge: 'bg-yellow-950/60 text-yellow-400 border border-yellow-700/50'  },
 }
 
 function groupByYear(list) {
