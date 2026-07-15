@@ -137,17 +137,19 @@ export default function ProfessorPage() {
                     <div key={i} className="relative">
                       <span className="absolute -left-4 top-2 w-3 h-3 rounded-full border-2 border-gray-900 bg-indigo-500" />
                       <p className="text-xs font-semibold text-indigo-400 mb-0.5">{e.year}</p>
-                      <p className="font-semibold text-white text-sm leading-snug">{e.title}</p>
+                      <p className="font-semibold text-white text-sm leading-snug">
+                        {e.title}
+                        {e.advisor && (
+                          <>
+                            {' · '}
+                            <a href={e.advisorUrl} target="_blank" rel="noopener noreferrer"
+                              className="text-indigo-400 hover:text-indigo-300 font-normal transition-colors">
+                              {e.advisor}
+                            </a>
+                          </>
+                        )}
+                      </p>
                       <p className="text-sm text-gray-400">{e.org}</p>
-                      {e.advisor && (
-                        <p className="text-xs text-gray-500 mt-0.5">
-                          Advisor:{' '}
-                          <a href={e.advisorUrl} target="_blank" rel="noopener noreferrer"
-                            className="text-indigo-400 hover:text-indigo-300 transition-colors">
-                            {e.advisor}
-                          </a>
-                        </p>
-                      )}
                     </div>
                   ))}
                 </div>
