@@ -8,8 +8,8 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } 
 
 const experience = [
   { year: '2026 –',     title: 'Assistant Professor', org: 'Department of Industrial Engineering, Kumoh National Institute of Technology' },
-  { year: '2025',       title: 'Postdoctoral Scholar', org: 'Industrial & Systems Engineering, University of Washington' },
-  { year: '2024',       title: 'Postdoctoral Research Fellow', org: 'Research Institute of Intelligent Logistics Big Data, Pusan National University' },
+  { year: '2025',       title: 'Postdoctoral Scholar', org: 'Industrial & Systems Engineering, University of Washington', advisor: 'Prof. Chiwoo Park', advisorUrl: 'https://www.chiwoopark.net/home' },
+  { year: '2024',       title: 'Postdoctoral Research Fellow', org: 'Research Institute of Intelligent Logistics Big Data, Pusan National University', advisor: 'Prof. Soondo Hong', advisorUrl: 'https://simpl-lab.github.io/' },
   { year: 'Ph.D. 2024', title: 'Department of Industrial Engineering', org: 'Pusan National University' },
   { year: 'B.S. 2019',  title: 'Department of Industrial Engineering', org: 'Pusan National University' },
 ]
@@ -139,6 +139,15 @@ export default function ProfessorPage() {
                       <p className="text-xs font-semibold text-indigo-400 mb-0.5">{e.year}</p>
                       <p className="font-semibold text-white text-sm leading-snug">{e.title}</p>
                       <p className="text-sm text-gray-400">{e.org}</p>
+                      {e.advisor && (
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          Advisor:{' '}
+                          <a href={e.advisorUrl} target="_blank" rel="noopener noreferrer"
+                            className="text-indigo-400 hover:text-indigo-300 transition-colors">
+                            {e.advisor}
+                          </a>
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>
