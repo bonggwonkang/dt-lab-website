@@ -140,13 +140,14 @@ export default function ProfessorPage() {
                       <p className="font-semibold text-white text-sm leading-snug">
                         {e.title}
                         {e.advisor && (
-                          <>
-                            {' · '}
+                          <span className="font-normal text-gray-400">
+                            {' ('}
                             <a href={e.advisorUrl} target="_blank" rel="noopener noreferrer"
-                              className="text-indigo-400 hover:text-indigo-300 font-normal transition-colors">
+                              className="text-indigo-400 hover:text-indigo-300 transition-colors">
                               {e.advisor}
                             </a>
-                          </>
+                            {')'}
+                          </span>
                         )}
                       </p>
                       <p className="text-sm text-gray-400">{e.org}</p>
