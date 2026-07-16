@@ -23,6 +23,11 @@ const teaching = [
   { course: 'Affective Quality Engineering',                    term: 'Spring 2026', uni: 'Kumoh National Institute of Technology' },
 ]
 
+const reviewJournals = [
+  'Simulation Modelling Practice and Theory',
+  'European Journal of Industrial Engineering',
+]
+
 const links = [
   { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=QLqVgY0AAAAJ&hl=ko' },
   { label: 'ResearchGate',   url: 'https://www.researchgate.net/profile/Bonggwon-Kang' },
@@ -151,6 +156,19 @@ export default function ProfessorPage() {
                         )}
                       </p>
                       <p className="text-sm text-gray-400">{e.org}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Review Services */}
+              <div>
+                <h3 className="text-xs font-semibold text-violet-400 tracking-[0.2em] uppercase mb-6">Review Services</h3>
+                <div className="space-y-2">
+                  {reviewJournals.map((j, i) => (
+                    <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-gray-800/50 border border-white/10">
+                      <span className="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0" />
+                      <span className="text-sm text-white font-medium">{j}</span>
                     </div>
                   ))}
                 </div>
