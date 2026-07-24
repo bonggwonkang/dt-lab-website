@@ -10,7 +10,7 @@ const experience = [
   { year: '2026 –',     title: 'Assistant Professor', org: 'Department of Industrial Engineering, Kumoh National Institute of Technology' },
   { year: '2025',       title: 'Postdoctoral Scholar', org: 'Industrial & Systems Engineering, University of Washington', advisor: 'Prof. Chiwoo Park', advisorUrl: 'https://www.chiwoopark.net/home' },
   { year: '2024',       title: 'Postdoctoral Research Fellow', org: 'Research Institute of Intelligent Logistics Big Data, Pusan National University', advisor: 'Prof. Soondo Hong', advisorUrl: 'https://simpl-lab.github.io/' },
-  { year: 'Ph.D. 2024', title: 'Department of Industrial Engineering', org: 'Pusan National University' },
+  { year: 'Ph.D. 2024', title: 'Department of Industrial Engineering', org: 'Pusan National University', advisor: 'Prof. Soondo Hong', advisorUrl: 'https://simpl-lab.github.io/' },
   { year: 'B.S. 2019',  title: 'Department of Industrial Engineering', org: 'Pusan National University' },
 ]
 
