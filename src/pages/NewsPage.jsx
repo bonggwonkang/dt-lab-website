@@ -13,10 +13,10 @@ const base = import.meta.env.BASE_URL
 // Numbered from oldest (1.jpg) to newest (38.jpg) — bottom of list = 1.jpg
 const items = [
   // ── 2026 ────────────────────────────────────────────────────────────────
-  { date: '2026', type: 'journal', img: '38.png',
-    title: 'New paper accepted in International Journal of Production Research',
+  { date: '2026', type: 'journal', img: '39.png',
+    title: 'New paper published in International Journal of Production Research',
     desc: '"Uncertainty-aware simulation optimization for yard template planning in transshipment hubs", authors: Kang, Bonggwon; Lee, Taehoon; Sun, Zhuo; Hong, Soondo. Abstract) Yard template planning (YTP) is commonly applied at transshipment hubs to reduce transportation costs by assigning storage areas for outbound vessels. With recent advances in digital transformation technologies, terminal operators increasingly rely on simulation-based decision-making to address the uncertain nature of port operations. However, high-fidelity container terminal simulations typically require several minutes to hours per run, and YTP involves a high-dimensional and combinatorial design space. To address these challenges, we propose a domain-informed parallel Bayesian optimisation framework. A Gaussian process (GP) surrogate is presented to efficiently approximate the posterior distribution of terminal performance, thereby enhancing an uncertainty-aware balance between exploration and exploitation. We further integrate a large neighbourhood search (LNS) with the surrogate to navigate the combinatorial design space in parallel. Experimental results show that the proposed approach improves average prediction accuracy by 14.89% and 23.42% over two standard GP surrogates and reduces average vehicle travel time by 4.15%, 1.47%, and 3.27% compared with two Bayesian optimisation approaches and the LNS-based simulation optimisation approach, respectively.',
-  },
+    url: 'https://doi.org/10.1080/00207543.2026.2696434' },
   { date: '2026.06', type: 'conference', img: '37.jpg',
     title: '2026 KIIE Spring Conference',
     desc: 'Attended the 2026 Spring Conference of the Korean Institute of Industrial Engineers (KIIE), Seoul, Korea.' },
