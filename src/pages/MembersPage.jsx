@@ -97,11 +97,11 @@ export default function MembersPage() {
               The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.
             </motion.p>
             <motion.div variants={fadeUp}>
-              <p className="text-base font-semibold text-gray-500 dark:text-gray-300 tracking-wide mb-3">Student Activities</p>
+              <p className="text-base font-semibold text-indigo-400 tracking-wide mb-3">Student Activities</p>
               <ul className="space-y-2">
-                {activities.map(a => (
+                {activities.map((a, i) => (
                   <li key={a} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-200">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0" />
+                    <span className="font-mono font-bold text-indigo-400 flex-shrink-0">[{i + 1}]</span>
                     {a}
                   </li>
                 ))}
