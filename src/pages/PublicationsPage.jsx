@@ -167,31 +167,11 @@ function SectionHeader({ label, color = 'indigo' }) {
   )
 }
 
-function PdfIcon() {
-  return (
-    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-      <polyline points="14 2 14 8 20 8" />
-      <line x1="16" y1="13" x2="8" y2="13" />
-      <line x1="16" y1="17" x2="8" y2="17" />
-    </svg>
-  )
-}
-
-function LinkIcon() {
-  return (
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-    </svg>
-  )
-}
-
 function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300' }) {
   return (
     <motion.div variants={fadeUp}>
       <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8 -indent-8">
-        <span className="text-gray-400 dark:text-gray-600 font-mono">[{num}] </span>
+        <span className="text-gray-900 dark:text-white font-mono">[{num}] </span>
         {highlightKang(item.authors)}
         <span className="text-gray-500 dark:text-gray-400">, </span>
         <span className="text-gray-900 dark:text-white font-medium">"{item.title}"</span>
@@ -202,24 +182,26 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
         <span className="text-gray-500 dark:text-gray-400">, {item.year}</span>
         {item.note && <span className="text-gray-500 italic"> ({item.note})</span>}
         <span className="text-gray-500 dark:text-gray-400">.</span>
-      </p>
-      {item.coNote && (
-        <p className="text-xs text-gray-500 italic mt-0.5">{item.coNote}</p>
-      )}
-      <div className="flex gap-2 mt-1.5 flex-wrap">
+        {item.coNote && <span className="text-gray-500 italic"> {item.coNote}</span>}
         {item.pdf && (
-          <a href={item.pdf} target="_blank" rel="noreferrer"
-            className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/70 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
-            <PdfIcon /> PDF
-          </a>
+          <>
+            {' '}
+            <a href={item.pdf} target="_blank" rel="noreferrer"
+              className="text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-medium hover:underline">
+              [PDF]
+            </a>
+          </>
         )}
         {item.doi && (
-          <a href={item.doi} target="_blank" rel="noreferrer"
-            className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-800/70 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-white/20 transition-colors">
-            <LinkIcon /> DOI
-          </a>
+          <>
+            {' '}
+            <a href={item.doi} target="_blank" rel="noreferrer"
+              className="text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-medium hover:underline">
+              [DOI]
+            </a>
+          </>
         )}
-      </div>
+      </p>
     </motion.div>
   )
 }
