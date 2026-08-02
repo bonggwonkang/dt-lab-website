@@ -14,7 +14,7 @@ const activities = [
 ]
 
 const professor = {
-  name: 'Bonggwon Kang',  nameKo: '강봉권',
+  name: 'Bonggwon Kang',
   role: 'Assistant Professor',
   affiliation: 'Dept. of Industrial Engineering\nKumoh National Institute of Technology',
   email: 'kbk@kumoh.ac.kr',
@@ -125,7 +125,6 @@ export default function MembersPage() {
               <div className="flex-1">
                 <div className="flex items-baseline gap-3 flex-wrap mb-1">
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white">{professor.name}</h3>
-                  <span className="text-gray-500 dark:text-gray-300 text-sm">{professor.nameKo}</span>
                 </div>
                 <p className="text-indigo-400 font-semibold text-sm mb-0.5">{professor.role}</p>
                 <p className="text-gray-500 dark:text-gray-300 text-sm whitespace-pre-line mb-3">{professor.affiliation}</p>
