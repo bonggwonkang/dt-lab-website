@@ -86,9 +86,6 @@ export default function BookPage() {
             {/* Info */}
             <motion.div variants={fadeUp} className="md:col-span-2 space-y-10">
               <div>
-                <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4">
-                  Textbook · 2025 · Kyobo Book Centre
-                </p>
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white leading-snug mb-1">
                   생산물류시스템: 시뮬레이션 모델링
                 </h2>
@@ -97,7 +94,7 @@ export default function BookPage() {
               </div>
 
               <div>
-                <h3 className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-4">About</h3>
+                <h3 className="text-xs font-semibold text-indigo-400 tracking-wide mb-4">About</h3>
                 <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm mb-3">
                   Modern production and logistics systems, such as semiconductor and display fabs, automotive assembly lines, and shipyards, consist of highly complex and large-scale processes where a single material interacts with numerous processing, storage, and transport facilities. To cope with such complexity and uncertainty, industries have increasingly adopted the concept of the digital twin.
                 </p>
@@ -110,7 +107,7 @@ export default function BookPage() {
               </div>
 
               <div>
-                <h3 className="text-xs font-semibold text-violet-400 tracking-[0.2em] uppercase mb-4">Table of Contents</h3>
+                <h3 className="text-xs font-semibold text-violet-400 tracking-wide mb-4">Table of Contents</h3>
                 <ul className="space-y-1.5">
                   {[
                     'Introduction to Discrete-Event Simulation',

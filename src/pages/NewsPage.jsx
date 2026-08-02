@@ -197,7 +197,7 @@ function renderDesc(desc) {
     <>
       {before && <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{before}</p>}
       <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
-        <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Abstract</span>
+        <span className="text-[10px] font-bold text-indigo-400 tracking-wide">Abstract</span>
         <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mt-2">{after}</p>
       </div>
     </>

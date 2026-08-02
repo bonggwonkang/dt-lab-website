@@ -54,30 +54,20 @@ const colorStyle = {
   violet: { bar: 'bg-violet-500', tag: 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 border-violet-200 dark:border-violet-800/60', num: 'text-violet-400' },
 }
 
-const ChipIcon = () => (
-  <svg className="w-6 h-6 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="7" y="7" width="10" height="10" rx="1" />
-    <path d="M9 7V4M12 7V4M15 7V4M9 17v3M12 17v3M15 17v3M7 9H4M7 12H4M7 15H4M17 9h3M17 12h3M17 15h3" />
-  </svg>
-)
-
 const domains = [
   {
     title: 'Semiconductor & Display Fabs',
     desc: 'Modeling and optimization of wafer fabrication processes and AMHS in semiconductor fabs.',
-    icon: <ChipIcon />,
     video: { src: '[3D] FAB AMHS Animation 3.mp4', title: '3D Semiconductor Fab AMHS Simulation' },
   },
   {
     title: 'Distribution Centers',
     desc: 'Simulation-based design and operational analysis of automated warehouse and logistics systems.',
-    icon: '📦',
     video: { src: '3D SVSRS.mp4', title: '3D Shuttle-based Storage and Retrieval System Simulation' },
   },
   {
     title: 'Container Terminals',
     desc: 'Large-scale port terminal simulation for crane scheduling, vehicle routing, and yard management.',
-    icon: '🚢',
     video: { src: 'container terminal.mp4', title: 'Container Terminal Simulation' },
   },
 ]
@@ -206,11 +196,11 @@ export default function ResearchPage() {
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {domains.map(d => (
+              {domains.map((d, i) => (
                 <motion.div key={d.title} variants={fadeUp} className="flex flex-col gap-4">
                   <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-white/10 hover:border-indigo-500/40 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="flex-shrink-0 text-2xl leading-none">{d.icon}</span>
+                      <span className="flex-shrink-0 text-sm font-mono font-bold text-indigo-400">[{i + 1}]</span>
                       <h3 className="font-bold text-gray-900 dark:text-white leading-snug">{d.title}</h3>
                     </div>
                     <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{d.desc}</p>
