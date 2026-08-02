@@ -82,7 +82,7 @@ const domains = [
   },
 ]
 
-function VideoPlayer({ src, title, colorBar = 'bg-indigo-500' }) {
+function VideoPlayer({ src, title }) {
   const base = import.meta.env.BASE_URL
   return (
     <div className="rounded-2xl overflow-hidden bg-gray-950 ring-1 ring-gray-200 dark:ring-white/10 shadow-xl shadow-black/10 dark:shadow-black/40">
@@ -91,12 +91,9 @@ function VideoPlayer({ src, title, colorBar = 'bg-indigo-500' }) {
           className="w-full h-full object-contain"
           controls
           preload="metadata"
+          title={title}
           src={`${base}videos/${src}`}
         />
-      </div>
-      <div className="px-5 py-3.5 flex items-center gap-3 bg-gray-900/80">
-        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${colorBar}`} />
-        <span className="text-xs text-gray-400 font-medium">{title}</span>
       </div>
     </div>
   )
@@ -180,7 +177,7 @@ export default function ResearchPage() {
 
                   {/* Video side */}
                   <motion.div variants={fadeUp} className={isEven ? '' : 'md:order-1'}>
-                    <VideoPlayer src={t.video.src} title={t.video.title} colorBar={s.bar} />
+                    <VideoPlayer src={t.video.src} title={t.video.title} />
                   </motion.div>
                 </motion.div>
               )
@@ -220,7 +217,7 @@ export default function ResearchPage() {
                   </div>
 
                   {d.video ? (
-                    <VideoPlayer src={d.video.src} title={d.video.title} colorBar="bg-teal-500" />
+                    <VideoPlayer src={d.video.src} title={d.video.title} />
                   ) : (
                     <div className="rounded-2xl overflow-hidden bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-white/10 border-dashed">
                       <div className="aspect-video flex flex-col items-center justify-center gap-2 p-6 text-center">

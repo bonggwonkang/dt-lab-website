@@ -69,7 +69,7 @@ export default function BookPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
-                  Purchase (교보문고)
+                  Purchase
                 </a>
                 <a href="https://simpl-lab.github.io/"
                   target="_blank" rel="noreferrer"
@@ -86,11 +86,9 @@ export default function BookPage() {
             {/* Info */}
             <motion.div variants={fadeUp} className="md:col-span-2 space-y-10">
               <div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="px-2.5 py-0.5 bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 text-xs font-semibold rounded-full border border-amber-200 dark:border-amber-800/50">Textbook</span>
-                  <span className="px-2.5 py-0.5 bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium rounded-full border border-gray-200 dark:border-white/10">2025</span>
-                  <span className="px-2.5 py-0.5 bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium rounded-full border border-gray-200 dark:border-white/10">Kyobo Book Centre</span>
-                </div>
+                <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4">
+                  Textbook · 2025 · Kyobo Book Centre
+                </p>
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white leading-snug mb-1">
                   생산물류시스템: 시뮬레이션 모델링
                 </h2>
