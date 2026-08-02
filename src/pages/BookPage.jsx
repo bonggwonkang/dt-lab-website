@@ -101,10 +101,13 @@ export default function BookPage() {
               <div>
                 <h3 className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-4">About</h3>
                 <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm mb-3">
-                  This textbook introduces discrete-event simulation (DES) modeling using Siemens Tecnomatix Plant Simulation, focusing on production and logistics systems in semiconductor, display, and automotive manufacturing.
+                  Modern production and logistics systems, such as semiconductor and display fabs, automotive assembly lines, and shipyards, consist of highly complex and large-scale processes where a single material interacts with numerous processing, storage, and transport facilities. To cope with such complexity and uncertainty, industries have increasingly adopted the concept of the digital twin.
+                </p>
+                <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm mb-3">
+                  Among various approaches, discrete-event simulation (DES) has become a core methodology, as it enables detailed modeling of time-series events and their interactions, supporting system-level evaluations. The construction of realistic simulation models requires the creation of digital counterparts of physical entities and the careful representation of their interactions in virtual space.
                 </p>
                 <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
-                  The book covers object-based modeling, SimTalk programming, statistical input/output analysis, and real-world case studies across 8 chapters.
+                  This textbook introduces systematic modeling methods using Siemens Tecnomatix Plant Simulation. Building on experiences in semiconductor and display manufacturing, it emphasizes modeling skills for production and logistics processes. The book covers basic simulation concepts, object-based modeling, and SimTalk programming for system interaction and statistical input/output analysis.
                 </p>
               </div>
 
@@ -128,7 +131,7 @@ export default function BookPage() {
 
               <div>
                 <h3 className="text-xs font-semibold text-violet-400 tracking-[0.2em] uppercase mb-4">Table of Contents</h3>
-                <div className="grid sm:grid-cols-2 gap-2">
+                <ul className="space-y-1.5">
                   {[
                     'Introduction to Discrete-Event Simulation',
                     'Foundational Modeling Concepts',
@@ -139,14 +142,12 @@ export default function BookPage() {
                     'Production & Logistics System Types',
                     'Queuing Theory & Case Studies',
                   ].map((c, i) => (
-                    <div key={c} className="flex items-start gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-white/10">
-                      <span className="text-xs font-black text-violet-500 mt-0.5 w-5 flex-shrink-0">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <span className="text-xs text-gray-600 dark:text-gray-300 font-medium leading-snug">{c}</span>
-                    </div>
+                    <li key={c} className="flex items-baseline gap-3 text-sm text-gray-600 dark:text-gray-300">
+                      <span className="text-xs font-mono text-violet-400 w-5 flex-shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                      {c}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </motion.div>
           </motion.div>
