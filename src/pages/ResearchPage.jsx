@@ -151,7 +151,7 @@ export default function ResearchPage() {
                     <ul className="space-y-3 mb-8">
                       {t.details.map((d, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
-                          <span className={`mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full ${s.bar}`} />
+                          <span className={`flex-shrink-0 font-mono font-bold ${s.num}`}>[{i + 1}]</span>
                           {d}
                         </li>
                       ))}
