@@ -164,8 +164,7 @@ export default function MembersPage() {
                   className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-white/10 hover:border-teal-500/30 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300 flex flex-col items-center text-center">
                   <MemberPhoto file={s.photo} name={s.nameEn} size="md" />
                   <div className="mt-4">
-                    <h3 className="font-bold text-gray-900 dark:text-white text-base">{s.name}</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-300 mt-0.5">{s.nameEn}</p>
+                    <h3 className="font-bold text-gray-900 dark:text-white text-base">{s.nameEn} ({s.name})</h3>
                     <span className="inline-block mt-2 px-2.5 py-0.5 bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-300 text-xs font-medium rounded-full border border-teal-200 dark:border-teal-800/60">
                       {s.degree}
                     </span>
