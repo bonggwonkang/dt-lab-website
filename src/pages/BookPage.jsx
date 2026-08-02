@@ -120,7 +120,7 @@ export default function BookPage() {
                     'Queuing Theory & Case Studies',
                   ].map((c, i) => (
                     <li key={c} className="flex items-baseline gap-3 text-sm text-gray-600 dark:text-gray-300">
-                      <span className="text-xs font-mono text-violet-400 w-5 flex-shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="font-mono font-bold text-white flex-shrink-0">[{i + 1}]</span>
                       {c}
                     </li>
                   ))}
