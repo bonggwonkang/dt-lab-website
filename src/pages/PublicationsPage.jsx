@@ -167,11 +167,31 @@ function SectionHeader({ label, color = 'indigo' }) {
   )
 }
 
+function PdfIcon() {
+  return (
+    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+    </svg>
+  )
+}
+
+function LinkIcon() {
+  return (
+    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+    </svg>
+  )
+}
+
 function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300' }) {
   return (
     <motion.div variants={fadeUp}>
-      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8 -indent-8">
-        <span className="text-gray-900 dark:text-white font-mono">[{num}] </span>
+      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8">
+        <span className="text-gray-900 dark:text-white font-mono -ml-8">[{num}] </span>
         {highlightKang(item.authors)}
         <span className="text-gray-500 dark:text-gray-400">, </span>
         <span className="text-gray-900 dark:text-white font-medium">"{item.title}"</span>
@@ -187,8 +207,8 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
           <>
             {' '}
             <a href={item.pdf} target="_blank" rel="noreferrer"
-              className="text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-medium hover:underline">
-              [PDF]
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium align-middle bg-rose-50 dark:bg-rose-950/70 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/50 hover:bg-rose-100 dark:hover:bg-rose-900/70 hover:text-rose-700 dark:hover:text-rose-300 transition-colors">
+              <PdfIcon /> PDF
             </a>
           </>
         )}
@@ -196,8 +216,8 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
           <>
             {' '}
             <a href={item.doi} target="_blank" rel="noreferrer"
-              className="text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-medium hover:underline">
-              [DOI]
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium align-middle bg-rose-50 dark:bg-rose-950/70 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/50 hover:bg-rose-100 dark:hover:bg-rose-900/70 hover:text-rose-700 dark:hover:text-rose-300 transition-colors">
+              <LinkIcon /> DOI
             </a>
           </>
         )}
@@ -222,9 +242,6 @@ function PageHeader() {
             className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.05] mb-5">
             Publications
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-gray-500 dark:text-gray-400 text-lg max-w-2xl leading-relaxed">
-            Peer-reviewed articles and other scholarly works.
-          </motion.p>
         </motion.div>
       </div>
     </section>
