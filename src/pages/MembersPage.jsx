@@ -149,7 +149,7 @@ export default function MembersPage() {
                 <div className="flex gap-2">
                   {professor.links.map(l => (
                     <a key={l.label} href={l.url} target="_blank" rel="noreferrer"
-                      className="px-3 py-1 rounded-lg bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 text-xs font-medium transition-colors border border-rose-200 dark:border-rose-800/50">
+                      className="px-3 py-1 rounded-lg bg-white dark:bg-white/10 hover:bg-gray-100 dark:hover:bg-white/20 text-gray-700 dark:text-white text-xs font-medium transition-colors border border-gray-300 dark:border-white/20">
                       {l.label}
                     </a>
                   ))}
