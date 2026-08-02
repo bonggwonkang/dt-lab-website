@@ -82,7 +82,7 @@ export default function ProfessorPage() {
               </div>
 
               <div className="text-center md:text-left">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Bonggwon Kang (강봉권)</h2>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white whitespace-nowrap">Bonggwon Kang (강봉권)</h2>
                 <p className="text-indigo-400 font-semibold text-sm mt-2">Assistant Professor</p>
                 <p className="text-gray-500 dark:text-gray-400 text-sm">Department of Industrial Engineering</p>
                 <p className="text-gray-500 dark:text-gray-400 text-sm">Kumoh National Institute of Technology</p>
