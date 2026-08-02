@@ -90,8 +90,7 @@ export default function MembersPage() {
       {/* Lab intro */}
       <section className="py-4 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
-            className="max-w-3xl">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
             <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-bold text-indigo-400 mb-4">
               Join the Digital Transformation Lab!
             </motion.h2>
