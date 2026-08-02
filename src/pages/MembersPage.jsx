@@ -101,7 +101,7 @@ export default function MembersPage() {
               <ul className="space-y-2">
                 {activities.map((a, i) => (
                   <li key={a} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-200">
-                    <span className="font-mono font-bold text-indigo-400 flex-shrink-0">[{i + 1}]</span>
+                    <span className="font-mono font-bold text-white flex-shrink-0">[{i + 1}]</span>
                     {a}
                   </li>
                 ))}
