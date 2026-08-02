@@ -48,7 +48,7 @@ function MemberPhoto({ file, name, size = 'lg', objectPos = 'object-center' }) {
   const dim  = size === 'lg' ? 'w-24 h-24 text-2xl' : 'w-16 h-16 text-sm'
   const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
   return (
-    <div className={`${dim} rounded-full overflow-hidden bg-gray-700 flex items-center justify-center font-bold text-indigo-400 ring-4 ring-gray-800 shadow-lg flex-shrink-0`}>
+    <div className={`${dim} rounded-full overflow-hidden bg-gray-300 dark:bg-gray-700 flex items-center justify-center font-bold text-indigo-400 ring-4 ring-gray-200 dark:ring-gray-800 shadow-lg flex-shrink-0`}>
       <img
         src={`${base}images/${file}`}
         alt={name}
@@ -62,7 +62,7 @@ function MemberPhoto({ file, name, size = 'lg', objectPos = 'object-center' }) {
 
 function PageHeader() {
   return (
-    <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
+    <section className="pt-32 pb-10 bg-white dark:bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -73,7 +73,7 @@ function PageHeader() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial="hidden" animate="visible" variants={stagger}>
           <motion.h1 variants={fadeUp}
-            className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
+            className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.05] mb-5">
             Members
           </motion.h1>
         </motion.div>
@@ -88,21 +88,21 @@ export default function MembersPage() {
       <PageHeader />
 
       {/* Lab intro */}
-      <section className="py-8 bg-gray-900 border-b border-white/10">
+      <section className="py-4 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
             className="max-w-3xl">
-            <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-bold text-white mb-4">
+            <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
               Join the Digital Transformation Lab!
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-gray-200 leading-relaxed mb-6 text-base">
+            <motion.p variants={fadeUp} className="text-gray-600 dark:text-gray-200 leading-relaxed mb-6 text-base">
               The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.
             </motion.p>
             <motion.div variants={fadeUp}>
-              <p className="text-xs font-semibold text-gray-300 uppercase tracking-widest mb-3">Student Activities</p>
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-widest mb-3">Student Activities</p>
               <ul className="space-y-2">
                 {activities.map(a => (
-                  <li key={a} className="flex items-start gap-3 text-sm text-gray-200">
+                  <li key={a} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-200">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0" />
                     {a}
                   </li>
@@ -114,25 +114,25 @@ export default function MembersPage() {
       </section>
 
       {/* Professor */}
-      <section className="py-10 bg-gray-900">
+      <section className="py-6 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
             <motion.h2 variants={fadeUp}
-              className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-8">
+              className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-4">
               Principal Investigator
             </motion.h2>
             <motion.div variants={fadeUp}
-              className="flex flex-col sm:flex-row gap-8 items-start bg-gray-800/50 rounded-2xl border border-white/10 p-8 hover:border-indigo-500/30 transition-all duration-300 max-w-2xl">
+              className="flex flex-col sm:flex-row gap-8 items-start bg-white dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-white/10 p-8 hover:border-indigo-500/30 transition-all duration-300 max-w-2xl shadow-sm dark:shadow-none">
               <MemberPhoto file={professor.photo} name="Bonggwon Kang" size="lg" />
               <div className="flex-1">
                 <div className="flex items-baseline gap-3 flex-wrap mb-1">
-                  <h3 className="text-xl font-bold text-white">{professor.name}</h3>
-                  <span className="text-gray-300 text-sm">{professor.nameKo}</span>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">{professor.name}</h3>
+                  <span className="text-gray-500 dark:text-gray-300 text-sm">{professor.nameKo}</span>
                 </div>
                 <p className="text-indigo-400 font-semibold text-sm mb-0.5">{professor.role}</p>
-                <p className="text-gray-300 text-sm whitespace-pre-line mb-3">{professor.affiliation}</p>
+                <p className="text-gray-500 dark:text-gray-300 text-sm whitespace-pre-line mb-3">{professor.affiliation}</p>
                 <a href={`mailto:${professor.email}`}
-                  className="inline-flex items-center gap-1.5 text-sm text-gray-300 hover:text-indigo-400 transition-colors mb-3">
+                  className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-300 hover:text-indigo-400 transition-colors mb-3">
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -141,7 +141,7 @@ export default function MembersPage() {
                 </a>
                 <div className="flex flex-wrap gap-2 mb-3">
                   {professor.interests.map(i => (
-                    <span key={i} className="px-2.5 py-1 bg-indigo-950/60 text-indigo-400 text-xs font-medium rounded-lg border border-indigo-800/60">
+                    <span key={i} className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 text-xs font-medium rounded-lg border border-indigo-200 dark:border-indigo-800/60">
                       {i}
                     </span>
                   ))}
@@ -149,7 +149,7 @@ export default function MembersPage() {
                 <div className="flex gap-2">
                   {professor.links.map(l => (
                     <a key={l.label} href={l.url} target="_blank" rel="noreferrer"
-                      className="px-3 py-1 rounded-lg bg-rose-950/60 hover:bg-rose-900/60 text-rose-400 hover:text-rose-300 text-xs font-medium transition-colors border border-rose-800/50">
+                      className="px-3 py-1 rounded-lg bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 text-xs font-medium transition-colors border border-rose-200 dark:border-rose-800/50">
                       {l.label}
                     </a>
                   ))}
@@ -161,25 +161,25 @@ export default function MembersPage() {
       </section>
 
       {/* Students */}
-      <section className="py-10 bg-gray-950">
+      <section className="py-6 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
             <motion.h2 variants={fadeUp}
-              className="text-xs font-semibold text-teal-400 tracking-[0.2em] uppercase mb-10">
+              className="text-xs font-semibold text-teal-400 tracking-[0.2em] uppercase mb-5">
               Researchers
             </motion.h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {students.map(s => (
                 <motion.div key={s.name} variants={fadeUp}
-                  className="bg-gray-800/50 rounded-2xl p-6 border border-white/10 hover:border-teal-500/30 hover:bg-gray-800/80 transition-all duration-300 flex flex-col items-center text-center">
+                  className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-white/10 hover:border-teal-500/30 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300 flex flex-col items-center text-center">
                   <MemberPhoto file={s.photo} name={s.nameEn} size="md" />
                   <div className="mt-4">
-                    <h3 className="font-bold text-white text-base">{s.name}</h3>
-                    <p className="text-sm text-gray-300 mt-0.5">{s.nameEn}</p>
-                    <span className="inline-block mt-2 px-2.5 py-0.5 bg-teal-950/60 text-teal-300 text-xs font-medium rounded-full border border-teal-800/60">
+                    <h3 className="font-bold text-gray-900 dark:text-white text-base">{s.name}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-300 mt-0.5">{s.nameEn}</p>
+                    <span className="inline-block mt-2 px-2.5 py-0.5 bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-300 text-xs font-medium rounded-full border border-teal-200 dark:border-teal-800/60">
                       {s.degree}
                     </span>
-                    <p className="text-sm text-gray-300 mt-2 leading-relaxed">{s.research}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-300 mt-2 leading-relaxed">{s.research}</p>
                     <a href={`mailto:${s.email}`}
                       className="mt-2 inline-block text-xs text-gray-400 hover:text-indigo-400 transition-colors">
                       {s.email}
@@ -190,13 +190,13 @@ export default function MembersPage() {
 
               {/* Recruiting */}
               <motion.div variants={fadeUp}
-                className="bg-gray-900 rounded-2xl p-6 border-2 border-dashed border-white/10 hover:border-indigo-500/30 transition-all duration-300 flex flex-col items-center justify-center text-center min-h-[220px]">
-                <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3">
-                  <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border-2 border-dashed border-gray-200 dark:border-white/10 hover:border-indigo-500/30 transition-all duration-300 flex flex-col items-center justify-center text-center min-h-[220px]">
+                <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center mb-3">
+                  <svg className="w-5 h-5 text-gray-500 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
-                <p className="text-sm font-semibold text-white">Recruiting</p>
+                <p className="text-sm font-semibold text-gray-900 dark:text-white">Recruiting</p>
                 <p className="text-xs text-gray-400 mt-1 max-w-[140px]">Motivated students welcome.</p>
                 <a href="mailto:kbk@kumoh.ac.kr"
                   className="mt-3 text-xs text-indigo-400 font-medium hover:underline">

@@ -9,7 +9,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } }
 
 function Hero() {
   return (
-    <section className="relative flex items-center overflow-hidden bg-gray-950">
+    <section className="relative flex items-center overflow-hidden bg-white dark:bg-gray-950">
       <div className="absolute inset-0 opacity-[0.07]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -21,14 +21,8 @@ function Hero() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
         <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl">
-          <motion.div variants={fadeUp} className="mb-8">
-            <span className="text-indigo-400 text-xs font-semibold tracking-[0.2em] uppercase">
-              Kumoh National Institute of Technology
-            </span>
-          </motion.div>
-
           <motion.h1 variants={fadeUp}
-            className="text-5xl md:text-7xl font-black text-white leading-[1.05] mb-6 tracking-tight">
+            className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white leading-[1.05] mb-6 tracking-tight">
             Welcome to the<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-teal-400">
               Digital Transformation
@@ -37,7 +31,7 @@ function Hero() {
           </motion.h1>
 
           <motion.p variants={fadeUp}
-            className="text-xl md:text-2xl text-white max-w-2xl leading-relaxed mb-10 font-light">
+            className="text-xl md:text-2xl text-gray-700 dark:text-white max-w-2xl leading-relaxed font-light">
             We develop advanced digital transformation methodologies for{' '}
             <span className="text-indigo-400 font-semibold">modeling</span>,{' '}
             <span className="text-indigo-400 font-semibold">analyzing</span>,{' '}
@@ -45,28 +39,17 @@ function Hero() {
             <span className="text-teal-400 font-semibold">calibrating</span>{' '}
             production and material handling system simulations.
           </motion.p>
-
-          <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
-            <Link to="/research"
-              className="inline-flex items-center px-7 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-indigo-900/40">
-              Explore Research
-            </Link>
-            <Link to="/news"
-              className="inline-flex items-center px-7 py-3.5 bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl border border-white/15 transition-colors">
-              Read News
-            </Link>
-          </motion.div>
         </motion.div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white dark:from-gray-900 to-transparent" />
     </section>
   )
 }
 
 function Contact() {
   return (
-    <section className="py-20 bg-gradient-to-br from-indigo-600 via-indigo-700 to-teal-700 relative overflow-hidden">
+    <section className="py-10 bg-gradient-to-br from-indigo-600 via-indigo-700 to-teal-700 relative overflow-hidden">
       <div className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: 'linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)',
@@ -75,10 +58,10 @@ function Contact() {
       />
       <div className="relative max-w-3xl mx-auto px-4 text-center">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
-          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-white mb-3">
             Join the Digital Transformation Lab!
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-indigo-100 text-base mb-8 max-w-lg mx-auto">
+          <motion.p variants={fadeUp} className="text-indigo-100 text-base mb-4 max-w-lg mx-auto">
             The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.
           </motion.p>
           <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">

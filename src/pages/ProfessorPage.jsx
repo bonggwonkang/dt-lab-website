@@ -35,7 +35,7 @@ const links = [
 
 function PageHeader() {
   return (
-    <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
+    <section className="pt-32 pb-10 bg-white dark:bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -46,7 +46,7 @@ function PageHeader() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial="hidden" animate="visible" variants={stagger}>
           <motion.h1 variants={fadeUp}
-            className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
+            className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.05] mb-5">
             Professor
           </motion.h1>
         </motion.div>
@@ -61,7 +61,7 @@ export default function ProfessorPage() {
     <>
       <PageHeader />
 
-      <section className="py-24 bg-gray-900">
+      <section className="py-12 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
@@ -69,7 +69,7 @@ export default function ProfessorPage() {
           >
             {/* ── Left: photo + contact ── */}
             <motion.div variants={fadeUp} className="md:col-span-1 flex flex-col items-center md:items-start gap-6">
-              <div className="w-48 h-56 rounded-2xl overflow-hidden bg-gray-800 shadow-xl ring-1 ring-white/10 flex-shrink-0">
+              <div className="w-48 h-56 rounded-2xl overflow-hidden bg-gray-200 dark:bg-gray-800 shadow-xl ring-1 ring-gray-200 dark:ring-white/10 flex-shrink-0">
                 <img
                   src={`${base}images/professor.jpg`}
                   alt="Bonggwon Kang"
@@ -82,31 +82,31 @@ export default function ProfessorPage() {
               </div>
 
               <div className="text-center md:text-left">
-                <h2 className="text-2xl font-bold text-white">Bonggwon Kang</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Bonggwon Kang</h2>
                 <p className="text-gray-500 text-sm mt-0.5">강봉권</p>
                 <p className="text-indigo-400 font-semibold text-sm mt-2">Assistant Professor</p>
-                <p className="text-gray-400 text-sm">Department of Industrial Engineering</p>
-                <p className="text-gray-400 text-sm">Kumoh National Institute of Technology</p>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">Department of Industrial Engineering</p>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">Kumoh National Institute of Technology</p>
               </div>
 
               <div className="space-y-2 text-sm w-full">
                 <a href="mailto:kbk@kumoh.ac.kr"
-                  className="flex items-center gap-2 text-gray-400 hover:text-indigo-400 transition-colors">
-                  <svg className="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-indigo-400 transition-colors">
+                  <svg className="w-4 h-4 text-gray-400 dark:text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   kbk@kumoh.ac.kr
                 </a>
-                <div className="flex items-start gap-2 text-gray-400">
-                  <svg className="w-4 h-4 text-gray-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-start gap-2 text-gray-500 dark:text-gray-400">
+                  <svg className="w-4 h-4 text-gray-400 dark:text-gray-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                       d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   +82-54-478-7665
                 </div>
-                <div className="flex items-start gap-2 text-gray-400 text-xs">
-                  <svg className="w-4 h-4 text-gray-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-start gap-2 text-gray-500 dark:text-gray-400 text-xs">
+                  <svg className="w-4 h-4 text-gray-400 dark:text-gray-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                       d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -118,7 +118,7 @@ export default function ProfessorPage() {
               <div className="flex flex-wrap gap-2">
                 {links.map(l => (
                   <a key={l.label} href={l.url} target="_blank" rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-950/60 hover:bg-rose-900/60 text-rose-400 hover:text-rose-300 text-xs font-medium transition-colors border border-rose-800/50">
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 text-xs font-medium transition-colors border border-rose-200 dark:border-rose-800/50">
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                         d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -137,15 +137,15 @@ export default function ProfessorPage() {
                 <h3 className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-6">
                   Education &amp; Experience
                 </h3>
-                <div className="relative pl-6 border-l-2 border-white/10 space-y-6">
+                <div className="relative pl-6 border-l-2 border-gray-200 dark:border-white/10 space-y-6">
                   {experience.map((e, i) => (
                     <div key={i} className="relative">
-                      <span className="absolute -left-4 top-2 w-3 h-3 rounded-full border-2 border-gray-900 bg-indigo-500" />
+                      <span className="absolute -left-4 top-2 w-3 h-3 rounded-full border-2 border-white dark:border-gray-900 bg-indigo-500" />
                       <p className="text-xs font-semibold text-indigo-400 mb-0.5">{e.year}</p>
-                      <p className="font-semibold text-white text-sm leading-snug">
+                      <p className="font-semibold text-gray-900 dark:text-white text-sm leading-snug">
                         {e.title}
                         {e.advisor && (
-                          <span className="font-normal text-gray-400">
+                          <span className="font-normal text-gray-500 dark:text-gray-400">
                             {' ('}
                             <a href={e.advisorUrl} target="_blank" rel="noopener noreferrer"
                               className="text-indigo-400 hover:text-indigo-300 transition-colors">
@@ -155,7 +155,7 @@ export default function ProfessorPage() {
                           </span>
                         )}
                       </p>
-                      <p className="text-sm text-gray-400">{e.org}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{e.org}</p>
                     </div>
                   ))}
                 </div>
@@ -163,34 +163,31 @@ export default function ProfessorPage() {
 
               {/* Review Services */}
               <div>
-                <h3 className="text-xs font-semibold text-violet-400 tracking-[0.2em] uppercase mb-6">Review Services</h3>
-                <div className="space-y-2">
+                <h3 className="text-xs font-semibold text-violet-400 tracking-[0.2em] uppercase mb-4">Review Services</h3>
+                <ul className="space-y-1.5">
                   {reviewJournals.map((j, i) => (
-                    <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-gray-800/50 border border-white/10">
-                      <span className="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0" />
-                      <span className="text-sm text-white font-medium">{j}</span>
-                    </div>
+                    <li key={i} className="flex items-center gap-2.5 text-sm text-gray-600 dark:text-gray-300">
+                      <span className="w-1 h-1 rounded-full bg-violet-500 flex-shrink-0" />
+                      {j}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
 
               {/* Teaching */}
               <div>
-                <h3 className="text-xs font-semibold text-teal-400 tracking-[0.2em] uppercase mb-6">Teaching</h3>
-                <div className="space-y-2">
+                <h3 className="text-xs font-semibold text-teal-400 tracking-[0.2em] uppercase mb-4">Teaching</h3>
+                <ul className="space-y-2">
                   {teaching.map((t, i) => (
-                    <div key={i} className="flex items-start justify-between gap-4 p-3.5 rounded-xl bg-gray-800/50 border border-white/10 hover:border-teal-500/30 transition-colors">
-                      <div className="flex items-start gap-3">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-500 flex-shrink-0" />
-                        <div>
-                          <span className="text-sm text-white font-medium">{t.course}</span>
-                          <p className="text-xs text-gray-500 mt-0.5">{t.uni}</p>
-                        </div>
-                      </div>
-                      <span className="text-xs text-gray-500 whitespace-nowrap flex-shrink-0">{t.term}</span>
-                    </div>
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-300 leading-snug">
+                      <span className="mt-1.5 w-1 h-1 rounded-full bg-teal-500 flex-shrink-0" />
+                      <span>
+                        {t.course}
+                        <span className="text-gray-400 dark:text-gray-500"> — {t.uni} ({t.term})</span>
+                      </span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
 
             </motion.div>

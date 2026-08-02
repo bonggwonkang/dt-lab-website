@@ -1,7 +1,6 @@
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
-import Footer from './components/Footer'
 import Home from './pages/Home'
 import ResearchPage from './pages/ResearchPage'
 import NewsPage from './pages/NewsPage'
@@ -20,7 +19,7 @@ export default function App() {
   return (
     <HashRouter>
       <ScrollToTop />
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col">
         <Navbar />
         <main className="flex-1">
           <Routes>
@@ -33,7 +32,6 @@ export default function App() {
             <Route path="/publications" element={<PublicationsPage />} />
           </Routes>
         </main>
-        <Footer />
       </div>
     </HashRouter>
   )

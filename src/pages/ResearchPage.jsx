@@ -49,9 +49,9 @@ const topics = [
 ]
 
 const colorStyle = {
-  indigo: { bar: 'bg-indigo-500', tag: 'bg-indigo-950/60 text-indigo-400 border-indigo-800/60', num: 'text-indigo-400' },
-  teal:   { bar: 'bg-teal-500',   tag: 'bg-teal-950/60 text-teal-400 border-teal-800/60',       num: 'text-teal-400'   },
-  violet: { bar: 'bg-violet-500', tag: 'bg-violet-950/60 text-violet-400 border-violet-800/60', num: 'text-violet-400' },
+  indigo: { bar: 'bg-indigo-500', tag: 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800/60', num: 'text-indigo-400' },
+  teal:   { bar: 'bg-teal-500',   tag: 'bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 border-teal-200 dark:border-teal-800/60',       num: 'text-teal-400'   },
+  violet: { bar: 'bg-violet-500', tag: 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 border-violet-200 dark:border-violet-800/60', num: 'text-violet-400' },
 }
 
 const ChipIcon = () => (
@@ -85,7 +85,7 @@ const domains = [
 function VideoPlayer({ src, title, colorBar = 'bg-indigo-500' }) {
   const base = import.meta.env.BASE_URL
   return (
-    <div className="rounded-2xl overflow-hidden bg-gray-950 ring-1 ring-white/10 shadow-xl shadow-black/40">
+    <div className="rounded-2xl overflow-hidden bg-gray-950 ring-1 ring-gray-200 dark:ring-white/10 shadow-xl shadow-black/10 dark:shadow-black/40">
       <div className="aspect-video">
         <video
           className="w-full h-full object-contain"
@@ -104,7 +104,7 @@ function VideoPlayer({ src, title, colorBar = 'bg-indigo-500' }) {
 
 function PageHeader() {
   return (
-    <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
+    <section className="pt-32 pb-10 bg-white dark:bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -115,10 +115,10 @@ function PageHeader() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial="hidden" animate="visible" variants={stagger}>
           <motion.h1 variants={fadeUp}
-            className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
+            className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.05] mb-5">
             Research
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-gray-200 text-lg max-w-2xl leading-relaxed">
+          <motion.p variants={fadeUp} className="text-gray-600 dark:text-gray-200 text-lg max-w-2xl leading-relaxed">
             Our work spans three interconnected themes,{' '}
             <span className="text-indigo-400 font-medium">modeling</span> complex systems,{' '}
             <span className="text-teal-400 font-medium">optimizing</span> their operations, and{' '}
@@ -137,9 +137,9 @@ export default function ResearchPage() {
       <PageHeader />
 
       {/* Topics */}
-      <section className="pt-24 pb-12 bg-gray-900">
+      <section className="pt-12 pb-8 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-28">
+          <div className="space-y-16">
             {topics.map((t, idx) => {
               const s = colorStyle[t.color]
               const isEven = idx % 2 === 0
@@ -157,13 +157,13 @@ export default function ResearchPage() {
                     <span className={`inline-block text-4xl font-black mb-3 ${s.num}`}>
                       Topic {t.num}
                     </span>
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-snug">
+                    <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-snug">
                       {t.title}
                     </h2>
-                    <p className="text-gray-400 leading-relaxed mb-6">{t.summary}</p>
+                    <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-6">{t.summary}</p>
                     <ul className="space-y-3 mb-8">
                       {t.details.map((d, i) => (
-                        <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
+                        <li key={i} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
                           <span className={`mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full ${s.bar}`} />
                           {d}
                         </li>
@@ -190,7 +190,7 @@ export default function ResearchPage() {
       </section>
 
       {/* Application Domains */}
-      <section className="pt-12 pb-24 bg-gray-950">
+      <section className="pt-8 pb-12 bg-white dark:bg-gray-950">
         <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
           style={{
             backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -205,30 +205,30 @@ export default function ResearchPage() {
             variants={stagger}
           >
             <motion.div variants={fadeUp} className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Application Domains</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Application Domains</h2>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-6">
               {domains.map(d => (
                 <motion.div key={d.title} variants={fadeUp} className="flex flex-col gap-4">
-                  <div className="bg-gray-800/50 rounded-2xl p-6 border border-white/10 hover:border-indigo-500/40 hover:bg-gray-800/80 transition-all duration-300">
+                  <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-white/10 hover:border-indigo-500/40 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300">
                     <div className="flex items-center gap-3 mb-3">
                       <span className="flex-shrink-0 text-2xl leading-none">{d.icon}</span>
-                      <h3 className="font-bold text-white leading-snug">{d.title}</h3>
+                      <h3 className="font-bold text-gray-900 dark:text-white leading-snug">{d.title}</h3>
                     </div>
-                    <p className="text-sm text-gray-400 leading-relaxed">{d.desc}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{d.desc}</p>
                   </div>
 
                   {d.video ? (
                     <VideoPlayer src={d.video.src} title={d.video.title} colorBar="bg-teal-500" />
                   ) : (
-                    <div className="rounded-2xl overflow-hidden bg-gray-900 border border-white/10 border-dashed">
+                    <div className="rounded-2xl overflow-hidden bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-white/10 border-dashed">
                       <div className="aspect-video flex flex-col items-center justify-center gap-2 p-6 text-center">
-                        <svg className="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-8 h-8 text-gray-400 dark:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                             d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
-                        <p className="text-xs text-gray-600 leading-relaxed">{d.videoNote}</p>
+                        <p className="text-xs text-gray-400 dark:text-gray-600 leading-relaxed">{d.videoNote}</p>
                       </div>
                     </div>
                   )}

@@ -139,14 +139,14 @@ const koreanJournals = [
 function highlightKang(text) {
   const marker = 'B. Kang'
   const parts = text.split(marker)
-  if (parts.length === 1) return <span className="text-gray-400">{text}</span>
+  if (parts.length === 1) return <span className="text-gray-500 dark:text-gray-400">{text}</span>
   return (
-    <span className="text-gray-400">
+    <span className="text-gray-500 dark:text-gray-400">
       {parts.map((part, i) => (
         <span key={i}>
           {part}
           {i < parts.length - 1 && (
-            <span className="text-green-400 font-semibold">B. Kang</span>
+            <span className="text-green-600 dark:text-green-400 font-semibold">B. Kang</span>
           )}
         </span>
       ))}
@@ -156,13 +156,13 @@ function highlightKang(text) {
 
 function SectionHeader({ label, color = 'indigo' }) {
   const styles = {
-    indigo: 'text-indigo-400 border-indigo-800/40',
-    blue:   'text-blue-400 border-blue-800/40',
+    indigo: 'text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800/40',
+    blue:   'text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800/40',
   }
   const cls = styles[color] || styles.indigo
   return (
     <motion.div variants={fadeUp} className={`flex items-center gap-4 mb-8 pb-4 border-b ${cls}`}>
-      <h2 className={`text-xl font-bold tracking-tight ${cls.split(' ')[0]}`}>{label}</h2>
+      <h2 className={`text-xl font-bold tracking-tight ${cls.split(' ').slice(0, 2).join(' ')}`}>{label}</h2>
     </motion.div>
   )
 }
@@ -187,22 +187,22 @@ function LinkIcon() {
   )
 }
 
-function JournalEntry({ num, item, journalColor = 'text-indigo-300' }) {
+function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300' }) {
   return (
     <motion.div variants={fadeUp} className="flex gap-4">
-      <span className="text-gray-600 text-sm font-mono w-6 shrink-0 pt-0.5 text-right">{num}.</span>
+      <span className="text-gray-400 dark:text-gray-600 text-sm font-mono w-6 shrink-0 pt-0.5 text-right">{num}.</span>
       <div className="flex-1">
-        <p className="text-sm text-gray-300 leading-relaxed">
+        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
           {highlightKang(item.authors)}
-          <span className="text-gray-400">, </span>
-          <span className="text-white font-medium">"{item.title}"</span>
-          <span className="text-gray-400">, </span>
+          <span className="text-gray-500 dark:text-gray-400">, </span>
+          <span className="text-gray-900 dark:text-white font-medium">"{item.title}"</span>
+          <span className="text-gray-500 dark:text-gray-400">, </span>
           <em className={`${journalColor} not-italic`}>{item.journal}</em>
-          {item.volume && <span className="text-gray-400">, {item.volume}</span>}
-          {item.pages && <span className="text-gray-400">, {item.pages}</span>}
-          <span className="text-gray-400">, {item.year}</span>
+          {item.volume && <span className="text-gray-500 dark:text-gray-400">, {item.volume}</span>}
+          {item.pages && <span className="text-gray-500 dark:text-gray-400">, {item.pages}</span>}
+          <span className="text-gray-500 dark:text-gray-400">, {item.year}</span>
           {item.note && <span className="text-gray-500 italic"> ({item.note})</span>}
-          <span className="text-gray-400">.</span>
+          <span className="text-gray-500 dark:text-gray-400">.</span>
         </p>
         {item.coNote && (
           <p className="text-xs text-gray-500 italic mt-0.5">{item.coNote}</p>
@@ -210,13 +210,13 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-300' }) {
         <div className="flex gap-2 mt-1.5 flex-wrap">
           {item.pdf && (
             <a href={item.pdf} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-indigo-950/70 text-indigo-400 border border-indigo-800/50 hover:bg-indigo-900/70 hover:text-indigo-300 transition-colors">
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/70 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
               <PdfIcon /> PDF
             </a>
           )}
           {item.doi && (
             <a href={item.doi} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-gray-800/70 text-gray-400 border border-white/10 hover:text-gray-200 hover:border-white/20 transition-colors">
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-800/70 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-white/20 transition-colors">
               <LinkIcon /> DOI
             </a>
           )}
@@ -228,7 +228,7 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-300' }) {
 
 function PageHeader() {
   return (
-    <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
+    <section className="pt-32 pb-10 bg-white dark:bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -239,10 +239,10 @@ function PageHeader() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial="hidden" animate="visible" variants={stagger}>
           <motion.h1 variants={fadeUp}
-            className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
+            className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.05] mb-5">
             Publications
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-gray-400 text-lg max-w-2xl leading-relaxed">
+          <motion.p variants={fadeUp} className="text-gray-500 dark:text-gray-400 text-lg max-w-2xl leading-relaxed">
             Peer-reviewed articles and other scholarly works.
           </motion.p>
         </motion.div>
@@ -256,15 +256,15 @@ export default function PublicationsPage() {
     <>
       <PageHeader />
 
-      <section className="py-20 bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <section className="py-10 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
           {/* International Journals */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
             <SectionHeader label="International Journals" color="indigo" />
             <div className="space-y-5">
               {internationalJournals.map((item, i) => (
-                <JournalEntry key={i} num={internationalJournals.length - i} item={item} journalColor="text-indigo-300" />
+                <JournalEntry key={i} num={internationalJournals.length - i} item={item} journalColor="text-indigo-500 dark:text-indigo-300" />
               ))}
             </div>
           </motion.div>
@@ -274,10 +274,10 @@ export default function PublicationsPage() {
             <SectionHeader label="Korean Journals" color="blue" />
             <div className="space-y-5">
               {koreanJournals.map((item, i) => (
-                <JournalEntry key={i} num={koreanJournals.length - i} item={item} journalColor="text-blue-300" />
+                <JournalEntry key={i} num={koreanJournals.length - i} item={item} journalColor="text-blue-500 dark:text-blue-300" />
               ))}
             </div>
-            <p className="text-xs text-gray-600 mt-6">* corresponding author</p>
+            <p className="text-xs text-gray-400 dark:text-gray-600 mt-6">* corresponding author</p>
           </motion.div>
 
         </div>

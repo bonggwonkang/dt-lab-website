@@ -8,7 +8,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } }
 
 function PageHeader() {
   return (
-    <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
+    <section className="pt-32 pb-10 bg-white dark:bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -19,7 +19,7 @@ function PageHeader() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial="hidden" animate="visible" variants={stagger}>
           <motion.h1 variants={fadeUp}
-            className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
+            className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.05] mb-5">
             Book
           </motion.h1>
         </motion.div>
@@ -34,7 +34,7 @@ export default function BookPage() {
     <>
       <PageHeader />
 
-      <section className="py-24 bg-gray-900">
+      <section className="py-12 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
@@ -42,7 +42,7 @@ export default function BookPage() {
           >
             {/* Cover */}
             <motion.div variants={fadeUp} className="md:col-span-1">
-              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/40 bg-gray-800 aspect-[3/4] flex items-center justify-center ring-1 ring-white/10">
+              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/10 dark:shadow-black/40 bg-gray-200 dark:bg-gray-800 aspect-[3/4] flex items-center justify-center ring-1 ring-gray-200 dark:ring-white/10">
                 <img
                   src={`${base}images/book-cover.jpg`}
                   alt="Production Logistics System: Simulation Modeling"
@@ -73,7 +73,7 @@ export default function BookPage() {
                 </a>
                 <a href="https://simpl-lab.github.io/"
                   target="_blank" rel="noreferrer"
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium rounded-xl transition-colors text-sm border border-white/10">
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-xl transition-colors text-sm border border-gray-200 dark:border-white/10">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -87,11 +87,11 @@ export default function BookPage() {
             <motion.div variants={fadeUp} className="md:col-span-2 space-y-10">
               <div>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="px-2.5 py-0.5 bg-amber-950/60 text-amber-400 text-xs font-semibold rounded-full border border-amber-800/50">Textbook</span>
-                  <span className="px-2.5 py-0.5 bg-gray-800 text-gray-400 text-xs font-medium rounded-full border border-white/10">2025</span>
-                  <span className="px-2.5 py-0.5 bg-gray-800 text-gray-400 text-xs font-medium rounded-full border border-white/10">Kyobo Book Centre</span>
+                  <span className="px-2.5 py-0.5 bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 text-xs font-semibold rounded-full border border-amber-200 dark:border-amber-800/50">Textbook</span>
+                  <span className="px-2.5 py-0.5 bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium rounded-full border border-gray-200 dark:border-white/10">2025</span>
+                  <span className="px-2.5 py-0.5 bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-medium rounded-full border border-gray-200 dark:border-white/10">Kyobo Book Centre</span>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-white leading-snug mb-1">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white leading-snug mb-1">
                   생산물류시스템: 시뮬레이션 모델링
                 </h2>
                 <p className="text-gray-500 text-sm mb-1">Production Logistics System: Simulation Modeling</p>
@@ -100,10 +100,10 @@ export default function BookPage() {
 
               <div>
                 <h3 className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-4">About</h3>
-                <p className="text-gray-400 leading-relaxed text-sm mb-3">
+                <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm mb-3">
                   This textbook introduces discrete-event simulation (DES) modeling using Siemens Tecnomatix Plant Simulation, focusing on production and logistics systems in semiconductor, display, and automotive manufacturing.
                 </p>
-                <p className="text-gray-400 leading-relaxed text-sm">
+                <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
                   The book covers object-based modeling, SimTalk programming, statistical input/output analysis, and real-world case studies across 8 chapters.
                 </p>
               </div>
@@ -118,7 +118,7 @@ export default function BookPage() {
                     'SimTalk programming for system interactions',
                     'Statistical input/output analysis',
                   ].map(t => (
-                    <li key={t} className="flex items-start gap-3 text-sm text-gray-400">
+                    <li key={t} className="flex items-start gap-3 text-sm text-gray-500 dark:text-gray-400">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-500 flex-shrink-0" />
                       {t}
                     </li>
@@ -139,11 +139,11 @@ export default function BookPage() {
                     'Production & Logistics System Types',
                     'Queuing Theory & Case Studies',
                   ].map((c, i) => (
-                    <div key={c} className="flex items-start gap-3 p-3 rounded-lg bg-gray-800/60 border border-white/10">
+                    <div key={c} className="flex items-start gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-white/10">
                       <span className="text-xs font-black text-violet-500 mt-0.5 w-5 flex-shrink-0">
                         {String(i + 1).padStart(2, '0')}
                       </span>
-                      <span className="text-xs text-gray-300 font-medium leading-snug">{c}</span>
+                      <span className="text-xs text-gray-600 dark:text-gray-300 font-medium leading-snug">{c}</span>
                     </div>
                   ))}
                 </div>

@@ -153,13 +153,13 @@ const items = [
 ]
 
 const typeStyle = {
-  journal:       { dot: 'bg-indigo-500',  badge: 'bg-indigo-950/60 text-indigo-400 border border-indigo-800/50'  },
-  conference:    { dot: 'bg-teal-500',    badge: 'bg-teal-950/60 text-teal-400 border border-teal-800/50'        },
-  book:          { dot: 'bg-amber-500',   badge: 'bg-amber-950/60 text-amber-400 border border-amber-800/50'     },
-  patent:        { dot: 'bg-violet-500',  badge: 'bg-violet-950/60 text-violet-400 border border-violet-800/50'  },
-  funding:       { dot: 'bg-green-500',   badge: 'bg-green-950/60 text-green-400 border border-green-800/50'     },
-  collaboration: { dot: 'bg-rose-400',    badge: 'bg-rose-950/60 text-rose-400 border border-rose-800/50'        },
-  award:         { dot: 'bg-yellow-400',  badge: 'bg-yellow-950/60 text-yellow-400 border border-yellow-700/50'  },
+  journal:       { dot: 'bg-indigo-500',  badge: 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50'  },
+  conference:    { dot: 'bg-teal-500',    badge: 'bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 border border-teal-200 dark:border-teal-800/50'        },
+  book:          { dot: 'bg-amber-500',   badge: 'bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/50'     },
+  patent:        { dot: 'bg-violet-500',  badge: 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 border border-violet-200 dark:border-violet-800/50'  },
+  funding:       { dot: 'bg-green-500',   badge: 'bg-green-50 dark:bg-green-950/60 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-800/50'     },
+  collaboration: { dot: 'bg-rose-400',    badge: 'bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/50'        },
+  award:         { dot: 'bg-yellow-400',  badge: 'bg-yellow-50 dark:bg-yellow-950/60 text-yellow-600 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-700/50'  },
 }
 
 function groupByYear(list) {
@@ -175,11 +175,11 @@ function groupByYear(list) {
 function PhotoPlaceholder() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-2">
-      <svg className="w-10 h-10 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-10 h-10 text-gray-400 dark:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.2}
           d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
       </svg>
-      <span className="text-xs text-gray-700 font-medium tracking-wide">Photo coming soon</span>
+      <span className="text-xs text-gray-400 dark:text-gray-700 font-medium tracking-wide">Photo coming soon</span>
     </div>
   )
 }
@@ -189,16 +189,16 @@ function renderDesc(desc) {
   const marker = 'Abstract)'
   const idx = desc.indexOf(marker)
   if (idx === -1) {
-    return <p className="text-sm text-gray-300 leading-relaxed">{desc}</p>
+    return <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{desc}</p>
   }
   const before = desc.slice(0, idx).trim()
   const after = desc.slice(idx + marker.length).trim()
   return (
     <>
-      {before && <p className="text-sm text-gray-300 leading-relaxed">{before}</p>}
-      <div className="mt-4 pt-4 border-t border-white/10">
+      {before && <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{before}</p>}
+      <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
         <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Abstract</span>
-        <p className="text-sm text-gray-300 leading-relaxed mt-2">{after}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mt-2">{after}</p>
       </div>
     </>
   )
@@ -225,11 +225,11 @@ function NewsModal({ item, onClose }) {
       onClick={onClose}
     >
       <div
-        className="bg-gray-900 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/10 shadow-2xl"
+        className="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-white/10 shadow-2xl"
         onClick={e => e.stopPropagation()}
       >
         {showImg && (
-          <div className="bg-gray-800 overflow-hidden rounded-t-2xl flex items-center justify-center">
+          <div className="bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-t-2xl flex items-center justify-center">
             <img
               src={`${base}images/${item.img}`}
               alt={item.title}
@@ -239,7 +239,7 @@ function NewsModal({ item, onClose }) {
           </div>
         )}
         {!showImg && item.img && (
-          <div className="aspect-video bg-gray-800/80 rounded-t-2xl">
+          <div className="aspect-video bg-gray-100 dark:bg-gray-800/80 rounded-t-2xl">
             <PhotoPlaceholder />
           </div>
         )}
@@ -254,7 +254,7 @@ function NewsModal({ item, onClose }) {
             </div>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-white bg-white/5 hover:bg-white/15 rounded-full p-1.5 transition-colors flex-shrink-0 ml-4"
+              className="text-gray-500 hover:text-gray-900 dark:hover:text-white bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/15 rounded-full p-1.5 transition-colors flex-shrink-0 ml-4"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -262,7 +262,7 @@ function NewsModal({ item, onClose }) {
             </button>
           </div>
 
-          <h2 className="font-bold text-white text-base leading-snug mb-4">{item.title}</h2>
+          <h2 className="font-bold text-gray-900 dark:text-white text-base leading-snug mb-4">{item.title}</h2>
 
           {renderDesc(item.desc)}
 
@@ -294,10 +294,10 @@ function NewsCard({ item, onCardClick }) {
 
   return (
     <motion.div variants={fadeUp}
-      className="bg-gray-800/50 rounded-2xl border border-white/10 hover:border-indigo-500/30 hover:bg-gray-800/80 transition-all duration-200 overflow-hidden flex flex-col cursor-pointer group"
+      className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-white/10 hover:border-indigo-500/30 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-200 overflow-hidden flex flex-col cursor-pointer group"
       onClick={() => onCardClick(item)}
     >
-      <div className="aspect-video bg-gray-900/80 flex-shrink-0 overflow-hidden">
+      <div className="aspect-video bg-gray-100 dark:bg-gray-900/80 flex-shrink-0 overflow-hidden">
         {showImg ? (
           <img
             src={`${base}images/${item.img}`}
@@ -318,9 +318,9 @@ function NewsCard({ item, onCardClick }) {
           <span className="text-xs text-gray-500">{item.date}</span>
         </div>
 
-        <p className="font-semibold text-gray-100 text-sm leading-snug flex-1">{item.title}</p>
+        <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm leading-snug flex-1">{item.title}</p>
 
-        <p className="text-xs text-gray-600 mt-3">Click to read more →</p>
+        <p className="text-xs text-gray-400 dark:text-gray-600 mt-3">Click to read more →</p>
       </div>
     </motion.div>
   )
@@ -328,7 +328,7 @@ function NewsCard({ item, onCardClick }) {
 
 function PageHeader() {
   return (
-    <section className="pt-32 pb-20 bg-gray-950 relative overflow-hidden">
+    <section className="pt-32 pb-10 bg-white dark:bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
@@ -339,7 +339,7 @@ function PageHeader() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial="hidden" animate="visible" variants={stagger}>
           <motion.h1 variants={fadeUp}
-            className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.05] mb-5">
+            className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.05] mb-5">
             News
           </motion.h1>
         </motion.div>
@@ -361,17 +361,17 @@ export default function NewsPage() {
       )}
       <PageHeader />
 
-      <section className="py-24 bg-gray-900">
+      <section className="py-12 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Filter bar */}
-          <div className="flex flex-wrap gap-2 mb-14">
+          <div className="flex flex-wrap gap-2 mb-8">
             <button
               onClick={() => setActiveFilter('all')}
               className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition-colors ${
                 activeFilter === 'all'
-                  ? 'bg-white/15 text-white border-white/30'
-                  : 'text-gray-400 border-white/10 hover:text-gray-200 hover:border-white/20'
+                  ? 'bg-black/5 dark:bg-white/15 text-gray-900 dark:text-white border-gray-300 dark:border-white/30'
+                  : 'text-gray-500 dark:text-gray-400 border-gray-200 dark:border-white/10 hover:text-gray-800 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-white/20'
               }`}
             >
               All
@@ -381,7 +381,7 @@ export default function NewsPage() {
                 key={k}
                 onClick={() => setActiveFilter(k)}
                 className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold border transition-colors capitalize ${
-                  activeFilter === k ? v.badge : 'text-gray-400 border-white/10 hover:text-gray-200 hover:border-white/20'
+                  activeFilter === k ? v.badge : 'text-gray-500 dark:text-gray-400 border-gray-200 dark:border-white/10 hover:text-gray-800 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-white/20'
                 }`}
               >
                 <span className={`w-2.5 h-2.5 rounded-full ${v.dot}`} />
@@ -391,7 +391,7 @@ export default function NewsPage() {
           </div>
 
           {/* Year sections with card grids */}
-          <div key={activeFilter} className="space-y-16">
+          <div key={activeFilter} className="space-y-10">
             {years.length === 0 && (
               <p className="text-gray-500 text-sm text-center py-12">No items for this filter.</p>
             )}
@@ -401,8 +401,8 @@ export default function NewsPage() {
                 variants={stagger}
               >
                 <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8">
-                  <span className="text-3xl font-black text-white">{year}</span>
-                  <span className="flex-1 h-px bg-white/10" />
+                  <span className="text-3xl font-black text-gray-900 dark:text-white">{year}</span>
+                  <span className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
                   <span className="text-sm text-gray-500">
                     {grouped[year].length} item{grouped[year].length > 1 ? 's' : ''}
                   </span>
