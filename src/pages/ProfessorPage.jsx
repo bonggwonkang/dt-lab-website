@@ -134,17 +134,18 @@ export default function ProfessorPage() {
 
               {/* Education & Experience */}
               <div>
-                <h3 className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-4">
+                <h3 className="text-xs font-semibold text-indigo-400 tracking-[0.2em] uppercase mb-6">
                   Education &amp; Experience
                 </h3>
-                <ul className="space-y-2">
+                <div className="relative pl-6 border-l-2 border-gray-200 dark:border-white/10 space-y-6">
                   {experience.map((e, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-300 leading-snug">
-                      <span className="mt-1.5 w-1 h-1 rounded-full bg-indigo-500 flex-shrink-0" />
-                      <span>
+                    <div key={i} className="relative">
+                      <span className="absolute -left-4 top-2 w-3 h-3 rounded-full border-2 border-white dark:border-gray-900 bg-indigo-500" />
+                      <p className="text-xs font-semibold text-indigo-400 mb-0.5">{e.year}</p>
+                      <p className="font-semibold text-gray-900 dark:text-white text-sm leading-snug">
                         {e.title}
                         {e.advisor && (
-                          <span className="text-gray-400 dark:text-gray-500">
+                          <span className="font-normal text-gray-500 dark:text-gray-400">
                             {' ('}
                             <a href={e.advisorUrl} target="_blank" rel="noopener noreferrer"
                               className="text-indigo-400 hover:text-indigo-300 transition-colors">
@@ -153,11 +154,11 @@ export default function ProfessorPage() {
                             {')'}
                           </span>
                         )}
-                        <span className="text-gray-400 dark:text-gray-500"> — {e.org}, {e.year}</span>
-                      </span>
-                    </li>
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{e.org}</p>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
 
               {/* Review Services */}

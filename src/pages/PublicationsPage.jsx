@@ -136,7 +136,7 @@ const koreanJournals = [
   },
 ]
 
-function highlightKang(text) {
+function highlightKang(text, color) {
   const marker = 'B. Kang'
   const parts = text.split(marker)
   if (parts.length === 1) return <span className="text-gray-500 dark:text-gray-400">{text}</span>
@@ -146,7 +146,7 @@ function highlightKang(text) {
         <span key={i}>
           {part}
           {i < parts.length - 1 && (
-            <span className="text-green-600 dark:text-green-400 font-semibold">B. Kang</span>
+            <span className={`${color} font-semibold`}>B. Kang</span>
           )}
         </span>
       ))}
@@ -192,7 +192,7 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
     <motion.div variants={fadeUp}>
       <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8">
         <span className="text-gray-900 dark:text-white font-mono -ml-8">[{num}] </span>
-        {highlightKang(item.authors)}
+        {highlightKang(item.authors, journalColor)}
         <span className="text-gray-500 dark:text-gray-400">, </span>
         <span className="text-gray-900 dark:text-white font-medium">"{item.title}"</span>
         <span className="text-gray-500 dark:text-gray-400">, </span>
@@ -207,7 +207,7 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
           <>
             {' '}
             <a href={item.pdf} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium align-middle bg-rose-50 dark:bg-rose-950/70 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/50 hover:bg-rose-100 dark:hover:bg-rose-900/70 hover:text-rose-700 dark:hover:text-rose-300 transition-colors">
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium align-middle bg-white dark:bg-white/10 text-gray-700 dark:text-white border border-gray-300 dark:border-white/20 hover:bg-gray-100 dark:hover:bg-white/20 transition-colors">
               <PdfIcon /> PDF
             </a>
           </>
@@ -216,7 +216,7 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
           <>
             {' '}
             <a href={item.doi} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium align-middle bg-rose-50 dark:bg-rose-950/70 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/50 hover:bg-rose-100 dark:hover:bg-rose-900/70 hover:text-rose-700 dark:hover:text-rose-300 transition-colors">
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium align-middle bg-white dark:bg-white/10 text-gray-700 dark:text-white border border-gray-300 dark:border-white/20 hover:bg-gray-100 dark:hover:bg-white/20 transition-colors">
               <LinkIcon /> DOI
             </a>
           </>
@@ -275,7 +275,6 @@ export default function PublicationsPage() {
                   <JournalEntry key={i} num={i + 1} item={item} journalColor="text-blue-500 dark:text-blue-300" />
                 ))}
               </div>
-              <p className="text-xs text-gray-400 dark:text-gray-600 mt-6">* corresponding author</p>
             </motion.div>
 
           </div>
