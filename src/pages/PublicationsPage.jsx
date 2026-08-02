@@ -189,38 +189,36 @@ function LinkIcon() {
 
 function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300' }) {
   return (
-    <motion.div variants={fadeUp} className="flex gap-4">
-      <span className="text-gray-400 dark:text-gray-600 text-sm font-mono w-6 shrink-0 pt-0.5 text-right">{num}.</span>
-      <div className="flex-1">
-        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-          {highlightKang(item.authors)}
-          <span className="text-gray-500 dark:text-gray-400">, </span>
-          <span className="text-gray-900 dark:text-white font-medium">"{item.title}"</span>
-          <span className="text-gray-500 dark:text-gray-400">, </span>
-          <em className={`${journalColor} not-italic`}>{item.journal}</em>
-          {item.volume && <span className="text-gray-500 dark:text-gray-400">, {item.volume}</span>}
-          {item.pages && <span className="text-gray-500 dark:text-gray-400">, {item.pages}</span>}
-          <span className="text-gray-500 dark:text-gray-400">, {item.year}</span>
-          {item.note && <span className="text-gray-500 italic"> ({item.note})</span>}
-          <span className="text-gray-500 dark:text-gray-400">.</span>
-        </p>
-        {item.coNote && (
-          <p className="text-xs text-gray-500 italic mt-0.5">{item.coNote}</p>
+    <motion.div variants={fadeUp}>
+      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+        <span className="text-gray-400 dark:text-gray-600 font-mono">{num}. </span>
+        {highlightKang(item.authors)}
+        <span className="text-gray-500 dark:text-gray-400">, </span>
+        <span className="text-gray-900 dark:text-white font-medium">"{item.title}"</span>
+        <span className="text-gray-500 dark:text-gray-400">, </span>
+        <em className={`${journalColor} not-italic`}>{item.journal}</em>
+        {item.volume && <span className="text-gray-500 dark:text-gray-400">, {item.volume}</span>}
+        {item.pages && <span className="text-gray-500 dark:text-gray-400">, {item.pages}</span>}
+        <span className="text-gray-500 dark:text-gray-400">, {item.year}</span>
+        {item.note && <span className="text-gray-500 italic"> ({item.note})</span>}
+        <span className="text-gray-500 dark:text-gray-400">.</span>
+      </p>
+      {item.coNote && (
+        <p className="text-xs text-gray-500 italic mt-0.5">{item.coNote}</p>
+      )}
+      <div className="flex gap-2 mt-1.5 flex-wrap">
+        {item.pdf && (
+          <a href={item.pdf} target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/70 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
+            <PdfIcon /> PDF
+          </a>
         )}
-        <div className="flex gap-2 mt-1.5 flex-wrap">
-          {item.pdf && (
-            <a href={item.pdf} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/70 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">
-              <PdfIcon /> PDF
-            </a>
-          )}
-          {item.doi && (
-            <a href={item.doi} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-800/70 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-white/20 transition-colors">
-              <LinkIcon /> DOI
-            </a>
-          )}
-        </div>
+        {item.doi && (
+          <a href={item.doi} target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-800/70 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-white/20 transition-colors">
+            <LinkIcon /> DOI
+          </a>
+        )}
       </div>
     </motion.div>
   )
@@ -228,7 +226,7 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
 
 function PageHeader() {
   return (
-    <section className="pt-32 pb-10 bg-white dark:bg-gray-950 relative overflow-hidden">
+    <section className="pt-24 pb-10 bg-white dark:bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',

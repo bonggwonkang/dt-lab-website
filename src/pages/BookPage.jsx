@@ -8,7 +8,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } }
 
 function PageHeader() {
   return (
-    <section className="pt-32 pb-10 bg-white dark:bg-gray-950 relative overflow-hidden">
+    <section className="pt-24 pb-10 bg-white dark:bg-gray-950 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
