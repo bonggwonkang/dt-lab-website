@@ -15,12 +15,12 @@ const experience = [
 ]
 
 const teaching = [
-  { course: 'Facilities Planning and Material Handling Systems', term: 'Spring 2025', uni: 'Pusan National University' },
-  { course: 'Digital Twin and Simulation Modeling',             term: 'Spring 2025', uni: 'Pukyong National University' },
-  { course: 'Introduction to Digital Twins',                    term: '2026',        uni: 'University of Washington (invited lectures over two weeks)' },
-  { course: 'Probability and Statistics',                       term: 'Spring 2026', uni: 'Kumoh National Institute of Technology' },
-  { course: 'Creative Thinking for Engineering',                term: 'Spring 2026', uni: 'Kumoh National Institute of Technology' },
-  { course: 'Affective Quality Engineering',                    term: 'Spring 2026', uni: 'Kumoh National Institute of Technology' },
+  { course: 'Facilities Planning and Material Handling Systems', term: '2025 Spring', uni: 'PNU' },
+  { course: 'Digital Twin and Simulation Modeling',             term: '2025 Spring', uni: 'PKNU' },
+  { course: 'Introduction to Digital Twins',                    term: '2026',        uni: 'UW', note: 'invited lectures over two weeks' },
+  { course: 'Probability and Statistics',                       term: '2026 Spring', uni: 'KIT' },
+  { course: 'Creative Thinking for Engineering',                term: '2026 Spring', uni: 'KIT' },
+  { course: 'Affective Quality Engineering',                    term: '2026 Spring', uni: 'KIT' },
 ]
 
 const reviewJournals = [
@@ -183,7 +183,7 @@ export default function ProfessorPage() {
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-teal-500 flex-shrink-0" />
                       <span>
                         {t.course}
-                        <span className="text-gray-400 dark:text-gray-500"> — {t.uni} ({t.term})</span>
+                        <span className="text-gray-400 dark:text-gray-500"> ({t.uni}, {t.term}{t.note ? `, ${t.note}` : ''})</span>
                       </span>
                     </li>
                   ))}

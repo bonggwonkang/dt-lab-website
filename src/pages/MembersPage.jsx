@@ -92,7 +92,7 @@ export default function MembersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
             className="max-w-3xl">
-            <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-bold text-indigo-400 mb-4">
               Join the Digital Transformation Lab!
             </motion.h2>
             <motion.p variants={fadeUp} className="text-gray-600 dark:text-gray-200 leading-relaxed mb-6 text-base">
