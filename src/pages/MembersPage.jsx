@@ -98,7 +98,7 @@ export default function MembersPage() {
               The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.
             </motion.p>
             <motion.div variants={fadeUp}>
-              <p className="text-xs font-semibold text-gray-500 dark:text-gray-300 tracking-wide mb-3">Student Activities</p>
+              <p className="text-base font-semibold text-gray-500 dark:text-gray-300 tracking-wide mb-3">Student Activities</p>
               <ul className="space-y-2">
                 {activities.map(a => (
                   <li key={a} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-200">
@@ -117,7 +117,7 @@ export default function MembersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
             <motion.h2 variants={fadeUp}
-              className="text-xs font-semibold text-indigo-400 tracking-wide mb-4">
+              className="text-base font-semibold text-indigo-400 tracking-wide mb-4">
               Principal Investigator
             </motion.h2>
             <motion.div variants={fadeUp}
@@ -164,7 +164,7 @@ export default function MembersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
             <motion.h2 variants={fadeUp}
-              className="text-xs font-semibold text-teal-400 tracking-wide mb-5">
+              className="text-base font-semibold text-teal-400 tracking-wide mb-5">
               Researchers
             </motion.h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">

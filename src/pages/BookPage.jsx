@@ -94,7 +94,7 @@ export default function BookPage() {
               </div>
 
               <div>
-                <h3 className="text-xs font-semibold text-indigo-400 tracking-wide mb-4">About</h3>
+                <h3 className="text-base font-semibold text-indigo-400 tracking-wide mb-4">About</h3>
                 <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm mb-3">
                   Modern production and logistics systems, such as semiconductor and display fabs, automotive assembly lines, and shipyards, consist of highly complex and large-scale processes where a single material interacts with numerous processing, storage, and transport facilities. To cope with such complexity and uncertainty, industries have increasingly adopted the concept of the digital twin.
                 </p>
@@ -107,7 +107,7 @@ export default function BookPage() {
               </div>
 
               <div>
-                <h3 className="text-xs font-semibold text-violet-400 tracking-wide mb-4">Table of Contents</h3>
+                <h3 className="text-base font-semibold text-violet-400 tracking-wide mb-4">Table of Contents</h3>
                 <ul className="space-y-1.5">
                   {[
                     'Introduction to Discrete-Event Simulation',

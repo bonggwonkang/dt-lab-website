@@ -197,7 +197,7 @@ function renderDesc(desc) {
     <>
       {before && <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{before}</p>}
       <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
-        <span className="text-[10px] font-bold text-indigo-400 tracking-wide">Abstract</span>
+        <span className="text-sm font-bold text-indigo-400 tracking-wide">Abstract</span>
         <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mt-2">{after}</p>
       </div>
     </>
@@ -319,8 +319,6 @@ function NewsCard({ item, onCardClick }) {
         </div>
 
         <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm leading-snug flex-1">{item.title}</p>
-
-        <p className="text-xs text-gray-400 dark:text-gray-600 mt-3">Click to read more →</p>
       </div>
     </motion.div>
   )
@@ -401,11 +399,9 @@ export default function NewsPage() {
                 variants={stagger}
               >
                 <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8">
-                  <span className="text-3xl font-black text-gray-900 dark:text-white">{year}</span>
+                  <span className="text-3xl font-black text-white">{year}</span>
                   <span className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
-                  <span className="text-sm text-gray-500">
-                    {grouped[year].length} item{grouped[year].length > 1 ? 's' : ''}
-                  </span>
+                  <span className="text-sm text-gray-500">{grouped[year].length}</span>
                 </motion.div>
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

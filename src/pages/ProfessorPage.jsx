@@ -134,7 +134,7 @@ export default function ProfessorPage() {
 
               {/* Education & Experience */}
               <div>
-                <h3 className="text-xs font-semibold text-indigo-400 tracking-wide mb-6">
+                <h3 className="text-base font-semibold text-indigo-400 tracking-wide mb-6">
                   Education &amp; Experience
                 </h3>
                 <div className="relative pl-6 border-l-2 border-gray-200 dark:border-white/10 space-y-6">
@@ -163,7 +163,7 @@ export default function ProfessorPage() {
 
               {/* Review Services */}
               <div>
-                <h3 className="text-xs font-semibold text-violet-400 tracking-wide mb-4">Review Services</h3>
+                <h3 className="text-base font-semibold text-violet-400 tracking-wide mb-4">Review Services</h3>
                 <ul className="space-y-1.5">
                   {reviewJournals.map((j, i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm text-gray-600 dark:text-gray-300">
@@ -176,7 +176,7 @@ export default function ProfessorPage() {
 
               {/* Teaching */}
               <div>
-                <h3 className="text-xs font-semibold text-teal-400 tracking-wide mb-4">Teaching</h3>
+                <h3 className="text-base font-semibold text-teal-400 tracking-wide mb-4">Teaching</h3>
                 <ul className="space-y-2">
                   {teaching.map((t, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-300 leading-snug">
