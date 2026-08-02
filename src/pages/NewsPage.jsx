@@ -401,7 +401,6 @@ export default function NewsPage() {
                 <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8">
                   <span className="text-3xl font-black text-white">{year}</span>
                   <span className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
-                  <span className="text-sm text-gray-500">{grouped[year].length}</span>
                 </motion.div>
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
