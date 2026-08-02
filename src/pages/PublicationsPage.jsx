@@ -190,8 +190,8 @@ function LinkIcon() {
 function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300' }) {
   return (
     <motion.div variants={fadeUp}>
-      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-        <span className="text-gray-400 dark:text-gray-600 font-mono">{num}. </span>
+      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8 -indent-8">
+        <span className="text-gray-400 dark:text-gray-600 font-mono">[{num}] </span>
         {highlightKang(item.authors)}
         <span className="text-gray-500 dark:text-gray-400">, </span>
         <span className="text-gray-900 dark:text-white font-medium">"{item.title}"</span>
@@ -255,29 +255,31 @@ export default function PublicationsPage() {
       <PageHeader />
 
       <section className="py-10 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl space-y-10">
 
-          {/* International Journals */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
-            <SectionHeader label="International Journals" color="indigo" />
-            <div className="space-y-5">
-              {internationalJournals.map((item, i) => (
-                <JournalEntry key={i} num={internationalJournals.length - i} item={item} journalColor="text-indigo-500 dark:text-indigo-300" />
-              ))}
-            </div>
-          </motion.div>
+            {/* International Journals */}
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
+              <SectionHeader label="International Journals" color="indigo" />
+              <div className="space-y-5">
+                {internationalJournals.map((item, i) => (
+                  <JournalEntry key={i} num={i + 1} item={item} journalColor="text-indigo-500 dark:text-indigo-300" />
+                ))}
+              </div>
+            </motion.div>
 
-          {/* Korean Journals */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
-            <SectionHeader label="Korean Journals" color="blue" />
-            <div className="space-y-5">
-              {koreanJournals.map((item, i) => (
-                <JournalEntry key={i} num={koreanJournals.length - i} item={item} journalColor="text-blue-500 dark:text-blue-300" />
-              ))}
-            </div>
-            <p className="text-xs text-gray-400 dark:text-gray-600 mt-6">* corresponding author</p>
-          </motion.div>
+            {/* Korean Journals */}
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
+              <SectionHeader label="Korean Journals" color="blue" />
+              <div className="space-y-5">
+                {koreanJournals.map((item, i) => (
+                  <JournalEntry key={i} num={i + 1} item={item} journalColor="text-blue-500 dark:text-blue-300" />
+                ))}
+              </div>
+              <p className="text-xs text-gray-400 dark:text-gray-600 mt-6">* corresponding author</p>
+            </motion.div>
 
+          </div>
         </div>
       </section>
     </>
