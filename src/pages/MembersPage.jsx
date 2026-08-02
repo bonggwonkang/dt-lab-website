@@ -19,7 +19,6 @@ const professor = {
   affiliation: 'Dept. of Industrial Engineering\nKumoh National Institute of Technology',
   email: 'kbk@kumoh.ac.kr',
   photo: 'professor.jpg',
-  interests: ['Simulation modeling, analysis, optimization, and calibration'],
   links: [
     { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=QLqVgY0AAAAJ&hl=ko' },
     { label: 'ResearchGate',   url: 'https://www.researchgate.net/profile/Bonggwon-Kang' },
@@ -138,13 +137,6 @@ export default function MembersPage() {
                   </svg>
                   {professor.email}
                 </a>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {professor.interests.map(i => (
-                    <span key={i} className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 text-xs font-medium rounded-lg border border-indigo-200 dark:border-indigo-800/60">
-                      {i}
-                    </span>
-                  ))}
-                </div>
                 <div className="flex gap-2">
                   {professor.links.map(l => (
                     <a key={l.label} href={l.url} target="_blank" rel="noreferrer"
