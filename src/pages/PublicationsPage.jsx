@@ -256,7 +256,7 @@ export default function PublicationsPage() {
 
       <section className="py-10 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl space-y-10">
+          <div className="space-y-10">
 
             {/* International Journals */}
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
