@@ -165,8 +165,8 @@ export default function ProfessorPage() {
                 <h3 className="text-base font-semibold text-violet-400 tracking-wide mb-4">Review Services</h3>
                 <ul className="space-y-1.5">
                   {reviewJournals.map((j, i) => (
-                    <li key={i} className="flex items-center gap-2.5 text-sm text-gray-600 dark:text-gray-300">
-                      <span className="w-1 h-1 rounded-full bg-violet-500 flex-shrink-0" />
+                    <li key={i} className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+                      <span className="font-mono font-bold text-white flex-shrink-0">[{i + 1}]</span>
                       {j}
                     </li>
                   ))}
@@ -178,8 +178,8 @@ export default function ProfessorPage() {
                 <h3 className="text-base font-semibold text-teal-400 tracking-wide mb-4">Teaching</h3>
                 <ul className="space-y-2">
                   {teaching.map((t, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-300 leading-snug">
-                      <span className="mt-1.5 w-1 h-1 rounded-full bg-teal-500 flex-shrink-0" />
+                    <li key={i} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300 leading-snug">
+                      <span className="font-mono font-bold text-white flex-shrink-0">[{i + 1}]</span>
                       <span>
                         {t.course}
                         <span className="text-gray-400 dark:text-gray-500"> ({t.uni}, {t.term}{t.note ? `, ${t.note}` : ''})</span>
