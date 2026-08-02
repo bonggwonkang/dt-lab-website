@@ -78,7 +78,7 @@ export default function BookPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
-                  Practice Code (simpl-lab.github.io)
+                  Practice Code
                 </a>
               </div>
             </motion.div>
@@ -109,24 +109,6 @@ export default function BookPage() {
                 <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
                   This textbook introduces systematic modeling methods using Siemens Tecnomatix Plant Simulation. Building on experiences in semiconductor and display manufacturing, it emphasizes modeling skills for production and logistics processes. The book covers basic simulation concepts, object-based modeling, and SimTalk programming for system interaction and statistical input/output analysis.
                 </p>
-              </div>
-
-              <div>
-                <h3 className="text-xs font-semibold text-teal-400 tracking-[0.2em] uppercase mb-4">Key Topics</h3>
-                <ul className="space-y-2">
-                  {[
-                    'Discrete-event simulation (DES) fundamentals and applications',
-                    'Digital twin concepts in manufacturing',
-                    'Object-based modeling techniques',
-                    'SimTalk programming for system interactions',
-                    'Statistical input/output analysis',
-                  ].map(t => (
-                    <li key={t} className="flex items-start gap-3 text-sm text-gray-500 dark:text-gray-400">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-500 flex-shrink-0" />
-                      {t}
-                    </li>
-                  ))}
-                </ul>
               </div>
 
               <div>
