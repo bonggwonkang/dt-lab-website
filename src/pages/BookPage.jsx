@@ -98,10 +98,10 @@ export default function BookPage() {
                 <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm mb-3">
                   Modern production and logistics systems, such as semiconductor and display fabs, automotive assembly lines, and shipyards, consist of highly complex and large-scale processes where a single material interacts with numerous processing, storage, and transport facilities. To cope with such complexity and uncertainty, industries have increasingly adopted the concept of the digital twin.
                 </p>
-                <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm mb-3">
+                <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm mb-3 indent-4">
                   Among various approaches, discrete-event simulation (DES) has become a core methodology, as it enables detailed modeling of time-series events and their interactions, supporting system-level evaluations. The construction of realistic simulation models requires the creation of digital counterparts of physical entities and the careful representation of their interactions in virtual space.
                 </p>
-                <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
+                <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm indent-4">
                   This textbook introduces systematic modeling methods using Siemens Tecnomatix Plant Simulation. Building on experiences in semiconductor and display manufacturing, it emphasizes modeling skills for production and logistics processes. The book covers basic simulation concepts, object-based modeling, and SimTalk programming for system interaction and statistical input/output analysis.
                 </p>
               </div>
