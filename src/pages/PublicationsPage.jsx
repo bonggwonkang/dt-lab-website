@@ -188,8 +188,8 @@ function LinkIcon() {
 }
 
 const pillStyle = {
-  indigo: 'bg-indigo-500 dark:bg-indigo-600 border-indigo-500 dark:border-indigo-600',
-  blue:   'bg-blue-500 dark:bg-blue-600 border-blue-500 dark:border-blue-600',
+  indigo: 'bg-indigo-500/80 dark:bg-indigo-600/80 border-indigo-500/80 dark:border-indigo-600/80',
+  blue:   'bg-blue-500/80 dark:bg-blue-600/80 border-blue-500/80 dark:border-blue-600/80',
 }
 
 function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300', pillColor = 'indigo' }) {
