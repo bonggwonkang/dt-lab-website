@@ -20,10 +20,10 @@ function Hero() {
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-        <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl">
+        <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-6xl">
           <motion.h1 variants={fadeUp}
             className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white leading-[1.05] mb-6 tracking-tight">
-            Welcome to the{' '}
+            Welcome to the<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-teal-400">
               Digital Transformation
             </span> Lab!
