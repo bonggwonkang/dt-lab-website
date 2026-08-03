@@ -23,11 +23,10 @@ function Hero() {
         <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl">
           <motion.h1 variants={fadeUp}
             className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white leading-[1.05] mb-6 tracking-tight">
-            Welcome to the<br />
+            Welcome to the{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-teal-400">
               Digital Transformation
-            </span><br />
-            Lab!
+            </span> Lab!
           </motion.h1>
 
           <motion.p variants={fadeUp}
