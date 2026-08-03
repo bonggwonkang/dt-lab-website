@@ -167,26 +167,6 @@ function SectionHeader({ label, color = 'indigo' }) {
   )
 }
 
-function PdfIcon() {
-  return (
-    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-      <polyline points="14 2 14 8 20 8" />
-      <line x1="16" y1="13" x2="8" y2="13" />
-      <line x1="16" y1="17" x2="8" y2="17" />
-    </svg>
-  )
-}
-
-function LinkIcon() {
-  return (
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-    </svg>
-  )
-}
-
 const pillStyle = {
   indigo: 'bg-indigo-500/80 dark:bg-indigo-600/80 border-indigo-500/80 dark:border-indigo-600/80',
   blue:   'bg-blue-500/80 dark:bg-blue-600/80 border-blue-500/80 dark:border-blue-600/80',
@@ -213,8 +193,8 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
           <>
             {' '}
             <a href={item.pdf} target="_blank" rel="noreferrer"
-              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium align-middle border text-white hover:opacity-80 transition-opacity ${pill}`}>
-              <PdfIcon /> PDF
+              className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium align-middle border text-white hover:opacity-80 transition-opacity ${pill}`}>
+              PDF
             </a>
           </>
         )}
@@ -222,8 +202,8 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
           <>
             {' '}
             <a href={item.doi} target="_blank" rel="noreferrer"
-              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium align-middle border text-white hover:opacity-80 transition-opacity ${pill}`}>
-              <LinkIcon /> DOI
+              className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium align-middle border text-white hover:opacity-80 transition-opacity ${pill}`}>
+              DOI
             </a>
           </>
         )}
