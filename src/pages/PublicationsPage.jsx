@@ -187,7 +187,13 @@ function LinkIcon() {
   )
 }
 
-function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300' }) {
+const pillStyle = {
+  indigo: 'bg-indigo-500 dark:bg-indigo-600 border-indigo-500 dark:border-indigo-600',
+  blue:   'bg-blue-500 dark:bg-blue-600 border-blue-500 dark:border-blue-600',
+}
+
+function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300', pillColor = 'indigo' }) {
+  const pill = pillStyle[pillColor] || pillStyle.indigo
   return (
     <motion.div variants={fadeUp}>
       <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8">
@@ -207,7 +213,7 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
           <>
             {' '}
             <a href={item.pdf} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium align-middle bg-white dark:bg-white/10 text-gray-700 dark:text-white border border-gray-300 dark:border-white/20 hover:bg-gray-100 dark:hover:bg-white/20 transition-colors">
+              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium align-middle border text-white hover:opacity-80 transition-opacity ${pill}`}>
               <PdfIcon /> PDF
             </a>
           </>
@@ -216,7 +222,7 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
           <>
             {' '}
             <a href={item.doi} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium align-middle bg-white dark:bg-white/10 text-gray-700 dark:text-white border border-gray-300 dark:border-white/20 hover:bg-gray-100 dark:hover:bg-white/20 transition-colors">
+              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium align-middle border text-white hover:opacity-80 transition-opacity ${pill}`}>
               <LinkIcon /> DOI
             </a>
           </>
@@ -262,7 +268,7 @@ export default function PublicationsPage() {
               <SectionHeader label="International Journals" color="indigo" />
               <div className="space-y-5">
                 {internationalJournals.map((item, i) => (
-                  <JournalEntry key={i} num={i + 1} item={item} journalColor="text-indigo-500 dark:text-indigo-300" />
+                  <JournalEntry key={i} num={i + 1} item={item} journalColor="text-indigo-500 dark:text-indigo-300" pillColor="indigo" />
                 ))}
               </div>
             </motion.div>
@@ -272,7 +278,7 @@ export default function PublicationsPage() {
               <SectionHeader label="Korean Journals" color="blue" />
               <div className="space-y-5">
                 {koreanJournals.map((item, i) => (
-                  <JournalEntry key={i} num={i + 1} item={item} journalColor="text-blue-500 dark:text-blue-300" />
+                  <JournalEntry key={i} num={i + 1} item={item} journalColor="text-blue-500 dark:text-blue-300" pillColor="blue" />
                 ))}
               </div>
             </motion.div>
