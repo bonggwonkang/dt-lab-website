@@ -310,15 +310,15 @@ function NewsCard({ item, onCardClick }) {
         )}
       </div>
 
-      <div className="p-5 flex flex-col flex-1">
-        <div className="flex flex-wrap items-center gap-2 mb-2.5">
-          <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${s.badge}`}>
+      <div className="p-3.5 flex flex-col flex-1">
+        <div className="flex flex-wrap items-center gap-1.5 mb-2">
+          <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold capitalize ${s.badge}`}>
             {item.type}
           </span>
-          <span className="text-xs text-gray-500">{item.date}</span>
+          <span className="text-[11px] text-gray-500">{item.date}</span>
         </div>
 
-        <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm leading-snug flex-1">{item.title}</p>
+        <p className="font-semibold text-gray-800 dark:text-gray-100 text-xs leading-snug flex-1 line-clamp-3">{item.title}</p>
       </div>
     </motion.div>
   )
@@ -403,7 +403,7 @@ export default function NewsPage() {
                   <span className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
                 </motion.div>
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {grouped[year].map((p, i) => (
                     <NewsCard key={i} item={p} onCardClick={setSelectedItem} />
                   ))}
