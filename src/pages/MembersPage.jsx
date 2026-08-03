@@ -28,14 +28,14 @@ const professor = {
 const students = [
   {
     name: '오가영', nameEn: 'Gayoung Oh',
-    degree: 'Undergraduate Researcher',
+    degree: 'Combined BS/MS Researcher',
     research: 'Surrogate-based decision-making',
     email: 'oh050316@kumoh.ac.kr',
     photo: 'member-oh.jpg',
   },
   {
     name: '이승빈', nameEn: 'Seungbin Lee',
-    degree: 'Undergraduate Researcher',
+    degree: 'Combined BS/MS Researcher',
     research: 'Digital twin applications for material handling systems',
     email: 'hctoto2005@kumoh.ac.kr',
     photo: 'member-lee.jpg',
