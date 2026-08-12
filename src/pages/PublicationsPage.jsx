@@ -16,6 +16,7 @@ const internationalJournals = [
     year: '2026',
     doi: 'https://doi.org/10.1080/00207543.2026.2696434',
     pdf: `${base}publications/kang-2026-yard-template-planning.pdf`,
+    jcr: 'Top 8.8%',
   },
   {
     authors: 'C. Park, R. Waelder, B. Kang, B. Maruyama, S. Hong, R.B. Gramacy',
@@ -26,6 +27,7 @@ const internationalJournals = [
     year: '2026',
     doi: 'https://www.tandfonline.com/doi/full/10.1080/00401706.2025.2561746',
     pdf: `${base}publications/park-2025-piecewise-gp.pdf`,
+    jcr: 'Top 15%',
   },
   {
     authors: 'B. Kang, C. Park, H. Kim, S. Hong',
@@ -36,6 +38,7 @@ const internationalJournals = [
     year: '2025',
     doi: 'https://www.sciencedirect.com/science/article/pii/S0278612525001049',
     pdf: `${base}publications/kang-2025-digital-twin-calibration.pdf`,
+    jcr: 'Top 0.46%',
   },
   {
     authors: 'B. Kang, C. Park, H. Kim, S. Hong',
@@ -46,6 +49,7 @@ const internationalJournals = [
     year: '2024',
     doi: 'https://ieeexplore.ieee.org/document/10278155',
     pdf: `${base}publications/kang-2024-bayesian-optimization.pdf`,
+    jcr: 'Top 10.80%',
   },
   {
     authors: 'B. Kang, B. Kim, S. Hong',
@@ -56,6 +60,7 @@ const internationalJournals = [
     year: '2023',
     doi: 'https://ieeexplore.ieee.org/document/10285297',
     pdf: `${base}publications/kang-2023-twin-cranes.pdf`,
+    jcr: 'Top 33.5%',
   },
   {
     authors: 'H.Y. Fibrianto*, B. Kang*, S. Hong',
@@ -67,6 +72,7 @@ const internationalJournals = [
     coNote: '*co-first authors',
     doi: 'https://ieeexplore.ieee.org/abstract/document/9174991',
     pdf: `${base}publications/fibrianto-2020-job-sequencing.pdf`,
+    jcr: 'Top 33.5%',
   },
 ]
 
@@ -205,6 +211,14 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
               className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium align-middle border text-white hover:opacity-80 transition-opacity ${pill}`}>
               DOI
             </a>
+          </>
+        )}
+        {item.jcr && (
+          <>
+            {' '}
+            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium align-middle border text-white ${pill}`}>
+              JCR {item.jcr}
+            </span>
           </>
         )}
       </p>
