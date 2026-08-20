@@ -39,6 +39,9 @@ const models = [
   { num: 10, file: '10. Conveyor-based jobshop.mp4',
     title: 'Conveyor-based Jobshop',
     desc: 'A conveyor-based job shop routing jobs through stations via conveyor transport.' },
+  { num: 11, file: '11. Pizza process simulator.mp4',
+    title: 'Pizza Process Simulator',
+    desc: 'A fun side project simulating a pizza-making process from order to delivery.' },
 ]
 
 function VideoPlayer({ src, title }) {
@@ -74,7 +77,7 @@ function PageHeader() {
             Playground
           </motion.h1>
           <motion.p variants={fadeUp} className="text-gray-600 dark:text-gray-200 text-lg max-w-2xl leading-relaxed">
-            A collection of plant simulation animations we build for fun while exploring different production layouts and material handling configurations.
+            A collection of materials we build for fun while exploring different production layouts and material handling configurations for digtal twin systems.
           </motion.p>
         </motion.div>
       </div>

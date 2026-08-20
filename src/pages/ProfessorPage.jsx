@@ -21,6 +21,9 @@ const teaching = [
   { course: 'Probability and Statistics',                       term: '2026 Spring', uni: 'KIT' },
   { course: 'Creative Thinking for Engineering',                term: '2026 Spring', uni: 'KIT' },
   { course: 'Affective Quality Engineering',                    term: '2026 Spring', uni: 'KIT' },
+  { course: 'Capstone Design',                                  term: '2026 Fall',   uni: 'KIT' },
+  { course: 'Digital Literacy',                                 term: '2026 Fall',   uni: 'KIT' },
+  { course: 'Digital Production System',                        term: '2026 Fall',   uni: 'KIT' },
 ]
 
 const reviewJournals = [
