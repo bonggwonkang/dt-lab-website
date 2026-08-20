@@ -255,7 +255,7 @@ function NewsModal({ item, onClose }) {
               <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${s.badge}`}>
                 {item.type}
               </span>
-              <span className="text-sm text-gray-500">{item.date}</span>
+              <span className="text-sm text-gray-500 dark:text-white">{item.date}</span>
             </div>
             <button
               onClick={onClose}
@@ -304,7 +304,7 @@ function NewsCard({ item, onCardClick }) {
           <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold capitalize ${s.badge}`}>
             {item.type}
           </span>
-          <span className="text-[11px] text-gray-500">{item.date}</span>
+          <span className="text-[11px] text-gray-500 dark:text-white">{item.date}</span>
         </div>
 
         <p className="font-semibold text-gray-800 dark:text-gray-100 text-xs leading-snug flex-1 line-clamp-3">{item.title}</p>
