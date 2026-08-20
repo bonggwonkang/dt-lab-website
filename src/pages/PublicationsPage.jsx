@@ -272,7 +272,7 @@ export default function PublicationsPage() {
               <SectionHeader label="Korean Journals" color="blue" />
               <div className="space-y-5">
                 {koreanJournals.map((item, i) => (
-                  <JournalEntry key={i} num={i + 1} item={item} journalColor="text-blue-500 dark:text-blue-300" pillColor="blue" />
+                  <JournalEntry key={i} num={koreanJournals.length - i} item={item} journalColor="text-blue-500 dark:text-blue-300" pillColor="blue" />
                 ))}
               </div>
             </motion.div>
