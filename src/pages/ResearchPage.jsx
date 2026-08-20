@@ -92,7 +92,11 @@ function VideoPlayer({ src, title }) {
         <video
           className="w-full h-full object-contain"
           controls
-          preload="metadata"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
           title={title}
           src={`${base}videos/${src}`}
         />

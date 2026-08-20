@@ -97,7 +97,11 @@ export default function PlaygroundPage() {
                     <video
                       className="w-full h-full object-contain"
                       controls
-                      preload="metadata"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
                       title={m.title}
                       src={`${base}playground/${m.file}`}
                     />
