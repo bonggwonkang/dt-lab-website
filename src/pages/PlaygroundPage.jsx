@@ -45,24 +45,8 @@ const models = [
 ]
 
 const colorStyle = {
-  odd:  { num: 'text-cyan-500 dark:text-cyan-400',     hoverBorder: 'hover:border-cyan-500/40' },
-  even: { num: 'text-violet-500 dark:text-violet-400', hoverBorder: 'hover:border-violet-500/40' },
-}
-
-function VideoPlayer({ src, title }) {
-  return (
-    <div className="rounded-2xl overflow-hidden bg-gray-950 ring-1 ring-gray-200 dark:ring-white/10 shadow-xl shadow-black/10 dark:shadow-black/40">
-      <div className="aspect-video">
-        <video
-          className="w-full h-full object-contain"
-          controls
-          preload="metadata"
-          title={title}
-          src={`${base}playground/${src}`}
-        />
-      </div>
-    </div>
-  )
+  odd:  { num: 'text-cyan-400',   hoverBorder: 'hover:border-cyan-500/40' },
+  even: { num: 'text-violet-400', hoverBorder: 'hover:border-violet-500/40' },
 }
 
 function PageHeader() {
@@ -107,15 +91,24 @@ export default function PlaygroundPage() {
             {models.map(m => {
               const s = colorStyle[m.num % 2 === 1 ? 'odd' : 'even']
               return (
-                <motion.div key={m.num} variants={fadeUp} className="flex flex-col gap-4">
-                  <div className={`bg-white dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-gray-800/80 transition-all duration-300 ${s.hoverBorder}`}>
+                <motion.div key={m.num} variants={fadeUp}
+                  className={`rounded-2xl overflow-hidden bg-gray-950 ring-1 ring-gray-200 dark:ring-white/10 shadow-xl shadow-black/10 dark:shadow-black/40 border-2 border-transparent transition-colors duration-300 ${s.hoverBorder}`}>
+                  <div className="aspect-video">
+                    <video
+                      className="w-full h-full object-contain"
+                      controls
+                      preload="metadata"
+                      title={m.title}
+                      src={`${base}playground/${m.file}`}
+                    />
+                  </div>
+                  <div className="p-6">
                     <div className="flex items-center gap-3 mb-3">
                       <span className={`flex-shrink-0 text-sm font-mono font-bold ${s.num}`}>[{m.num}]</span>
-                      <h3 className="font-bold text-gray-900 dark:text-white leading-snug">{m.title}</h3>
+                      <h3 className="font-bold text-white leading-snug">{m.title}</h3>
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{m.desc}</p>
+                    <p className="text-sm text-white leading-relaxed">{m.desc}</p>
                   </div>
-                  <VideoPlayer src={m.file} title={m.title} />
                 </motion.div>
               )
             })}
