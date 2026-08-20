@@ -33,9 +33,8 @@ function Hero() {
             className="text-xl md:text-2xl text-gray-700 dark:text-white max-w-2xl leading-relaxed font-light">
             We develop advanced digital transformation methodologies for{' '}
             <span className="text-indigo-400 font-semibold">modeling</span>,{' '}
-            <span className="text-indigo-400 font-semibold">analyzing</span>,{' '}
             <span className="text-teal-400 font-semibold">optimizing</span>, and{' '}
-            <span className="text-teal-400 font-semibold">calibrating</span>{' '}
+            <span className="text-violet-400 font-semibold">calibrating</span>{' '}
             production and material handling system simulations.
           </motion.p>
         </motion.div>
