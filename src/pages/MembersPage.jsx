@@ -29,16 +29,30 @@ const students = [
   {
     name: '오가영', nameEn: 'Gayoung Oh',
     degree: 'Combined BS/MS Researcher',
-    research: 'Surrogate-based decision-making',
+    research: 'Statistical modeling of digital twin-based decision-making',
     email: 'oh050316@kumoh.ac.kr',
     photo: 'member-oh.jpg',
   },
   {
     name: '이승빈', nameEn: 'Seungbin Lee',
     degree: 'Combined BS/MS Researcher',
-    research: 'Digital twin applications for material handling systems',
+    research: 'Digital twin applications for operational planning',
     email: 'hctoto2005@kumoh.ac.kr',
     photo: 'member-lee.jpg',
+  },
+  {
+    name: '박찬범', nameEn: 'Beomchan Park',
+    degree: 'Undergraduate Researcher',
+    research: 'Digital twin-based production scheduling applications',
+    email: 'beomchan.park.212@gmail.com',
+    photo: 'member-park.jpg',
+  },
+  {
+    name: '강동혁', nameEn: 'Donghyeok Kang',
+    degree: 'Undergraduate Researcher',
+    research: 'AI-embedded digital twin applications',
+    email: 'dhyeok.kang@gmail.com',
+    photo: 'member-kang.jpg',
   },
 ]
 
