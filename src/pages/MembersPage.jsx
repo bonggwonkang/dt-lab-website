@@ -29,6 +29,7 @@ const students = [
   {
     name: '오가영', nameEn: 'Gayoung Oh',
     degree: 'Combined BS/MS Researcher',
+    color: 'violet',
     research: 'Statistical modeling of digital twin-based decision-making',
     email: 'oh050316@kumoh.ac.kr',
     photo: 'member-oh.jpg',
@@ -36,6 +37,7 @@ const students = [
   {
     name: '이승빈', nameEn: 'Seungbin Lee',
     degree: 'Combined BS/MS Researcher',
+    color: 'violet',
     research: 'Mathematical modeling of digital twin-based operational planning',
     email: 'hctoto2005@kumoh.ac.kr',
     photo: 'member-lee.jpg',
@@ -43,6 +45,7 @@ const students = [
   {
     name: '박찬범', nameEn: 'Beomchan Park',
     degree: 'Undergraduate Researcher',
+    color: 'teal',
     research: 'Digital twin-based production scheduling',
     email: 'beomchan.park.212@gmail.com',
     photo: 'member-park.jpg',
@@ -50,11 +53,17 @@ const students = [
   {
     name: '강동혁', nameEn: 'Donghyeok Kang',
     degree: 'Undergraduate Researcher',
+    color: 'teal',
     research: 'Digital twin-based real-time decision-making',
     email: 'dhyeok.kang@gmail.com',
     photo: 'member-kang.jpg',
   },
 ]
+
+const studentColorStyle = {
+  teal:   { border: 'hover:border-teal-500/30',   badge: 'bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-300 border-teal-200 dark:border-teal-800/60' },
+  violet: { border: 'hover:border-violet-500/30', badge: 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border-violet-200 dark:border-violet-800/60' },
+}
 
 function MemberPhoto({ file, name, size = 'lg', objectPos = 'object-center' }) {
   const base = import.meta.env.BASE_URL
@@ -175,11 +184,11 @@ export default function MembersPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {students.map(s => (
                 <motion.div key={s.name} variants={fadeUp}
-                  className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-white/10 hover:border-teal-500/30 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300 flex flex-col items-center text-center">
+                  className={`bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300 flex flex-col items-center text-center ${studentColorStyle[s.color].border}`}>
                   <MemberPhoto file={s.photo} name={s.nameEn} size="md" />
                   <div className="mt-4">
                     <h3 className="font-bold text-gray-900 dark:text-white text-base">{s.nameEn} ({s.name})</h3>
-                    <span className="inline-block mt-2 px-2.5 py-0.5 bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-300 text-xs font-medium rounded-full border border-teal-200 dark:border-teal-800/60">
+                    <span className={`inline-block mt-2 px-2.5 py-0.5 text-xs font-medium rounded-full border ${studentColorStyle[s.color].badge}`}>
                       {s.degree}
                     </span>
                     <p className="text-sm text-gray-500 dark:text-gray-300 mt-2 leading-relaxed">{s.research}</p>
