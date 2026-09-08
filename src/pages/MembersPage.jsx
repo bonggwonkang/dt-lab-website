@@ -36,7 +36,7 @@ const students = [
   {
     name: '이승빈', nameEn: 'Seungbin Lee',
     degree: 'Combined BS/MS Researcher',
-    research: 'Digital twin-based operational planning',
+    research: 'Mathematical modeling of digital twin-based operational planning',
     email: 'hctoto2005@kumoh.ac.kr',
     photo: 'member-lee.jpg',
   },
