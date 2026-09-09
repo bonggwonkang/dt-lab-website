@@ -11,9 +11,9 @@ const base = import.meta.env.BASE_URL
 
 // Photos go in public/images/
 // Numbered from oldest (1.jpg) to newest (38.jpg) — bottom of list = 1.jpg
-export const items = [
+const items = [
   // ── 2026 ────────────────────────────────────────────────────────────────
-  { date: '2026.08', type: 'journal', img: '39.png',
+  { date: '2026', type: 'journal', img: '39.png',
     title: 'New paper published in International Journal of Production Research',
     desc: '"Uncertainty-aware simulation optimization for yard template planning in transshipment hubs" has been accepted for publication in International Journal of Production Research. Abstract) Yard template planning (YTP) is commonly applied at transshipment hubs to reduce transportation costs by assigning storage areas for outbound vessels. With recent advances in digital transformation technologies, terminal operators increasingly rely on simulation-based decision-making to address the uncertain nature of port operations. However, high-fidelity container terminal simulations typically require several minutes to hours per run, and YTP involves a high-dimensional and combinatorial design space. To address these challenges, we propose a domain-informed parallel Bayesian optimisation framework. A Gaussian process (GP) surrogate is presented to efficiently approximate the posterior distribution of terminal performance, thereby enhancing an uncertainty-aware balance between exploration and exploitation. We further integrate a large neighbourhood search (LNS) with the surrogate to navigate the combinatorial design space in parallel. Experimental results show that the proposed approach improves average prediction accuracy by 14.89% and 23.42% over two standard GP surrogates and reduces average vehicle travel time by 4.15%, 1.47%, and 3.27% compared with two Bayesian optimisation approaches and the LNS-based simulation optimisation approach, respectively.',
     url: 'https://doi.org/10.1080/00207543.2026.2696434' },
@@ -158,7 +158,7 @@ export const items = [
     url: 'https://link.springer.com/chapter/10.1007/978-3-030-44783-0_6' },
 ]
 
-export const typeStyle = {
+const typeStyle = {
   journal:       { dot: 'bg-indigo-500',  badge: 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50'  },
   conference:    { dot: 'bg-teal-500',    badge: 'bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 border border-teal-200 dark:border-teal-800/50'        },
   book:          { dot: 'bg-amber-500',   badge: 'bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/50'     },
