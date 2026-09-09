@@ -1,11 +1,35 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { items as newsItems } from './NewsPage'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 }
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }
+
+// e.g. '2024.12.11' -> '2024.12', '2026' -> '2026'
+const toYearMonth = (date) => (date.length >= 7 ? date.slice(0, 7) : date)
+
+function NewsPreview() {
+  return (
+    <Link to="/news"
+      className="block bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-white/10 hover:border-indigo-500/30 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300 p-5">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-xs font-semibold text-indigo-400 tracking-wide">Latest News</span>
+        <span className="text-xs text-gray-400">View all →</span>
+      </div>
+      <ul className="space-y-2.5">
+        {newsItems.slice(0, 5).map((item, i) => (
+          <li key={i} className="flex items-baseline gap-2 text-sm">
+            <span className="text-gray-400 dark:text-gray-500 text-xs flex-shrink-0 font-mono">{toYearMonth(item.date)}</span>
+            <span className="text-gray-700 dark:text-gray-200 line-clamp-1">{item.title}</span>
+          </li>
+        ))}
+      </ul>
+    </Link>
+  )
+}
 
 function Hero() {
   return (
@@ -19,8 +43,8 @@ function Hero() {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-        <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-6xl">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full grid lg:grid-cols-[1fr_320px] gap-10 items-center">
+        <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-3xl">
           <motion.h1 variants={fadeUp}
             className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white leading-[1.05] mb-6 tracking-tight">
             Welcome to the<br />
@@ -37,6 +61,10 @@ function Hero() {
             <span className="text-violet-400 font-semibold">calibrating</span>{' '}
             production and material handling system simulations.
           </motion.p>
+        </motion.div>
+
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="hidden lg:block">
+          <NewsPreview />
         </motion.div>
       </div>
 
