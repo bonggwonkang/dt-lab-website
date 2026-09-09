@@ -158,7 +158,7 @@ export const items = [
     url: 'https://link.springer.com/chapter/10.1007/978-3-030-44783-0_6' },
 ]
 
-const typeStyle = {
+export const typeStyle = {
   journal:       { dot: 'bg-indigo-500',  badge: 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/50'  },
   conference:    { dot: 'bg-teal-500',    badge: 'bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 border border-teal-200 dark:border-teal-800/50'        },
   book:          { dot: 'bg-amber-500',   badge: 'bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/50'     },

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { items as newsItems } from './NewsPage'
+import { items as newsItems, typeStyle } from './NewsPage'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -14,18 +14,24 @@ const toYearMonth = (date) => (date.length >= 7 ? date.slice(0, 7) : date)
 function NewsPreview() {
   return (
     <Link to="/news"
-      className="block bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-white/10 hover:border-indigo-500/30 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300 p-5">
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-semibold text-indigo-400 tracking-wide">Latest News</span>
+      className="h-full flex flex-col bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-white/10 hover:border-indigo-500/30 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300 p-6">
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-sm font-semibold text-indigo-400 tracking-wide">Latest News</span>
         <span className="text-xs text-gray-400">View all →</span>
       </div>
-      <ul className="space-y-2.5">
-        {newsItems.slice(0, 5).map((item, i) => (
-          <li key={i} className="flex items-baseline gap-2 text-sm">
-            <span className="text-gray-400 dark:text-gray-500 text-xs flex-shrink-0 font-mono">{toYearMonth(item.date)}</span>
-            <span className="text-gray-700 dark:text-gray-200 line-clamp-1">{item.title}</span>
-          </li>
-        ))}
+      <ul className="flex-1 flex flex-col justify-between">
+        {newsItems.slice(0, 5).map((item, i) => {
+          const dot = (typeStyle[item.type] || typeStyle.journal).dot
+          return (
+            <li key={i} className="flex items-start gap-2.5">
+              <span className={`w-2 h-2 rounded-full flex-shrink-0 mt-1.5 ${dot}`} />
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-200 leading-snug line-clamp-2">{item.title}</p>
+                <span className="text-xs text-gray-500 dark:text-white font-mono">{toYearMonth(item.date)}</span>
+              </div>
+            </li>
+          )
+        })}
       </ul>
     </Link>
   )
@@ -43,30 +49,29 @@ function Hero() {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full grid lg:grid-cols-[1fr_320px] gap-10 items-center">
-        <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-3xl">
-          <motion.h1 variants={fadeUp}
-            className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white leading-[1.05] mb-6 tracking-tight">
-            Welcome to the<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-teal-400">
-              Digital Transformation
-            </span> Lab!
-          </motion.h1>
+      <motion.div initial="hidden" animate="visible" variants={stagger}
+        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full grid xl:grid-cols-[1fr_360px] gap-x-10 gap-y-6">
+        <motion.h1 variants={fadeUp}
+          className="xl:col-start-1 max-w-4xl text-5xl md:text-7xl xl:text-5xl font-black text-gray-900 dark:text-white leading-[1.05] tracking-tight">
+          Welcome to the<br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-teal-400">
+            Digital Transformation
+          </span> Lab!
+        </motion.h1>
 
-          <motion.p variants={fadeUp}
-            className="text-xl md:text-2xl text-gray-700 dark:text-white max-w-2xl leading-relaxed font-light">
-            We develop advanced digital transformation methodologies for{' '}
-            <span className="text-indigo-400 font-semibold">modeling</span>,{' '}
-            <span className="text-teal-400 font-semibold">optimizing</span>, and{' '}
-            <span className="text-violet-400 font-semibold">calibrating</span>{' '}
-            production and material handling system simulations.
-          </motion.p>
-        </motion.div>
+        <motion.p variants={fadeUp}
+          className="xl:col-start-1 text-xl md:text-2xl text-gray-700 dark:text-white max-w-2xl leading-relaxed font-light">
+          We develop advanced digital transformation methodologies for{' '}
+          <span className="text-indigo-400 font-semibold">modeling</span>,{' '}
+          <span className="text-teal-400 font-semibold">optimizing</span>, and{' '}
+          <span className="text-violet-400 font-semibold">calibrating</span>{' '}
+          production and material handling system simulations.
+        </motion.p>
 
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="hidden lg:block">
+        <motion.div variants={fadeUp} className="hidden xl:block xl:col-start-2 xl:row-start-1 xl:row-span-2">
           <NewsPreview />
         </motion.div>
-      </div>
+      </motion.div>
 
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white dark:from-gray-900 to-transparent" />
     </section>
