@@ -8,19 +8,19 @@ import{p34,p35,p36,p37,p38,p39}from'./modules-bayes.js'
 function p10(root){
   const st={N:10,sigma:.25,seed:3,truth:true,eps:false};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--truth)',l:'sin(2πx)'},{c:'var(--obs)',t:'dot',l:'observation tₙ'},
-    {c:'var(--muted)',t:'dash',l:'noise εₙ'}]);
+  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},
+    {c:'var(--muted)',t:'dash',l:'noise \\(\\epsilon_n\\)'}]);
   const P=new Plot(b.pc,{h:340});
-  const out=readout(b.pn,[{k:'N',l:'Points N'},{k:'sg',l:'Noise σ'},
-    {k:'me',l:'Sample mean of ε'},{k:'se',l:'Sample s.d. of ε'}]);
+  const out=readout(b.pn,[{k:'N',l:'Points \\(N\\)'},{k:'sg',l:'Noise \\(\\sigma\\)'},
+    {k:'me',l:'Sample mean of \\(\\epsilon\\)'},{k:'se',l:'Sample s.d. of \\(\\epsilon\\)'}]);
   b.pn.appendChild(el('div','hr'));
-  const sN=slider(b.pn,{label:'Number of points N',min:2,max:100,step:1,value:st.N,on:v=>{st.N=v;gen()}});
-  const sS=slider(b.pn,{label:'Noise level σ',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
+  const sN=slider(b.pn,{label:'Number of points \\(N\\)',min:2,max:100,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  const sS=slider(b.pn,{label:'Noise level \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new sample',on:()=>{st.seed++;gen()}},
-    {l:'Reset (N = 10, σ = 0.25)',on:()=>{st.N=10;st.sigma=.25;sN.set(10);sS.set(.25);gen()}}]);
+    {l:'Reset \\((N=10,\\ \\sigma=0.25)\\)',on:()=>{st.N=10;st.sigma=.25;sN.set(10);sS.set(.25);gen()}}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'Show sin(2πx)',st.truth,v=>{st.truth=v;P.draw()});
-  toggle(tg,'Show the noise εₙ',st.eps,v=>{st.eps=v;P.draw()});
+  toggle(tg,'Show \\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
+  toggle(tg,'Show the noise \\(\\epsilon_n\\)',st.eps,v=>{st.eps=v;P.draw()});
   eqbar(root,'Synthetic data set',
     '\\( x_n=\\dfrac{n}{N-1}\\in[0,1]\\), \\(t_n=\\sin(2\\pi x_n)+\\epsilon\\), \\(\\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
     'training set \\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), target vector \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
@@ -41,21 +41,21 @@ function p10(root){
 function p11(root){
   const st={w:[0,0,0,0],rng:10,terms:false,truth:true,data:true,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'y(x, w)'},{c:'var(--truth)',l:'sin(2πx)'},
-    {c:'var(--obs)',t:'dot',l:'observation tₙ'},{c:'var(--muted)',t:'dash',l:'term wⱼxʲ'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},
+    {c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},{c:'var(--muted)',t:'dash',l:'term \\(w_jx^{j}\\)'}]);
   const P=new Plot(b.pc,{h:350,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  slider(b.pn,{label:'Order M',min:0,max:9,step:1,value:3,on:v=>{
+  slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
-  btnrow(b.pn,[{l:'Set w to w*',on:()=>{applyFit(st,W);draw()}},
-    {l:'Double every wⱼ',on:()=>{st.w=st.w.map(v=>v*2);st.rng=niceRange(Math.max.apply(null,st.w.map(Math.abs))||1);W.sync();draw()}},
-    {l:'Reset w to 0',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
+  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}\\) to \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
+    {l:'Double every \\(w_j\\)',on:()=>{st.w=st.w.map(v=>v*2);st.rng=niceRange(Math.max.apply(null,st.w.map(Math.abs))||1);W.sync();draw()}},
+    {l:'Reset \\(\\mathbf{w}\\) to \\(\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'M',l:'Order M'},{k:'np',l:'Coefficients M+1'},{k:'E',l:'E(w)'}]);
+  const out=readout(b.pn,[{k:'M',l:'Order \\(M\\)'},{k:'np',l:'Coefficients \\(M+1\\)'},{k:'E',l:'\\(E(\\mathbf{w})\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'Show each term wⱼxʲ',st.terms,v=>{st.terms=v;P.draw()});
-  toggle(tg,'Show sin(2πx)',st.truth,v=>{st.truth=v;P.draw()});
+  toggle(tg,'Show each term \\(w_jx^{j}\\)',st.terms,v=>{st.terms=v;P.draw()});
+  toggle(tg,'Show \\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
   toggle(tg,'Show the training data',st.data,v=>{st.data=v;P.draw()});
   eqbar(root,'Polynomial curve',
     '\\( y(x,\\mathbf{w}) = w_0+w_1x+w_2x^2+\\cdots+w_Mx^M=\\sum_{j=0}^{M}w_jx^{j}\\)<br>'+
@@ -79,20 +79,20 @@ const SUP='⁰¹²³⁴⁵⁶⁷⁸⁹',supd=j=>String(j).split('').map(d=>SUP[+
 function p12(root){
   const st={w:[.3,.3],rng:6,rngMin:6,d:makeData(10,.25,3),bars:true};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'y(x, w)'},{c:'var(--obs)',t:'dot',l:'observation tₙ'},
-    {c:'var(--truth)',l:'displacement y(xₙ,w) − tₙ'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},
+    {c:'var(--truth)',l:'displacement \\(y(x_n,\\mathbf{w})-t_n\\)'}]);
   const P=new Plot(b.pc,{h:345,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const surfWrap=el('div','card plotcard');
-  slider(b.pn,{label:'Order M',min:0,max:3,step:1,value:1,on:v=>{
+  slider(b.pn,{label:'Order \\(M\\)',min:0,max:3,step:1,value:1,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
-  btnrow(b.pn,[{l:'Move to w*',on:()=>{applyFit(st,W);draw()}},
-    {l:'Reset w to 0',on:()=>{st.w=st.w.map(()=>0);st.rng=st.rngMin;W.sync();draw()}},
+  btnrow(b.pn,[{l:'Move to \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
+    {l:'Reset \\(\\mathbf{w}\\) to \\(\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=st.rngMin;W.sync();draw()}},
     {l:'New sample',on:()=>{st.d=makeData(10,.25,st.d.seed+1);st.g=null;draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'E',l:'E(w)',big:true},{k:'Em',l:'Minimum E(w*)'},{k:'gap',l:'E(w) − E(w*)'},
-    {k:'rms',l:'E<sub>RMS</sub>'},{k:'mx',l:'Largest displacement'}]);
+  const out=readout(b.pn,[{k:'E',l:'\\(E(\\mathbf{w})\\)',big:true},{k:'Em',l:'Minimum \\(E(\\mathbf{w}^{*})\\)'},{k:'gap',l:'\\(E(\\mathbf{w})-E(\\mathbf{w}^{*})\\)'},
+    {k:'rms',l:'\\(E_{\\mathrm{RMS}}\\)'},{k:'mx',l:'Largest displacement'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the displacements',st.bars,v=>{st.bars=v;P.draw()});
   eqbar(root,'Sum-of-squares error',
@@ -100,8 +100,8 @@ function p12(root){
     '\\(|y(x_n,\\mathbf{w})-t_n|\\) of one data point from the curve, and \\(E(\\mathbf{w})\\) is one half of the sum of their squares.');
   root.appendChild(surfWrap);
   const scap=el('div','legend');surfWrap.appendChild(scap);
-  scap.innerHTML='<span><b style="font-weight:600">Error surface E(w₀, w₁)</b></span>'+
-    '<span style="color:var(--muted)">stronger colour means larger E(w) · × marks the minimiser w* · click anywhere to move w there</span>';
+  scap.innerHTML='<span><b style="font-weight:600">Error surface \\(E(w_0,w_1)\\)</b></span>'+
+    '<span style="color:var(--muted)">stronger colour means larger \\(E(\\mathbf{w})\\) &middot; &times; marks the minimiser \\(\\mathbf{w}^{*}\\) &middot; click anywhere to move \\(\\mathbf{w}\\) there</span>';
   const S=new Plot(surfWrap,{h:310,xlim:[-2.6,3.6],ylim:[-6.2,3.2],xl:'w₀',yl:'w₁',xt:[-2,0,2],yt:[-4,-2,0,2],pad:[16,18,28,40]});
   const snote=el('div','soon','The error surface can only be drawn for \\(M=1\\), where the model has just two parameters \\(w_0,w_1\\) and \\(E(\\mathbf{w})\\) fits on a plane. Set the order back to 1 to see it.');
   surfWrap.appendChild(snote);snote.style.display='none';tex(snote);

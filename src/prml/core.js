@@ -192,8 +192,8 @@ function wPanel(host,st,redraw){
   const box=el('div');box.style.cssText='display:flex;flex-direction:column;gap:9px';host.appendChild(box);
   const api={s:[],
     rebuild(){box.innerHTML='';api.s=[];st.w.forEach((v,j)=>{
-      api.s[j]=slider(box,{label:'w'+sub(j),min:-st.rng,max:st.rng,step:st.rng/500,value:v,
-        fmt:x=>fmt(x,st.rng>=20?1:2),on:x=>{st.w[j]=x;redraw()}})})},
+      api.s[j]=slider(box,{label:'\\(w_{'+j+'}\\)',min:-st.rng,max:st.rng,step:st.rng/500,value:v,
+        fmt:x=>fmt(x,st.rng>=20?1:2),on:x=>{st.w[j]=x;redraw()}})});tex(box)},
     sync(){if(api.s.length!==st.w.length)return api.rebuild();
       st.w.forEach((v,j)=>{api.s[j].setRange(-st.rng,st.rng,st.rng/500);api.s[j].set(v)})}};
   api.rebuild();return api}
@@ -202,14 +202,14 @@ function applyFit(st,api,lam){const w=fit(st.d.xs,st.d.ts,st.w.length-1,lam||0);
 
 /* coefficient chips: w0 = .. , w1 = .. */
 function wchips(host,label){const box=el('div','mat');if(label)box.appendChild(el('div','cap',label));
-  const d=el('div','wmat');box.appendChild(d);host.appendChild(box);
+  const d=el('div','wmat');box.appendChild(d);host.appendChild(box);tex(box);
   return function(ww,prec){d.innerHTML='';ww.forEach((v,j)=>
     d.appendChild(el('span',null,'w'+sub(j)+' = '+fmt(v,prec==null?2:prec))))}}
 
 /* ---- matrix view: a grid of numbers shaded by magnitude ---- */
 function matview(host,o){const box=el('div','mat');if(o.cap)box.appendChild(el('div','cap',o.cap));
   const g=el('div','grid');g.style.gridTemplateColumns='repeat('+(o.cols+(o.rowLab?1:0))+',minmax(0,1fr))';
-  box.appendChild(g);host.appendChild(box);
+  box.appendChild(g);host.appendChild(box);tex(box);
   return function(get){g.innerHTML='';let mx=1e-12;
     for(let i=0;i<o.rows;i++)for(let j=0;j<o.cols;j++)mx=Math.max(mx,Math.abs(get(i,j)));
     for(let i=0;i<o.rows;i++){
