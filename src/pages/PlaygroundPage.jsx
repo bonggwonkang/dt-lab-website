@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 
 const fadeUp = {
@@ -48,27 +47,12 @@ const models = [
     desc: 'A course material simulating a pizza-making process with four different layouts' },
 ]
 
-const statModels = [
-  { num: 1, slide: 10,
-    title: 'Setup: fitting a polynomial to a synthetic function (I)',
-    desc: 'The target we want to learn, sin(2πx), against the observations we are actually given — controlled by the number of points N and the noise level σ' },
-  { num: 2, slide: 11,
-    title: 'Setup: fitting a polynomial to a synthetic function (II)',
-    desc: 'Moving the coefficients w to see the polynomial y(x, w) respond, and why it is a linear function of the coefficients' },
-  { num: 3, slide: 12,
-    title: 'Prediction error function (I)',
-    desc: 'How the sum-of-squares error E(w) changes with the choice of w, shown as displacement bars and as an error surface' },
-]
-
 const colorStyle = {
   odd:  { num: 'text-cyan-400',   hoverBorder: 'hover:border-cyan-500/40' },
   even: { num: 'text-violet-400', hoverBorder: 'hover:border-violet-500/40' },
 }
 
-const tabs = [
-  { id: 'computer',    name: 'Computer models',    count: models.length },
-  { id: 'statistical', name: 'Statistical models', count: statModels.length },
-]
+const tabBase = 'px-5 py-2.5 rounded-xl text-sm font-semibold border transition-colors'
 
 function PageHeader() {
   return (
@@ -87,7 +71,7 @@ function PageHeader() {
             Playground
           </motion.h1>
           <motion.p variants={fadeUp} className="text-gray-600 dark:text-gray-200 text-lg max-w-2xl leading-relaxed">
-            A collection of materials we build for fun — computer models of production layouts and material
+            A collection of materials we build for fun: computer models of production layouts and material
             handling configurations for digital twin systems, and statistical models behind the methods we teach.
           </motion.p>
         </motion.div>
@@ -137,89 +121,7 @@ function ComputerModels() {
   )
 }
 
-function StatisticalModels() {
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-60px' }}
-      variants={stagger}
-      className="flex flex-col gap-8"
-    >
-      <motion.a variants={fadeUp} href={`${base}prml/`} target="_blank" rel="noopener noreferrer"
-        className="group rounded-2xl overflow-hidden bg-gray-950 ring-1 ring-gray-200 dark:ring-white/10 shadow-xl shadow-black/10 dark:shadow-black/40 border-2 border-transparent hover:border-indigo-500/40 transition-colors duration-300">
-        <div className="relative p-8 md:p-10">
-          <div className="absolute inset-0 opacity-[0.10]"
-            style={{
-              backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
-              backgroundSize: '40px 40px',
-            }}
-          />
-          <div className="absolute -top-16 right-10 w-72 h-72 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative">
-            <p className="text-xs font-semibold tracking-[0.14em] uppercase text-indigo-400 mb-3">
-              Interactive simulators
-            </p>
-            <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
-              Pattern Recognition and Machine Learning
-            </h3>
-            <p className="text-white/80 max-w-3xl leading-relaxed">
-              Move the sliders and watch how the equations of the introduction chapter actually behave — the
-              synthetic function, the polynomial curve, the error function, and the Bayesian treatment that
-              follows. Built as course material; nothing to install.
-            </p>
-            <div className="flex flex-wrap items-center gap-4 mt-5">
-              <span className="text-sm font-semibold text-indigo-400 group-hover:text-indigo-300 transition-colors">
-                Open the collection →
-              </span>
-              <span className="text-xs font-mono text-gray-400">3 of 16 simulators open</span>
-            </div>
-          </div>
-        </div>
-      </motion.a>
-
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {statModels.map(m => {
-          const s = colorStyle[m.num % 2 === 1 ? 'odd' : 'even']
-          return (
-            <motion.a key={m.num} variants={fadeUp}
-              href={`${base}prml/#slide-${m.slide}`} target="_blank" rel="noopener noreferrer"
-              className={`group flex flex-col rounded-2xl overflow-hidden bg-gray-950 ring-1 ring-gray-200 dark:ring-white/10 shadow-xl shadow-black/10 dark:shadow-black/40 border-2 border-transparent transition-colors duration-300 ${s.hoverBorder}`}>
-              <div className="relative h-24 bg-gradient-to-br from-indigo-600/25 via-gray-950 to-teal-600/20 flex items-end px-6 pb-4">
-                <div className="absolute inset-0 opacity-[0.12]"
-                  style={{
-                    backgroundImage: 'linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)',
-                    backgroundSize: '28px 28px',
-                  }}
-                />
-                <span className="relative text-xs font-mono text-gray-300">Slide {m.slide}</span>
-              </div>
-              <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className={`flex-shrink-0 text-sm font-mono font-bold ${s.num}`}>[{m.num}]</span>
-                  <h3 className="font-bold text-white leading-snug">{m.title}</h3>
-                </div>
-                <p className="text-sm text-white leading-relaxed flex-1">{m.desc}</p>
-                <span className="mt-4 text-sm font-semibold text-indigo-400 group-hover:text-indigo-300 transition-colors">
-                  Open simulator →
-                </span>
-              </div>
-            </motion.a>
-          )
-        })}
-      </div>
-
-      <motion.p variants={fadeUp} className="text-sm text-gray-500 dark:text-gray-400">
-        Thirteen more simulators — the RMS error, regularization, MLE-MAP, and the Bayesian predictive
-        distribution — are in preparation.
-      </motion.p>
-    </motion.div>
-  )
-}
-
 export default function PlaygroundPage() {
-  const [tab, setTab] = useState('computer')
-
   return (
     <>
       <PageHeader />
@@ -227,25 +129,18 @@ export default function PlaygroundPage() {
       <section className="py-10 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap gap-2 mb-8">
-            {tabs.map(t => {
-              const active = tab === t.id
-              return (
-                <button key={t.id} type="button" onClick={() => setTab(t.id)}
-                  className={`px-5 py-2.5 rounded-xl text-sm font-semibold border transition-colors ${
-                    active
-                      ? 'bg-indigo-600 text-white border-indigo-500'
-                      : 'bg-white dark:bg-white/5 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-white/10 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10'
-                  }`}>
-                  {t.name}
-                  <span className={`ml-2 text-xs font-mono ${active ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'}`}>
-                    {t.count}
-                  </span>
-                </button>
-              )
-            })}
+            <span aria-current="page" className={`${tabBase} bg-indigo-600 text-white border-indigo-500`}>
+              Computer models
+              <span className="ml-2 text-xs font-mono text-white/70">{models.length}</span>
+            </span>
+            <a href={`${base}prml/`}
+              className={`${tabBase} bg-white dark:bg-white/5 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-white/10 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10`}>
+              Statistical models
+              <span className="ml-2 text-xs">↗</span>
+            </a>
           </div>
 
-          {tab === 'computer' ? <ComputerModels /> : <StatisticalModels />}
+          <ComputerModels />
         </div>
       </section>
     </>

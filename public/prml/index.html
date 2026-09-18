@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PRML Simulators | Digital Transformation Laboratory</title>
-<meta name="description" content="Interactive simulators for Pattern Recognition and Machine Learning (Introduction) — Digital Transformation Laboratory, Kumoh National Institute of Technology.">
+<meta name="description" content="Interactive simulators for Pattern Recognition and Machine Learning (Introduction). Digital Transformation Laboratory, Kumoh National Institute of Technology.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="PRML Simulators | Digital Transformation Laboratory">
 <meta property="og:description" content="Move the sliders and watch how the equations of PRML Chapter 1 behave: polynomial curve fitting, the error function, MLE-MAP and the Bayesian treatment.">
@@ -50,26 +50,8 @@ img{max-width:100%}
 .navlink.here{color:#fff}
 .navlink.here::after{content:"";display:block;width:4px;height:4px;border-radius:999px;background:var(--accent);margin:2px auto 0}
 
-/* ---------- hero ---------- */
-.hero{position:relative;overflow:hidden;padding-top:112px;padding-bottom:44px;background:var(--g950)}
-.gridbg{position:absolute;inset:0;opacity:.07;pointer-events:none;
-  background-image:linear-gradient(to right,#6366f1 1px,transparent 1px),linear-gradient(to bottom,#6366f1 1px,transparent 1px);
-  background-size:48px 48px}
-.orb{position:absolute;border-radius:999px;filter:blur(64px);pointer-events:none}
-.orb-a{top:-60px;left:18%;width:22rem;height:22rem;background:rgba(79,70,229,.20)}
-.orb-b{bottom:-120px;right:14%;width:20rem;height:20rem;background:rgba(13,148,136,.16)}
-.hero .container{position:relative}
-.eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
-.hero h1{font-size:clamp(34px,6vw,60px);font-weight:900;line-height:1.05;margin-bottom:18px}
-.grad{background:linear-gradient(90deg,#818CF8,#2DD4BF);-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{font-size:clamp(16px,1.6vw,19px);color:var(--ink-2);max-width:60ch;font-weight:300;line-height:1.7}
-.metarow{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.tag{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);
-  border:1px solid var(--line);border-radius:999px;padding:6px 13px;background:rgba(255,255,255,.03)}
-.tag b{color:var(--ink-2);font-weight:600}
-
 /* ---------- app ---------- */
-.app{background:var(--g900);border-top:1px solid var(--line);padding-block:40px 56px}
+.app{background:var(--g900);padding-block:96px 56px;min-height:100vh}
 .appgrid{display:grid;grid-template-columns:288px minmax(0,1fr);gap:28px;align-items:start}
 .side{position:sticky;top:88px;display:flex;flex-direction:column;gap:18px;max-height:calc(100vh - 110px);overflow-y:auto;padding-right:4px}
 .sgroup h3{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:10px}
@@ -93,7 +75,7 @@ img{max-width:100%}
 .chip{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--accent);
   border:1px solid rgba(99,102,241,.45);background:rgba(99,102,241,.12);border-radius:999px;padding:3px 10px}
 .msec{font-size:12px;color:var(--muted);letter-spacing:.04em}
-.mhead h2{font-size:clamp(22px,2.6vw,30px);font-weight:800;line-height:1.2}
+.mhead h1{font-size:clamp(24px,2.8vw,32px);font-weight:800;line-height:1.2}
 .mgoal{color:var(--ink-2);max-width:72ch;font-weight:300}
 
 /* ---------- cards ---------- */
@@ -160,7 +142,6 @@ footer{background:var(--g950);border-top:1px solid var(--line);padding-block:36p
 @media (max-width:640px){
   .bname{display:none}
   .navlink{padding:8px 10px}
-  .hero{padding-top:96px}
   .logoband{gap:14px;padding:12px 16px}
   .logoband img{height:26px}
 }
@@ -183,22 +164,6 @@ footer{background:var(--g950);border-top:1px solid var(--line);padding-block:36p
   </div>
 </nav>
 
-<header class="hero">
-  <div class="gridbg"></div><div class="orb orb-a"></div><div class="orb orb-b"></div>
-  <div class="container rise">
-    <p class="eyebrow">Course material · Introduction</p>
-    <h1>Pattern Recognition<br><span class="grad">and Machine Learning</span></h1>
-    <p class="lead">Interactive simulators for the introduction chapter. Move the sliders and watch how the
-      equations on the slides actually behave — the synthetic function, the polynomial curve, the error
-      function, and the Bayesian treatment that follows.</p>
-    <div class="metarow">
-      <span class="tag"><b>Instructor</b> Bonggwon Kang</span>
-      <span class="tag"><b>Textbook</b> Bishop, Pattern Recognition and Machine Learning, Ch.&nbsp;1</span>
-      <span class="tag"><b>Slides</b> p.&nbsp;10 – 39</span>
-      <span class="tag"><b>Open</b> 3 of 16 simulators</span>
-    </div>
-  </div>
-</header>
 
 <section class="app">
   <div class="container appgrid">
@@ -217,7 +182,7 @@ footer{background:var(--g950);border-top:1px solid var(--line);padding-block:36p
     <div class="fnote">
       <span><b>Digital Transformation Laboratory</b> · Department of Industrial Engineering,
         Kumoh National Institute of Technology</span>
-      <span>Course material for Pattern Recognition and Machine Learning. Built for teaching — please
+      <span>Course material for Pattern Recognition and Machine Learning. Built for teaching, so please
         keep the attribution when you reuse it.</span>
     </div>
   </div>
@@ -400,7 +365,7 @@ function p10(root){
     '\\( x_n=\\dfrac{n}{N-1}\\in[0,1],\\qquad t_n=\\sin(2\\pi x_n)+\\epsilon,\\qquad \\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
     'training set \\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), target vector \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
   note(root,['The green curve \\(\\sin(2\\pi x)\\) is what we want to learn; the blue circles are all we are given. As σ grows, the observations \\(t_n\\) drift away from the curve.',
-    'Increase \\(N\\). Every single point is still wrong, but the shape of the curve emerges from the cloud — this is why <b>the larger the data set, the more complex the model we can afford to fit</b>.',
+    'Increase \\(N\\). Every single point is still wrong, but the shape of the curve emerges from the cloud. This is why <b>the larger the data set, the more complex the model we can afford to fit</b>.',
     '“Draw a new sample” keeps σ fixed and redraws the noise \\(\\epsilon\\) only. The same σ gives a different data set every time, and that variability is exactly the uncertainty in \\(\\mathbf{w}\\) the Bayesian treatment will carry.']);
   function gen(){st.d=makeData(st.N,st.sigma,st.seed);
     const m=st.d.es.reduce((a,b)=>a+b,0)/st.N,v=st.d.es.reduce((a,b)=>a+(b-m)*(b-m),0)/Math.max(1,st.N-1);
@@ -436,8 +401,8 @@ function p11(root){
     '\\( y(x,\\mathbf{w}) = w_0+w_1x+w_2x^2+\\cdots+w_Mx^M=\\sum_{j=0}^{M}w_jx^{j}\\)<br>'+
     'a nonlinear function of \\(x\\), but a <b>linear function of the coefficients</b> \\(\\mathbf{w}\\).');
   note(root,['\\(w_0\\) shifts the whole curve, \\(w_1\\) tilts it, and \\(w_2,\\dots,w_M\\) add bends. Switch on “each term” to watch the contributions \\(w_jx^j\\) add up to the red curve.',
-    'Press <b>“Double every wⱼ”</b>: the curve is scaled by exactly two, \\(y(x,a\\mathbf{w})=a\\,y(x,\\mathbf{w})\\). That is what “linear in \\(\\mathbf{w}\\)” means — and it is why the error function can be minimised exactly in closed form.',
-    'Raise \\(M\\) and press “Set w to w*”. At \\(M=9\\) the curve passes through every point but oscillates wildly (over-fitting), and the slider ranges blow up — the coefficient magnitudes of Table 1.1.']);
+    'Press <b>“Double every wⱼ”</b>: the curve is scaled by exactly two, \\(y(x,a\\mathbf{w})=a\\,y(x,\\mathbf{w})\\). That is what “linear in \\(\\mathbf{w}\\)” means, and it is why the error function can be minimised exactly in closed form.',
+    'Raise \\(M\\) and press “Set w to w*”. At \\(M=9\\) the curve passes through every point but oscillates wildly (over-fitting), and the slider ranges blow up to the coefficient magnitudes of Table 1.1.']);
   function draw(){out({M:st.w.length-1,np:st.w.length,E:fmt(sse(st.d.xs,st.d.ts,st.w),3)});P.draw()}
   P.render=p=>{const c=p.col;
     if(st.terms)st.w.forEach((wj,j)=>{if(!wj)return;p.path(x=>wj*Math.pow(x,j),c.muted,1.2,[4,3]);
@@ -471,7 +436,7 @@ function p12(root){
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the displacements',st.bars,v=>{st.bars=v;P.draw()});
   eqbar(root,'Sum-of-squares error',
-    '\\( E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\) — each green bar is the displacement '+
+    '\\( E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\). Each green bar is the displacement '+
     '\\(|y(x_n,\\mathbf{w})-t_n|\\) of one data point from the curve, and \\(E(\\mathbf{w})\\) is one half of the sum of their squares.');
   root.appendChild(surfWrap);
   const scap=el('div','legend');surfWrap.appendChild(scap);
@@ -482,7 +447,7 @@ function p12(root){
   surfWrap.appendChild(snote);snote.style.display='none';tex(snote);
   note(root,['The same data set gives a completely different total \\(E(\\mathbf{w})\\) depending on how the curve is drawn. Learning means finding the \\(\\mathbf{w}^*\\) that makes this total as small as possible.',
     'Because \\(E(\\mathbf{w})\\) is a <b>quadratic function</b> of the coefficients, its derivatives are linear in \\(\\mathbf{w}\\): the surface has a single valley with elliptical contours, so the minimiser \\(\\mathbf{w}^*\\) is unique and can be found in closed form.',
-    'With \\(M>1\\) the surface can no longer be drawn — there are too many dimensions — but nothing changes in principle: “Move to w*” jumps straight to the bottom of that valley.']);
+    'With \\(M>1\\) the surface can no longer be drawn, because there are too many dimensions, but nothing changes in principle: “Move to w*” jumps straight to the bottom of that valley.']);
   S.onClick=(w0,w1)=>{if(st.w.length!==2)return;st.w=[clamp(w0,-st.rng,st.rng),clamp(w1,-st.rng,st.rng)];W.sync();draw()};
   function draw(){const E=sse(st.d.xs,st.d.ts,st.w),ws=fit(st.d.xs,st.d.ts,st.w.length-1),Em=sse(st.d.xs,st.d.ts,ws);
     let mx=0;st.d.xs.forEach((x,n)=>{mx=Math.max(mx,Math.abs(polyval(st.w,x)-st.d.ts[n]))});
@@ -518,7 +483,7 @@ function p12(root){
 /* ===== not open yet ===== */
 function soon(plan){return root=>{const s=el('div','soon');
   s.append(el('b',null,'In preparation'),el('div',null,plan),
-    el('div',null,'<span style="font-size:13px">Slides 10, 11 and 12 are open — the rest follow the same layout.</span>'));
+    el('div',null,'<span style="font-size:13px">Slides 10, 11 and 12 are open. The rest follow the same layout.</span>'));
   root.appendChild(s);tex(s)}}
 
 /* ===================== module list ===================== */
@@ -527,9 +492,9 @@ const S1='Sinusoidal function and polynomial curve',
       S3='Bayesian polynomial function learning';
 const MODULES=[
  {p:10,sec:S1,t:'Setup: fitting a polynomial to a synthetic function (I)',
-  g:'The target we want to learn, \\(\\sin(2\\pi x)\\), against the observations \\(t_n\\) we are actually given — controlled by the number of points \\(N\\) and the noise level \\(\\sigma\\).',b:p10},
+  g:'The target we want to learn, \\(\\sin(2\\pi x)\\), against the observations \\(t_n\\) we are actually given, controlled by the number of points \\(N\\) and the noise level \\(\\sigma\\).',b:p10},
  {p:11,sec:S1,t:'Setup: fitting a polynomial to a synthetic function (II)',
-  g:'Move the coefficients \\(\\mathbf{w}\\) and watch the polynomial \\(y(x,\\mathbf{w})\\) respond — and see why it is a linear function of \\(\\mathbf{w}\\).',b:p11},
+  g:'Move the coefficients \\(\\mathbf{w}\\) and watch the polynomial \\(y(x,\\mathbf{w})\\) respond, and see why it is a linear function of \\(\\mathbf{w}\\).',b:p11},
  {p:12,sec:S1,t:'Prediction error function (I)',
   g:'How the sum-of-squares error \\(E(\\mathbf{w})\\) changes with the choice of \\(\\mathbf{w}\\), shown as displacement bars and as an error surface.',b:p12},
  {p:15,sec:S1,t:'The root-mean-square (RMS) error',
@@ -593,7 +558,7 @@ function show(i){if(i===cur)return;cur=i;const m=MODULES[i];
   stage.innerHTML='';
   const h=el('div','mhead rise');
   h.innerHTML='<div class="mtop"><span class="chip">Slide p.'+m.p+'</span><span class="msec">'+m.sec+'</span></div>'+
-    '<h2>'+m.t+'</h2><p class="mgoal">'+m.g+'</p>';
+    '<h1>'+m.t+'</h1><p class="mgoal">'+m.g+'</p>';
   stage.appendChild(h);tex(h);
   const body=el('div');body.style.cssText='display:flex;flex-direction:column;gap:20px';stage.appendChild(body);
   m.b(body)}
