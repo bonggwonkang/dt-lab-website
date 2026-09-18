@@ -1,4 +1,8 @@
+import { lazy, Suspense } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
+
+const StatisticalModels = lazy(() => import('../prml/StatisticalModels.jsx'))
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -121,7 +125,19 @@ function ComputerModels() {
   )
 }
 
+const tabs = [
+  { id: 'computer',    name: 'Computer models' },
+  { id: 'statistical', name: 'Statistical models' },
+]
+
 export default function PlaygroundPage() {
+  const [params, setParams] = useSearchParams()
+  const tab = params.get('tab') === 'statistical' ? 'statistical' : 'computer'
+  const slide = Number(params.get('slide')) || 10
+
+  const openTab = id => setParams(id === 'statistical' ? { tab: 'statistical' } : {}, { replace: true })
+  const openSlide = p => setParams({ tab: 'statistical', slide: String(p) }, { replace: true })
+
   return (
     <>
       <PageHeader />
@@ -129,18 +145,26 @@ export default function PlaygroundPage() {
       <section className="py-10 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap gap-2 mb-8">
-            <span aria-current="page" className={`${tabBase} bg-indigo-600 text-white border-indigo-500`}>
-              Computer models
-              <span className="ml-2 text-xs font-mono text-white/70">{models.length}</span>
-            </span>
-            <a href={`${base}prml/`}
-              className={`${tabBase} bg-white dark:bg-white/5 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-white/10 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10`}>
-              Statistical models
-              <span className="ml-2 text-xs">↗</span>
-            </a>
+            {tabs.map(t => (
+              <button key={t.id} type="button" onClick={() => openTab(t.id)}
+                aria-current={tab === t.id ? 'page' : undefined}
+                className={`${tabBase} ${
+                  tab === t.id
+                    ? 'bg-indigo-600 text-white border-indigo-500'
+                    : 'bg-white dark:bg-white/5 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-white/10 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10'
+                }`}>
+                {t.name}
+              </button>
+            ))}
           </div>
 
-          <ComputerModels />
+          {tab === 'computer'
+            ? <ComputerModels />
+            : (
+              <Suspense fallback={<p className="text-sm text-gray-500 dark:text-gray-400">Loading the simulators…</p>}>
+                <StatisticalModels slide={slide} onSlide={openSlide} />
+              </Suspense>
+            )}
         </div>
       </section>
     </>
