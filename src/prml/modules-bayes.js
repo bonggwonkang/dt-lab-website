@@ -300,7 +300,7 @@ export function p38(root){
 
 /* ===== slide 39 · Where the data are decides what the model knows ===== */
 export function p39(root){
-  const st={M:9,lnAlpha:ALPHA0,beta:BETA0,xs:[],ts:[],seed:3};
+  const st={M:9,lnAlpha:-1,beta:BETA0,xs:[],ts:[],seed:3};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--fit)',l:'mean m(x)'},{c:'var(--fit)',t:'dash',l:'m(x) ± s(x)'},
     {c:'var(--truth)',l:'sin(2πx)'},{c:'var(--obs)',t:'dot',l:'your data points'}]);
