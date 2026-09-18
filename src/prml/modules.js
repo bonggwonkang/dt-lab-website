@@ -1,21 +1,8 @@
 /* PRML simulators: one builder per slide, registered in MODULES. */
 import{el,fmt,clamp,tex,sin2pi,makeData,polyval,fit,sse,erms,Plot,board,legend,slider,
-  toggle,btnrow,readout,eqbar,note,sub}from'./core.js'
-
-/* shared coefficient sliders (slides 11 and 12) */
-const NICE=[1,2,3,5,10,20,50,100,300,1000,1e4,1e5,1e6];
-const niceRange=m=>{for(let i=0;i<NICE.length;i++)if(m<=NICE[i]*.98)return NICE[i];return Math.ceil(m)};
-function wPanel(host,st,redraw){
-  const box=el('div');box.style.cssText='display:flex;flex-direction:column;gap:9px';host.appendChild(box);
-  const api={s:[],
-    rebuild(){box.innerHTML='';api.s=[];st.w.forEach((v,j)=>{
-      api.s[j]=slider(box,{label:'w'+sub(j),min:-st.rng,max:st.rng,step:st.rng/500,value:v,
-        fmt:x=>fmt(x,st.rng>=20?1:2),on:x=>{st.w[j]=x;redraw()}})})},
-    sync(){if(api.s.length!==st.w.length)return api.rebuild();
-      st.w.forEach((v,j)=>{api.s[j].setRange(-st.rng,st.rng,st.rng/500);api.s[j].set(v)})}};
-  api.rebuild();return api}
-function applyFit(st,api,lam){const w=fit(st.d.xs,st.d.ts,st.w.length-1,lam||0);
-  st.rng=Math.max(st.rngMin||0,niceRange(Math.max.apply(null,w.map(Math.abs))||1));st.w=w.slice();api.sync()}
+  toggle,btnrow,readout,eqbar,note,sub,niceRange,wPanel,applyFit}from'./core.js'
+import{p15,p19,p23,p25,p28,p30,p33}from'./modules-mle.js'
+import{p34,p35,p36,p37,p38,p39}from'./modules-bayes.js'
 
 /* ===== slide 10 · Setup: fitting a polynomial to a synthetic function (I) ===== */
 function p10(root){
@@ -153,12 +140,6 @@ function p12(root){
   S.hoverFmt=(a,bq)=>[{t:'w₀ = '+fmt(a,2)+', w₁ = '+fmt(bq,2)},{t:'E(w) = '+fmt(sse(st.d.xs,st.d.ts,[a,bq]),2),c:S.col.acc}];
   draw()}
 
-/* ===== not open yet ===== */
-function soon(plan){return root=>{const s=el('div','soon');
-  s.append(el('b',null,'In preparation'),el('div',null,plan),
-    el('div',null,'<span style="font-size:13px">Slides 10, 11 and 12 are open. The rest follow the same layout.</span>'));
-  root.appendChild(s);tex(s)}}
-
 /* ===================== module list ===================== */
 const S1='Sinusoidal function and polynomial curve',
       S2='Probabilistic polynomial curve and MLE-MAP',
@@ -171,44 +152,31 @@ const MODULES=[
  {p:12,sec:S1,t:'Prediction error function (I)',
   g:'How the sum-of-squares error \\(E(\\mathbf{w})\\) changes with the choice of \\(\\mathbf{w}\\), shown as displacement bars and as an error surface.',b:p12},
  {p:15,sec:S1,t:'The root-mean-square (RMS) error',
-  g:'\\(E_{\\mathrm{RMS}}\\) on the training set and on an independent test set for various values of \\(M\\), together with the learned \\(\\mathbf{w}^*\\).',
-  b:soon('Sweeping \\(M\\) from 0 to 9 while plotting both error curves and the coefficient table of Table 1.1.')},
+  g:'\\(E_{\\mathrm{RMS}}\\) on the training set and on an independent test set for various values of \\(M\\), together with the learned \\(\\mathbf{w}^*\\).',b:p15},
  {p:19,sec:S1,t:'An error function that discourages over-fitting',
-  g:'How the regularization coefficient \\(\\lambda\\) (the shrinkage method) trades the error term against the penalty term.',
-  b:soon('Sweeping \\(\\ln\\lambda\\) to show the balance between \\(\\frac12\\sum\\{y(x_n,\\mathbf{w})-t_n\\}^2\\) and \\(\\frac{\\lambda}{2}\\|\\mathbf{w}\\|^2\\).')},
+  g:'How the regularization coefficient \\(\\lambda\\) (the shrinkage method) trades the error term against the penalty term.',b:p19},
  {p:23,sec:S2,t:'Problem setup: sinusoidal function and probabilistic polynomial curve (I)',
-  g:'Extending the deterministic curve \\(y(x,\\mathbf{w})\\) into the conditional distribution \\(p(t|x,\\mathbf{w},\\beta)=\\mathcal N(t|y(x,\\mathbf{w}),\\beta^{-1})\\).',
-  b:soon('Standing a Gaussian on the curve at each \\(x\\) to give the precision \\(\\beta\\) a shape you can see.')},
+  g:'Extending the deterministic curve \\(y(x,\\mathbf{w})\\) into the conditional distribution \\(p(t|x,\\mathbf{w},\\beta)=\\mathcal N(t|y(x,\\mathbf{w}),\\beta^{-1})\\).',b:p23},
  {p:25,sec:S2,t:'Likelihood of the probabilistic polynomial curve and MLE',
-  g:'How the likelihood \\(p(\\mathbf{t}|\\mathbf{x},\\mathbf{w},\\beta)\\) responds as the coefficients \\(\\mathbf{w}\\) move.',
-  b:soon('Showing the per-point densities, their product, and the log likelihood side by side.')},
+  g:'How the likelihood \\(p(\\mathbf{t}|\\mathbf{x},\\mathbf{w},\\beta)\\) responds as the coefficients \\(\\mathbf{w}\\) move.',b:p25},
  {p:28,sec:S2,t:'Maximum likelihood (MLE): the predictive distribution',
-  g:'How \\(\\mathbf{w}_{\\mathrm{ML}}\\) and \\(\\beta_{\\mathrm{ML}}\\) are updated as the number of data points grows.',
-  b:soon('Growing \\(N\\) and watching the width of \\(\\mathcal N(t|y(x,\\mathbf{w}_{\\mathrm{ML}}),\\beta_{\\mathrm{ML}}^{-1})\\).')},
+  g:'How \\(\\mathbf{w}_{\\mathrm{ML}}\\) and \\(\\beta_{\\mathrm{ML}}\\) are updated as the number of data points grows.',b:p28},
  {p:30,sec:S2,t:'Maximum a posteriori (MAP): the posterior over w (I)',
-  g:'How the prior \\(p(\\mathbf{w}|\\alpha)\\) pulls \\(\\mathbf{w}_{\\mathrm{MAP}}\\) away from \\(\\mathbf{w}_{\\mathrm{ML}}\\).',
-  b:soon('Sweeping the hyperparameter \\(\\alpha\\) with \\(\\mathbf{w}_{\\mathrm{ML}}\\) and \\(\\mathbf{w}_{\\mathrm{MAP}}\\) reported together.')},
+  g:'How the prior \\(p(\\mathbf{w}|\\alpha)\\) pulls \\(\\mathbf{w}_{\\mathrm{MAP}}\\) away from \\(\\mathbf{w}_{\\mathrm{ML}}\\).',b:p30},
  {p:33,sec:S3,t:'Bayesian polynomial function (I)',
-  g:'What “integrating a variable out” means, using grades \\(Y\\) recorded by gender \\(X\\).',
-  b:soon('Changing the proportion of female records and watching the marginalized grade distribution respond.')},
+  g:'What “integrating a variable out” means, using grades \\(Y\\) recorded by gender \\(X\\).',b:p33},
  {p:34,sec:S3,t:'Bayesian polynomial function (II)',
-  g:'How the uncertainty in \\(\\mathbf{w}\\) shrinks as data points are added.',
-  b:soon('Overlaying curves drawn from the posterior distribution over \\(\\mathbf{w}\\).')},
+  g:'How the uncertainty in \\(\\mathbf{w}\\) shrinks as data points are added.',b:p34},
  {p:35,sec:S3,t:'Bayesian polynomial function (III)',
-  g:'The predictive distribution \\(p(t|x,\\mathbf{x},\\mathbf{t})=\\int p(t|x,\\mathbf{w})p(\\mathbf{w}|\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}\\), obtained by marginalizing over \\(\\mathbf{w}\\).',
-  b:soon('Showing that the spread of the sampled curves is exactly what the integral returns.')},
+  g:'The predictive distribution \\(p(t|x,\\mathbf{x},\\mathbf{t})=\\int p(t|x,\\mathbf{w})p(\\mathbf{w}|\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}\\), obtained by marginalizing over \\(\\mathbf{w}\\).',b:p35},
  {p:36,sec:S3,t:'Basis functions that span the space of polynomials',
-  g:'The polynomial as an inner product, \\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\).',
-  b:soon('Linking each component of \\(\\boldsymbol\\phi(x)=(x^0,\\dots,x^M)^{\\mathrm T}\\) to the curve it contributes.')},
+  g:'The polynomial as an inner product, \\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\).',b:p36},
  {p:37,sec:S3,t:'Bayesian polynomial in basis functions: posterior mean and covariance',
-  g:'The matrices behind the posterior: \\(\\sum_n\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\) and \\(\\sum_n\\boldsymbol\\phi(x_n)t_n\\).',
-  b:soon('Watching the matrix entries update as data points are added one at a time.')},
+  g:'The matrices behind the posterior: \\(\\sum_n\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\) and \\(\\sum_n\\boldsymbol\\phi(x_n)t_n\\).',b:p37},
  {p:38,sec:S3,t:'Bayesian polynomial in basis functions: matching the Gaussian form',
-  g:'The multivariate Gaussian \\(\\mathcal N(\\mathbf{w}|\\mathbf{m}_N,\\mathbf{S})\\) and the value of each term of the log likelihood.',
-  b:soon('Decomposing \\(-\\frac12\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{w}+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N\\) term by term.')},
+  g:'The multivariate Gaussian \\(\\mathcal N(\\mathbf{w}|\\mathbf{m}_N,\\mathbf{S})\\) and the value of each term of the log likelihood.',b:p38},
  {p:39,sec:S3,t:'Deriving the Bayesian predictive distribution',
-  g:'How \\(\\mathcal N(t|m(x),s^2(x))\\) responds to the number and the position of the data points.',
-  b:soon('Placing data points by hand and reading off \\(m(x)\\) and \\(s^2(x)\\).')}
+  g:'How \\(\\mathcal N(t|m(x),s^2(x))\\) responds to the number and the position of the data points.',b:p39}
 ];
-MODULES.forEach((m,i)=>{m.ready=[10,11,12].indexOf(m.p)>=0;m.no=i+1});
+MODULES.forEach((m,i)=>{m.ready=true;m.no=i+1});
 export{MODULES};

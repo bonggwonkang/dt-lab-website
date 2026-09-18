@@ -9,7 +9,8 @@ const fmt=(v,d)=>{d=d==null?2:d;if(!isFinite(v))return'–';const a=Math.abs(v);
 let mjLoad=null;
 function ensureMathJax(){
   if(mjLoad)return mjLoad;
-  window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['$$','$$']]},
+  window.MathJax={loader:{load:['[tex]/boldsymbol']},
+    tex:{packages:{'[+]':['boldsymbol']},inlineMath:[['\\(','\\)']],displayMath:[['$$','$$']]},
     svg:{fontCache:'global'},options:{enableMenu:false},startup:{typeset:false}};
   mjLoad=new Promise((res,rej)=>{const t=document.createElement('script');
     t.src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js';
@@ -88,6 +89,15 @@ class Plot{
     if(dash)g.setLineDash(dash);g.beginPath();const n=240,[a,b]=this.o.xlim;
     for(let i=0;i<=n;i++){const x=a+(b-a)*i/n,y=f(x),Y=this.Y(clamp(y,this.o.ylim[0]-2,this.o.ylim[1]+2));
       i?g.lineTo(this.X(x),Y):g.moveTo(this.X(x),Y)}g.stroke();g.restore()}
+  line(pts,color,w,dash){const g=this.ctx;g.save();g.strokeStyle=color;g.lineWidth=w||2;g.lineJoin='round';
+    if(dash)g.setLineDash(dash);g.beginPath();
+    pts.forEach((p,i)=>{const X=this.X(p[0]),Y=this.Y(clamp(p[1],this.o.ylim[0]-2,this.o.ylim[1]+2));
+      i?g.lineTo(X,Y):g.moveTo(X,Y)});g.stroke();g.restore()}
+  heat(V,NX,NY,mn,mx){const g=this.ctx,c=this.col,x0=this.o.xlim[0],x1=this.o.xlim[1],
+    y0=this.o.ylim[0],y1=this.o.ylim[1],cw=(this.X(x1)-this.X(x0))/NX,ch=(this.Y(y0)-this.Y(y1))/NY;
+    for(let i=0;i<NX;i++)for(let j=0;j<NY;j++){const t=(V[i][j]-mn)/((mx-mn)||1);
+      g.fillStyle=c.ramp[clamp(Math.floor(t*6),0,5)];
+      g.fillRect(this.X(x0)+i*cw-.5,this.Y(y1)+(NY-1-j)*ch-.5,cw+1,ch+1)}}
   band(lo,hi,color,alpha){const g=this.ctx;g.save();g.globalAlpha=alpha==null?.16:alpha;g.fillStyle=color;g.beginPath();
     const n=160,[a,b]=this.o.xlim;
     for(let i=0;i<=n;i++){const x=a+(b-a)*i/n;const Y=this.Y(clamp(hi(x),this.o.ylim[0]-2,this.o.ylim[1]+2));i?g.lineTo(this.X(x),Y):g.moveTo(this.X(x),Y)}
@@ -140,4 +150,73 @@ function note(host,items,title){const n=el('div','note');n.appendChild(el('b',nu
   const u=el('ul');items.forEach(t=>u.appendChild(el('li',null,t)));n.appendChild(u);host.appendChild(n);tex(n);return n}
 const SUB='₀₁₂₃₄₅₆₇₈₉';const sub=j=>String(j).split('').map(d=>SUB[+d]).join('');
 
-export{el,cssv,setRoot,clamp,fmt,tex,ensureMathJax,rng,gauss,sin2pi,makeData,phi,polyval,solve,fit,sse,erms,Plot,board,legend,slider,toggle,btnrow,readout,eqbar,note,sub};
+/* ---- linear algebra and Bayesian pieces shared by the later slides ---- */
+const zeros=(n,m)=>{const A=[];for(let i=0;i<n;i++)A.push(new Array(m).fill(0));return A};
+const dot=(a,b)=>{let s=0;for(let i=0;i<a.length;i++)s+=a[i]*b[i];return s};
+const matVec=(A,x)=>A.map(r=>dot(r,x));
+/* quadratic form a^T A a */
+const quad=(a,A)=>{let s=0;for(let i=0;i<a.length;i++)for(let j=0;j<a.length;j++)s+=a[i]*A[i][j]*a[j];return s};
+function inv(A){const n=A.length,M=A.map((r,i)=>r.concat(Array.from({length:n},(_,j)=>i===j?1:0)));
+  for(let c=0;c<n;c++){let p=c;for(let r=c+1;r<n;r++)if(Math.abs(M[r][c])>Math.abs(M[p][c]))p=r;
+    const t=M[c];M[c]=M[p];M[p]=t;const pv=M[c][c]||1e-300;
+    for(let k=c;k<2*n;k++)M[c][k]/=pv;
+    for(let r=0;r<n;r++){if(r===c)continue;const f=M[r][c];if(!f)continue;
+      for(let k=c;k<2*n;k++)M[r][k]-=f*M[c][k]}}
+  return M.map(r=>r.slice(n))}
+/* lower triangular Cholesky factor, used to draw samples of w */
+function chol(A){const n=A.length,L=zeros(n,n);
+  for(let i=0;i<n;i++)for(let j=0;j<=i;j++){let s=A[i][j];
+    for(let k=0;k<j;k++)s-=L[i][k]*L[j][k];
+    if(i===j)L[i][j]=Math.sqrt(Math.max(s,1e-14));else L[i][j]=s/(L[j][j]||1e-300)}
+  return L}
+/* posterior over w: S^-1 = alpha I + beta sum phi phi^T ,  S^-1 m_N = beta sum phi t_n */
+function posterior(xs,ts,M,alpha,beta){const d=M+1,Sinv=zeros(d,d),b=new Array(d).fill(0);
+  for(let n=0;n<xs.length;n++){const p=phi(xs[n],M);
+    for(let i=0;i<d;i++){b[i]+=beta*p[i]*ts[n];for(let j=0;j<d;j++)Sinv[i][j]+=beta*p[i]*p[j]}}
+  for(let i=0;i<d;i++)Sinv[i][i]+=alpha;
+  const S=inv(Sinv);return{Sinv:Sinv,S:S,b:b,m:matVec(S,b),d:d}}
+/* predictive distribution: m(x) = phi(x)^T m_N , s^2(x) = beta^-1 + phi(x)^T S phi(x) */
+function predict(x,M,post,beta){const p=phi(x,M);
+  return{mean:dot(p,post.m),var:1/beta+quad(p,post.S)}}
+function sampleW(post,r){const L=chol(post.S),d=post.d,z=[],w=[];
+  for(let i=0;i<d;i++)z.push(gauss(r));
+  for(let i=0;i<d;i++){let s=post.m[i];for(let k=0;k<=i;k++)s+=L[i][k]*z[k];w.push(s)}
+  return w}
+const gaussPdf=(x,mu,sd)=>Math.exp(-.5*Math.pow((x-mu)/sd,2))/(sd*Math.sqrt(2*Math.PI));
+const logGaussPdf=(x,mu,sd)=>-.5*Math.pow((x-mu)/sd,2)-Math.log(sd)-.5*Math.log(2*Math.PI);
+
+/* ---- coefficient sliders shared by the polynomial modules ---- */
+const NICE=[1,2,3,5,10,20,50,100,300,1000,1e4,1e5,1e6];
+const niceRange=m=>{for(let i=0;i<NICE.length;i++)if(m<=NICE[i]*.98)return NICE[i];return Math.ceil(m)};
+function wPanel(host,st,redraw){
+  const box=el('div');box.style.cssText='display:flex;flex-direction:column;gap:9px';host.appendChild(box);
+  const api={s:[],
+    rebuild(){box.innerHTML='';api.s=[];st.w.forEach((v,j)=>{
+      api.s[j]=slider(box,{label:'w'+sub(j),min:-st.rng,max:st.rng,step:st.rng/500,value:v,
+        fmt:x=>fmt(x,st.rng>=20?1:2),on:x=>{st.w[j]=x;redraw()}})})},
+    sync(){if(api.s.length!==st.w.length)return api.rebuild();
+      st.w.forEach((v,j)=>{api.s[j].setRange(-st.rng,st.rng,st.rng/500);api.s[j].set(v)})}};
+  api.rebuild();return api}
+function applyFit(st,api,lam){const w=fit(st.d.xs,st.d.ts,st.w.length-1,lam||0);
+  st.rng=Math.max(st.rngMin||0,niceRange(Math.max.apply(null,w.map(Math.abs))||1));st.w=w.slice();api.sync()}
+
+/* coefficient chips: w0 = .. , w1 = .. */
+function wchips(host,label){const box=el('div','mat');if(label)box.appendChild(el('div','cap',label));
+  const d=el('div','wmat');box.appendChild(d);host.appendChild(box);
+  return function(ww,prec){d.innerHTML='';ww.forEach((v,j)=>
+    d.appendChild(el('span',null,'w'+sub(j)+' = '+fmt(v,prec==null?2:prec))))}}
+
+/* ---- matrix view: a grid of numbers shaded by magnitude ---- */
+function matview(host,o){const box=el('div','mat');if(o.cap)box.appendChild(el('div','cap',o.cap));
+  const g=el('div','grid');g.style.gridTemplateColumns='repeat('+(o.cols+(o.rowLab?1:0))+',minmax(0,1fr))';
+  box.appendChild(g);host.appendChild(box);
+  return function(get){g.innerHTML='';let mx=1e-12;
+    for(let i=0;i<o.rows;i++)for(let j=0;j<o.cols;j++)mx=Math.max(mx,Math.abs(get(i,j)));
+    for(let i=0;i<o.rows;i++){
+      if(o.rowLab)g.appendChild(el('span','cell lab',o.rowLab(i)));
+      for(let j=0;j<o.cols;j++){const v=get(i,j),c=el('span','cell',fmt(v,o.digits==null?2:o.digits));
+        const t=Math.min(1,Math.abs(v)/mx);c.style.background='rgba(99,102,241,'+(.06+.5*t).toFixed(3)+')';
+        if(t>.55)c.style.color='#fff';g.appendChild(c)}}}}
+
+export{el,cssv,setRoot,clamp,fmt,tex,ensureMathJax,rng,gauss,sin2pi,makeData,phi,polyval,solve,fit,sse,erms,Plot,board,legend,slider,toggle,btnrow,readout,eqbar,note,sub,
+  zeros,dot,matVec,quad,inv,chol,posterior,predict,sampleW,gaussPdf,logGaussPdf,matview,wchips,niceRange,wPanel,applyFit};

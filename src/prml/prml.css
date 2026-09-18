@@ -91,6 +91,18 @@
   border:1px dashed var(--line-2);border-radius:16px;display:flex;flex-direction:column;gap:8px}
 .prml .soon b{color:var(--accent);font-size:12px;letter-spacing:.02em;font-weight:600}
 
+/* ---------- matrices and coefficient chips ---------- */
+.prml .mat{display:flex;flex-direction:column;gap:6px;min-width:0}
+.prml .mat .cap{font-size:11.5px;letter-spacing:.02em;color:var(--muted);font-weight:600}
+.prml .grid{display:grid;gap:3px}
+.prml .cell{font-family:var(--mono);font-size:11px;text-align:right;padding:4px 6px;border-radius:5px;
+  background:var(--sunken);color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.prml .cell.lab{background:none;color:var(--muted);text-align:center}
+.prml .matrow{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.prml .wmat{display:flex;flex-wrap:wrap;gap:5px}
+.prml .wmat span{font-family:var(--mono);font-size:11.5px;padding:3px 7px;border-radius:5px;
+  background:var(--sunken);color:var(--ink-2);font-variant-numeric:tabular-nums}
+
 /* Tailwind's preflight makes every svg a block, which would break inline math. */
 .prml mjx-container[jax="SVG"]>svg{display:inline-block}
 .prml mjx-container[jax="SVG"][display="true"]{display:block;margin:2px 0}
