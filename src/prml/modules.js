@@ -83,15 +83,17 @@ function p12(root){
     {c:'var(--truth)',l:'displacement \\(y(x_n,\\mathbf{w})-t_n\\)'}]);
   const P=new Plot(b.pc,{h:345,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const surfWrap=el('div','card plotcard');
-  slider(b.pn,{label:'Order \\(M\\)',min:0,max:3,step:1,value:1,on:v=>{
-    const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();draw()}});
+  slider(b.pn,{label:'Order \\(M\\)',min:0,max:2,step:1,value:1,on:v=>{
+    const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;
+    W.rebuild();buildPanels();draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
   btnrow(b.pn,[{l:'Move to \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
     {l:'Reset \\(\\mathbf{w}\\) to \\(\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=st.rngMin;W.sync();draw()}},
-    {l:'New sample',on:()=>{st.d=makeData(10,.25,st.d.seed+1);st.g=null;draw()}}]);
+    {l:'New sample',on:()=>{st.d=makeData(10,.25,st.d.seed+1);draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'E',l:'\\(E(\\mathbf{w})\\)',big:true},{k:'Em',l:'Minimum \\(E(\\mathbf{w}^{*})\\)'},{k:'gap',l:'\\(E(\\mathbf{w})-E(\\mathbf{w}^{*})\\)'},
+  const out=readout(b.pn,[{k:'E',l:'\\(E(\\mathbf{w})\\)',big:true},{k:'Em',l:'Minimum \\(E(\\mathbf{w}^{*})\\)'},
+    {k:'gap',l:'\\(E(\\mathbf{w})-E(\\mathbf{w}^{*})\\)'},
     {k:'rms',l:'\\(E_{\\mathrm{RMS}}\\)'},{k:'mx',l:'Largest displacement'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the displacements',st.bars,v=>{st.bars=v;P.draw()});
@@ -100,45 +102,83 @@ function p12(root){
     '\\(|y(x_n,\\mathbf{w})-t_n|\\) of one data point from the curve, and \\(E(\\mathbf{w})\\) is one half of the sum of their squares.');
   root.appendChild(surfWrap);
   const scap=el('div','legend');surfWrap.appendChild(scap);
-  scap.innerHTML='<span><b style="font-weight:600">Error surface \\(E(w_0,w_1)\\)</b></span>'+
-    '<span style="color:var(--muted)">stronger colour means larger \\(E(\\mathbf{w})\\) &middot; &times; marks the minimiser \\(\\mathbf{w}^{*}\\) &middot; click anywhere to move \\(\\mathbf{w}\\) there</span>';
-  const S=new Plot(surfWrap,{h:310,xlim:[-2.6,3.6],ylim:[-6.2,3.2],xl:'w₀',yl:'w₁',xt:[-2,0,2],yt:[-4,-2,0,2],pad:[16,18,28,40]});
-  const snote=el('div','soon','The error surface can only be drawn for \\(M=1\\), where the model has just two parameters \\(w_0,w_1\\) and \\(E(\\mathbf{w})\\) fits on a plane. Set the order back to 1 to see it.');
-  surfWrap.appendChild(snote);snote.style.display='none';tex(snote);
-  note(root,['The same data set gives a completely different total \\(E(\\mathbf{w})\\) depending on how the curve is drawn. Learning means finding the \\(\\mathbf{w}^*\\) that makes this total as small as possible.',
-    'Because \\(E(\\mathbf{w})\\) is a <b>quadratic function</b> of the coefficients, its derivatives are linear in \\(\\mathbf{w}\\): the surface has a single valley with elliptical contours, so the minimiser \\(\\mathbf{w}^*\\) is unique and can be found in closed form.',
-    'With \\(M>1\\) the surface can no longer be drawn, because there are too many dimensions, but nothing changes in principle: “Move to w*” jumps straight to the bottom of that valley.']);
-  S.onClick=(w0,w1)=>{if(st.w.length!==2)return;st.w=[clamp(w0,-st.rng,st.rng),clamp(w1,-st.rng,st.rng)];W.sync();draw()};
-  function draw(){const E=sse(st.d.xs,st.d.ts,st.w),ws=fit(st.d.xs,st.d.ts,st.w.length-1),Em=sse(st.d.xs,st.d.ts,ws);
+  scap.innerHTML='<span><b style="font-weight:600">The error as a function of the coefficients</b></span>'+
+    '<span style="color:var(--muted)">&times; marks the minimiser \\(\\mathbf{w}^{*}\\) &middot; '+
+    'click anywhere to move \\(\\mathbf{w}\\) there</span>';
+  const panels=el('div');panels.style.cssText='display:grid;gap:16px';surfWrap.appendChild(panels);
+  note(root,['The same data set gives a completely different total \\(E(\\mathbf{w})\\) depending on how the curve is drawn. Learning means finding the \\(\\mathbf{w}^{*}\\) that makes this total as small as possible.',
+    'Because \\(E(\\mathbf{w})\\) is a <b>quadratic function</b> of the coefficients, its derivatives are linear in \\(\\mathbf{w}\\): with \\(M=0\\) it is a parabola, with \\(M=1\\) a bowl with elliptical contours, and the minimiser \\(\\mathbf{w}^{*}\\) is unique and can be found in closed form.',
+    'At \\(M=2\\) the bowl lives in three dimensions, so it is shown as the three planes you can still draw, each holding the remaining coefficient at its current value. Move that third slider and watch every slice shift, which is why the coefficients cannot be tuned one at a time.']);
+  const NX=52,NY=52;
+  const ticks=r=>[-r,-r/2,0,r/2,r];
+  const Ew=w=>sse(st.d.xs,st.d.ts,w);
+  let SP=[];
+  function buildPanels(){
+    panels.innerHTML='';SP=[];
+    const M=st.w.length-1;
+    panels.style.gridTemplateColumns=M===2?'repeat(auto-fit,minmax(240px,1fr))':'minmax(0,1fr)';
+    if(M===0){
+      const box=el('div');box.style.cssText='display:flex;flex-direction:column;gap:6px';
+      box.appendChild(el('div','cap','\\(E(w_0)\\), a parabola in the single coefficient'));
+      const p=new Plot(box,{h:280,xlim:[-st.rng,st.rng],ylim:[0,1],xl:'w'+sub(0),yl:'E',
+        xt:ticks(st.rng),yt:[0,1],pad:[16,18,28,50]});
+      p.render=q=>{const c=q.col;
+        q.path(v=>Ew([v]),c.acc,2.6);
+        q.seg(st.best[0],0,Ew(st.best),c.ink,1.5,[4,4]);
+        q.mark(st.best[0],Ew(st.best),c.ink,5);
+        q.label(st.best[0],Ew(st.best),'  w*',c.ink,'left',-13);
+        q.mark(st.w[0],Ew(st.w),c.fit,6);
+        q.label(st.w[0],Ew(st.w),'  current w',c.fit,'left',15)};
+      p.hoverFmt=v=>[{t:'w'+sub(0)+' = '+fmt(v,2)},{t:'E(w) = '+fmt(Ew([v]),2),c:p.col.acc}];
+      p.onClick=v=>{st.w[0]=clamp(v,-st.rng,st.rng);W.sync();draw()};
+      panels.appendChild(box);SP.push({p:p,a:0,b:-1});
+    }else{
+      const prs=M===1?[[0,1]]:[[0,1],[0,2],[1,2]];
+      prs.forEach(pr=>{const a=pr[0],bb=pr[1],
+        other=M===2?[0,1,2].filter(k=>k!==a&&k!==bb)[0]:-1;
+        const box=el('div');box.style.cssText='display:flex;flex-direction:column;gap:6px';
+        box.appendChild(el('div','cap','\\(E(w_'+a+',w_'+bb+')\\)'+
+          (other>=0?' with \\(w_'+other+'\\) held where you left it':'')));
+        const p=new Plot(box,{h:M===1?300:250,xlim:[-st.rng,st.rng],ylim:[-st.rng,st.rng],
+          xl:'w'+sub(a),yl:'w'+sub(bb),xt:ticks(st.rng),yt:ticks(st.rng),pad:[16,18,28,40]});
+        p.render=q=>{const c=q.col,w=st.w.slice(),V=[];let mn=Infinity,mx=-Infinity;
+          const x0=q.o.xlim[0],x1=q.o.xlim[1],y0=q.o.ylim[0],y1=q.o.ylim[1];
+          for(let i=0;i<NX;i++){V.push([]);
+            for(let j=0;j<NY;j++){w[a]=x0+(x1-x0)*(i+.5)/NX;w[bb]=y0+(y1-y0)*(j+.5)/NY;
+              const v=Math.log(Ew(w)+1e-6);V[i].push(v);if(v<mn)mn=v;if(v>mx)mx=v}}
+          q.heat(V,NX,NY,mn,mx);q.axes();
+          const g=q.ctx,BX=q.X(st.best[a]),BY=q.Y(st.best[bb]),s=6;
+          g.save();g.strokeStyle=c.ink;g.lineWidth=2;g.beginPath();
+          g.moveTo(BX-s,BY-s);g.lineTo(BX+s,BY+s);g.moveTo(BX+s,BY-s);g.lineTo(BX-s,BY+s);
+          g.stroke();g.restore();
+          q.label(st.best[a],st.best[bb],'  w*',c.ink,'left',-13);
+          q.mark(st.w[a],st.w[bb],c.fit,6);
+          q.label(st.w[a],st.w[bb],'  current w',c.fit,'left',15)};
+        p.hoverFmt=(x,y)=>{const w=st.w.slice();w[a]=x;w[bb]=y;
+          return[{t:'w'+sub(a)+' = '+fmt(x,2)+', w'+sub(bb)+' = '+fmt(y,2)},
+            {t:'E(w) = '+fmt(Ew(w),2),c:p.col.acc}]};
+        p.onClick=(x,y)=>{st.w[a]=clamp(x,-st.rng,st.rng);st.w[bb]=clamp(y,-st.rng,st.rng);
+          W.sync();draw()};
+        panels.appendChild(box);SP.push({p:p,a:a,b:bb})})
+    }
+    tex(panels)}
+  function draw(){const E=Ew(st.w),ws=fit(st.d.xs,st.d.ts,st.w.length-1),Em=Ew(ws);
     let mx=0;st.d.xs.forEach((x,n)=>{mx=Math.max(mx,Math.abs(polyval(st.w,x)-st.d.ts[n]))});
     out({E:fmt(E,3),Em:fmt(Em,3),gap:fmt(E-Em,3),rms:fmt(erms(st.d.xs,st.d.ts,st.w),3),mx:fmt(mx,3)});
-    st.best=ws;const two=st.w.length===2;S.c.style.display=two?'':'none';scap.style.display=two?'':'none';
-    snote.style.display=two?'none':'';P.draw();if(two)S.draw()}
+    st.best=ws;
+    SP.forEach(s=>{s.p.o.xlim=[-st.rng,st.rng];s.p.o.xt=ticks(st.rng);
+      if(s.b>=0){s.p.o.ylim=[-st.rng,st.rng];s.p.o.yt=ticks(st.rng)}
+      else{const top=Math.max(Ew([-st.rng]),Ew([st.rng]));
+        s.p.o.ylim=[0,top];s.p.o.yt=[0,Math.round(top/2),Math.round(top)]}
+      s.p.draw()});
+    P.draw()}
   P.render=p=>{const c=p.col,d=st.d;
     p.path(x=>polyval(st.w,x),c.fit,2.6);
     if(st.bars)d.xs.forEach((x,n)=>p.seg(x,d.ts[n],polyval(st.w,x),c.truth,2.5));
     p.dots(d.xs,d.ts,c.obs)};
-  P.hoverFmt=x=>[{t:'x = '+fmt(x,2)},{t:'y(x,w) = '+fmt(polyval(st.w,x),2),c:P.col.fit}];
-  const NX=64,NY=64;
-  function grid(){if(st.g)return st.g;const x0=S.o.xlim[0],x1=S.o.xlim[1],y0=S.o.ylim[0],y1=S.o.ylim[1];
-    const V=[];let mn=Infinity,mxv=-Infinity;
-    for(let i=0;i<NX;i++){V.push([]);for(let j=0;j<NY;j++){
-      const a=x0+(x1-x0)*(i+.5)/NX,bq=y0+(y1-y0)*(j+.5)/NY,v=Math.log(sse(st.d.xs,st.d.ts,[a,bq])+1e-6);
-      V[i].push(v);if(v<mn)mn=v;if(v>mxv)mxv=v}}
-    st.g={V:V,mn:mn,mx:mxv};return st.g}
-  S.render=p=>{if(st.w.length!==2)return;const g=p.ctx,c=p.col,G=grid();
-    const x0=p.o.xlim[0],x1=p.o.xlim[1],y0=p.o.ylim[0],y1=p.o.ylim[1];
-    const cw=(p.X(x1)-p.X(x0))/NX,ch=(p.Y(y0)-p.Y(y1))/NY;
-    for(let i=0;i<NX;i++)for(let j=0;j<NY;j++){
-      const t=(G.V[i][j]-G.mn)/(G.mx-G.mn||1),k=clamp(Math.floor(t*6),0,5);
-      g.fillStyle=c.ramp[k];g.fillRect(p.X(x0)+i*cw-.5,p.Y(y1)+(NY-1-j)*ch-.5,cw+1,ch+1)}
-    p.axes();
-    const bw=st.best;g.save();g.strokeStyle=c.ink;g.lineWidth=2;const BX=p.X(bw[0]),BY=p.Y(bw[1]),s=6;
-    g.beginPath();g.moveTo(BX-s,BY-s);g.lineTo(BX+s,BY+s);g.moveTo(BX+s,BY-s);g.lineTo(BX-s,BY+s);g.stroke();g.restore();
-    p.label(bw[0],bw[1],'  w*',c.ink,'left',-13);
-    p.mark(st.w[0],st.w[1],c.fit,6);p.label(st.w[0],st.w[1],'  current w',c.fit,'left',15)};
-  S.hoverFmt=(a,bq)=>[{t:'w₀ = '+fmt(a,2)+', w₁ = '+fmt(bq,2)},{t:'E(w) = '+fmt(sse(st.d.xs,st.d.ts,[a,bq]),2),c:S.col.acc}];
-  draw()}
+  P.hoverFmt=x=>[{t:'x = '+fmt(x,2)},{t:'y(x, w) = '+fmt(polyval(st.w,x),2),c:P.col.fit}];
+  st.best=fit(st.d.xs,st.d.ts,st.w.length-1);
+  buildPanels();draw()}
 
 /* ===================== module list ===================== */
 const S1='Sinusoidal function and polynomial curve',
