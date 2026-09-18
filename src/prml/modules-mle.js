@@ -252,7 +252,7 @@ export function p28(root){
   const chips=wchips(b.pn,'Learned w_ML');
   eqbar(root,'Maximum likelihood estimates and the predictive distribution',
     '\\( \\dfrac{1}{\\beta_{\\mathrm{ML}}}=\\dfrac{1}{N}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w}_{\\mathrm{ML}})-t_n\\}^{2}'+
-    '\\qquad p(t\\mid x,\\mathbf{w}_{\\mathrm{ML}},\\beta_{\\mathrm{ML}})='+
+    '\\), \\(p(t\\mid x,\\mathbf{w}_{\\mathrm{ML}},\\beta_{\\mathrm{ML}})='+
     '\\mathcal N\\!\\left(t\\mid y(x,\\mathbf{w}_{\\mathrm{ML}}),\\beta_{\\mathrm{ML}}^{-1}\\right)\\)');
   note(root,['\\(\\beta_{\\mathrm{ML}}\\) is read straight off the residuals: the model calls whatever it failed to fit "noise". With a sensible \\(M\\), \\(\\sigma_{\\mathrm{ML}}\\) settles near the σ the data were generated with.',
     'Push \\(M\\) up to 9 with \\(N=10\\). The residuals vanish, so \\(\\beta_{\\mathrm{ML}}\\) shoots up and the band collapses: the model is now <b>certain and wrong</b>, which is the danger of a point estimate.',

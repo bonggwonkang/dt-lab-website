@@ -90,7 +90,7 @@ export function p35(root){
     '\\( p(t\\mid x,\\mathbf{x},\\mathbf{t})=\\int p(t\\mid x,\\mathbf{w})\\,'+
     'p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\)<br>'+
     '\\( m(x)=\\beta\\,\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)t_n'+
-    '\\qquad s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\,\\boldsymbol\\phi(x)\\)');
+    '\\), \\(s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\,\\boldsymbol\\phi(x)\\)');
   note(root,['Switch the overlay on. The band is not a separate idea from slide 34: it is exactly the spread of those curves, obtained in closed form instead of by sampling.',
     'The width splits into two parts. \\(\\beta^{-1}\\) is noise in the targets and never goes away; \\(\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi(x)\\) is uncertainty about \\(\\mathbf{w}\\) and does shrink with data.',
     'Move \\(x_0\\) towards the edges. The band flares where the model has to extrapolate, so <b>the variance depends on \\(x\\)</b>, something the maximum likelihood predictive distribution of slide 28 could never show.']);
@@ -196,7 +196,7 @@ export function p37(root){
   let views=null;
   eqbar(root,'Reading the posterior off a Gaussian',
     '\\( \\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)'+
-    '\\boldsymbol\\phi(x_n)^{\\mathrm T}\\qquad'+
+    '\\boldsymbol\\phi(x_n)^{\\mathrm T}\\), \\('+
     '\\mathbf{S}^{-1}\\mathbf{m}_N=\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)t_n\\)');
   note(root,['Each data point contributes one rank-one block \\(\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\) to the sum. Press "Add a point" and watch a whole matrix change from a single new observation.',
     'The prior enters in exactly one place: \\(\\alpha\\) is added along the diagonal. That is what keeps \\(\\mathbf{S}^{-1}\\) invertible even when there are fewer points than coefficients, so the posterior always exists.',

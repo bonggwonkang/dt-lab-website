@@ -22,7 +22,7 @@ function p10(root){
   toggle(tg,'Show sin(2πx)',st.truth,v=>{st.truth=v;P.draw()});
   toggle(tg,'Show the noise εₙ',st.eps,v=>{st.eps=v;P.draw()});
   eqbar(root,'Synthetic data set',
-    '\\( x_n=\\dfrac{n}{N-1}\\in[0,1],\\qquad t_n=\\sin(2\\pi x_n)+\\epsilon,\\qquad \\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
+    '\\( x_n=\\dfrac{n}{N-1}\\in[0,1]\\), \\(t_n=\\sin(2\\pi x_n)+\\epsilon\\), \\(\\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
     'training set \\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), target vector \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
   note(root,['The green curve \\(\\sin(2\\pi x)\\) is what we want to learn; the blue circles are all we are given. As σ grows, the observations \\(t_n\\) drift away from the curve.',
     'Increase \\(N\\). Every single point is still wrong, but the shape of the curve emerges from the cloud. This is why <b>the larger the data set, the more complex the model we can afford to fit</b>.',
