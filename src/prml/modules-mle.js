@@ -427,9 +427,8 @@ export function p33(root){
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the two conditionals',st.show,v=>{st.show=v;P.draw()});
   eqbar(b.lc,'The sum rule: integrating a variable out',
-    '\\( p(Y)=\\sum_{X}p(Y,X)=\\sum_{X}p(Y\\mid X)\\,p(X)\\), and for a continuous variable the sum '+
-    'becomes an integral, \\( p(Y)=\\int p(Y\\mid X)\\,p(X)\\,dX \\). Marginalizing means asking about '+
-    '\\(Y\\) while refusing to condition on \\(X\\). Here \\(p(X=x_k)=N_k/N\\) is the share of the data with \\(X=x_k\\), and \\(p(Y\\mid X=x_k)=\\mathcal N(Y\\mid\\mu_k,\\sigma_k^{2})\\), \\(k=1,2\\).');
+    '\\( p(Y)=\\sum_{X}p(Y,X)=\\sum_{X}p(Y\\mid X)\\,p(X)\\), \\( p(Y)=\\int p(Y\\mid X)\\,p(X)\\,dX\\)<br>'+
+    '\\( p(X=x_k)=N_k/N\\), \\( p(Y\\mid X=x_k)=\\mathcal N(Y\\mid\\mu_k,\\sigma_k^{2})\\), \\(k=1,2\\)');
   /* ---- the same computation in the notation of the polynomial example ---- */
   const q={p2:.5,x0:.9,beta:11.1,d:makeData(10,.25,3)},d2=makeData(10,.25,8);
   q.w1=fit(q.d.xs,q.d.ts,3);q.w2=fit(d2.xs,d2.ts,3);
@@ -464,8 +463,8 @@ export function p33(root){
     '\\( p(t\\mid x_0,\\mathbf{x},\\mathbf{t})=\\sum_{k=1}^{2}p(t\\mid x_0,\\mathbf{w}^{(k)})\\,'+
     'p(\\mathbf{w}^{(k)}\\mid\\mathbf{x},\\mathbf{t})\\), \\( p(t\\mid x_0,\\mathbf{w}^{(k)})='+
     '\\mathcal N\\!\\left(t\\mid y(x_0,\\mathbf{w}^{(k)}),\\beta^{-1}\\right)\\)<br>'+
-    'Over every \\(\\mathbf{w}\\) the sum becomes \\( \\int p(t\\mid x_0,\\mathbf{w})\\,'+
-    'p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}\\), the predictive distribution of slide 35.');
+    '\\( \\sum_{k}p(t\\mid x_0,\\mathbf{w}^{(k)})\\,p(\\mathbf{w}^{(k)}\\mid\\mathbf{x},\\mathbf{t})\\;\\longrightarrow\\;'+
+    '\\int p(t\\mid x_0,\\mathbf{w})\\,p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}\\)');
   function draw2(){const p2=q.p2,p1=1-p2,y1=polyval(q.w1,q.x0),y2=polyval(q.w2,q.x0),m=p1*y1+p2*y2,
       vw=1/q.beta,vb=p1*(y1-m)*(y1-m)+p2*(y2-m)*(y2-m),peak=gaussPdf(0,0,Math.sqrt(vw)),
       tk=Number((peak*.45).toPrecision(2));
