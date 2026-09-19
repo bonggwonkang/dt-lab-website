@@ -103,7 +103,7 @@ function p12(root){
   b.lc.appendChild(surfWrap);
   const scap=el('div','legend');surfWrap.appendChild(scap);
   scap.innerHTML='<span><b style="font-weight:600">The error as a function of the coefficients</b></span>'+
-    '<span style="color:var(--muted)">&times; marks the minimiser \\(\\mathbf{w}^{*}\\) &middot; '+
+    '<span style="color:var(--muted)">&times; \\(\\mathbf{w}^{*}\\) &middot; '+
     'click anywhere to move \\(\\mathbf{w}\\) there</span>';
   const panels=el('div');panels.style.cssText='display:grid;gap:16px';surfWrap.appendChild(panels);
   note(root,['The same data set gives a completely different total \\(E(\\mathbf{w})\\) depending on how the curve is drawn. Learning means finding the \\(\\mathbf{w}^{*}\\) that makes this total as small as possible.',
@@ -119,7 +119,7 @@ function p12(root){
     panels.style.gridTemplateColumns=M===2?'repeat(auto-fit,minmax(240px,1fr))':'minmax(0,1fr)';
     if(M===0){
       const box=el('div');box.style.cssText='display:flex;flex-direction:column;gap:6px';
-      box.appendChild(el('div','cap','\\(E(w_0)\\), a parabola in the single coefficient'));
+      box.appendChild(el('div','cap','\\(E(w_0)\\)'));
       const p=new Plot(box,{h:280,xlim:[-st.rng,st.rng],ylim:[0,1],xl:'w'+sub(0),yl:'E',
         xt:ticks(st.rng),yt:[0,1],pad:[16,18,28,50]});
       p.render=q=>{const c=q.col;
@@ -137,8 +137,8 @@ function p12(root){
       prs.forEach(pr=>{const a=pr[0],bb=pr[1],
         other=M===2?[0,1,2].filter(k=>k!==a&&k!==bb)[0]:-1;
         const box=el('div');box.style.cssText='display:flex;flex-direction:column;gap:6px';
-        box.appendChild(el('div','cap','\\(E(w_'+a+',w_'+bb+')\\)'+
-          (other>=0?' with \\(w_'+other+'\\) held where you left it':'')));
+        box.appendChild(el('div','cap',other>=0?'\\(E(w_'+a+',w_'+bb+'\\mid w_'+other+')\\)':
+          '\\(E(w_'+a+',w_'+bb+')\\)'));
         const p=new Plot(box,{h:M===1?300:250,xlim:[-st.rng,st.rng],ylim:[-st.rng,st.rng],
           xl:'w'+sub(a),yl:'w'+sub(bb),xt:ticks(st.rng),yt:ticks(st.rng),pad:[16,18,28,40]});
         p.render=q=>{const c=q.col,w=st.w.slice(),V=[];let mn=Infinity,mx=-Infinity;
@@ -204,7 +204,7 @@ const MODULES=[
  {p:30,sec:S2,t:'Maximum a posteriori (MAP): the posterior over w (I)',
   g:'How the prior \\(p(\\mathbf{w}|\\alpha)\\) pulls \\(\\mathbf{w}_{\\mathrm{MAP}}\\) away from \\(\\mathbf{w}_{\\mathrm{ML}}\\).',b:p30},
  {p:33,sec:S3,t:'Bayesian polynomial function (I)',
-  g:'What “integrating a variable out” means, using grades \\(Y\\) recorded by gender \\(X\\).',b:p33},
+  g:'What “integrating a variable out” means, for a continuous \\(Y\\) and a variable \\(X\\) that takes two values \\(x_1,x_2\\).',b:p33},
  {p:34,sec:S3,t:'Bayesian polynomial function (II)',
   g:'How the uncertainty in \\(\\mathbf{w}\\) shrinks as data points are added.',b:p34},
  {p:35,sec:S3,t:'Bayesian polynomial function (III)',

@@ -141,8 +141,7 @@ export function p36(root){
   toggle(tg,'Show the basis functions',st.basis,v=>{st.basis=v;P.draw()});
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
-  cap.innerHTML='<span><b style="font-weight:600">The inner product term by term at \\(x_0\\)</b></span>'+
-    '<span style="color:var(--muted)">column 1 is \\(\\phi_j(x_0)\\), column 2 is \\(w_j\\), column 3 is their product</span>';
+  cap.innerHTML='<span><b style="font-weight:600">The inner product term by term at \\(x_0\\)</b></span>';
   const holder=el('div','matrow');card.appendChild(holder);
   let mv=null;
   eqbar(root,'The polynomial as an inner product',
@@ -190,8 +189,7 @@ export function p37(root){
     {k:'a',l:'\\(\\alpha\\)'},{k:'tr',l:'Trace of \\(\\mathbf{S}\\)'}]);
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
-  cap.innerHTML='<span><b style="font-weight:600">Everything the posterior is built from</b></span>'+
-    '<span style="color:var(--muted)">colour intensity follows the size of each entry</span>';
+  cap.innerHTML='<span><b style="font-weight:600">Everything the posterior is built from</b></span>';
   const holder=el('div','matrow');card.appendChild(holder);
   let views=null;
   eqbar(root,'Reading the posterior off a Gaussian',
@@ -238,7 +236,7 @@ export function p38(root){
   const b=board(root,'Controls');
   const cap0=el('div','legend');b.pc.appendChild(cap0);
   cap0.innerHTML='<span><b style="font-weight:600">\\(p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\) over the plane \\((w_0,w_1)\\)</b></span>'+
-    '<span style="color:var(--muted)">stronger colour means higher density &middot; &times; is the mean \\(\\mathbf{m}_N\\) &middot; click to move \\(\\mathbf{w}\\)</span>';
+    '<span style="color:var(--muted)">&times; \\(\\mathbf{m}_N\\) &middot; click to move \\(\\mathbf{w}\\)</span>';
   const P=new Plot(b.pc,{h:330,xlim:[-1.4,2.6],ylim:[-4.2,1.2],xl:'w₀',yl:'w₁',
     xt:[-1,0,1,2],yt:[-4,-2,0],pad:[16,18,28,40]});
   const sN=slider(b.pn,{label:'Data points \\(N\\)',min:0,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
@@ -254,8 +252,7 @@ export function p38(root){
     {k:'s',l:'\\(\\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})\\)',big:true},{k:'md',l:'Mahalanobis distance from \\(\\mathbf{m}_N\\)'}]);
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
-  cap.innerHTML='<span><b style="font-weight:600">The mean vector and the covariance matrix</b></span>'+
-    '<span style="color:var(--muted)">\\(\\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_n\\boldsymbol\\phi\\boldsymbol\\phi^{\\mathrm T}\\), and \\(\\mathbf{m}_N\\) solves \\(\\mathbf{S}^{-1}\\mathbf{m}_N=\\beta\\sum_n\\boldsymbol\\phi(x_n)t_n\\)</span>';
+  cap.innerHTML='<span><b style="font-weight:600">The mean vector and the covariance matrix</b></span>';
   const holder=el('div','matrow');card.appendChild(holder);
   const vm=matview(holder,{cap:'\\(\\mathbf{m}_N\\)',rows:2,cols:1,rowLab:i=>'i = '+i,digits:3});
   const vs=matview(holder,{cap:'\\(\\mathbf{S}\\) (covariance)',rows:2,cols:2,rowLab:i=>'i = '+i,digits:4});

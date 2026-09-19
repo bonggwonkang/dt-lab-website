@@ -171,8 +171,7 @@ export function p25(root){
   const P=new Plot(b.pc,{h:300,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
-  cap.innerHTML='<span><b style="font-weight:600">Log likelihood as one coefficient moves</b></span>'+
-    '<span style="color:var(--muted)">every other coefficient is held where you left it</span>';
+  cap.innerHTML='<span><b style="font-weight:600">Log likelihood as one coefficient moves</b></span>';
   const L=new Plot(card,{h:240,xlim:[-10,10],ylim:[-200,60],xl:'wⱼ',yl:'ln p',
     xt:[-10,-5,0,5,10],yt:[-200,-100,0],pad:[16,18,28,46]});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
@@ -248,7 +247,8 @@ export function p28(root){
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">Estimated noise level as data accumulate</b></span>'+
-    '<span style="color:var(--muted)">the dashed line is the \\(\\sigma\\) the data were actually generated with</span>';
+    '';
+  legend(card,[{c:'var(--truth)',t:'dash',l:'\\(\\sigma\\)'},{c:'var(--fit)',l:'\\(\\sigma_{\\mathrm{ML}}\\)'}]);
   const S=new Plot(card,{h:230,xlim:[2,80],ylim:[0,.65],xl:'N',yl:'σ_ML',
     xt:[10,20,40,60,80],yt:[0,.25,.5],pad:[16,18,28,46]});
   const sN=slider(b.pn,{label:'Data points \\(N\\)',min:4,max:80,step:1,value:st.N,on:v=>{st.N=v;gen()}});
@@ -302,8 +302,7 @@ export function p30(root){
   const P=new Plot(b.pc,{h:290,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const pc=el('div','card plotcard');b.lc.appendChild(pc);
   const pcap=el('div','legend');pc.appendChild(pcap);
-  pcap.innerHTML='<span><b style="font-weight:600">The prior over each coefficient</b></span>'+
-    '<span style="color:var(--muted)">with covariance \\(\\alpha^{-1}\\mathbf{I}\\) the prior splits into one bell per coefficient</span>';
+  pcap.innerHTML='<span><b style="font-weight:600">The prior over each coefficient</b></span>';
   legend(pc,[{c:'var(--accent)',t:'dash',l:'\\(p(w_j\\mid\\alpha)=\\mathcal N(w_j\\mid0,\\alpha^{-1})\\)'},
     {c:'var(--accent)',t:'dot',l:'\\(w_{\\mathrm{MAP},j}\\)'},{c:'var(--fit)',t:'dot',l:'\\(w_{\\mathrm{ML},j}\\)'},
     {c:'var(--truth)',l:'\\(p(w_{\\mathrm{MAP},j}\\mid\\alpha)\\)'}]);
@@ -312,7 +311,10 @@ export function p30(root){
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">Test error as the prior tightens</b></span>'+
-    '<span style="color:var(--muted)">large \\(\\alpha\\) means a narrow prior, which pulls every coefficient towards zero</span>';
+    '';
+  legend(card,[{c:'var(--accent)',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}(\\mathbf{w}_{\\mathrm{MAP}})\\)'},
+    {c:'var(--fit)',t:'dash',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}(\\mathbf{w}_{\\mathrm{ML}})\\)'},
+    {c:'var(--accent)',t:'dash',l:'\\(\\ln\\alpha\\)'}]);
   const A=new Plot(card,{h:230,xlim:[-14,8],ylim:[-.04,1.04],xl:'ln α',yl:'E_RMS',
     xt:[-12,-8,-4,0,4,8],yt:[0,.5,1],pad:[16,18,28,40]});
   const sA=slider(b.pn,{label:'Prior precision \\(\\ln\\alpha\\)',min:-14,max:8,step:.25,value:st.lnAlpha,
@@ -391,39 +393,39 @@ export function p30(root){
   A.onClick=x=>{const a=clamp(Math.round(x*4)/4,-14,8);st.lnAlpha=a;sA.set(a);draw()};
   gen()}
 
-/* ===== slide 33 · Marginalization: grades recorded by gender ===== */
+/* ===== slide 33 · Marginalization over a two-valued X ===== */
 export function p33(root){
   const st={pF:.5,muM:72,sdM:12,muF:78,sdF:10,show:true};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--obs)',l:'\\(p(Y\\mid X=\\text{male})\\)'},{c:'var(--fit)',l:'\\(p(Y\\mid X=\\text{female})\\)'},
+  legend(b.pc,[{c:'var(--obs)',l:'\\(p(Y\\mid X=x_1)\\)'},{c:'var(--fit)',l:'\\(p(Y\\mid X=x_2)\\)'},
     {c:'var(--truth)',l:'\\(p(Y)\\)'}]);
-  const P=new Plot(b.pc,{h:340,xlim:[30,110],ylim:[0,.055],xl:'Y  (grade)',yl:'density',
+  const P=new Plot(b.pc,{h:340,xlim:[30,110],ylim:[0,.055],xl:'Y',yl:'density',
     xt:[40,60,80,100],yt:[0,.02,.04],pad:[16,18,28,52]});
-  const sP=slider(b.pn,{label:'Share of female records \\(p(X=\\text{female})\\)',min:0,max:1,step:.01,
+  const sP=slider(b.pn,{label:'\\(p(X=x_2)\\)',min:0,max:1,step:.01,
     value:st.pF,fmt:v=>fmt(v,2),on:v=>{st.pF=v;draw()}});
   b.pn.appendChild(el('div','hr'));
-  slider(b.pn,{label:'Mean grade, male',min:50,max:95,step:.5,value:st.muM,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'Mean \\(\\mu_1\\)',min:50,max:95,step:.5,value:st.muM,fmt:v=>fmt(v,1),
     on:v=>{st.muM=v;draw()}});
-  slider(b.pn,{label:'Spread, male',min:4,max:20,step:.5,value:st.sdM,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'Spread \\(\\sigma_1\\)',min:4,max:20,step:.5,value:st.sdM,fmt:v=>fmt(v,1),
     on:v=>{st.sdM=v;draw()}});
-  slider(b.pn,{label:'Mean grade, female',min:50,max:95,step:.5,value:st.muF,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'Mean \\(\\mu_2\\)',min:50,max:95,step:.5,value:st.muF,fmt:v=>fmt(v,1),
     on:v=>{st.muF=v;draw()}});
-  slider(b.pn,{label:'Spread, female',min:4,max:20,step:.5,value:st.sdF,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'Spread \\(\\sigma_2\\)',min:4,max:20,step:.5,value:st.sdF,fmt:v=>fmt(v,1),
     on:v=>{st.sdF=v;draw()}});
-  btnrow(b.pn,[{l:'All male',on:()=>{st.pF=0;sP.set(0);draw()}},
-    {l:'Half and half',on:()=>{st.pF=.5;sP.set(.5);draw()}},
-    {l:'All female',on:()=>{st.pF=1;sP.set(1);draw()}}]);
+  btnrow(b.pn,[{l:'\\(p(X=x_1)=1\\)',on:()=>{st.pF=0;sP.set(0);draw()}},
+    {l:'\\(p(X=x_1)=p(X=x_2)\\)',on:()=>{st.pF=.5;sP.set(.5);draw()}},
+    {l:'\\(p(X=x_2)=1\\)',on:()=>{st.pF=1;sP.set(1);draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'pf',l:'\\(p(X=\\text{female})\\)'},{k:'pm',l:'\\(p(X=\\text{male})\\)'},
-    {k:'em',l:'\\(\\mathbb{E}[Y\\mid X=\\text{male}]\\)'},{k:'ef',l:'\\(\\mathbb{E}[Y\\mid X=\\text{female}]\\)'},{k:'e',l:'\\(\\mathbb{E}[Y]\\) after marginalizing',big:true},
+  const out=readout(b.pn,[{k:'pf',l:'\\(p(X=x_2)\\)'},{k:'pm',l:'\\(p(X=x_1)\\)'},
+    {k:'em',l:'\\(\\mathbb{E}[Y\\mid X=x_1]\\)'},{k:'ef',l:'\\(\\mathbb{E}[Y\\mid X=x_2]\\)'},{k:'e',l:'\\(\\mathbb{E}[Y]\\) after marginalizing',big:true},
     {k:'sd',l:'Standard deviation of \\(p(Y)\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the two conditionals',st.show,v=>{st.show=v;P.draw()});
   eqbar(root,'The sum rule: integrating a variable out',
     '\\( p(Y)=\\sum_{X}p(Y,X)=\\sum_{X}p(Y\\mid X)\\,p(X)\\), and for a continuous variable the sum '+
     'becomes an integral, \\( p(Y)=\\int p(Y\\mid X)\\,p(X)\\,dX \\). Marginalizing means asking about '+
-    '\\(Y\\) while refusing to condition on \\(X\\).');
-  note(root,['The marginal is not one of the two conditionals, and it is not their average shape either. It is a <b>weighted mixture</b>: each conditional contributes in proportion to how often that group appears.',
+    '\\(Y\\) while refusing to condition on \\(X\\). Here \\(p(Y\\mid X=x_k)=\\mathcal N(Y\\mid\\mu_k,\\sigma_k^{2})\\), \\(k=1,2\\).');
+  note(root,['The marginal is not one of the two conditionals, and it is not their average shape either. It is a <b>weighted mixture</b>: each conditional contributes in proportion to how often that value of \\(X\\) appears.',
     'Slide the share to 0 or 1 and the marginal collapses onto a single conditional. Keep it near a half with means far apart and the marginal grows two humps, which no single Gaussian could describe.',
     'This is the operation the Bayesian treatment performs on \\(\\mathbf{w}\\): the predictive distribution weighs every possible \\(\\mathbf{w}\\) by how plausible the data made it, instead of committing to one value.']);
   function draw(){const pf=st.pF,pm=1-pf,mean=pm*st.muM+pf*st.muF,
@@ -440,5 +442,5 @@ export function p33(root){
     const m=(1-st.pF)*st.muM+st.pF*st.muF;
     p.seg(m,0,mix(m),c.muted,1.5,[3,3]);p.label(m,mix(m),'  E[Y]',c.ink2,'left',-12)};
   P.hoverFmt=y=>[{t:'Y = '+fmt(y,1)},{t:'p(Y) = '+fmt(mix(y),4),c:P.col.truth},
-    {t:'p(Y | male) = '+fmt(dM(y),4),c:P.col.obs},{t:'p(Y | female) = '+fmt(dF(y),4),c:P.col.fit}];
+    {t:'p(Y | x₁) = '+fmt(dM(y),4),c:P.col.obs},{t:'p(Y | x₂) = '+fmt(dF(y),4),c:P.col.fit}];
   draw()}
