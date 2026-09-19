@@ -14,8 +14,8 @@ function curves(post,M,K,seed){const r=rng(seed),out=[];
 export function p34(root){
   const st={N:2,M:9,lnAlpha:ALPHA0,beta:BETA0,K:24,seed:3,mean:true};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--accent)',l:'curves drawn from \\(p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\)'},{c:'var(--fit)',l:'posterior mean'},
-    {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'}]);
+  legend(b.pc,[{c:'var(--accent)',l:'\\(y(x,\\mathbf{w}),\\ \\mathbf{w}\\sim p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\)'},{c:'var(--fit)',l:'\\(m(x)\\)'},
+    {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'}]);
   const P=new Plot(b.pc,{h:360,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const sN=slider(b.pn,{label:'Data points \\(N\\)',min:0,max:25,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
@@ -67,9 +67,9 @@ export function p34(root){
 export function p35(root){
   const st={N:10,M:9,lnAlpha:ALPHA0,beta:BETA0,K:12,x0:.5,samples:false,seed:3};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'mean \\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(m(x)\\pm s(x)\\)'},
-    {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},
-    {c:'var(--accent)',l:'curves drawn from the posterior'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(m(x)\\pm s(x)\\)'},
+    {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
+    {c:'var(--accent)',l:'\\(y(x,\\mathbf{w}),\\ \\mathbf{w}\\sim p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\)'}]);
   const P=new Plot(b.pc,{h:360,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const sN=slider(b.pn,{label:'Data points \\(N\\)',min:1,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
@@ -123,8 +123,8 @@ export function p35(root){
 export function p36(root){
   const st={w:[.2,1.2,-2.2,1.1],rng:10,x0:.6,basis:true,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\)'},{c:'var(--muted)',t:'dash',l:'basis function \\(\\phi_j(x)=x^{j}\\)'},
-    {c:'var(--accent)',l:'weighted basis \\(w_j\\phi_j(x)\\)'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\)'},{c:'var(--muted)',t:'dash',l:'\\(\\phi_j(x)=x^{j}\\)'},
+    {c:'var(--accent)',l:'\\(w_j\\phi_j(x)\\)'}]);
   const P=new Plot(b.pc,{h:340,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();mv=null;draw()}});
@@ -174,8 +174,8 @@ export function p36(root){
 export function p37(root){
   const st={N:3,M:2,lnAlpha:-3,beta:BETA0,seed:3};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'posterior mean \\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(\\pm s(x)\\)'},
-    {c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(m(x)\\pm s(x)\\)'},
+    {c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'}]);
   const P=new Plot(b.pc,{h:250,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const sN=slider(b.pn,{label:'Data points \\(N\\)',min:1,max:8,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:4,step:1,value:st.M,on:v=>{st.M=v;reset();gen()}});
@@ -302,8 +302,8 @@ export function p38(root){
 export function p39(root){
   const st={M:9,lnAlpha:-1,beta:BETA0,xs:[],ts:[],seed:3};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'mean \\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(m(x)\\pm s(x)\\)'},
-    {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'your data points'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(m(x)\\pm s(x)\\)'},
+    {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'}]);
   const P=new Plot(b.pc,{h:380,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const hint=el('div','legend');b.pc.appendChild(hint);
   hint.innerHTML='<span style="color:var(--muted)">Click anywhere on the plot to place a data point.</span>';

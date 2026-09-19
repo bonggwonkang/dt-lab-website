@@ -8,12 +8,12 @@ const norm2=w=>w.reduce((a,v)=>a+v*v,0);
 export function p15(root){
   const st={M:3,N:10,sigma:.25,seed:3};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'training data'},
+  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}^{*})\\)'}]);
   const P=new Plot(b.pc,{h:250,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const card=el('div','card plotcard');root.appendChild(card);
-  legend(card,[{c:'var(--obs)',l:'training'},{c:'var(--fit)',l:'test (100 fresh points)'},
-    {c:'var(--accent)',t:'dash',l:'the order \\(M\\) you selected'}]);
+  legend(card,[{c:'var(--obs)',l:'\\(E_{\\mathrm{RMS}}^{\\text{train}}\\)'},{c:'var(--fit)',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}\\)'},
+    {c:'var(--accent)',t:'dash',l:'\\(M\\)'}]);
   const R=new Plot(card,{h:260,xlim:[-.6,9.6],ylim:[-.04,1.04],xl:'M',yl:'E_RMS',
     xt:[0,3,6,9],yt:[0,.5,1],pad:[16,18,28,40]});
   const sM=slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
@@ -58,12 +58,12 @@ export function p15(root){
 export function p19(root){
   const st={lnLam:-18,M:9,N:10,sigma:.25,seed:3};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'training data'},
-    {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}^{*})\\) with the penalty term'}]);
+  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
+    {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}^{*})\\)'}]);
   const P=new Plot(b.pc,{h:250,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const card=el('div','card plotcard');root.appendChild(card);
-  legend(card,[{c:'var(--obs)',l:'training'},{c:'var(--fit)',l:'test'},
-    {c:'var(--accent)',t:'dash',l:'the \\(\\ln\\lambda\\) you selected'}]);
+  legend(card,[{c:'var(--obs)',l:'\\(E_{\\mathrm{RMS}}^{\\text{train}}\\)'},{c:'var(--fit)',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}\\)'},
+    {c:'var(--accent)',t:'dash',l:'\\(\\ln\\lambda\\)'}]);
   const R=new Plot(card,{h:250,xlim:[-40,0],ylim:[-.04,1.04],xl:'ln λ',yl:'E_RMS',
     xt:[-35,-30,-25,-20,-15,-10,-5,0],yt:[0,.5,1],pad:[16,18,28,40]});
   const sL=slider(b.pn,{label:'Regularization \\(\\ln\\lambda\\)',min:-40,max:0,step:.5,value:st.lnLam,
@@ -113,8 +113,8 @@ export function p19(root){
 export function p23(root){
   const st={w:[.2,1.5,-2.4,.6],rng:10,beta:11.1,x0:.45,band:true,bell:true,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'mean \\(y(x,\\mathbf{w})\\)'},{c:'var(--fit)',t:'dash',l:'\\(\\pm1\\) standard deviation'},
-    {c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--fit)',t:'dash',l:'\\(y(x,\\mathbf{w})\\pm\\beta^{-1/2}\\)'},
+    {c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'}]);
   const P=new Plot(b.pc,{h:360,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();draw()}});
@@ -165,9 +165,9 @@ export function p23(root){
 export function p25(root){
   const st={w:[.2,1.5,-2.4,.6],rng:10,beta:11.1,j:1,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},
-    {c:'var(--fit)',t:'dash',l:'\\(p(t\\mid x_n,\\mathbf{w},\\beta)\\) at each \\(x_n\\)'},
-    {c:'var(--truth)',l:'density \\(p(t_n\\mid x_n,\\mathbf{w},\\beta)\\)'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
+    {c:'var(--fit)',t:'dash',l:'\\(p(t\\mid x_n,\\mathbf{w},\\beta)\\)'},
+    {c:'var(--truth)',l:'\\(p(t_n\\mid x_n,\\mathbf{w},\\beta)\\)'}]);
   const P=new Plot(b.pc,{h:300,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const card=el('div','card plotcard');root.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
@@ -242,7 +242,7 @@ export function p25(root){
 export function p28(root){
   const st={N:10,M:3,sigma:.25,seed:3};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},
+  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}_{\\mathrm{ML}})\\)'},{c:'var(--fit)',t:'dash',l:'\\(\\pm1\\,\\sigma_{\\mathrm{ML}}\\)'}]);
   const P=new Plot(b.pc,{h:290,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const card=el('div','card plotcard');root.appendChild(card);
@@ -297,7 +297,7 @@ export function p28(root){
 export function p30(root){
   const st={lnAlpha:-5,M:9,N:10,sigma:.25,beta:11.1,seed:3};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},
+  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',t:'dash',l:'\\(y(x,\\mathbf{w}_{\\mathrm{ML}})\\)'},{c:'var(--accent)',l:'\\(y(x,\\mathbf{w}_{\\mathrm{MAP}})\\)'}]);
   const P=new Plot(b.pc,{h:290,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const card=el('div','card plotcard');root.appendChild(card);
@@ -358,7 +358,7 @@ export function p33(root){
   const st={pF:.5,muM:72,sdM:12,muF:78,sdF:10,show:true};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--obs)',l:'\\(p(Y\\mid X=\\text{male})\\)'},{c:'var(--fit)',l:'\\(p(Y\\mid X=\\text{female})\\)'},
-    {c:'var(--truth)',l:'marginal \\(p(Y)\\)'}]);
+    {c:'var(--truth)',l:'\\(p(Y)\\)'}]);
   const P=new Plot(b.pc,{h:340,xlim:[30,110],ylim:[0,.055],xl:'Y  (grade)',yl:'density',
     xt:[40,60,80,100],yt:[0,.02,.04],pad:[16,18,28,52]});
   const sP=slider(b.pn,{label:'Share of female records \\(p(X=\\text{female})\\)',min:0,max:1,step:.01,

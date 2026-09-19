@@ -8,8 +8,8 @@ import{p34,p35,p36,p37,p38,p39}from'./modules-bayes.js'
 function p10(root){
   const st={N:10,sigma:.25,seed:3,truth:true,eps:false};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},
-    {c:'var(--muted)',t:'dash',l:'noise \\(\\epsilon_n\\)'}]);
+  legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
+    {c:'var(--muted)',t:'dash',l:'\\(\\epsilon_n\\)'}]);
   const P=new Plot(b.pc,{h:340});
   const out=readout(b.pn,[{k:'N',l:'Points \\(N\\)'},{k:'sg',l:'Noise \\(\\sigma\\)'},
     {k:'me',l:'Sample mean of \\(\\epsilon\\)'},{k:'se',l:'Sample s.d. of \\(\\epsilon\\)'}]);
@@ -42,7 +42,7 @@ function p11(root){
   const st={w:[0,0,0,0],rng:10,terms:false,truth:true,data:true,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},
-    {c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},{c:'var(--muted)',t:'dash',l:'term \\(w_jx^{j}\\)'}]);
+    {c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},{c:'var(--muted)',t:'dash',l:'\\(w_jx^{j}\\)'}]);
   const P=new Plot(b.pc,{h:350,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();draw()}});
@@ -79,8 +79,8 @@ const SUP='⁰¹²³⁴⁵⁶⁷⁸⁹',supd=j=>String(j).split('').map(d=>SUP[+
 function p12(root){
   const st={w:[.3,.3],rng:6,rngMin:6,d:makeData(10,.25,3),bars:true};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},
-    {c:'var(--truth)',l:'displacement \\(y(x_n,\\mathbf{w})-t_n\\)'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
+    {c:'var(--truth)',l:'\\(y(x_n,\\mathbf{w})-t_n\\)'}]);
   const P=new Plot(b.pc,{h:345,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const surfWrap=el('div','card plotcard');
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:2,step:1,value:1,on:v=>{
@@ -128,7 +128,7 @@ function p12(root){
         q.mark(st.best[0],Ew(st.best),c.ink,5);
         q.label(st.best[0],Ew(st.best),'  w*',c.ink,'left',-13);
         q.mark(st.w[0],Ew(st.w),c.fit,6);
-        q.label(st.w[0],Ew(st.w),'  current w',c.fit,'left',15)};
+        q.label(st.w[0],Ew(st.w),'  w',c.fit,'left',15)};
       p.hoverFmt=v=>[{t:'w'+sub(0)+' = '+fmt(v,2)},{t:'E(w) = '+fmt(Ew([v]),2),c:p.col.acc}];
       p.onClick=v=>{st.w[0]=clamp(v,-st.rng,st.rng);W.sync();draw()};
       panels.appendChild(box);SP.push({p:p,a:0,b:-1});
@@ -153,7 +153,7 @@ function p12(root){
           g.stroke();g.restore();
           q.label(st.best[a],st.best[bb],'  w*',c.ink,'left',-13);
           q.mark(st.w[a],st.w[bb],c.fit,6);
-          q.label(st.w[a],st.w[bb],'  current w',c.fit,'left',15)};
+          q.label(st.w[a],st.w[bb],'  w',c.fit,'left',15)};
         p.hoverFmt=(x,y)=>{const w=st.w.slice();w[a]=x;w[bb]=y;
           return[{t:'w'+sub(a)+' = '+fmt(x,2)+', w'+sub(bb)+' = '+fmt(y,2)},
             {t:'E(w) = '+fmt(Ew(w),2),c:p.col.acc}]};
