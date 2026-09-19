@@ -181,7 +181,7 @@ function p12(root){
   buildPanels();draw()}
 
 /* ===================== module list ===================== */
-const S1='Sinusoidal function and polynomial curve',
+const S1='Synthetic function and polynomial curve',
       S2='Probabilistic polynomial curve and MLE-MAP',
       S3='Bayesian polynomial function learning';
 const MODULES=[
@@ -195,7 +195,7 @@ const MODULES=[
   g:'\\(E_{\\mathrm{RMS}}\\) on the training set and on an independent test set for various values of \\(M\\), together with the learned \\(\\mathbf{w}^*\\).',b:p15},
  {p:19,sec:S1,t:'An error function that discourages over-fitting',
   g:'How the regularization coefficient \\(\\lambda\\) (the shrinkage method) trades the error term against the penalty term.',b:p19},
- {p:23,sec:S2,t:'Problem setup: sinusoidal function and probabilistic polynomial curve (I)',
+ {p:23,sec:S2,t:'Problem setup: synthetic function and probabilistic polynomial curve (I)',
   g:'Extending the deterministic curve \\(y(x,\\mathbf{w})\\) into the conditional distribution \\(p(t|x,\\mathbf{w},\\beta)=\\mathcal N(t|y(x,\\mathbf{w}),\\beta^{-1})\\).',b:p23},
  {p:25,sec:S2,t:'Likelihood of the probabilistic polynomial curve and MLE',
   g:'How the likelihood \\(p(\\mathbf{t}|\\mathbf{x},\\mathbf{w},\\beta)\\) responds as the coefficients \\(\\mathbf{w}\\) move.',b:p25},
