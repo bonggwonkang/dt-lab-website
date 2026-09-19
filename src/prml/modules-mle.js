@@ -388,11 +388,23 @@ export function p33(root){
   const st={pF:.5,muM:72,sdM:12,muF:78,sdF:10,show:true};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--obs)',l:'\\(p(Y\\mid X=x_1)\\)'},{c:'var(--fit)',l:'\\(p(Y\\mid X=x_2)\\)'},
+    {c:'var(--obs)',t:'dash',l:'\\(p(Y\\mid X=x_1)\\,p(X=x_1)\\)'},
+    {c:'var(--fit)',t:'dash',l:'\\(p(Y\\mid X=x_2)\\,p(X=x_2)\\)'},
     {c:'var(--truth)',l:'\\(p(Y)\\)'}]);
   const P=new Plot(b.pc,{h:340,xlim:[30,110],ylim:[0,.055],xl:'\\(Y\\)',yl:'\\(p(Y)\\)',
     xt:[40,60,80,100],yt:[0,.02,.04],pad:[16,18,28,52]});
-  const sP=slider(b.pn,{label:'\\(p(X=x_2)\\)',min:0,max:1,step:.01,
-    value:st.pF,fmt:v=>fmt(v,2),on:v=>{st.pF=v;draw()}});
+  const sP=slider(b.pn,{label:'Data mix \\(N_1:N_2\\)',min:0,max:1,step:.01,value:st.pF,
+    fmt:v=>Math.round((1-v)*100)+' : '+Math.round(v*100),on:v=>{st.pF=v;draw()}});
+  /* the composition of the data set, one colour per value of X */
+  const bar=el('div');bar.style.cssText='display:flex;height:24px;border-radius:6px;overflow:hidden;'+
+    'font-family:var(--mono);font-size:11px;color:#fff;margin-top:-4px';
+  const seg1=el('div'),seg2=el('div');
+  [[seg1,'var(--obs)'],[seg2,'var(--fit)']].forEach(q=>{q[0].style.cssText='background:'+q[1]+
+    ';display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;transition:width .15s'});
+  bar.append(seg1,seg2);b.pn.appendChild(bar);
+  btnrow(b.pn,[{l:'\\(N_1:N_2=1:0\\)',on:()=>{st.pF=0;sP.set(0);draw()}},
+    {l:'\\(N_1:N_2=1:1\\)',on:()=>{st.pF=.5;sP.set(.5);draw()}},
+    {l:'\\(N_1:N_2=0:1\\)',on:()=>{st.pF=1;sP.set(1);draw()}}]);
   b.pn.appendChild(el('div','hr'));
   slider(b.pn,{label:'Mean \\(\\mu_1\\)',min:50,max:95,step:.5,value:st.muM,fmt:v=>fmt(v,1),
     on:v=>{st.muM=v;draw()}});
@@ -402,11 +414,8 @@ export function p33(root){
     on:v=>{st.muF=v;draw()}});
   slider(b.pn,{label:'Spread \\(\\sigma_2\\)',min:4,max:20,step:.5,value:st.sdF,fmt:v=>fmt(v,1),
     on:v=>{st.sdF=v;draw()}});
-  btnrow(b.pn,[{l:'\\(p(X=x_1)=1\\)',on:()=>{st.pF=0;sP.set(0);draw()}},
-    {l:'\\(p(X=x_1)=p(X=x_2)\\)',on:()=>{st.pF=.5;sP.set(.5);draw()}},
-    {l:'\\(p(X=x_2)=1\\)',on:()=>{st.pF=1;sP.set(1);draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'pf',l:'\\(p(X=x_2)\\)'},{k:'pm',l:'\\(p(X=x_1)\\)'},
+  const out=readout(b.pn,[{k:'pm',l:'\\(p(X=x_1)=N_1/N\\)'},{k:'pf',l:'\\(p(X=x_2)=N_2/N\\)'},
     {k:'em',l:'\\(\\mathbb{E}[Y\\mid X=x_1]\\)'},{k:'ef',l:'\\(\\mathbb{E}[Y\\mid X=x_2]\\)'},{k:'e',l:'\\(\\mathbb{E}[Y]\\) after marginalizing',big:true},
     {k:'sd',l:'Standard deviation of \\(p(Y)\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
@@ -414,12 +423,15 @@ export function p33(root){
   eqbar(root,'The sum rule: integrating a variable out',
     '\\( p(Y)=\\sum_{X}p(Y,X)=\\sum_{X}p(Y\\mid X)\\,p(X)\\), and for a continuous variable the sum '+
     'becomes an integral, \\( p(Y)=\\int p(Y\\mid X)\\,p(X)\\,dX \\). Marginalizing means asking about '+
-    '\\(Y\\) while refusing to condition on \\(X\\). Here \\(p(Y\\mid X=x_k)=\\mathcal N(Y\\mid\\mu_k,\\sigma_k^{2})\\), \\(k=1,2\\).');
+    '\\(Y\\) while refusing to condition on \\(X\\). Here \\(p(X=x_k)=N_k/N\\) is the share of the data with \\(X=x_k\\), and \\(p(Y\\mid X=x_k)=\\mathcal N(Y\\mid\\mu_k,\\sigma_k^{2})\\), \\(k=1,2\\).');
   note(root,['The marginal is not one of the two conditionals, and it is not their average shape either. It is a <b>weighted mixture</b>: each conditional contributes in proportion to how often that value of \\(X\\) appears.',
-    'Slide the share to 0 or 1 and the marginal collapses onto a single conditional. Keep it near a half with means far apart and the marginal grows two humps, which no single Gaussian could describe.',
+    'Move the data mix to 100 : 0 or 0 : 100 and the marginal collapses onto a single conditional. Keep it near a half with means far apart and the marginal grows two humps, which no single Gaussian could describe.',
     'This is the operation the Bayesian treatment performs on \\(\\mathbf{w}\\): the predictive distribution weighs every possible \\(\\mathbf{w}\\) by how plausible the data made it, instead of committing to one value.']);
   function draw(){const pf=st.pF,pm=1-pf,mean=pm*st.muM+pf*st.muF,
     sec=pm*(st.sdM*st.sdM+st.muM*st.muM)+pf*(st.sdF*st.sdF+st.muF*st.muF);
+    seg1.style.width=(pm*100)+'%';seg2.style.width=(pf*100)+'%';
+    seg1.textContent=pm>=.12?'x₁ '+Math.round(pm*100)+'%':'';
+    seg2.textContent=pf>=.12?'x₂ '+Math.round(pf*100)+'%':'';
     out({pf:fmt(pf,2),pm:fmt(pm,2),em:fmt(st.muM,1),ef:fmt(st.muF,1),e:fmt(mean,2),
       sd:fmt(Math.sqrt(Math.max(sec-mean*mean,0)),2)});P.draw()}
   const dM=y=>gaussPdf(y,st.muM,st.sdM),dF=y=>gaussPdf(y,st.muF,st.sdF),
