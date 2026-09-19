@@ -426,9 +426,6 @@ export function p33(root){
     {k:'vw',l:'\\(\\mathbb{E}_X[\\mathrm{Var}(Y\\mid X)]\\)'},{k:'vb',l:'\\(\\mathrm{Var}_X(\\mathbb{E}[Y\\mid X])\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the two conditionals',st.show,v=>{st.show=v;P.draw()});
-  eqbar(b.lc,'The sum rule: integrating a variable out',
-    '\\( p(Y)=\\sum_{X}p(Y,X)=\\sum_{X}p(Y\\mid X)\\,p(X)\\), \\( p(Y)=\\int p(Y\\mid X)\\,p(X)\\,dX\\)<br>'+
-    '\\( p(X=x_k)=N_k/N\\), \\( p(Y\\mid X=x_k)=\\mathcal N(Y\\mid\\mu_k,\\sigma_k^{2})\\), \\(k=1,2\\)');
   /* ---- the same computation in the notation of the polynomial example ---- */
   const q={p2:.5,x0:.9,beta:11.1,d:makeData(10,.25,3)},d2=makeData(10,.25,8);
   q.w1=fit(q.d.xs,q.d.ts,3);q.w2=fit(d2.xs,d2.ts,3);
@@ -459,7 +456,7 @@ export function p33(root){
     {k:'m',l:'\\(\\mathbb{E}[t]\\) after marginalizing',big:true},
     {k:'v',l:'\\(\\mathrm{Var}[t]\\)'},{k:'vw',l:'\\(\\beta^{-1}\\)'},
     {k:'vb',l:'\\(\\mathrm{Var}_{\\mathbf{w}}\\big(y(x_0,\\mathbf{w})\\big)\\)'}]);
-  eqbar(b2.lc,'The same sum over two coefficient vectors',
+  eqbar(b2.lc,'Marginalizing over w',
     '\\( p(t\\mid x_0,\\mathbf{x},\\mathbf{t})=\\sum_{k=1}^{2}p(t\\mid x_0,\\mathbf{w}^{(k)})\\,'+
     'p(\\mathbf{w}^{(k)}\\mid\\mathbf{x},\\mathbf{t})\\), \\( p(t\\mid x_0,\\mathbf{w}^{(k)})='+
     '\\mathcal N\\!\\left(t\\mid y(x_0,\\mathbf{w}^{(k)}),\\beta^{-1}\\right)\\)<br>'+
