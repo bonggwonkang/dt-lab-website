@@ -139,7 +139,7 @@ export function p36(root){
     {k:'big',l:'Largest single term'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the basis functions',st.basis,v=>{st.basis=v;P.draw()});
-  const card=el('div','card plotcard');root.appendChild(card);
+  const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">The inner product term by term at \\(x_0\\)</b></span>'+
     '<span style="color:var(--muted)">column 1 is \\(\\phi_j(x_0)\\), column 2 is \\(w_j\\), column 3 is their product</span>';
@@ -188,7 +188,7 @@ export function p37(root){
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'n',l:'Points seen'},{k:'d',l:'Matrix size \\((M+1)\\)'},
     {k:'a',l:'\\(\\alpha\\)'},{k:'tr',l:'Trace of \\(\\mathbf{S}\\)'}]);
-  const card=el('div','card plotcard');root.appendChild(card);
+  const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">Everything the posterior is built from</b></span>'+
     '<span style="color:var(--muted)">colour intensity follows the size of each entry</span>';
@@ -252,7 +252,7 @@ export function p38(root){
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'q',l:'\\(-\\tfrac12\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{w}\\)'},{k:'l',l:'\\(+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N\\)'},{k:'c',l:'\\(+C_3\\) (constant)'},
     {k:'s',l:'\\(\\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})\\)',big:true},{k:'md',l:'Mahalanobis distance from \\(\\mathbf{m}_N\\)'}]);
-  const card=el('div','card plotcard');root.appendChild(card);
+  const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">The mean vector and the covariance matrix</b></span>'+
     '<span style="color:var(--muted)">\\(\\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_n\\boldsymbol\\phi\\boldsymbol\\phi^{\\mathrm T}\\), and \\(\\mathbf{m}_N\\) solves \\(\\mathbf{S}^{-1}\\mathbf{m}_N=\\beta\\sum_n\\boldsymbol\\phi(x_n)t_n\\)</span>';

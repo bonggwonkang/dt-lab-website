@@ -100,7 +100,7 @@ function p12(root){
   eqbar(root,'Sum-of-squares error',
     '\\( E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\). Each green bar is the displacement '+
     '\\(|y(x_n,\\mathbf{w})-t_n|\\) of one data point from the curve, and \\(E(\\mathbf{w})\\) is one half of the sum of their squares.');
-  root.appendChild(surfWrap);
+  b.lc.appendChild(surfWrap);
   const scap=el('div','legend');surfWrap.appendChild(scap);
   scap.innerHTML='<span><b style="font-weight:600">The error as a function of the coefficients</b></span>'+
     '<span style="color:var(--muted)">&times; marks the minimiser \\(\\mathbf{w}^{*}\\) &middot; '+

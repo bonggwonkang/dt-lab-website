@@ -124,8 +124,8 @@ class Plot{
 }
 
 /* ===================== UI parts ===================== */
-function board(root,panelTitle){const b=el('div','board'),pc=el('div','card plotcard'),pn=el('div','card panel');
-  if(panelTitle)pn.appendChild(el('h3',null,panelTitle));b.append(pc,pn);root.appendChild(b);return{pc:pc,pn:pn}}
+function board(root,panelTitle){const b=el('div','board'),lc=el('div','col'),pc=el('div','card plotcard'),pn=el('div','card panel');
+  if(panelTitle)pn.appendChild(el('h3',null,panelTitle));lc.appendChild(pc);b.append(lc,pn);root.appendChild(b);return{pc:pc,pn:pn,lc:lc}}
 function legend(host,items){const L=el('div','legend');items.forEach(it=>{const s=el('span');
   const i=el('i',it.t==='dot'?'dot':null);
   if(it.t==='dot'){i.style.borderColor=it.c;i.style.borderTopColor=it.c}

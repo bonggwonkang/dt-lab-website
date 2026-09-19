@@ -11,7 +11,7 @@ export function p15(root){
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}^{*})\\)'}]);
   const P=new Plot(b.pc,{h:250,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  const card=el('div','card plotcard');root.appendChild(card);
+  const card=el('div','card plotcard');b.lc.appendChild(card);
   legend(card,[{c:'var(--obs)',l:'\\(E_{\\mathrm{RMS}}^{\\text{train}}\\)'},{c:'var(--fit)',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}\\)'},
     {c:'var(--accent)',t:'dash',l:'\\(M\\)'}]);
   const R=new Plot(card,{h:260,xlim:[-.6,9.6],ylim:[-.04,1.04],xl:'M',yl:'E_RMS',
@@ -61,7 +61,7 @@ export function p19(root){
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}^{*})\\)'}]);
   const P=new Plot(b.pc,{h:250,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  const card=el('div','card plotcard');root.appendChild(card);
+  const card=el('div','card plotcard');b.lc.appendChild(card);
   legend(card,[{c:'var(--obs)',l:'\\(E_{\\mathrm{RMS}}^{\\text{train}}\\)'},{c:'var(--fit)',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}\\)'},
     {c:'var(--accent)',t:'dash',l:'\\(\\ln\\lambda\\)'}]);
   const R=new Plot(card,{h:250,xlim:[-40,0],ylim:[-.04,1.04],xl:'ln λ',yl:'E_RMS',
@@ -169,7 +169,7 @@ export function p25(root){
     {c:'var(--fit)',t:'dash',l:'\\(p(t\\mid x_n,\\mathbf{w},\\beta)\\)'},
     {c:'var(--truth)',l:'\\(p(t_n\\mid x_n,\\mathbf{w},\\beta)\\)'}]);
   const P=new Plot(b.pc,{h:300,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  const card=el('div','card plotcard');root.appendChild(card);
+  const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">Log likelihood as one coefficient moves</b></span>'+
     '<span style="color:var(--muted)">every other coefficient is held where you left it</span>';
@@ -245,7 +245,7 @@ export function p28(root){
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}_{\\mathrm{ML}})\\)'},{c:'var(--fit)',t:'dash',l:'\\(\\pm1\\,\\sigma_{\\mathrm{ML}}\\)'}]);
   const P=new Plot(b.pc,{h:290,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  const card=el('div','card plotcard');root.appendChild(card);
+  const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">Estimated noise level as data accumulate</b></span>'+
     '<span style="color:var(--muted)">the dashed line is the \\(\\sigma\\) the data were actually generated with</span>';
@@ -300,7 +300,7 @@ export function p30(root){
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',t:'dash',l:'\\(y(x,\\mathbf{w}_{\\mathrm{ML}})\\)'},{c:'var(--accent)',l:'\\(y(x,\\mathbf{w}_{\\mathrm{MAP}})\\)'}]);
   const P=new Plot(b.pc,{h:290,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  const pc=el('div','card plotcard');root.appendChild(pc);
+  const pc=el('div','card plotcard');b.lc.appendChild(pc);
   const pcap=el('div','legend');pc.appendChild(pcap);
   pcap.innerHTML='<span><b style="font-weight:600">The prior over each coefficient</b></span>'+
     '<span style="color:var(--muted)">with covariance \\(\\alpha^{-1}\\mathbf{I}\\) the prior splits into one bell per coefficient</span>';
@@ -309,7 +309,7 @@ export function p30(root){
     {c:'var(--truth)',l:'\\(p(w_{\\mathrm{MAP},j}\\mid\\alpha)\\)'}]);
   const Q=new Plot(pc,{h:300,xlim:[-.6,9.6],ylim:[-1,1],xl:'j',yl:'w_j',
     xt:[0,1,2,3,4,5,6,7,8,9],yt:[-1,0,1],pad:[16,18,28,58]});
-  const card=el('div','card plotcard');root.appendChild(card);
+  const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">Test error as the prior tightens</b></span>'+
     '<span style="color:var(--muted)">large \\(\\alpha\\) means a narrow prior, which pulls every coefficient towards zero</span>';
