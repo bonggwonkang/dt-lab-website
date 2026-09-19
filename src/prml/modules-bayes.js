@@ -86,7 +86,7 @@ export function p35(root){
     {k:'sm',l:'model part \\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi(x_0)\\)'},{k:'sh',l:'width at \\(x=0.05\\)'},{k:'sl',l:'width at \\(x=0.95\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Overlay curves from the posterior',st.samples,v=>{st.samples=v;P.draw()});
-  eqbar(root,'Marginalizing over w',
+  eqbar(b.lc,'Marginalizing over w',
     '\\( p(t\\mid x,\\mathbf{x},\\mathbf{t})=\\int p(t\\mid x,\\mathbf{w})\\,'+
     'p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\)<br>'+
     '\\( m(x)=\\beta\\,\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)t_n'+

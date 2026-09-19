@@ -21,7 +21,7 @@ function p10(root){
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show \\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
   toggle(tg,'Show the noise \\(\\epsilon_n\\)',st.eps,v=>{st.eps=v;P.draw()});
-  eqbar(root,'Synthetic data set',
+  eqbar(b.lc,'Synthetic data set',
     '\\( x_n=\\dfrac{n}{N-1}\\in[0,1]\\), \\(t_n=\\sin(2\\pi x_n)+\\epsilon\\), \\(\\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
     'training set \\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), target vector \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
   note(root,['The green curve \\(\\sin(2\\pi x)\\) is what we want to learn; the blue circles are all we are given. As σ grows, the observations \\(t_n\\) drift away from the curve.',
@@ -57,7 +57,7 @@ function p11(root){
   toggle(tg,'Show each term \\(w_jx^{j}\\)',st.terms,v=>{st.terms=v;P.draw()});
   toggle(tg,'Show \\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
   toggle(tg,'Show the training data',st.data,v=>{st.data=v;P.draw()});
-  eqbar(root,'Polynomial curve',
+  eqbar(b.lc,'Polynomial curve',
     '\\( y(x,\\mathbf{w}) = w_0+w_1x+w_2x^2+\\cdots+w_Mx^M=\\sum_{j=0}^{M}w_jx^{j}\\)<br>'+
     'a nonlinear function of \\(x\\), but a <b>linear function of the coefficients</b> \\(\\mathbf{w}\\).');
   note(root,['\\(w_0\\) shifts the whole curve, \\(w_1\\) tilts it, and \\(w_2,\\dots,w_M\\) add bends. Switch on “each term” to watch the contributions \\(w_jx^j\\) add up to the red curve.',
