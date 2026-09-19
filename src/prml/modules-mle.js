@@ -166,6 +166,7 @@ export function p25(root){
   const st={w:[.2,1.5,-2.4,.6],rng:10,beta:11.1,j:1,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--obs)',t:'dot',l:'observation \\(t_n\\)'},
+    {c:'var(--fit)',t:'dash',l:'\\(p(t\\mid x_n,\\mathbf{w},\\beta)\\) at each \\(x_n\\)'},
     {c:'var(--truth)',l:'density \\(p(t_n\\mid x_n,\\mathbf{w},\\beta)\\)'}]);
   const P=new Plot(b.pc,{h:300,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const card=el('div','card plotcard');root.appendChild(card);
@@ -194,7 +195,7 @@ export function p25(root){
     '\\mathcal N\\!\\left(t_n\\mid y(x_n,\\mathbf{w}),\\beta^{-1}\\right)\\)<br>'+
     '\\( \\ln p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)=-\\dfrac{\\beta}{2}\\sum_{n=1}^{N}'+
     '\\{y(x_n,\\mathbf{w})-t_n\\}^{2}+\\dfrac{N}{2}\\ln\\beta-\\dfrac{N}{2}\\ln(2\\pi)\\)');
-  note(root,['Each green stem is the density the model assigns to one observed target. The likelihood is their product, which is why a single badly missed point can sink the whole thing.',
+  note(root,['Each small bell is \\(p(t\\mid x_n,\\mathbf{w},\\beta)\\): it stands on its own \\(x_n\\), spreads along \\(t\\) and is centred on the curve. The green segment reads that bell at the observed \\(t_n\\), and the likelihood is the product of those readings, which is why a single badly missed point can sink the whole thing.',
     'Only the first term depends on \\(\\mathbf{w}\\), and it is \\(-\\beta\\) times the sum-of-squares error. <b>Maximising the likelihood with respect to \\(\\mathbf{w}\\) is exactly minimising \\(E(\\mathbf{w})\\)</b>, so "Set w to w_ML" lands on the same solution as least squares.',
     'The sweep below shows \\(\\ln p\\) as one coefficient moves: a single smooth peak. \\(\\beta\\) changes how sharp that peak is, but not where it sits.']);
   const logLik=(w,beta)=>{let s=0;st.d.xs.forEach((x,n)=>{const r=polyval(w,x)-st.d.ts[n];s+=r*r});
@@ -212,11 +213,21 @@ export function p25(root){
     P.draw();L.draw()}
   P.render=p=>{const c=p.col,sd=1/Math.sqrt(st.beta);
     p.path(x=>polyval(st.w,x),c.fit,2.6);
-    const g=p.ctx;g.save();g.strokeStyle=c.truth;g.lineWidth=2.5;
-    st.d.xs.forEach((x,n)=>{const y=polyval(st.w,x),t=st.d.ts[n],
-      h=gaussPdf(t,y,sd)/gaussPdf(0,0,sd);
-      g.beginPath();g.moveTo(p.X(x),p.Y(t));g.lineTo(p.X(x)+h*30,p.Y(t));g.stroke()});
-    g.restore();
+    const g=p.ctx,peak=gaussPdf(0,0,sd),W=p.X(.08)-p.X(0);
+    st.d.xs.forEach((x,n)=>{const y=polyval(st.w,x),t=st.d.ts[n],X0=p.X(x),
+      lo=Math.min(y-3.5*sd,t),hi=Math.max(y+3.5*sd,t);
+      g.save();
+      /* the axis the bell stands on: x = x_n, running along t */
+      g.strokeStyle=c.line2;g.lineWidth=1;g.beginPath();g.moveTo(X0,p.Y(lo));g.lineTo(X0,p.Y(hi));g.stroke();
+      /* the conditional Gaussian over t, its height drawn sideways */
+      g.strokeStyle=c.fit;g.globalAlpha=.75;g.lineWidth=1.4;g.setLineDash([3,2]);g.beginPath();
+      for(let i=0;i<=60;i++){const tt=y-3.5*sd+7*sd*i/60,X=X0+W*gaussPdf(tt,y,sd)/peak;
+        i?g.lineTo(X,p.Y(tt)):g.moveTo(X,p.Y(tt))}
+      g.stroke();g.setLineDash([]);g.globalAlpha=1;
+      /* its value at the observed target */
+      g.strokeStyle=c.truth;g.lineWidth=2.5;g.beginPath();
+      g.moveTo(X0,p.Y(t));g.lineTo(X0+W*gaussPdf(t,y,sd)/peak,p.Y(t));g.stroke();
+      g.restore()});
     p.dots(st.d.xs,st.d.ts,c.obs)};
   P.hoverFmt=x=>[{t:'x = '+fmt(x,2)},{t:'y(x, w) = '+fmt(polyval(st.w,x),2),c:P.col.fit}];
   L.render=p=>{const c=p.col,sw=st.sweep,lo=sw.lo,hi=sw.hi;
