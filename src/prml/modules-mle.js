@@ -170,8 +170,6 @@ export function p25(root){
     {c:'var(--truth)',l:'\\(p(t_n\\mid x_n,\\mathbf{w},\\beta)\\)'}]);
   const P=new Plot(b.pc,{h:300,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const card=el('div','card plotcard');b.lc.appendChild(card);
-  const cap=el('div','legend');card.appendChild(cap);
-  cap.innerHTML='<span><b style="font-weight:600">Log likelihood as one coefficient moves</b></span>';
   const L=new Plot(card,{h:240,xlim:[-10,10],ylim:[-200,60],xl:'\\(w_j\\)',yl:'\\(\\ln p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)\\)',
     xt:[-10,-5,0,5,10],yt:[-200,-100,0],pad:[16,18,28,46]});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
@@ -245,9 +243,6 @@ export function p28(root){
     {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}_{\\mathrm{ML}})\\)'},{c:'var(--fit)',t:'dash',l:'\\(\\pm1\\,\\sigma_{\\mathrm{ML}}\\)'}]);
   const P=new Plot(b.pc,{h:290,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const card=el('div','card plotcard');b.lc.appendChild(card);
-  const cap=el('div','legend');card.appendChild(cap);
-  cap.innerHTML='<span><b style="font-weight:600">Estimated noise level as data accumulate</b></span>'+
-    '';
   legend(card,[{c:'var(--truth)',t:'dash',l:'\\(\\sigma\\)'},{c:'var(--fit)',l:'\\(\\sigma_{\\mathrm{ML}}\\)'}]);
   const S=new Plot(card,{h:230,xlim:[2,80],ylim:[0,.65],xl:'\\(N\\)',yl:'\\(\\sigma_{\\mathrm{ML}}\\)',
     xt:[10,20,40,60,80],yt:[0,.25,.5],pad:[16,18,28,46]});
@@ -301,17 +296,12 @@ export function p30(root){
     {c:'var(--fit)',t:'dash',l:'\\(y(x,\\mathbf{w}_{\\mathrm{ML}})\\)'},{c:'var(--accent)',l:'\\(y(x,\\mathbf{w}_{\\mathrm{MAP}})\\)'}]);
   const P=new Plot(b.pc,{h:290,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   const pc=el('div','card plotcard');b.lc.appendChild(pc);
-  const pcap=el('div','legend');pc.appendChild(pcap);
-  pcap.innerHTML='<span><b style="font-weight:600">The prior over each coefficient</b></span>';
   legend(pc,[{c:'var(--accent)',t:'dash',l:'\\(p(w_j\\mid\\alpha)=\\mathcal N(w_j\\mid0,\\alpha^{-1})\\)'},
     {c:'var(--accent)',t:'dot',l:'\\(w_{\\mathrm{MAP},j}\\)'},{c:'var(--fit)',t:'dot',l:'\\(w_{\\mathrm{ML},j}\\)'},
     {c:'var(--truth)',l:'\\(p(w_{\\mathrm{MAP},j}\\mid\\alpha)\\)'}]);
   const Q=new Plot(pc,{h:300,xlim:[-.6,9.6],ylim:[-1,1],xl:'\\(j\\)',yl:'\\(w_j\\)',
     xt:[0,1,2,3,4,5,6,7,8,9],yt:[-1,0,1],pad:[16,18,28,58]});
   const card=el('div','card plotcard');b.lc.appendChild(card);
-  const cap=el('div','legend');card.appendChild(cap);
-  cap.innerHTML='<span><b style="font-weight:600">Test error as the prior tightens</b></span>'+
-    '';
   legend(card,[{c:'var(--accent)',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}(\\mathbf{w}_{\\mathrm{MAP}})\\)'},
     {c:'var(--fit)',t:'dash',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}(\\mathbf{w}_{\\mathrm{ML}})\\)'},
     {c:'var(--accent)',t:'dash',l:'\\(\\ln\\alpha\\)'}]);

@@ -101,8 +101,6 @@ function p12(root){
     '\\( E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\). Each green bar is the displacement '+
     '\\(|y(x_n,\\mathbf{w})-t_n|\\) of one data point from the curve, and \\(E(\\mathbf{w})\\) is one half of the sum of their squares.');
   b.lc.appendChild(surfWrap);
-  const scap=el('div','legend');surfWrap.appendChild(scap);
-  scap.innerHTML='<span><b style="font-weight:600">The error as a function of the coefficients</b></span>';
   const panels=el('div');panels.style.cssText='display:grid;gap:16px';surfWrap.appendChild(panels);
   note(root,['The same data set gives a completely different total \\(E(\\mathbf{w})\\) depending on how the curve is drawn. Learning means finding the \\(\\mathbf{w}^{*}\\) that makes this total as small as possible.',
     'Because \\(E(\\mathbf{w})\\) is a <b>quadratic function</b> of the coefficients, its derivatives are linear in \\(\\mathbf{w}\\): with \\(M=0\\) it is a parabola, with \\(M=1\\) a bowl with elliptical contours, and the minimiser \\(\\mathbf{w}^{*}\\) is unique and can be found in closed form.',
