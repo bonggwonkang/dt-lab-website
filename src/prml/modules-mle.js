@@ -393,7 +393,7 @@ export function p33(root){
     {c:'var(--truth)',l:'\\(p(Y)\\)'}]);
   const P=new Plot(b.pc,{h:340,xlim:[30,110],ylim:[0,.055],xl:'\\(Y\\)',yl:'\\(p(Y)\\)',
     xt:[40,60,80,100],yt:[0,.02,.04],pad:[16,18,28,52]});
-  const sP=slider(b.pn,{label:'Data mix \\(N_1:N_2\\)',min:0,max:1,step:.01,value:st.pF,
+  slider(b.pn,{label:'Data mix \\(N_1:N_2\\)',min:0,max:1,step:.01,value:st.pF,
     fmt:v=>Math.round((1-v)*100)+' : '+Math.round(v*100),on:v=>{st.pF=v;draw()}});
   /* a two-colour bar showing how the weight splits between the two components */
   function mixbar(host,l1,l2){const bar=el('div');
@@ -407,18 +407,6 @@ export function p33(root){
       s1.textContent=p1>=.12?l1+' '+Math.round(p1*100)+'%':'';
       s2.textContent=p2>=.12?l2+' '+Math.round(p2*100)+'%':''}}
   const setBar=mixbar(b.pn,'x₁','x₂');
-  btnrow(b.pn,[{l:'\\(N_1:N_2=1:0\\)',on:()=>{st.pF=0;sP.set(0);draw()}},
-    {l:'\\(N_1:N_2=1:1\\)',on:()=>{st.pF=.5;sP.set(.5);draw()}},
-    {l:'\\(N_1:N_2=0:1\\)',on:()=>{st.pF=1;sP.set(1);draw()}}]);
-  b.pn.appendChild(el('div','hr'));
-  slider(b.pn,{label:'Mean \\(\\mu_1\\)',min:50,max:95,step:.5,value:st.muM,fmt:v=>fmt(v,1),
-    on:v=>{st.muM=v;draw()}});
-  slider(b.pn,{label:'Spread \\(\\sigma_1\\)',min:4,max:20,step:.5,value:st.sdM,fmt:v=>fmt(v,1),
-    on:v=>{st.sdM=v;draw()}});
-  slider(b.pn,{label:'Mean \\(\\mu_2\\)',min:50,max:95,step:.5,value:st.muF,fmt:v=>fmt(v,1),
-    on:v=>{st.muF=v;draw()}});
-  slider(b.pn,{label:'Spread \\(\\sigma_2\\)',min:4,max:20,step:.5,value:st.sdF,fmt:v=>fmt(v,1),
-    on:v=>{st.sdF=v;draw()}});
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'pm',l:'\\(p(X=x_1)=N_1/N\\)'},{k:'pf',l:'\\(p(X=x_2)=N_2/N\\)'},
     {k:'em',l:'\\(\\mathbb{E}[Y\\mid X=x_1]\\)'},{k:'ef',l:'\\(\\mathbb{E}[Y\\mid X=x_2]\\)'},{k:'e',l:'\\(\\mathbb{E}[Y]\\) after marginalizing',big:true},
