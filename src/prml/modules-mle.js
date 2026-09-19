@@ -395,13 +395,18 @@ export function p33(root){
     xt:[40,60,80,100],yt:[0,.02,.04],pad:[16,18,28,52]});
   const sP=slider(b.pn,{label:'Data mix \\(N_1:N_2\\)',min:0,max:1,step:.01,value:st.pF,
     fmt:v=>Math.round((1-v)*100)+' : '+Math.round(v*100),on:v=>{st.pF=v;draw()}});
-  /* the composition of the data set, one colour per value of X */
-  const bar=el('div');bar.style.cssText='display:flex;height:24px;border-radius:6px;overflow:hidden;'+
-    'font-family:var(--mono);font-size:11px;color:#fff;margin-top:-4px';
-  const seg1=el('div'),seg2=el('div');
-  [[seg1,'var(--obs)'],[seg2,'var(--fit)']].forEach(q=>{q[0].style.cssText='background:'+q[1]+
-    ';display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;transition:width .15s'});
-  bar.append(seg1,seg2);b.pn.appendChild(bar);
+  /* a two-colour bar showing how the weight splits between the two components */
+  function mixbar(host,l1,l2){const bar=el('div');
+    bar.style.cssText='display:flex;height:24px;border-radius:6px;overflow:hidden;'+
+      'font-family:var(--mono);font-size:11px;color:#fff;margin-top:-4px';
+    const s1=el('div'),s2=el('div');
+    [[s1,'var(--obs)'],[s2,'var(--fit)']].forEach(z=>{z[0].style.cssText='background:'+z[1]+
+      ';display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;transition:width .15s'});
+    bar.append(s1,s2);host.appendChild(bar);
+    return function(p2){const p1=1-p2;s1.style.width=(p1*100)+'%';s2.style.width=(p2*100)+'%';
+      s1.textContent=p1>=.12?l1+' '+Math.round(p1*100)+'%':'';
+      s2.textContent=p2>=.12?l2+' '+Math.round(p2*100)+'%':''}}
+  const setBar=mixbar(b.pn,'x₁','x₂');
   btnrow(b.pn,[{l:'\\(N_1:N_2=1:0\\)',on:()=>{st.pF=0;sP.set(0);draw()}},
     {l:'\\(N_1:N_2=1:1\\)',on:()=>{st.pF=.5;sP.set(.5);draw()}},
     {l:'\\(N_1:N_2=0:1\\)',on:()=>{st.pF=1;sP.set(1);draw()}}]);
@@ -417,23 +422,87 @@ export function p33(root){
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'pm',l:'\\(p(X=x_1)=N_1/N\\)'},{k:'pf',l:'\\(p(X=x_2)=N_2/N\\)'},
     {k:'em',l:'\\(\\mathbb{E}[Y\\mid X=x_1]\\)'},{k:'ef',l:'\\(\\mathbb{E}[Y\\mid X=x_2]\\)'},{k:'e',l:'\\(\\mathbb{E}[Y]\\) after marginalizing',big:true},
-    {k:'sd',l:'Standard deviation of \\(p(Y)\\)'}]);
+    {k:'sd',l:'Standard deviation of \\(p(Y)\\)'},
+    {k:'vw',l:'\\(\\mathbb{E}_X[\\mathrm{Var}(Y\\mid X)]\\)'},{k:'vb',l:'\\(\\mathrm{Var}_X(\\mathbb{E}[Y\\mid X])\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the two conditionals',st.show,v=>{st.show=v;P.draw()});
-  eqbar(root,'The sum rule: integrating a variable out',
+  eqbar(b.lc,'The sum rule: integrating a variable out',
     '\\( p(Y)=\\sum_{X}p(Y,X)=\\sum_{X}p(Y\\mid X)\\,p(X)\\), and for a continuous variable the sum '+
     'becomes an integral, \\( p(Y)=\\int p(Y\\mid X)\\,p(X)\\,dX \\). Marginalizing means asking about '+
     '\\(Y\\) while refusing to condition on \\(X\\). Here \\(p(X=x_k)=N_k/N\\) is the share of the data with \\(X=x_k\\), and \\(p(Y\\mid X=x_k)=\\mathcal N(Y\\mid\\mu_k,\\sigma_k^{2})\\), \\(k=1,2\\).');
-  note(root,['The marginal is not one of the two conditionals, and it is not their average shape either. It is a <b>weighted mixture</b>: each conditional contributes in proportion to how often that value of \\(X\\) appears.',
-    'Move the data mix to 100 : 0 or 0 : 100 and the marginal collapses onto a single conditional. Keep it near a half with means far apart and the marginal grows two humps, which no single Gaussian could describe.',
-    'This is the operation the Bayesian treatment performs on \\(\\mathbf{w}\\): the predictive distribution weighs every possible \\(\\mathbf{w}\\) by how plausible the data made it, instead of committing to one value.']);
+  /* ---- the same computation in the notation of the polynomial example ---- */
+  const q={p2:.5,x0:.9,beta:11.1,d:makeData(10,.25,3)},d2=makeData(10,.25,8);
+  q.w1=fit(q.d.xs,q.d.ts,3);q.w2=fit(d2.xs,d2.ts,3);
+  const b2=board(root,'Controls');
+  legend(b2.pc,[{c:'var(--obs)',l:'\\(y(x,\\mathbf{w}^{(1)})\\)'},{c:'var(--fit)',l:'\\(y(x,\\mathbf{w}^{(2)})\\)'},
+    {c:'var(--muted)',t:'dot',l:'\\(t_n\\)'}]);
+  const C=new Plot(b2.pc,{h:250,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
+  const dc=el('div','card plotcard');b2.lc.appendChild(dc);
+  legend(dc,[{c:'var(--obs)',l:'\\(p(t\\mid x_0,\\mathbf{w}^{(1)})\\)'},{c:'var(--fit)',l:'\\(p(t\\mid x_0,\\mathbf{w}^{(2)})\\)'},
+    {c:'var(--obs)',t:'dash',l:'\\(p(t\\mid x_0,\\mathbf{w}^{(1)})\\,p(\\mathbf{w}^{(1)}\\mid\\mathbf{x},\\mathbf{t})\\)'},
+    {c:'var(--fit)',t:'dash',l:'\\(p(t\\mid x_0,\\mathbf{w}^{(2)})\\,p(\\mathbf{w}^{(2)}\\mid\\mathbf{x},\\mathbf{t})\\)'},
+    {c:'var(--truth)',l:'\\(p(t\\mid x_0,\\mathbf{x},\\mathbf{t})\\)'}]);
+  const D=new Plot(dc,{h:300,xlim:[-2.2,2.2],ylim:[0,1.5],xl:'\\(t\\)',
+    yl:'\\(p(t\\mid x_0,\\mathbf{x},\\mathbf{t})\\)',xt:[-2,-1,0,1,2],yt:[0,.5,1],pad:[16,18,28,52]});
+  const sQ=slider(b2.pn,{label:'Posterior weights \\(p(\\mathbf{w}^{(1)}\\mid\\mathbf{x},\\mathbf{t}):p(\\mathbf{w}^{(2)}\\mid\\mathbf{x},\\mathbf{t})\\)',
+    min:0,max:1,step:.01,value:q.p2,fmt:v=>Math.round((1-v)*100)+' : '+Math.round(v*100),on:v=>{q.p2=v;draw2()}});
+  const setBar2=mixbar(b2.pn,'w⁽¹⁾','w⁽²⁾');
+  btnrow(b2.pn,[{l:'\\(1:0\\)',on:()=>{q.p2=0;sQ.set(0);draw2()}},
+    {l:'\\(1:1\\)',on:()=>{q.p2=.5;sQ.set(.5);draw2()}},
+    {l:'\\(0:1\\)',on:()=>{q.p2=1;sQ.set(1);draw2()}}]);
+  b2.pn.appendChild(el('div','hr'));
+  slider(b2.pn,{label:'New input \\(x_0\\)',min:0,max:1,step:.01,value:q.x0,fmt:v=>fmt(v,2),
+    on:v=>{q.x0=v;draw2()}});
+  slider(b2.pn,{label:'Noise precision \\(\\beta\\)',min:1,max:60,step:.5,value:q.beta,fmt:v=>fmt(v,1),
+    on:v=>{q.beta=v;draw2()}});
+  b2.pn.appendChild(el('div','hr'));
+  const out2=readout(b2.pn,[{k:'y1',l:'\\(y(x_0,\\mathbf{w}^{(1)})\\)'},{k:'y2',l:'\\(y(x_0,\\mathbf{w}^{(2)})\\)'},
+    {k:'m',l:'\\(\\mathbb{E}[t]\\) after marginalizing',big:true},
+    {k:'v',l:'\\(\\mathrm{Var}[t]\\)'},{k:'vw',l:'\\(\\beta^{-1}\\)'},
+    {k:'vb',l:'\\(\\mathrm{Var}_{\\mathbf{w}}\\big(y(x_0,\\mathbf{w})\\big)\\)'}]);
+  eqbar(b2.lc,'The same sum over two coefficient vectors',
+    '\\( p(t\\mid x_0,\\mathbf{x},\\mathbf{t})=\\sum_{k=1}^{2}p(t\\mid x_0,\\mathbf{w}^{(k)})\\,'+
+    'p(\\mathbf{w}^{(k)}\\mid\\mathbf{x},\\mathbf{t})\\), \\( p(t\\mid x_0,\\mathbf{w}^{(k)})='+
+    '\\mathcal N\\!\\left(t\\mid y(x_0,\\mathbf{w}^{(k)}),\\beta^{-1}\\right)\\)<br>'+
+    'Over every \\(\\mathbf{w}\\) the sum becomes \\( \\int p(t\\mid x_0,\\mathbf{w})\\,'+
+    'p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}\\), the predictive distribution of slide 35.');
+  function draw2(){const p2=q.p2,p1=1-p2,y1=polyval(q.w1,q.x0),y2=polyval(q.w2,q.x0),m=p1*y1+p2*y2,
+      vw=1/q.beta,vb=p1*(y1-m)*(y1-m)+p2*(y2-m)*(y2-m),peak=gaussPdf(0,0,Math.sqrt(vw)),
+      tk=Number((peak*.45).toPrecision(2));
+    setBar2(p2);D.o.ylim=[0,peak*1.12];D.o.yt=[0,tk,Number((2*tk).toPrecision(2))];
+    out2({y1:fmt(y1,3),y2:fmt(y2,3),m:fmt(m,3),v:fmt(vw+vb,4),vw:fmt(vw,4),vb:fmt(vb,4)});
+    C.draw();D.draw()}
+  C.render=p=>{const c=p.col;
+    p.dots(q.d.xs,q.d.ts,c.muted,3.4);
+    p.path(x=>polyval(q.w1,x),c.obs,2.4);p.path(x=>polyval(q.w2,x),c.fit,2.4);
+    p.seg(q.x0,p.o.ylim[0],p.o.ylim[1],c.line2,1,[3,3]);
+    p.mark(q.x0,polyval(q.w1,q.x0),c.obs,4.5);p.mark(q.x0,polyval(q.w2,q.x0),c.fit,4.5);
+    p.label(q.x0,p.o.ylim[0]+.2,' x₀',c.ink2,'left')};
+  C.hoverFmt=x=>[{t:'x = '+fmt(x,2)},{t:'y(x, w⁽¹⁾) = '+fmt(polyval(q.w1,x),2),c:C.col.obs},
+    {t:'y(x, w⁽²⁾) = '+fmt(polyval(q.w2,x),2),c:C.col.fit}];
+  C.onClick=x=>{q.x0=clamp(x,0,1);draw2()};
+  const comp=()=>{const sd=1/Math.sqrt(q.beta),y1=polyval(q.w1,q.x0),y2=polyval(q.w2,q.x0),p2=q.p2;
+    return{f1:t=>gaussPdf(t,y1,sd),f2:t=>gaussPdf(t,y2,sd),p1:1-p2,p2:p2,m:(1-p2)*y1+p2*y2}};
+  D.render=p=>{const c=p.col,k=comp(),mix=t=>k.p1*k.f1(t)+k.p2*k.f2(t);
+    p.band(()=>0,mix,c.truth,.14);
+    p.path(k.f1,c.obs,1.2);p.path(k.f2,c.fit,1.2);
+    p.path(t=>k.p1*k.f1(t),c.obs,2,[5,4]);p.path(t=>k.p2*k.f2(t),c.fit,2,[5,4]);
+    p.path(mix,c.truth,2.8);
+    p.seg(k.m,0,mix(k.m),c.muted,1.5,[3,3]);p.label(k.m,mix(k.m),'  E[t]',c.ink2,'left',-12)};
+  D.hoverFmt=t=>{const k=comp();return[{t:'t = '+fmt(t,2)},
+    {t:'p(t | x₀, x, t) = '+fmt(k.p1*k.f1(t)+k.p2*k.f2(t),3),c:D.col.truth}]};
+  draw2();
+  note(root,['The marginal is not one of the two conditionals, and it is not their average shape either. It is a <b>weighted mixture</b>: each conditional contributes in proportion to its weight.',
+    'Move the mix to 1 : 0 or 0 : 1 and the marginal collapses onto a single conditional. In the lower simulator that is a point estimate, one \\(\\mathbf{w}\\) plugged in. Any other mix is a Bayesian prediction that keeps both candidates.',
+    'The two simulators are the same computation: \\(X\\) becomes \\(\\mathbf{w}\\), \\(Y\\) becomes \\(t\\), and the share \\(p(X=x_k)\\) becomes the posterior weight \\(p(\\mathbf{w}^{(k)}\\mid\\mathbf{x},\\mathbf{t})\\). The only difference is who sets the weights: here you do, in the Bayesian treatment the data do.',
+    'Move \\(x_0\\) from the middle to the edge. The two curves agree near \\(x=0.5\\) and part near \\(x=1\\), so \\(\\mathrm{Var}_{\\mathbf{w}}(y(x_0,\\mathbf{w}))\\) grows and the prediction widens, while \\(\\beta^{-1}\\) stays put. These are the two terms of \\(s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi(x)\\) on slide 35, and of \\(\\mathbb{E}_X[\\mathrm{Var}(Y\\mid X)]+\\mathrm{Var}_X(\\mathbb{E}[Y\\mid X])\\) above.']);
   function draw(){const pf=st.pF,pm=1-pf,mean=pm*st.muM+pf*st.muF,
     sec=pm*(st.sdM*st.sdM+st.muM*st.muM)+pf*(st.sdF*st.sdF+st.muF*st.muF);
-    seg1.style.width=(pm*100)+'%';seg2.style.width=(pf*100)+'%';
-    seg1.textContent=pm>=.12?'x₁ '+Math.round(pm*100)+'%':'';
-    seg2.textContent=pf>=.12?'x₂ '+Math.round(pf*100)+'%':'';
+    setBar(pf);
     out({pf:fmt(pf,2),pm:fmt(pm,2),em:fmt(st.muM,1),ef:fmt(st.muF,1),e:fmt(mean,2),
-      sd:fmt(Math.sqrt(Math.max(sec-mean*mean,0)),2)});P.draw()}
+      sd:fmt(Math.sqrt(Math.max(sec-mean*mean,0)),2),
+      vw:fmt(pm*st.sdM*st.sdM+pf*st.sdF*st.sdF,2),
+      vb:fmt(pm*(st.muM-mean)*(st.muM-mean)+pf*(st.muF-mean)*(st.muF-mean),2)});P.draw()}
   const dM=y=>gaussPdf(y,st.muM,st.sdM),dF=y=>gaussPdf(y,st.muF,st.sdF),
     mix=y=>(1-st.pF)*dM(y)+st.pF*dF(y);
   P.render=p=>{const c=p.col;

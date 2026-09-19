@@ -65,7 +65,7 @@
 .prml .ctrl{display:flex;flex-direction:column;gap:4px}
 .prml .ctrl .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .prml .ctrl .lab{font-size:13px;color:var(--ink-2)}
-.prml .ctrl .val{font-size:13px;color:#fff;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.prml .ctrl .val{font-size:13px;color:#fff;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
 .prml input[type=range]{width:100%;accent-color:var(--accent-fill);height:18px;margin:0;background:transparent}
 .prml .btnrow{display:flex;flex-wrap:wrap;gap:7px}
 .prml button.act{font:inherit;font-size:12.5px;font-weight:500;padding:7px 12px;border-radius:9px;

@@ -200,7 +200,7 @@ const MODULES=[
  {p:30,sec:S2,t:'Maximum a posteriori (MAP): the posterior over w (I)',
   g:'How the prior \\(p(\\mathbf{w}|\\alpha)\\) pulls \\(\\mathbf{w}_{\\mathrm{MAP}}\\) away from \\(\\mathbf{w}_{\\mathrm{ML}}\\).',b:p30},
  {p:33,sec:S3,t:'Bayesian polynomial function (I)',
-  g:'What “integrating a variable out” means, for a continuous \\(Y\\) and a variable \\(X\\) that takes two values \\(x_1,x_2\\).',b:p33},
+  g:'What “integrating a variable out” means, first for a two-valued \\(X\\) and a continuous \\(Y\\), then for two candidate coefficient vectors \\(\\mathbf{w}^{(1)},\\mathbf{w}^{(2)}\\) of the polynomial example.',b:p33},
  {p:34,sec:S3,t:'Bayesian polynomial function (II)',
   g:'How the uncertainty in \\(\\mathbf{w}\\) shrinks as data points are added.',b:p34},
  {p:35,sec:S3,t:'Bayesian polynomial function (III)',
