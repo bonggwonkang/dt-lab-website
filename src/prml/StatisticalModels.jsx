@@ -33,8 +33,8 @@ export default function StatisticalModels({ slide, onSlide }) {
     const head = document.createElement('div')
     head.className = 'mhead rise'
     head.innerHTML =
-      '<div class="mtop"><span class="chip">Slide p.' + m.p + '</span>' +
-      '<span class="msec">' + m.sec + '</span></div>' +
+      '<div class="mtop"><span class="chip ' + (m.no % 2 ? 'odd' : 'even') + '">Slide p.' + m.p +
+      '<span class="msec">' + m.sec + '</span></span></div>' +
       '<h2 class="mtitle">' + m.t + '</h2><p class="mgoal">' + m.g + '</p>'
     host.appendChild(head)
     const body = document.createElement('div')
