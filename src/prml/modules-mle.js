@@ -249,7 +249,7 @@ export function p28(root){
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">Estimated noise level as data accumulate</b></span>'+
     '<span style="color:var(--muted)">the dashed line is the \\(\\sigma\\) the data were actually generated with</span>';
-  const S=new Plot(card,{h:230,xlim:[2,80],ylim:[0,.65],xl:'N',yl:'\\(\\sigma_{\\mathrm{ML}}\\)',
+  const S=new Plot(card,{h:230,xlim:[2,80],ylim:[0,.65],xl:'N',yl:'σ_ML',
     xt:[10,20,40,60,80],yt:[0,.25,.5],pad:[16,18,28,46]});
   const sN=slider(b.pn,{label:'Data points \\(N\\)',min:4,max:80,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
