@@ -300,6 +300,15 @@ export function p30(root){
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',t:'dash',l:'\\(y(x,\\mathbf{w}_{\\mathrm{ML}})\\)'},{c:'var(--accent)',l:'\\(y(x,\\mathbf{w}_{\\mathrm{MAP}})\\)'}]);
   const P=new Plot(b.pc,{h:290,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
+  const pc=el('div','card plotcard');root.appendChild(pc);
+  const pcap=el('div','legend');pc.appendChild(pcap);
+  pcap.innerHTML='<span><b style="font-weight:600">The prior over each coefficient</b></span>'+
+    '<span style="color:var(--muted)">with covariance \\(\\alpha^{-1}\\mathbf{I}\\) the prior splits into one bell per coefficient</span>';
+  legend(pc,[{c:'var(--accent)',t:'dash',l:'\\(p(w_j\\mid\\alpha)=\\mathcal N(w_j\\mid0,\\alpha^{-1})\\)'},
+    {c:'var(--accent)',t:'dot',l:'\\(w_{\\mathrm{MAP},j}\\)'},{c:'var(--fit)',t:'dot',l:'\\(w_{\\mathrm{ML},j}\\)'},
+    {c:'var(--truth)',l:'\\(p(w_{\\mathrm{MAP},j}\\mid\\alpha)\\)'}]);
+  const Q=new Plot(pc,{h:300,xlim:[-.6,9.6],ylim:[-1,1],xl:'j',yl:'w_j',
+    xt:[0,1,2,3,4,5,6,7,8,9],yt:[-1,0,1],pad:[16,18,28,58]});
   const card=el('div','card plotcard');root.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">Test error as the prior tightens</b></span>'+
@@ -313,11 +322,12 @@ export function p30(root){
   slider(b.pn,{label:'Noise precision \\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new sample',on:()=>{st.seed++;gen()}},
-    {l:'Flat prior \\((\\alpha\\to0)\\)',on:()=>{st.lnAlpha=-14;sA.set(-14);draw()}},
     {l:'Jump to the best \\(\\alpha\\)',on:()=>{st.lnAlpha=st.best;sA.set(st.best);draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'a',l:'\\(\\alpha\\)'},{k:'lam',l:'\\(\\lambda=\\alpha/\\beta\\)'},{k:'nml',l:'\\(\\lVert\\mathbf{w}_{\\mathrm{ML}}\\rVert\\)'},
-    {k:'nmap',l:'\\(\\lVert\\mathbf{w}_{\\mathrm{MAP}}\\rVert\\)'},{k:'eml',l:'\\(E_{\\mathrm{RMS}}\\) test, \\(\\mathbf{w}_{\\mathrm{ML}}\\)'},{k:'emap',l:'\\(E_{\\mathrm{RMS}}\\) test, \\(\\mathbf{w}_{\\mathrm{MAP}}\\)',big:true}]);
+    {k:'nmap',l:'\\(\\lVert\\mathbf{w}_{\\mathrm{MAP}}\\rVert\\)'},{k:'pml',l:'\\(-\\tfrac{\\alpha}{2}\\lVert\\mathbf{w}_{\\mathrm{ML}}\\rVert^{2}\\)'},
+    {k:'pmap',l:'\\(-\\tfrac{\\alpha}{2}\\lVert\\mathbf{w}_{\\mathrm{MAP}}\\rVert^{2}\\)'},
+    {k:'eml',l:'\\(E_{\\mathrm{RMS}}\\) test, \\(\\mathbf{w}_{\\mathrm{ML}}\\)'},{k:'emap',l:'\\(E_{\\mathrm{RMS}}\\) test, \\(\\mathbf{w}_{\\mathrm{MAP}}\\)',big:true}]);
   const cML=wchips(b.pn,'\\(\\mathbf{w}_{\\mathrm{ML}}\\)'),cMAP=wchips(b.pn,'\\(\\mathbf{w}_{\\mathrm{MAP}}\\)');
   eqbar(root,'Prior over the coefficients and the MAP estimate',
     '\\( p(\\mathbf{w}\\mid\\alpha)=\\mathcal N\\!\\left(\\mathbf{w}\\mid\\mathbf{0},\\alpha^{-1}\\mathbf{I}\\right)'+
@@ -325,9 +335,9 @@ export function p30(root){
     '\\mathbf{w}^{\\mathrm T}\\mathbf{w}\\right\\}\\)<br>'+
     '\\( \\mathbf{w}_{\\mathrm{MAP}}=\\arg\\min_{\\mathbf{w}}\\left[\\dfrac{\\beta}{2}\\sum_{n=1}^{N}'+
     '\\{y(x_n,\\mathbf{w})-t_n\\}^{2}+\\dfrac{\\alpha}{2}\\mathbf{w}^{\\mathrm T}\\mathbf{w}\\right]\\)');
-  note(root,['The prior says, before seeing any data, that large coefficients are implausible. Slide α up and the MAP curve peels away from the wild ML curve towards something smooth.',
-    'Compare the two equations: MAP with \\(\\alpha\\) and \\(\\beta\\) is the regularized error function of slide 19 with \\(\\lambda=\\alpha/\\beta\\). <b>Regularization was a prior in disguise all along.</b>',
-    'Add data and the prior matters less: with \\(N=40\\) the two curves nearly coincide over a wide range of α, because the likelihood term now dominates the prior.']);
+  note(root,['Each coefficient has its own bell \\(\\mathcal N(w_j\\mid0,\\alpha^{-1})\\): before seeing any data, the prior says every \\(w_j\\) should sit near zero, and \\(\\alpha\\) sets how near. Slide \\(\\ln\\alpha\\) up and the bells narrow, and every \\(w_{\\mathrm{MAP},j}\\) is pulled back inside its bell.',
+    '\\(w_{\\mathrm{ML},j}\\) ignores the bells and lands wherever the data put it, often far off the chart where the prior density is essentially zero; the readout \\(-\\tfrac{\\alpha}{2}\\lVert\\mathbf{w}\\rVert^{2}\\) is that log prior. MAP trades a little fit for a lot of prior, so its curve peels away from the wild ML curve towards something smooth.',
+    'Compare the two equations: MAP with \\(\\alpha\\) and \\(\\beta\\) is the regularized error function of slide 19 with \\(\\lambda=\\alpha/\\beta\\). <b>Regularization was a prior in disguise all along.</b> Add data and the prior matters less, because the likelihood term grows with \\(N\\) while the prior does not.']);
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
     st.rows=[];let best=-14,bv=Infinity;
     for(let a=-14;a<=8;a+=.25){const w=fit(st.tr.xs,st.tr.ts,st.M,Math.exp(a)/st.beta),
@@ -335,10 +345,38 @@ export function p30(root){
     st.best=best;draw()}
   function draw(){const al=Math.exp(st.lnAlpha),lam=al/st.beta;
     st.wML=fit(st.tr.xs,st.tr.ts,st.M);st.wMAP=fit(st.tr.xs,st.tr.ts,st.M,lam);
+    st.sd=1/Math.sqrt(al);
+    const R=Math.max(3.5*st.sd,1.25*Math.max.apply(null,st.wMAP.map(Math.abs)),1e-3),
+      tk=Number((.8*R).toPrecision(2));
+    Q.o.xlim=[-.6,st.M+.6];Q.o.xt=Array.from({length:st.M+1},(_,j)=>j);
+    Q.o.ylim=[-R,R];Q.o.yt=[-tk,0,tk];
     out({a:fmt(al,al<1?4:2),lam:fmt(lam,lam<1?4:2),nml:fmt(Math.sqrt(norm2(st.wML)),1),
+      pml:fmt(-al/2*norm2(st.wML),2),pmap:fmt(-al/2*norm2(st.wMAP),3),
       nmap:fmt(Math.sqrt(norm2(st.wMAP)),2),eml:fmt(erms(st.te.xs,st.te.ts,st.wML),3),
       emap:fmt(erms(st.te.xs,st.te.ts,st.wMAP),3)});
-    cML(st.wML,1);cMAP(st.wMAP,2);P.draw();A.draw()}
+    cML(st.wML,1);cMAP(st.wMAP,2);P.draw();Q.draw();A.draw()}
+  Q.render=q=>{const c=q.col,g=q.ctx,sd=st.sd,R=q.o.ylim[1],peak=gaussPdf(0,0,sd),
+      Wd=(q.X(1)-q.X(0))*.62,lo=Math.max(-R,-4*sd),hi=Math.min(R,4*sd);
+    for(let j=0;j<=st.M;j++){const X0=q.X(j),wm=st.wMAP[j],wl=st.wML[j];
+      g.save();
+      g.strokeStyle=c.line2;g.lineWidth=1;g.beginPath();g.moveTo(X0,q.Y(-R));g.lineTo(X0,q.Y(R));g.stroke();
+      /* the prior bell for w_j, its height drawn sideways */
+      g.strokeStyle=c.acc;g.globalAlpha=.8;g.lineWidth=1.4;g.setLineDash([3,2]);g.beginPath();
+      for(let i=0;i<=80;i++){const w=lo+(hi-lo)*i/80,X=X0+Wd*gaussPdf(w,0,sd)/peak;
+        i?g.lineTo(X,q.Y(w)):g.moveTo(X,q.Y(w))}
+      g.stroke();g.setLineDash([]);g.globalAlpha=1;
+      /* its value at w_MAP,j */
+      g.strokeStyle=c.truth;g.lineWidth=2.5;g.beginPath();
+      g.moveTo(X0,q.Y(wm));g.lineTo(X0+Wd*gaussPdf(wm,0,sd)/peak,q.Y(wm));g.stroke();
+      /* w_ML,j: a dot, or an arrow at the edge when it is off the chart */
+      g.fillStyle=c.fit;
+      if(Math.abs(wl)<=R){g.restore();q.dots([j],[wl],c.fit,4)}
+      else{const up=wl>0,Y=q.Y(up?R:-R)+(up?7:-7);g.beginPath();
+        g.moveTo(X0,Y+(up?-7:7));g.lineTo(X0-5,Y);g.lineTo(X0+5,Y);g.closePath();g.fill();g.restore()}
+      q.mark(j,wm,c.acc,4.5)}};
+  Q.hoverFmt=x=>{const j=clamp(Math.round(x),0,st.M);
+    return[{t:'j = '+j},{t:'w_MAP = '+fmt(st.wMAP[j],3),c:Q.col.acc},{t:'w_ML = '+fmt(st.wML[j],1),c:Q.col.fit},
+      {t:'p(w_MAP | α) = '+fmt(gaussPdf(st.wMAP[j],0,st.sd),3),c:Q.col.truth}]};
   P.render=p=>{const c=p.col;p.path(sin2pi,c.truth,2.2);p.dots(st.tr.xs,st.tr.ts,c.obs);
     p.path(x=>polyval(st.wML,x),c.fit,2,[5,4]);p.path(x=>polyval(st.wMAP,x),c.acc,2.8)};
   P.hoverFmt=x=>[{t:'x = '+fmt(x,2)},{t:'w_ML: '+fmt(polyval(st.wML,x),2),c:P.col.fit},
