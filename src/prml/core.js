@@ -50,9 +50,12 @@ const erms=(xs,ts,w)=>Math.sqrt(2*sse(xs,ts,w)/xs.length);
 
 /* ===================== plotting ===================== */
 class Plot{
-  constructor(host,o){this.o=Object.assign({xlim:[-.04,1.04],ylim:[-1.65,1.65],xl:'x',yl:'t',
+  constructor(host,o){this.o=Object.assign({xlim:[-.04,1.04],ylim:[-1.65,1.65],xl:'\\(x\\)',yl:'\\(t\\)',
     xt:[0,1],yt:[-1,0,1],h:330,pad:[16,18,28,34]},o||{});
-    this.c=el('canvas');host.appendChild(this.c);this.ctx=this.c.getContext('2d');
+    const wrap=el('div','pwrap');host.appendChild(wrap);
+    this.c=el('canvas');wrap.appendChild(this.c);this.ctx=this.c.getContext('2d');
+    this.lx=el('div','axl axl-x',this.o.xl);this.ly=el('div','axl axl-y',this.o.yl);
+    wrap.append(this.lx,this.ly);tex(wrap);
     this.render=null;this.hover=null;this.hoverFmt=null;this.onClick=null;
     const move=e=>{const r=this.c.getBoundingClientRect();
       const px=(e.touches?e.touches[0].clientX:e.clientX)-r.left,py=(e.touches?e.touches[0].clientY:e.clientY)-r.top;
@@ -64,7 +67,7 @@ class Plot{
     this.ro=new ResizeObserver(()=>this.resize());this.ro.observe(host);this.resize()}
   resize(){const dpr=window.devicePixelRatio||1,w=this.c.parentElement.clientWidth||600,h=this.o.h;
     if(!w)return;this.w=w;this.h=h;this.c.width=Math.round(w*dpr);this.c.height=Math.round(h*dpr);
-    this.c.style.height=h+'px';this.ctx.setTransform(dpr,0,0,dpr,0,0);this.pad=this.o.pad.slice();this.draw()}
+    this.c.style.height=h+'px';this.ctx.setTransform(dpr,0,0,dpr,0,0);this.pad=this.o.pad.slice();this.pad[0]+=8;this.pad[2]+=14;this.draw()}
   X(x){const[a,b]=this.o.xlim;return this.pad[3]+(x-a)/(b-a)*(this.w-this.pad[1]-this.pad[3])}
   Y(y){const[a,b]=this.o.ylim;return this.h-this.pad[2]-(y-a)/(b-a)*(this.h-this.pad[0]-this.pad[2])}
   ix(px){const[a,b]=this.o.xlim;return a+(px-this.pad[3])/(this.w-this.pad[1]-this.pad[3])*(b-a)}
@@ -82,9 +85,7 @@ class Plot{
     g.textAlign='right';g.textBaseline='middle';
     o.yt.forEach(v=>{const Y=this.Y(v);g.beginPath();g.moveTo(this.X(o.xlim[0]),Y);g.lineTo(this.X(o.xlim[1]),Y);
       g.strokeStyle=v===0?c.line2:c.line;g.stroke();g.fillText(String(v),this.pad[3]-7,Y)});
-    g.fillStyle=c.ink2;g.font='italic 12px "IBM Plex Mono",monospace';g.textAlign='right';g.textBaseline='bottom';
-    g.fillText(o.xl,this.w-this.pad[1],this.h-this.pad[2]+18);
-    g.textAlign='left';g.textBaseline='top';g.fillText(o.yl,4,this.pad[0]-8);g.restore()}
+    g.restore()}
   path(f,color,w,dash){const g=this.ctx;g.save();g.strokeStyle=color;g.lineWidth=w||2;g.lineJoin='round';
     if(dash)g.setLineDash(dash);g.beginPath();const n=240,[a,b]=this.o.xlim;
     for(let i=0;i<=n;i++){const x=a+(b-a)*i/n,y=f(x),Y=this.Y(clamp(y,this.o.ylim[0]-2,this.o.ylim[1]+2));

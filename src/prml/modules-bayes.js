@@ -235,9 +235,8 @@ export function p38(root){
   const M=1;
   const b=board(root,'Controls');
   const cap0=el('div','legend');b.pc.appendChild(cap0);
-  cap0.innerHTML='<span><b style="font-weight:600">\\(p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\) over the plane \\((w_0,w_1)\\)</b></span>'+
-    '<span style="color:var(--muted)">&times; \\(\\mathbf{m}_N\\) &middot; click to move \\(\\mathbf{w}\\)</span>';
-  const P=new Plot(b.pc,{h:330,xlim:[-1.4,2.6],ylim:[-4.2,1.2],xl:'w₀',yl:'w₁',
+  cap0.innerHTML='<span><b style="font-weight:600">\\(p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\) over the plane \\((w_0,w_1)\\)</b></span>';
+  const P=new Plot(b.pc,{h:330,xlim:[-1.4,2.6],ylim:[-4.2,1.2],xl:'\\(w_0\\)',yl:'\\(w_1\\)',
     xt:[-1,0,1,2],yt:[-4,-2,0],pad:[16,18,28,40]});
   const sN=slider(b.pn,{label:'Data points \\(N\\)',min:0,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Prior precision \\(\\ln\\alpha\\)',min:-8,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
@@ -257,7 +256,7 @@ export function p38(root){
   const vm=matview(holder,{cap:'\\(\\mathbf{m}_N\\)',rows:2,cols:1,rowLab:i=>'i = '+i,digits:3});
   const vs=matview(holder,{cap:'\\(\\mathbf{S}\\) (covariance)',rows:2,cols:2,rowLab:i=>'i = '+i,digits:4});
   const vi=matview(holder,{cap:'\\(\\mathbf{S}^{-1}\\) (precision)',rows:2,cols:2,rowLab:i=>'i = '+i,digits:2});
-  const vw=matview(holder,{cap:'\\(\\mathbf{w}\\) (where you clicked)',rows:2,cols:1,rowLab:i=>'i = '+i,digits:3});
+  const vw=matview(holder,{cap:'\\(\\mathbf{w}\\)',rows:2,cols:1,rowLab:i=>'i = '+i,digits:3});
   eqbar(root,'Matching the Gaussian form',
     '\\( \\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})=-\\dfrac{1}{2}\\mathbf{w}^{\\mathrm T}'+
     '\\mathbf{S}^{-1}\\mathbf{w}+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N+C_3\\), '+
@@ -302,8 +301,6 @@ export function p39(root){
   legend(b.pc,[{c:'var(--fit)',l:'\\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(m(x)\\pm s(x)\\)'},
     {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'}]);
   const P=new Plot(b.pc,{h:380,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  const hint=el('div','legend');b.pc.appendChild(hint);
-  hint.innerHTML='<span style="color:var(--muted)">Click anywhere on the plot to place a data point.</span>';
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
   slider(b.pn,{label:'Prior precision \\(\\ln\\alpha\\)',min:-10,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
     on:v=>{st.lnAlpha=v;draw()}});

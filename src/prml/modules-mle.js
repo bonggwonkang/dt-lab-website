@@ -14,7 +14,7 @@ export function p15(root){
   const card=el('div','card plotcard');b.lc.appendChild(card);
   legend(card,[{c:'var(--obs)',l:'\\(E_{\\mathrm{RMS}}^{\\text{train}}\\)'},{c:'var(--fit)',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}\\)'},
     {c:'var(--accent)',t:'dash',l:'\\(M\\)'}]);
-  const R=new Plot(card,{h:260,xlim:[-.6,9.6],ylim:[-.04,1.04],xl:'M',yl:'E_RMS',
+  const R=new Plot(card,{h:260,xlim:[-.6,9.6],ylim:[-.04,1.04],xl:'\\(M\\)',yl:'\\(E_{\\mathrm{RMS}}\\)',
     xt:[0,3,6,9],yt:[0,.5,1],pad:[16,18,28,40]});
   const sM=slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
   const sN=slider(b.pn,{label:'Training points \\(N\\)',min:4,max:60,step:1,value:st.N,on:v=>{st.N=v;gen()}});
@@ -64,7 +64,7 @@ export function p19(root){
   const card=el('div','card plotcard');b.lc.appendChild(card);
   legend(card,[{c:'var(--obs)',l:'\\(E_{\\mathrm{RMS}}^{\\text{train}}\\)'},{c:'var(--fit)',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}\\)'},
     {c:'var(--accent)',t:'dash',l:'\\(\\ln\\lambda\\)'}]);
-  const R=new Plot(card,{h:250,xlim:[-40,0],ylim:[-.04,1.04],xl:'ln λ',yl:'E_RMS',
+  const R=new Plot(card,{h:250,xlim:[-40,0],ylim:[-.04,1.04],xl:'\\(\\ln\\lambda\\)',yl:'\\(E_{\\mathrm{RMS}}\\)',
     xt:[-35,-30,-25,-20,-15,-10,-5,0],yt:[0,.5,1],pad:[16,18,28,40]});
   const sL=slider(b.pn,{label:'Regularization \\(\\ln\\lambda\\)',min:-40,max:0,step:.5,value:st.lnLam,
     fmt:v=>fmt(v,1),on:v=>{st.lnLam=v;draw()}});
@@ -132,7 +132,7 @@ export function p23(root){
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the \\(\\pm1\\sigma\\) band',st.band,v=>{st.band=v;P.draw()});
   toggle(tg,'Show the Gaussian at \\(x_0\\)',st.bell,v=>{st.bell=v;P.draw()});
-  eqbar(root,'A Gaussian conditional distribution for the target',
+  eqbar(b.lc,'A Gaussian conditional distribution for the target',
     '\\( p(t\\mid x,\\mathbf{w},\\beta)=\\mathcal N\\!\\left(t\\mid y(x,\\mathbf{w}),\\beta^{-1}\\right)\\), '+
     'where the mean is the polynomial \\(y(x,\\mathbf{w})\\) and the precision \\(\\beta\\) is the inverse variance, '+
     '\\(\\beta^{-1}=\\sigma^{2}\\).');
@@ -172,7 +172,7 @@ export function p25(root){
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
   cap.innerHTML='<span><b style="font-weight:600">Log likelihood as one coefficient moves</b></span>';
-  const L=new Plot(card,{h:240,xlim:[-10,10],ylim:[-200,60],xl:'wⱼ',yl:'ln p',
+  const L=new Plot(card,{h:240,xlim:[-10,10],ylim:[-200,60],xl:'\\(w_j\\)',yl:'\\(\\ln p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)\\)',
     xt:[-10,-5,0,5,10],yt:[-200,-100,0],pad:[16,18,28,46]});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;
@@ -249,7 +249,7 @@ export function p28(root){
   cap.innerHTML='<span><b style="font-weight:600">Estimated noise level as data accumulate</b></span>'+
     '';
   legend(card,[{c:'var(--truth)',t:'dash',l:'\\(\\sigma\\)'},{c:'var(--fit)',l:'\\(\\sigma_{\\mathrm{ML}}\\)'}]);
-  const S=new Plot(card,{h:230,xlim:[2,80],ylim:[0,.65],xl:'N',yl:'σ_ML',
+  const S=new Plot(card,{h:230,xlim:[2,80],ylim:[0,.65],xl:'\\(N\\)',yl:'\\(\\sigma_{\\mathrm{ML}}\\)',
     xt:[10,20,40,60,80],yt:[0,.25,.5],pad:[16,18,28,46]});
   const sN=slider(b.pn,{label:'Data points \\(N\\)',min:4,max:80,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
@@ -306,7 +306,7 @@ export function p30(root){
   legend(pc,[{c:'var(--accent)',t:'dash',l:'\\(p(w_j\\mid\\alpha)=\\mathcal N(w_j\\mid0,\\alpha^{-1})\\)'},
     {c:'var(--accent)',t:'dot',l:'\\(w_{\\mathrm{MAP},j}\\)'},{c:'var(--fit)',t:'dot',l:'\\(w_{\\mathrm{ML},j}\\)'},
     {c:'var(--truth)',l:'\\(p(w_{\\mathrm{MAP},j}\\mid\\alpha)\\)'}]);
-  const Q=new Plot(pc,{h:300,xlim:[-.6,9.6],ylim:[-1,1],xl:'j',yl:'w_j',
+  const Q=new Plot(pc,{h:300,xlim:[-.6,9.6],ylim:[-1,1],xl:'\\(j\\)',yl:'\\(w_j\\)',
     xt:[0,1,2,3,4,5,6,7,8,9],yt:[-1,0,1],pad:[16,18,28,58]});
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const cap=el('div','legend');card.appendChild(cap);
@@ -315,7 +315,7 @@ export function p30(root){
   legend(card,[{c:'var(--accent)',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}(\\mathbf{w}_{\\mathrm{MAP}})\\)'},
     {c:'var(--fit)',t:'dash',l:'\\(E_{\\mathrm{RMS}}^{\\text{test}}(\\mathbf{w}_{\\mathrm{ML}})\\)'},
     {c:'var(--accent)',t:'dash',l:'\\(\\ln\\alpha\\)'}]);
-  const A=new Plot(card,{h:230,xlim:[-14,8],ylim:[-.04,1.04],xl:'ln α',yl:'E_RMS',
+  const A=new Plot(card,{h:230,xlim:[-14,8],ylim:[-.04,1.04],xl:'\\(\\ln\\alpha\\)',yl:'\\(E_{\\mathrm{RMS}}\\)',
     xt:[-12,-8,-4,0,4,8],yt:[0,.5,1],pad:[16,18,28,40]});
   const sA=slider(b.pn,{label:'Prior precision \\(\\ln\\alpha\\)',min:-14,max:8,step:.25,value:st.lnAlpha,
     fmt:v=>fmt(v,2),on:v=>{st.lnAlpha=v;draw()}});
@@ -399,7 +399,7 @@ export function p33(root){
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--obs)',l:'\\(p(Y\\mid X=x_1)\\)'},{c:'var(--fit)',l:'\\(p(Y\\mid X=x_2)\\)'},
     {c:'var(--truth)',l:'\\(p(Y)\\)'}]);
-  const P=new Plot(b.pc,{h:340,xlim:[30,110],ylim:[0,.055],xl:'Y',yl:'density',
+  const P=new Plot(b.pc,{h:340,xlim:[30,110],ylim:[0,.055],xl:'\\(Y\\)',yl:'\\(p(Y)\\)',
     xt:[40,60,80,100],yt:[0,.02,.04],pad:[16,18,28,52]});
   const sP=slider(b.pn,{label:'\\(p(X=x_2)\\)',min:0,max:1,step:.01,
     value:st.pF,fmt:v=>fmt(v,2),on:v=>{st.pF=v;draw()}});

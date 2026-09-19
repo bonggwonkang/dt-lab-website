@@ -56,6 +56,10 @@
 .prml .legend i.dot{width:10px;height:10px;border-radius:50%;border:2px solid;
   background:var(--surface);border-top:2px solid}
 .prml canvas{display:block;width:100%;touch-action:none;border-radius:8px}
+.prml .pwrap{position:relative}
+.prml .axl{position:absolute;font-size:12.5px;line-height:1;color:var(--ink-2);pointer-events:none}
+.prml .axl-y{left:2px;top:0}
+.prml .axl-x{right:4px;bottom:0}
 .prml .panel{padding:16px;display:flex;flex-direction:column;gap:14px}
 .prml .panel h3{margin:0;font-size:11.5px;letter-spacing:.02em;color:var(--muted);font-weight:600}
 .prml .ctrl{display:flex;flex-direction:column;gap:4px}

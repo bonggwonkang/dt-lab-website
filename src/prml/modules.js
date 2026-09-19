@@ -102,9 +102,7 @@ function p12(root){
     '\\(|y(x_n,\\mathbf{w})-t_n|\\) of one data point from the curve, and \\(E(\\mathbf{w})\\) is one half of the sum of their squares.');
   b.lc.appendChild(surfWrap);
   const scap=el('div','legend');surfWrap.appendChild(scap);
-  scap.innerHTML='<span><b style="font-weight:600">The error as a function of the coefficients</b></span>'+
-    '<span style="color:var(--muted)">&times; \\(\\mathbf{w}^{*}\\) &middot; '+
-    'click anywhere to move \\(\\mathbf{w}\\) there</span>';
+  scap.innerHTML='<span><b style="font-weight:600">The error as a function of the coefficients</b></span>';
   const panels=el('div');panels.style.cssText='display:grid;gap:16px';surfWrap.appendChild(panels);
   note(root,['The same data set gives a completely different total \\(E(\\mathbf{w})\\) depending on how the curve is drawn. Learning means finding the \\(\\mathbf{w}^{*}\\) that makes this total as small as possible.',
     'Because \\(E(\\mathbf{w})\\) is a <b>quadratic function</b> of the coefficients, its derivatives are linear in \\(\\mathbf{w}\\): with \\(M=0\\) it is a parabola, with \\(M=1\\) a bowl with elliptical contours, and the minimiser \\(\\mathbf{w}^{*}\\) is unique and can be found in closed form.',
@@ -120,7 +118,7 @@ function p12(root){
     if(M===0){
       const box=el('div');box.style.cssText='display:flex;flex-direction:column;gap:6px';
       box.appendChild(el('div','cap','\\(E(w_0)\\)'));
-      const p=new Plot(box,{h:280,xlim:[-st.rng,st.rng],ylim:[0,1],xl:'w'+sub(0),yl:'E',
+      const p=new Plot(box,{h:280,xlim:[-st.rng,st.rng],ylim:[0,1],xl:'\\(w_0\\)',yl:'\\(E(w_0)\\)',
         xt:ticks(st.rng),yt:[0,1],pad:[16,18,28,50]});
       p.render=q=>{const c=q.col;
         q.path(v=>Ew([v]),c.acc,2.6);
@@ -140,7 +138,7 @@ function p12(root){
         box.appendChild(el('div','cap',other>=0?'\\(E(w_'+a+',w_'+bb+'\\mid w_'+other+')\\)':
           '\\(E(w_'+a+',w_'+bb+')\\)'));
         const p=new Plot(box,{h:M===1?300:250,xlim:[-st.rng,st.rng],ylim:[-st.rng,st.rng],
-          xl:'w'+sub(a),yl:'w'+sub(bb),xt:ticks(st.rng),yt:ticks(st.rng),pad:[16,18,28,40]});
+          xl:'\\(w_'+a+'\\)',yl:'\\(w_'+bb+'\\)',xt:ticks(st.rng),yt:ticks(st.rng),pad:[16,18,28,40]});
         p.render=q=>{const c=q.col,w=st.w.slice(),V=[];let mn=Infinity,mx=-Infinity;
           const x0=q.o.xlim[0],x1=q.o.xlim[1],y0=q.o.ylim[0],y1=q.o.ylim[1];
           for(let i=0;i<NX;i++){V.push([]);
