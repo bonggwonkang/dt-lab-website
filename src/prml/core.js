@@ -208,23 +208,19 @@ function wchips(host,label){const box=el('div','mat');if(label)box.appendChild(e
     d.appendChild(el('span',null,'w'+sub(j)+' = '+fmt(v,prec==null?2:prec))))}}
 
 /* ---- matrix view: a grid of numbers shaded by magnitude ---- */
-function matview(host,o){const vec=o.cols===1;
-  const box=el('div','mat '+(vec?'vec':'mtx'));
+function matview(host,o){const one=o.rows===1&&o.cols===1,vec=!one&&(o.cols===1||o.rows===1);
+  const box=el('div','mat '+(one||vec?'vec':'mtx'));
   if(o.cap)box.appendChild(el('div','cap','<span>'+o.cap+'</span><span class="shape">'+
-    (vec?'Vector':'Matrix')+' '+o.rows+'&times;'+o.cols+'</span>'));
-  const g=el('div','grid');g.style.gridTemplateColumns=(o.rowLab?'auto ':'')+
-    (vec?'64px':'repeat('+o.cols+',minmax(0,1fr))');
+    (one?'Scalar':(vec?'Vector ':'Matrix ')+o.rows+'&times;'+o.cols)+'</span>'));
+  const g=el('div','grid');g.style.gridTemplateColumns=o.cols===1?'64px':
+    'repeat('+o.cols+',minmax(0,1fr))';
   box.appendChild(g);host.appendChild(box);tex(box);
   return function(get){g.innerHTML='';let mx=1e-12;
     for(let i=0;i<o.rows;i++)for(let j=0;j<o.cols;j++)mx=Math.max(mx,Math.abs(get(i,j)));
-    if(o.rowLab)g.appendChild(el('span','cell lab',''));
-    for(let j=0;j<o.cols;j++)g.appendChild(el('span','cell lab',
-      vec?'':(o.colLab?o.colLab(j):'j = '+j)));
-    for(let i=0;i<o.rows;i++){
-      if(o.rowLab)g.appendChild(el('span','cell lab',o.rowLab(i)));
+    for(let i=0;i<o.rows;i++)
       for(let j=0;j<o.cols;j++){const v=get(i,j),c=el('span','cell',fmt(v,o.digits==null?2:o.digits));
         const t=Math.min(1,Math.abs(v)/mx);c.style.background='rgba(99,102,241,'+(.06+.5*t).toFixed(3)+')';
-        if(t>.55)c.style.color='#fff';g.appendChild(c)}}}}
+        if(t>.55)c.style.color='#fff';g.appendChild(c)}}}
 
 export{el,cssv,setRoot,clamp,fmt,tex,ensureMathJax,rng,gauss,sin2pi,makeData,phi,polyval,solve,fit,sse,erms,Plot,board,legend,slider,toggle,btnrow,readout,eqbar,note,sub,
   zeros,dot,matVec,quad,inv,chol,posterior,predict,sampleW,gaussPdf,logGaussPdf,matview,wchips,niceRange,wPanel,applyFit};

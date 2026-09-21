@@ -151,9 +151,13 @@ export function p36(root){
     let big=0;terms.forEach(v=>{if(Math.abs(v)>Math.abs(big))big=v});
     out({y:fmt(polyval(st.w,st.x0),3),d:st.w.length,big:fmt(big,3)});
     if(!mv){holder.innerHTML='';
-      const v=c=>matview(holder,{cap:c,rows:st.w.length,cols:1,rowLab:i=>'j = '+i,digits:3});
-      mv={p:v('\\(\\phi_j(x_0)\\)'),w:v('\\(w_j\\)'),t:v('\\(w_j\\phi_j(x_0)\\)')}}
-    mv.p(i=>p0[i]);mv.w(i=>st.w[i]);mv.t(i=>terms[i]);
+      const row=c=>matview(holder,{cap:c,rows:1,cols:st.w.length,digits:3});
+      mv={p:row('\\(\\boldsymbol\\phi(x_0)^{\\mathrm T}=\\left(x_0^{0},x_0^{1},\\dots,x_0^{M}\\right)\\)'),
+        w:matview(holder,{cap:'\\(\\mathbf{w}\\)',rows:st.w.length,cols:1,digits:3}),
+        t:row('\\(w_j\\phi_j(x_0)\\)'),
+        y:matview(holder,{cap:'\\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}=y(x_0,\\mathbf{w})\\)',
+          rows:1,cols:1,digits:3})}}
+    mv.p((i,j)=>p0[j]);mv.w(i=>st.w[i]);mv.t((i,j)=>terms[j]);mv.y(()=>polyval(st.w,st.x0));
     P.draw()}
   P.render=p=>{const c=p.col,M=st.w.length-1;
     if(st.basis)for(let j=0;j<=M;j++)if(st.w[j])p.path(x=>st.w[j]*Math.pow(x,j),c.acc,1.3);
@@ -205,13 +209,12 @@ export function p37(root){
     let tr=0;for(let i=0;i<d;i++)tr+=st.post.S[i][i];
     out({n:st.d.xs.length,d:d,a:fmt(al,al<1?4:2),tr:fmt(tr,3)});
     if(!views){views={
-      phi:matview(holder,{cap:'\\(\\mathbf{\\Phi}\\): row \\(n\\) is \\(\\boldsymbol\\phi(x_n)^{\\mathrm T}\\)',rows:st.d.xs.length,cols:d,
-        rowLab:i=>'n = '+(i+1),digits:3}),
-      pp:matview(holder,{cap:'\\(\\sum_n\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\)',rows:d,cols:d,rowLab:i=>'i = '+i,digits:3}),
-      pt:matview(holder,{cap:'\\(\\sum_n\\boldsymbol\\phi(x_n)t_n\\)',rows:d,cols:1,rowLab:i=>'i = '+i,digits:3}),
-      si:matview(holder,{cap:'\\(\\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_n\\boldsymbol\\phi\\boldsymbol\\phi^{\\mathrm T}\\)',rows:d,cols:d,rowLab:i=>'i = '+i,digits:2}),
-      s:matview(holder,{cap:'\\(\\mathbf{S}\\)',rows:d,cols:d,rowLab:i=>'i = '+i,digits:3}),
-      m:matview(holder,{cap:'\\(\\mathbf{m}_N\\)',rows:d,cols:1,rowLab:i=>'i = '+i,digits:3})}}
+      phi:matview(holder,{cap:'\\(\\mathbf{\\Phi}\\): row \\(n\\) is \\(\\boldsymbol\\phi(x_n)^{\\mathrm T}\\)',rows:st.d.xs.length,cols:d,digits:3}),
+      pp:matview(holder,{cap:'\\(\\sum_n\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\)',rows:d,cols:d,digits:3}),
+      pt:matview(holder,{cap:'\\(\\sum_n\\boldsymbol\\phi(x_n)t_n\\)',rows:d,cols:1,digits:3}),
+      si:matview(holder,{cap:'\\(\\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_n\\boldsymbol\\phi\\boldsymbol\\phi^{\\mathrm T}\\)',rows:d,cols:d,digits:2}),
+      s:matview(holder,{cap:'\\(\\mathbf{S}\\)',rows:d,cols:d,digits:3}),
+      m:matview(holder,{cap:'\\(\\mathbf{m}_N\\)',rows:d,cols:1,digits:3})}}
     views.phi((i,j)=>P0[i][j]);views.pp((i,j)=>PP[i][j]);views.pt(i=>Pt[i]);
     views.si((i,j)=>st.post.Sinv[i][j]);views.s((i,j)=>st.post.S[i][j]);views.m(i=>st.post.m[i]);
     P.draw()}
@@ -243,10 +246,10 @@ export function p38(root){
     {k:'s',l:'\\(\\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})\\)',big:true},{k:'md',l:'Mahalanobis distance from \\(\\mathbf{m}_N\\)'}]);
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const holder=el('div','matrow');card.appendChild(holder);
-  const vm=matview(holder,{cap:'\\(\\mathbf{m}_N\\)',rows:2,cols:1,rowLab:i=>'i = '+i,digits:3});
-  const vs=matview(holder,{cap:'\\(\\mathbf{S}\\) (covariance)',rows:2,cols:2,rowLab:i=>'i = '+i,digits:4});
-  const vi=matview(holder,{cap:'\\(\\mathbf{S}^{-1}\\) (precision)',rows:2,cols:2,rowLab:i=>'i = '+i,digits:2});
-  const vw=matview(holder,{cap:'\\(\\mathbf{w}\\)',rows:2,cols:1,rowLab:i=>'i = '+i,digits:3});
+  const vm=matview(holder,{cap:'\\(\\mathbf{m}_N\\)',rows:2,cols:1,digits:3});
+  const vs=matview(holder,{cap:'\\(\\mathbf{S}\\) (covariance)',rows:2,cols:2,digits:4});
+  const vi=matview(holder,{cap:'\\(\\mathbf{S}^{-1}\\) (precision)',rows:2,cols:2,digits:2});
+  const vw=matview(holder,{cap:'\\(\\mathbf{w}\\)',rows:2,cols:1,digits:3});
   eqbar(root,'Matching the Gaussian form',
     '\\( \\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})=-\\dfrac{1}{2}\\mathbf{w}^{\\mathrm T}'+
     '\\mathbf{S}^{-1}\\mathbf{w}+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N+C_3\\), '+
