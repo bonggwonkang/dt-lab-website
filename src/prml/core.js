@@ -211,7 +211,7 @@ function wchips(host,label){const box=el('div','mat');if(label)box.appendChild(e
 function matview(host,o){const vec=o.cols===1;
   const box=el('div','mat '+(vec?'vec':'mtx'));
   if(o.cap)box.appendChild(el('div','cap','<span>'+o.cap+'</span><span class="shape">'+
-    (vec?'vector':'matrix')+' '+o.rows+'&times;'+o.cols+'</span>'));
+    (vec?'Vector':'Matrix')+' '+o.rows+'&times;'+o.cols+'</span>'));
   const g=el('div','grid');g.style.gridTemplateColumns=(o.rowLab?'auto ':'')+
     (vec?'64px':'repeat('+o.cols+',minmax(0,1fr))');
   box.appendChild(g);host.appendChild(box);tex(box);
