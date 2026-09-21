@@ -189,7 +189,7 @@ export function p37(root){
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const holder=el('div','matrow');card.appendChild(holder);
   let views=null;
-  eqbar(root,'Reading the posterior off a Gaussian',
+  eqbar(root,'Reading the posterior from the Gaussian form',
     '\\( \\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)'+
     '\\boldsymbol\\phi(x_n)^{\\mathrm T}\\), \\('+
     '\\mathbf{S}^{-1}\\mathbf{m}_N=\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)t_n\\)');
