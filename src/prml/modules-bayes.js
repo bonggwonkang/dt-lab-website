@@ -123,7 +123,7 @@ export function p35(root){
 export function p36(root){
   const st={w:[.2,1.2,-2.2,1.1],rng:10,x0:.6,basis:true,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\)'},{c:'var(--muted)',t:'dash',l:'\\(\\phi_j(x)=x^{j}\\)'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\)'},{c:'var(--accent)',l:'\\(w_j\\phi_j(x)\\)'}]);
   const P=new Plot(b.pc,{h:340,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();mv=null;draw()}});
@@ -137,7 +137,7 @@ export function p36(root){
   const out=readout(b.pn,[{k:'y',l:'\\(y(x_0,\\mathbf{w})=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\)',big:true},{k:'d',l:'Dimension \\(M+1\\)'},
     {k:'big',l:'Largest single term'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'Show the basis functions',st.basis,v=>{st.basis=v;P.draw()});
+  toggle(tg,'Show \\(w_j\\phi_j(x)\\)',st.basis,v=>{st.basis=v;P.draw()});
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const holder=el('div','matrow');card.appendChild(holder);
   let mv=null;
@@ -156,7 +156,7 @@ export function p36(root){
     mv.p(i=>p0[i]);mv.w(i=>st.w[i]);mv.t(i=>terms[i]);
     P.draw()}
   P.render=p=>{const c=p.col,M=st.w.length-1;
-    if(st.basis)for(let j=0;j<=M;j++)p.path(x=>Math.pow(x,j),c.muted,1,[4,3]);
+    if(st.basis)for(let j=0;j<=M;j++)if(st.w[j])p.path(x=>st.w[j]*Math.pow(x,j),c.acc,1.3);
     p.dots(st.d.xs,st.d.ts,c.obs,3.4);
     p.path(x=>polyval(st.w,x),c.fit,2.8);
     p.seg(st.x0,p.o.ylim[0],p.o.ylim[1],c.line2,1,[3,3]);
