@@ -145,7 +145,7 @@ export function p36(root){
     '\\( y(x,\\mathbf{w})=\\sum_{j=0}^{M}w_jx^{j}=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\), '+
     'where \\(\\boldsymbol\\phi(x)=\\left(x^{0},x^{1},\\dots,x^{M}\\right)^{\\mathrm T}\\in\\mathbb R^{M+1}\\).');
   note(root,['A polynomial is a weighted sum of fixed shapes. The shapes \\(x^{0},x^{1},\\dots,x^{M}\\) never move; only the weights \\(\\mathbf{w}\\) do, which is again the linearity that makes the algebra easy.',
-    'At a single \\(x_0\\) the whole model collapses to one dot product. The table shows every term of it, and the terms grow rapidly with \\(j\\) near \\(x=1\\) while they all vanish near \\(x=0\\).',
+    'At a single \\(x_0\\) the whole model collapses to one dot product. The terms \\(w_j\\phi_j(x_0)\\) grow rapidly with \\(j\\) near \\(x=1\\) while they all vanish near \\(x=0\\).',
     'Nothing in the later slides depends on these shapes being powers of \\(x\\). Replace \\(\\boldsymbol\\phi\\) with Gaussians or sigmoids and every formula from here on still holds.']);
   function draw(){const p0=phi(st.x0,st.w.length-1),terms=p0.map((v,j)=>v*st.w[j]);
     let big=0;terms.forEach(v=>{if(Math.abs(v)>Math.abs(big))big=v});
@@ -154,10 +154,9 @@ export function p36(root){
       const row=c=>matview(holder,{cap:c,rows:1,cols:st.w.length,digits:3});
       mv={p:row('\\(\\boldsymbol\\phi(x_0)^{\\mathrm T}=\\left(x_0^{0},x_0^{1},\\dots,x_0^{M}\\right)\\)'),
         w:matview(holder,{cap:'\\(\\mathbf{w}\\)',rows:st.w.length,cols:1,digits:3}),
-        t:row('\\(w_j\\phi_j(x_0)\\)'),
         y:matview(holder,{cap:'\\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}=y(x_0,\\mathbf{w})\\)',
           rows:1,cols:1,digits:3})}}
-    mv.p((i,j)=>p0[j]);mv.w(i=>st.w[i]);mv.t((i,j)=>terms[j]);mv.y(()=>polyval(st.w,st.x0));
+    mv.p((i,j)=>p0[j]);mv.w(i=>st.w[i]);mv.y(()=>polyval(st.w,st.x0));
     P.draw()}
   P.render=p=>{const c=p.col,M=st.w.length-1;
     if(st.basis)for(let j=0;j<=M;j++)if(st.w[j])p.path(x=>st.w[j]*Math.pow(x,j),c.acc,1.3);
