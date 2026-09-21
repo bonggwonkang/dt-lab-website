@@ -43,14 +43,6 @@ const students = [
     photo: 'member-lee.jpg',
   },
   {
-    name: '박찬범', nameEn: 'Beomchan Park',
-    degree: 'Undergraduate Researcher',
-    color: 'teal',
-    research: 'Digital twin-based production scheduling',
-    email: 'beomchan.park.212@gmail.com',
-    photo: 'member-park.jpg',
-  },
-  {
     name: '강동혁', nameEn: 'Donghyeok Kang',
     degree: 'Undergraduate Researcher',
     color: 'teal',
