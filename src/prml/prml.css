@@ -101,7 +101,12 @@
 
 /* ---------- matrices and coefficient chips ---------- */
 .prml .mat{display:flex;flex-direction:column;gap:6px;min-width:0}
-.prml .mat .cap{font-size:11.5px;letter-spacing:.02em;color:var(--muted);font-weight:600}
+.prml .mat .cap{font-size:11.5px;letter-spacing:.02em;color:var(--muted);font-weight:600;
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.prml .mat .shape{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;line-height:1.6;border-radius:999px;padding:1px 7px;white-space:nowrap}
+.prml .mat.mtx .shape{color:#A5B4FC;border:1px solid rgba(99,102,241,.55);background:rgba(99,102,241,.18)}
+.prml .mat.vec .shape{color:var(--muted);border:1px dashed var(--line-2);background:none}
 .prml .grid{display:grid;gap:3px}
 .prml .cell{font-family:var(--mono);font-size:11px;text-align:right;padding:4px 6px;border-radius:5px;
   background:var(--sunken);color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}

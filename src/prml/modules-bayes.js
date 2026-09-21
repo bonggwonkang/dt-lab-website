@@ -152,9 +152,9 @@ export function p36(root){
     let big=0;terms.forEach(v=>{if(Math.abs(v)>Math.abs(big))big=v});
     out({y:fmt(polyval(st.w,st.x0),3),d:st.w.length,big:fmt(big,3)});
     if(!mv){holder.innerHTML='';
-      mv=matview(holder,{cap:'\\(\\phi_j(x_0)\\), \\(w_j\\), \\(w_j\\phi_j(x_0)\\)',rows:st.w.length,cols:3,
-        rowLab:i=>'j = '+i,digits:3})}
-    mv((i,j)=>j===0?p0[i]:j===1?st.w[i]:terms[i]);
+      const v=c=>matview(holder,{cap:c,rows:st.w.length,cols:1,rowLab:i=>'j = '+i,digits:3});
+      mv={p:v('\\(\\phi_j(x_0)\\)'),w:v('\\(w_j\\)'),t:v('\\(w_j\\phi_j(x_0)\\)')}}
+    mv.p(i=>p0[i]);mv.w(i=>st.w[i]);mv.t(i=>terms[i]);
     P.draw()}
   P.render=p=>{const c=p.col,M=st.w.length-1;
     if(st.basis)for(let j=0;j<=M;j++)p.path(x=>Math.pow(x,j),c.muted,1,[4,3]);
