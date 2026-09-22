@@ -33,7 +33,7 @@ export default function StatisticalModels({ slide, onSlide }) {
     const head = document.createElement('div')
     head.className = 'mhead rise'
     head.innerHTML =
-      '<div class="mtop"><span class="chip ' + (m.no % 2 ? 'odd' : 'even') + '">Slide p.' + m.p +
+      '<div class="mtop"><span class="chip ' + (m.no % 2 ? 'odd' : 'even') + '">Slide p.' + (m.pl || m.p) +
       '<span class="msec">' + m.sec + '</span></span></div>' +
       '<h2 class="mtitle">' + m.t + '</h2><p class="mgoal">' + m.g + '</p>'
     host.appendChild(head)
@@ -59,7 +59,7 @@ export default function StatisticalModels({ slide, onSlide }) {
                   disabled={!m.ready}
                   onClick={() => onSlide(m.p)}>
                   <span className="no">[{m.no}]</span>
-                  <span className="tt"><span className="pg">Slide {m.p}</span>{m.t}</span>
+                  <span className="tt"><span className="pg">Slide {m.pl || m.p}</span>{m.t}</span>
                 </button>
               ))}
             </div>
