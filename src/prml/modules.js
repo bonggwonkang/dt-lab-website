@@ -3,6 +3,7 @@ import{el,fmt,clamp,tex,sin2pi,makeData,polyval,fit,sse,erms,Plot,board,legend,s
   toggle,btnrow,readout,eqbar,note,sub,niceRange,wPanel,applyFit}from'./core.js'
 import{p15,p19,p23,p25,p28,p30,p33}from'./modules-mle.js'
 import{p34,p35,p36,p37,p38,p39}from'./modules-bayes.js'
+import{p45,p49}from'./modules-select.js'
 
 /* ===== slide 10 · Setup: fitting a polynomial to a synthetic function (I) ===== */
 function p10(root){
@@ -179,7 +180,8 @@ function p12(root){
 /* ===================== module list ===================== */
 const S1='Synthetic function and polynomial curve',
       S2='Probabilistic polynomial curve and MLE-MAP',
-      S3='Bayesian polynomial function learning';
+      S3='Bayesian polynomial function learning',
+      S4='Model selection';
 const MODULES=[
  {p:10,sec:S1,t:'Setup: fitting a polynomial to a synthetic function (I)',
   g:'The target we want to learn, \\(\\sin(2\\pi x)\\), against the observations \\(t_n\\) we are actually given, controlled by the number of points \\(N\\) and the noise level \\(\\sigma\\).',b:p10},
@@ -212,7 +214,11 @@ const MODULES=[
  {p:38,sec:S3,t:'Bayesian polynomial in basis functions: matching the Gaussian form',
   g:'The multivariate Gaussian \\(\\mathcal N(\\mathbf{w}|\\mathbf{m}_N,\\mathbf{S})\\) and the value of each term of the log likelihood.',b:p38},
  {p:39,sec:S3,t:'Deriving the Bayesian predictive distribution',
-  g:'How \\(\\mathcal N(t|m(x),s^2(x))\\) responds to the number and the position of the data points.',b:p39}
+  g:'How \\(\\mathcal N(t|m(x),s^2(x))\\) responds to the number and the position of the data points.',b:p39},
+ {p:45,sec:S4,t:'Training, validation and test sets',
+  g:'How the size of each set changes the \\(\\lambda\\) that validation picks and the test error that is then reported.',b:p45},
+ {p:49,sec:S4,t:'Cross-validation and information criteria',
+  g:'The order \\(M\\) chosen by \\(S\\)-fold cross-validation, by \\(\\mathrm{AIC}\\) and by \\(\\mathrm{BIC}\\), against the \\(M\\) that actually minimises the test error.',b:p49}
 ];
 MODULES.forEach((m,i)=>{m.ready=true;m.no=i+1});
 export{MODULES};
