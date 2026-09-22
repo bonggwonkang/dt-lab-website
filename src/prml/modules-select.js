@@ -58,10 +58,10 @@ export function p45(root){
     '\\sum_{n=1}^{N_{\\mathrm{Valid}}}\\left\\{y\\!\\left(x_n,\\mathbf{w}^{*}_{\\mathrm{MAP}}(\\lambda)\\right)-t_n\\right\\}^{2}}\\), '+
     '\\( E_{\\mathrm{RMS}}^{\\mathrm{test}}=\\sqrt{\\dfrac{1}{N_{\\mathrm{Test}}}\\sum_{n=1}^{N_{\\mathrm{Test}}}'+
     '\\left\\{y\\!\\left(x_n,\\mathbf{w}^{*}_{\\mathrm{MAP}}(\\lambda^{*})\\right)-t_n\\right\\}^{2}}\\)');
-  note(root,['The three sets do different jobs. \\(\\mathcal D_{\\mathrm{Train}}\\) fixes \\(\\mathbf{w}\\), \\(\\mathcal D_{\\mathrm{Valid}}\\) picks \\(\\lambda\\), and \\(\\mathcal D_{\\mathrm{Test}}\\) is only reported, never used to choose anything.',
-    'Pull \\(N_{\\mathrm{Valid}}\\) down to a handful of points and press "Draw a new sample" a few times. The validation curve moves about and \\(\\lambda^{*}\\) jumps with it, which is a small validation set giving a noisy estimate of predictive performance.',
-    'The last readout is what that noise costs: the gap between the test error at the chosen \\(\\lambda^{*}\\) and the lowest test error available on the grid.',
-    'Now shrink \\(N_{\\mathrm{Test}}\\) instead. The chosen model does not change, but the number reported for it does, so a small test set is an unreliable score even for a fixed model.']);
+  note(root,['Train fixes \\(\\mathbf{w}\\), validation picks \\(\\lambda\\), test only reports.',
+    'Small \\(N_{\\mathrm{Valid}}\\): \\(\\lambda^{*}\\) jumps from sample to sample.',
+    'That jumping is what the last readout charges in test error.',
+    'Small \\(N_{\\mathrm{Test}}\\): same model, unreliable score.']);
   function near(x){let k=0;for(let i=1;i<st.rows.length;i++)
     if(Math.abs(st.rows[i].l-x)<Math.abs(st.rows[k].l-x))k=i;return st.rows[k]}
   function gen(){st.d={tr:sample(st.ntr,st.sigma,st.seed),va:sample(st.nva,st.sigma,st.seed+101),
@@ -137,10 +137,10 @@ export function p49(root){
     '\\( \\mathrm{AIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-M\\), '+
     '\\( \\mathrm{BIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-\\dfrac{M}{2}\\ln N\\), '+
     'where \\(M\\) counts the adjustable parameters, \\(M+1\\) for a polynomial of order \\(M\\)');
-  note(root,['Cross-validation uses every point to assess performance, so its curve is far steadier than a single validation set. The price is in the readout: \\(S\\) times as many training runs, one row of the figure on the previous slide for each fold.',
-    'Raise \\(S\\) and each run trains on more of the data, so the estimate is less pessimistic. Lower it and the folds are large but each fit is starved, which pushes \\(E_{\\mathrm{CV}}\\) up at every \\(M\\).',
-    'The information criteria need no held-out data and only one fit per \\(M\\), but they take no account of the uncertainty in the parameters. \\(\\mathrm{BIC}\\) penalises \\(\\ln N\\) per parameter against \\(\\mathrm{AIC}\\)\'s 1, so it favours the simpler model of the two.',
-    'Compare all three choices with the \\(M\\) that actually minimises the test error. They agree often, not always, and the disagreement grows as \\(N\\) falls.']);
+  note(root,['Cross-validation is steadier, at \\(S\\) times the training runs.',
+    'Larger \\(S\\): more data per run, more runs.',
+    '\\(\\mathrm{AIC}\\) and \\(\\mathrm{BIC}\\) need one fit and no held-out data.',
+    '\\(\\mathrm{BIC}\\) charges \\(\\ln N\\) per parameter, so it picks simpler.']);
   function logLik(xs,ts,w){const N=xs.length;let s=0;
     for(let n=0;n<N;n++){const d=polyval(w,xs[n])-ts[n];s+=d*d}
     const be=N/Math.max(s,1e-12);

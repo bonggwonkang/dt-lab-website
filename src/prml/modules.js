@@ -26,9 +26,9 @@ function p10(root){
   eqbar(b.lc,'Synthetic data set',
     '\\( x_n=\\dfrac{n}{N-1}\\in[0,1]\\), \\(t_n=\\sin(2\\pi x_n)+\\epsilon\\), \\(\\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
     'training set \\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), target vector \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
-  note(root,['The green curve \\(\\sin(2\\pi x)\\) is what we want to learn; the blue circles are all we are given. As σ grows, the observations \\(t_n\\) drift away from the curve.',
-    'Increase \\(N\\). Every single point is still wrong, but the shape of the curve emerges from the cloud. This is why <b>the larger the data set, the more complex the model we can afford to fit</b>.',
-    '“Draw a new sample” keeps σ fixed and redraws the noise \\(\\epsilon\\) only. The same σ gives a different data set every time, and that variability is exactly the uncertainty in \\(\\mathbf{w}\\) the Bayesian treatment will carry.']);
+  note(root,['\\(\\sin(2\\pi x)\\) is the target, \\(t_n\\) is all we are given.',
+    'Larger \\(N\\), clearer shape, every single point still wrong.',
+    'A new sample keeps \\(\\sigma\\) and redraws the noise \\(\\epsilon_n\\).']);
   function gen(){st.d=makeData(st.N,st.sigma,st.seed);
     const m=st.d.es.reduce((a,b)=>a+b,0)/st.N,v=st.d.es.reduce((a,b)=>a+(b-m)*(b-m),0)/Math.max(1,st.N-1);
     out({N:st.N,sg:fmt(st.sigma,2),me:fmt(m,3),se:fmt(Math.sqrt(v),3)});P.draw()}
@@ -62,9 +62,9 @@ function p11(root){
   eqbar(b.lc,'Polynomial curve',
     '\\( y(x,\\mathbf{w}) = w_0+w_1x+w_2x^2+\\cdots+w_Mx^M=\\sum_{j=0}^{M}w_jx^{j}\\)<br>'+
     'a nonlinear function of \\(x\\), but a <b>linear function of the coefficients</b> \\(\\mathbf{w}\\).');
-  note(root,['\\(w_0\\) shifts the whole curve, \\(w_1\\) tilts it, and \\(w_2,\\dots,w_M\\) add bends. Switch on “each term” to watch the contributions \\(w_jx^j\\) add up to the red curve.',
-    'Press <b>“Double every wⱼ”</b>: the curve is scaled by exactly two, \\(y(x,a\\mathbf{w})=a\\,y(x,\\mathbf{w})\\). That is what “linear in \\(\\mathbf{w}\\)” means, and it is why the error function can be minimised exactly in closed form.',
-    'Raise \\(M\\) and press “Set w to w*”. At \\(M=9\\) the curve passes through every point but oscillates wildly (over-fitting), and the slider ranges blow up to the coefficient magnitudes of Table 1.1.']);
+  note(root,['\\(w_0\\) shifts, \\(w_1\\) tilts, \\(w_2,\\dots,w_M\\) bend the curve.',
+    'Double \\(\\mathbf{w}\\) and \\(y\\) doubles: linear in \\(\\mathbf{w}\\), not in \\(x\\).',
+    '\\(M=9\\) passes through every point and wiggles: over-fitting.']);
   function draw(){out({M:st.w.length-1,np:st.w.length,E:fmt(sse(st.d.xs,st.d.ts,st.w),3)});P.draw()}
   P.render=p=>{const c=p.col;
     if(st.terms)st.w.forEach((wj,j)=>{if(!wj)return;p.path(x=>wj*Math.pow(x,j),c.muted,1.2,[4,3]);
@@ -104,9 +104,9 @@ function p12(root){
     '\\(|y(x_n,\\mathbf{w})-t_n|\\) of one data point from the curve, and \\(E(\\mathbf{w})\\) is one half of the sum of their squares.');
   b.lc.appendChild(surfWrap);
   const panels=el('div');panels.style.cssText='display:grid;gap:16px';surfWrap.appendChild(panels);
-  note(root,['The same data set gives a completely different total \\(E(\\mathbf{w})\\) depending on how the curve is drawn. Learning means finding the \\(\\mathbf{w}^{*}\\) that makes this total as small as possible.',
-    'Because \\(E(\\mathbf{w})\\) is a <b>quadratic function</b> of the coefficients, its derivatives are linear in \\(\\mathbf{w}\\): with \\(M=0\\) it is a parabola, with \\(M=1\\) a bowl with elliptical contours, and the minimiser \\(\\mathbf{w}^{*}\\) is unique and can be found in closed form.',
-    'At \\(M=2\\) the bowl lives in three dimensions, so it is shown as the three planes you can still draw, each holding the remaining coefficient at its current value. Move that third slider and watch every slice shift, which is why the coefficients cannot be tuned one at a time.']);
+  note(root,['Same data, different \\(\\mathbf{w}\\), completely different \\(E(\\mathbf{w})\\).',
+    '\\(E(\\mathbf{w})\\) is quadratic, so \\(\\mathbf{w}^{*}\\) is unique and in closed form.',
+    '\\(M=0\\) a parabola, \\(M=1\\) a bowl, \\(M=2\\) three slices.']);
   const NX=52,NY=52;
   const ticks=r=>[-r,-r/2,0,r/2,r];
   const Ew=w=>sse(st.d.xs,st.d.ts,w);

@@ -38,9 +38,9 @@ export function p34(root){
     'Because the observed targets are corrupted by noise and the data set is finite, the data cannot '+
     'determine \\(\\mathbf{w}\\) uniquely, and every curve drawn here is one \\(\\mathbf{w}\\) the data '+
     'still consider plausible.');
-  note(root,['With no data the curves are whatever the prior allows: all of them pass near zero on average, and α alone decides how wild they get.',
-    'Add points one at a time. The bundle tightens fastest where the points are, and stays wide where there are none, which is uncertainty that a single least-squares curve simply cannot express.',
-    'The posterior standard deviations shrink as \\(N\\) grows while the mean settles down. Slide 35 replaces this bundle of samples with the integral that summarises it.']);
+  note(root,['With no data the curves are whatever \\(\\alpha\\) allows.',
+    'Each point tightens the bundle where it sits.',
+    'The posterior spread shrinks as \\(N\\) grows.']);
   function gen(){st.d=makeData(Math.max(st.N,0),.25,st.seed);
     if(st.N===0){st.d={xs:[],ts:[],N:0,seed:st.seed}}draw()}
   function draw(){const al=Math.exp(st.lnAlpha);
@@ -91,9 +91,9 @@ export function p35(root){
     'p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\)<br>'+
     '\\( m(x)=\\beta\\,\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)t_n'+
     '\\), \\(s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\,\\boldsymbol\\phi(x)\\)');
-  note(root,['Switch the overlay on. The band is not a separate idea from slide 34: it is exactly the spread of those curves, obtained in closed form instead of by sampling.',
-    'The width splits into two parts. \\(\\beta^{-1}\\) is noise in the targets and never goes away; \\(\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi(x)\\) is uncertainty about \\(\\mathbf{w}\\) and does shrink with data.',
-    'Move \\(x_0\\) towards the edges. The band flares where the model has to extrapolate, so <b>the variance depends on \\(x\\)</b>, something the maximum likelihood predictive distribution of slide 28 could never show.']);
+  note(root,['The band is the spread of those curves, in closed form.',
+    '\\(s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi\\): noise plus model.',
+    'The band flares at the edges, so the variance depends on \\(x\\).']);
   function gen(){st.d=makeData(st.N,.25,st.seed);draw()}
   function draw(){const al=Math.exp(st.lnAlpha);
     st.post=posterior(st.d.xs,st.d.ts,st.M,al,st.beta);
@@ -144,9 +144,9 @@ export function p36(root){
   eqbar(root,'The polynomial as an inner product',
     '\\( y(x,\\mathbf{w})=\\sum_{j=0}^{M}w_jx^{j}=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\), '+
     'where \\(\\boldsymbol\\phi(x)=\\left(x^{0},x^{1},\\dots,x^{M}\\right)^{\\mathrm T}\\in\\mathbb R^{M+1}\\).');
-  note(root,['A polynomial is a weighted sum of fixed shapes. The shapes \\(x^{0},x^{1},\\dots,x^{M}\\) never move; only the weights \\(\\mathbf{w}\\) do, which is again the linearity that makes the algebra easy.',
-    'At a single \\(x_0\\) the whole model collapses to one dot product. The terms \\(w_j\\phi_j(x_0)\\) grow rapidly with \\(j\\) near \\(x=1\\) while they all vanish near \\(x=0\\).',
-    'Nothing in the later slides depends on these shapes being powers of \\(x\\). Replace \\(\\boldsymbol\\phi\\) with Gaussians or sigmoids and every formula from here on still holds.']);
+  note(root,['Fixed shapes \\(x^{0},\\dots,x^{M}\\), only \\(\\mathbf{w}\\) moves.',
+    'At \\(x_0\\) the model is one inner product \\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\).',
+    'Any \\(\\boldsymbol\\phi\\) works: powers, Gaussians, sigmoids.']);
   function draw(){const p0=phi(st.x0,st.w.length-1),terms=p0.map((v,j)=>v*st.w[j]);
     let big=0;terms.forEach(v=>{if(Math.abs(v)>Math.abs(big))big=v});
     out({y:fmt(polyval(st.w,st.x0),3),d:st.w.length,big:fmt(big,3)});
@@ -193,9 +193,9 @@ export function p37(root){
     '\\( \\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)'+
     '\\boldsymbol\\phi(x_n)^{\\mathrm T}\\), \\('+
     '\\mathbf{S}^{-1}\\mathbf{m}_N=\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)t_n\\)');
-  note(root,['Each data point contributes one rank-one block \\(\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\) to the sum. Press "Add a point" and watch a whole matrix change from a single new observation.',
-    'The prior enters in exactly one place: \\(\\alpha\\) is added along the diagonal. That is what keeps \\(\\mathbf{S}^{-1}\\) invertible even when there are fewer points than coefficients, so the posterior always exists.',
-    'The mean solves \\(\\mathbf{S}^{-1}\\mathbf{m}_N=\\beta\\sum\\boldsymbol\\phi(x_n)t_n\\). Raise β and the data term dominates; raise α and \\(\\mathbf{m}_N\\) is pulled back towards \\(\\mathbf{0}\\).']);
+  note(root,['Each point adds one rank-one block \\(\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\).',
+    '\\(\\alpha\\) enters only on the diagonal and keeps \\(\\mathbf{S}^{-1}\\) invertible.',
+    '\\(\\mathbf{S}\\) depends on the \\(x_n\\), \\(\\mathbf{m}_N\\) on the \\(t_n\\) as well.']);
   function reset(){views=null;holder.innerHTML=''}
   function gen(){st.d=makeData(st.N,.25,st.seed);reset();draw()}
   function draw(){const al=Math.exp(st.lnAlpha),M=st.M,d=M+1;
@@ -254,9 +254,9 @@ export function p38(root){
     '\\mathbf{S}^{-1}\\mathbf{w}+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N+C_3\\), '+
     'so reading the quadratic term gives \\(\\mathbf{S}^{-1}\\) and reading the linear term gives '+
     '\\(\\mathbf{S}^{-1}\\mathbf{m}_N\\), which is how the posterior mean and covariance are identified.');
-  note(root,['Only two terms depend on \\(\\mathbf{w}\\). The quadratic one bends the surface into an ellipse and the linear one slides its centre to \\(\\mathbf{m}_N\\); \\(C_3\\) only normalises.',
-    'Click away from the mean and watch the quadratic term fall much faster than the linear term rises. That gap is the Mahalanobis distance, which is how a Gaussian measures "far".',
-    'Add data and the ellipse shrinks and tilts. The tilt is correlation: with \\(x\\in[0,1]\\) the intercept \\(w_0\\) and the slope \\(w_1\\) cannot be pinned down independently.']);
+  note(root,['Only the quadratic and the linear term depend on \\(\\mathbf{w}\\).',
+    'Away from \\(\\mathbf{m}_N\\) the quadratic term falls fastest.',
+    'Data shrinks the ellipse, the tilt is \\(w_0,w_1\\) correlation.']);
   function gen(){st.d=st.N?makeData(st.N,.25,st.seed):{xs:[],ts:[],N:0,seed:st.seed};draw()}
   function draw(){const al=Math.exp(st.lnAlpha);
     st.post=posterior(st.d.xs,st.d.ts,M,al,st.beta);
@@ -311,9 +311,9 @@ export function p39(root){
     '\\( p(t\\mid x,\\mathbf{x},\\mathbf{t})=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\), '+
     '\\( s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\,\\boldsymbol\\phi(x)\\), '+
     '\\( \\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\).');
-  note(root,['Start with an empty plot: the band is just the prior, wide and centred on zero. Place one point and a narrow waist appears around it.',
-    'Press "Crowd the left half". The band is tight where you put data and flares over the empty stretch, because \\(\\mathbf{S}\\) only shrinks in the directions the data actually constrain.',
-    'Place a point far from the curve and watch how far the mean moves. With \\(M=9\\) a lone outlier can drag the whole fit, which is why α, and more data, matter.']);
+  note(root,['With no data the band is the prior, wide and centred on zero.',
+    'Tight where the points are, wide where they are not.',
+    'One far point moves the mean less once \\(N\\) is large.']);
   function draw(){const al=Math.exp(st.lnAlpha);
     st.post=posterior(st.xs,st.ts,st.M,al,st.beta);
     const s=x=>Math.sqrt(predict(x,st.M,st.post,st.beta).var);

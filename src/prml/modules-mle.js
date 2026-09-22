@@ -28,9 +28,9 @@ export function p15(root){
   eqbar(root,'Root-mean-square error',
     '\\( E_{\\mathrm{RMS}}=\\sqrt{2E(\\mathbf{w}^{*})/N}\\), where dividing by \\(N\\) lets us compare data sets of '+
     'different sizes on an equal footing and the square root puts the error on the same scale as the target \\(t\\).');
-  note(root,['Training error falls all the way to zero as \\(M\\) grows: with \\(M=9\\) and \\(N=10\\) the polynomial has enough freedom to pass through every point.',
-    'Test error tells the real story. It flattens out around \\(M=3\\dots 8\\) and then explodes, which is over-fitting seen as a number rather than as a wiggly curve.',
-    'Raise \\(N\\) and watch the explosion move to the right. The larger the data set, the more complex the model we can afford to fit.']);
+  note(root,['Training error reaches zero at \\(M=9\\) with \\(N=10\\).',
+    'Test error is flat near \\(M=3\\dots 8\\), then explodes.',
+    'Larger \\(N\\) moves the explosion to larger \\(M\\).']);
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
     st.rows=[];let best=0,bv=Infinity;
     for(let M=0;M<=9;M++){const w=fit(st.tr.xs,st.tr.ts,M),a=erms(st.tr.xs,st.tr.ts,w),e=erms(st.te.xs,st.te.ts,w);
@@ -83,9 +83,9 @@ export function p19(root){
     '+\\dfrac{\\lambda}{2}\\lVert\\mathbf{w}\\rVert^{2}\\), with '+
     '\\(\\lVert\\mathbf{w}\\rVert^{2}=\\mathbf{w}^{\\mathrm T}\\mathbf{w}=w_0^2+w_1^2+\\cdots+w_M^2\\). '+
     'This quadratic case is ridge regression, known as weight decay in the context of neural networks.');
-  note(root,['Start at \\(\\ln\\lambda=-40\\), which is effectively no penalty: the \\(M=9\\) curve passes through every point and the coefficients reach the huge values of Table 1.1.',
-    'Increase \\(\\ln\\lambda\\) and watch the two numbers trade places. The error term grows while the penalty term shrinks the coefficients, and the test error drops.',
-    'Push \\(\\lambda\\) too far and the penalty wins outright: the coefficients are driven towards zero and the curve flattens, so both errors rise again.']);
+  note(root,['\\(\\ln\\lambda=-40\\): no penalty, huge coefficients.',
+    'Middle \\(\\lambda\\): lowest test error, tame coefficients.',
+    'Large \\(\\lambda\\): \\(\\mathbf{w}\\to\\mathbf{0}\\) and the curve flattens.']);
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
     st.rows=[];let best=-40,bv=Infinity;
     for(let l=-40;l<=0;l+=.5){const w=fit(st.tr.xs,st.tr.ts,st.M,Math.exp(l)),
@@ -136,9 +136,9 @@ export function p23(root){
     '\\( p(t\\mid x,\\mathbf{w},\\beta)=\\mathcal N\\!\\left(t\\mid y(x,\\mathbf{w}),\\beta^{-1}\\right)\\), '+
     'where the mean is the polynomial \\(y(x,\\mathbf{w})\\) and the precision \\(\\beta\\) is the inverse variance, '+
     '\\(\\beta^{-1}=\\sigma^{2}\\).');
-  note(root,['The curve no longer predicts a single value. At every \\(x\\) it now carries a whole Gaussian, drawn sideways at \\(x_0\\), whose centre is the old deterministic prediction \\(y(x,\\mathbf{w})\\).',
-    'Lower \\(\\beta\\) and the bell flattens and the band widens: the model admits more noise. Raise \\(\\beta\\) and it claims the targets sit almost exactly on the curve.',
-    'Move \\(\\mathbf{w}\\) and the whole distribution moves with it, because \\(\\mathbf{w}\\) sets only the mean. \\(\\beta\\) and \\(\\mathbf{w}\\) are separate parameters, and the next slides estimate both from the data.']);
+  note(root,['Every \\(x\\) carries a Gaussian centred on \\(y(x,\\mathbf{w})\\).',
+    'Small \\(\\beta\\), wide bell, since \\(\\beta^{-1}=\\sigma^{2}\\).',
+    'Move \\(\\mathbf{w}\\) and the whole distribution moves with it.']);
   function draw(){const sd=1/Math.sqrt(st.beta);let inside=0;
     st.d.xs.forEach((x,n)=>{if(Math.abs(st.d.ts[n]-polyval(st.w,x))<=sd)inside++});
     out({sd:fmt(sd,3),y0:fmt(polyval(st.w,st.x0),3),p0:fmt(gaussPdf(0,0,sd),2),
@@ -192,9 +192,9 @@ export function p25(root){
     '\\mathcal N\\!\\left(t_n\\mid y(x_n,\\mathbf{w}),\\beta^{-1}\\right)\\)<br>'+
     '\\( \\ln p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)=-\\dfrac{\\beta}{2}\\sum_{n=1}^{N}'+
     '\\{y(x_n,\\mathbf{w})-t_n\\}^{2}+\\dfrac{N}{2}\\ln\\beta-\\dfrac{N}{2}\\ln(2\\pi)\\)');
-  note(root,['Each small bell is \\(p(t\\mid x_n,\\mathbf{w},\\beta)\\): it stands on its own \\(x_n\\), spreads along \\(t\\) and is centred on the curve. The green segment reads that bell at the observed \\(t_n\\), and the likelihood is the product of those readings, which is why a single badly missed point can sink the whole thing.',
-    'Only the first term depends on \\(\\mathbf{w}\\), and it is \\(-\\beta\\) times the sum-of-squares error. <b>Maximising the likelihood with respect to \\(\\mathbf{w}\\) is exactly minimising \\(E(\\mathbf{w})\\)</b>, so "Set w to w_ML" lands on the same solution as least squares.',
-    'The sweep below shows \\(\\ln p\\) as one coefficient moves: a single smooth peak. \\(\\beta\\) changes how sharp that peak is, but not where it sits.']);
+  note(root,['The likelihood is a product of bells read at each \\(t_n\\).',
+    'Only \\(-\\tfrac{\\beta}{2}\\sum\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\) depends on \\(\\mathbf{w}\\).',
+    'Maximizing \\(\\ln p\\) is minimizing \\(E(\\mathbf{w})\\).']);
   const logLik=(w,beta)=>{let s=0;st.d.xs.forEach((x,n)=>{const r=polyval(w,x)-st.d.ts[n];s+=r*r});
     return -beta/2*s+st.d.N/2*Math.log(beta)-st.d.N/2*Math.log(2*Math.PI)};
   function draw(){const s2=2*sse(st.d.xs,st.d.ts,st.w),N=st.d.N;
@@ -260,9 +260,9 @@ export function p28(root){
     '\\( \\dfrac{1}{\\beta_{\\mathrm{ML}}}=\\dfrac{1}{N}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w}_{\\mathrm{ML}})-t_n\\}^{2}'+
     '\\), \\(p(t\\mid x,\\mathbf{w}_{\\mathrm{ML}},\\beta_{\\mathrm{ML}})='+
     '\\mathcal N\\!\\left(t\\mid y(x,\\mathbf{w}_{\\mathrm{ML}}),\\beta_{\\mathrm{ML}}^{-1}\\right)\\)');
-  note(root,['\\(\\beta_{\\mathrm{ML}}\\) is read straight off the residuals: the model calls whatever it failed to fit "noise". With a sensible \\(M\\), \\(\\sigma_{\\mathrm{ML}}\\) settles near the σ the data were generated with.',
-    'Push \\(M\\) up to 9 with \\(N=10\\). The residuals vanish, so \\(\\beta_{\\mathrm{ML}}\\) shoots up and the band collapses: the model is now <b>certain and wrong</b>, which is the danger of a point estimate.',
-    'Because we now have a distribution rather than a single number, the prediction at a new \\(x\\) is a Gaussian. Its width is the same everywhere, which is exactly what the Bayesian treatment later fixes.']);
+  note(root,['\\(\\beta_{\\mathrm{ML}}\\) is read straight off the residuals.',
+    '\\(M=9\\) with \\(N=10\\): residuals vanish, \\(\\beta_{\\mathrm{ML}}\\to\\infty\\).',
+    'More data and \\(\\sigma_{\\mathrm{ML}}\\) settles near the true \\(\\sigma\\).']);
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
     st.curve=[];
     for(let n=4;n<=80;n+=2){const d=makeData(n,st.sigma,st.seed),w=fit(d.xs,d.ts,st.M);
@@ -327,9 +327,9 @@ export function p30(root){
     '\\mathbf{w}^{\\mathrm T}\\mathbf{w}\\right\\}\\)<br>'+
     '\\( \\mathbf{w}_{\\mathrm{MAP}}=\\arg\\min_{\\mathbf{w}}\\left[\\dfrac{\\beta}{2}\\sum_{n=1}^{N}'+
     '\\{y(x_n,\\mathbf{w})-t_n\\}^{2}+\\dfrac{\\alpha}{2}\\mathbf{w}^{\\mathrm T}\\mathbf{w}\\right]\\)');
-  note(root,['Each coefficient has its own bell \\(\\mathcal N(w_j\\mid0,\\alpha^{-1})\\): before seeing any data, the prior says every \\(w_j\\) should sit near zero, and \\(\\alpha\\) sets how near. Slide \\(\\ln\\alpha\\) up and the bells narrow, and every \\(w_{\\mathrm{MAP},j}\\) is pulled back inside its bell.',
-    '\\(w_{\\mathrm{ML},j}\\) ignores the bells and lands wherever the data put it, often far off the chart where the prior density is essentially zero; the readout \\(-\\tfrac{\\alpha}{2}\\lVert\\mathbf{w}\\rVert^{2}\\) is that log prior. MAP trades a little fit for a lot of prior, so its curve peels away from the wild ML curve towards something smooth.',
-    'Compare the two equations: MAP with \\(\\alpha\\) and \\(\\beta\\) is the regularized error function of slide 19 with \\(\\lambda=\\alpha/\\beta\\). <b>Regularization was a prior in disguise all along.</b> Add data and the prior matters less, because the likelihood term grows with \\(N\\) while the prior does not.']);
+  note(root,['The prior is one bell \\(\\mathcal N(w_j\\mid0,\\alpha^{-1})\\) per coefficient.',
+    '\\(\\mathbf{w}_{\\mathrm{ML}}\\) ignores it, \\(\\mathbf{w}_{\\mathrm{MAP}}\\) is pulled towards \\(\\mathbf{0}\\).',
+    'MAP is regularization with \\(\\lambda=\\alpha/\\beta\\).']);
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
     st.rows=[];let best=-14,bv=Infinity;
     for(let a=-14;a<=8;a+=.25){const w=fit(st.tr.xs,st.tr.ts,st.M,Math.exp(a)/st.beta),
@@ -476,10 +476,10 @@ export function p33(root){
   D.hoverFmt=t=>{const k=comp();return[{t:'t = '+fmt(t,2)},
     {t:'p(t | x₀, x, t) = '+fmt(k.p1*k.f1(t)+k.p2*k.f2(t),3),c:D.col.truth}]};
   draw2();
-  note(root,['The marginal is not one of the two conditionals, and it is not their average shape either. It is a <b>weighted mixture</b>: each conditional contributes in proportion to its weight.',
-    'Move the mix to 1 : 0 or 0 : 1 and the marginal collapses onto a single conditional. In the lower simulator that is a point estimate, one \\(\\mathbf{w}\\) plugged in. Any other mix is a Bayesian prediction that keeps both candidates.',
-    'The two simulators are the same computation: \\(X\\) becomes \\(\\mathbf{w}\\), \\(Y\\) becomes \\(t\\), and the share \\(p(X=x_k)\\) becomes the posterior weight \\(p(\\mathbf{w}^{(k)}\\mid\\mathbf{x},\\mathbf{t})\\). The only difference is who sets the weights: here you do, in the Bayesian treatment the data do.',
-    'Move \\(x_0\\) from the middle to the edge. The two curves agree near \\(x=0.5\\) and part near \\(x=1\\), so \\(\\mathrm{Var}_{\\mathbf{w}}(y(x_0,\\mathbf{w}))\\) grows and the prediction widens, while \\(\\beta^{-1}\\) stays put. These are the two terms of \\(s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi(x)\\) on slide 35, and of \\(\\mathbb{E}_X[\\mathrm{Var}(Y\\mid X)]+\\mathrm{Var}_X(\\mathbb{E}[Y\\mid X])\\) above.']);
+  note(root,['The marginal is a weighted mixture, not an average shape.',
+    'A mix of 1 : 0 collapses it onto one conditional.',
+    '\\(X\\to\\mathbf{w}\\) and \\(Y\\to t\\): the same sum, one slide later.',
+    '\\(s^{2}(x)=\\beta^{-1}+\\mathrm{Var}_{\\mathbf{w}}(y)\\): noise plus spread.']);
   function draw(){const pf=st.pF,pm=1-pf,mean=pm*st.muM+pf*st.muF,
     sec=pm*(st.sdM*st.sdM+st.muM*st.muM)+pf*(st.sdF*st.sdF+st.muF*st.muF);
     setBar(pf);

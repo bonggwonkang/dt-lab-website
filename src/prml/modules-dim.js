@@ -60,10 +60,10 @@ export function p56(root){
     'with \\( \\binom{D+M}{M}\\) independent coefficients up to order \\(M\\), which grows like \\(D^{M}\\)<br>'+
     '\\( \\dfrac{V_D(1)-V_D(1-\\epsilon)}{V_D(1)}=1-(1-\\epsilon)^{D}\\), '+
     '\\( p(r)\\propto r^{D-1}\\exp\\!\\left(-\\dfrac{r^{2}}{2}\\right)\\)');
-  note(root,['Raise \\(D\\) with \\(M\\) fixed and read the first number. A cubic in one variable has 4 coefficients, in ten variables it has 286, and the count climbs like \\(D^{M}\\), so a model that was cheap in one dimension is hopeless in many.',
-    'The second panel asks what share of a sphere lies in the outer shell of thickness \\(\\epsilon\\). Set \\(\\epsilon=0.1\\) and move \\(D\\): at \\(D=1\\) the shell holds a tenth of the volume, by \\(D=20\\) it holds almost all of it.',
-    'The third panel is the same story for a Gaussian. Put the band at \\(r_1=0\\), \\(r_2=1\\) and raise \\(D\\): the mass near the centre drains away and piles up in a thin shell near \\(r=\\sqrt{D-1}\\).',
-    'Our intuition is built in two or three dimensions, where points sit near the middle of a region. In high dimensions almost every point is near the boundary, which is why filling the input space with cells or with data stops working.']);
+  note(root,['Coefficients grow like \\(D^{M}\\): 4 at \\(D=1\\), 286 at \\(D=10\\).',
+    'At \\(\\epsilon=0.1\\) the shell holds 10% of the volume at \\(D=1\\), 88% at \\(D=20\\).',
+    'Gaussian mass leaves the centre for a shell at \\(r=\\sqrt{D-1}\\).',
+    'In high \\(D\\) almost every point is near the boundary.']);
 
   function draw(){const D=st.D,M=st.M,c=comb(D+M,M);
     oA({c:big(c),e:big(comb(D+M-1,M)),p:big(Math.pow(D,M))});
