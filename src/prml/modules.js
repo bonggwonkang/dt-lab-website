@@ -5,6 +5,7 @@ import{p15,p19,p23,p25,p28,p30,p33}from'./modules-mle.js'
 import{p34,p35,p36,p37,p38,p39}from'./modules-bayes.js'
 import{p45,p49}from'./modules-select.js'
 import{p56}from'./modules-dim.js'
+import{p66}from'./modules-decide.js'
 
 /* ===== slide 10 · Setup: fitting a polynomial to a synthetic function (I) ===== */
 function p10(root){
@@ -182,8 +183,7 @@ function p12(root){
 const S1='Synthetic function and polynomial curve',
       S2='Probabilistic polynomial curve and MLE-MAP',
       S3='Bayesian polynomial function learning',
-      S4='Model selection',
-      S5='Curse of dimensionality';
+      S4='Fundamental concepts';
 const MODULES=[
  {p:10,sec:S1,t:'Setup: fitting a polynomial to a synthetic function (I)',
   g:'The target we want to learn, \\(\\sin(2\\pi x)\\), against the observations \\(t_n\\) we are actually given, controlled by the number of points \\(N\\) and the noise level \\(\\sigma\\).',b:p10},
@@ -221,8 +221,10 @@ const MODULES=[
   g:'How the size of each set changes the \\(\\lambda\\) that validation picks and the test error that is then reported.',b:p45},
  {p:49,sec:S4,t:'Cross-validation and information criteria',
   g:'The order \\(M\\) chosen by \\(S\\)-fold cross-validation, by \\(\\mathrm{AIC}\\) and by \\(\\mathrm{BIC}\\), against the \\(M\\) that actually minimises the test error.',b:p49},
- {p:56,pl:'56, 58, 59',sec:S5,t:'Coefficients, volume and probability mass as the dimension grows',
-  g:'How the number of polynomial coefficients, the volume of a sphere and the mass of a Gaussian all move once \\(D\\) stops being small.',b:p56}
+ {p:56,pl:'56, 58, 59',sec:S4,t:'Coefficients, volume and probability mass as the dimension grows',
+  g:'How the number of polynomial coefficients, the volume of a sphere and the mass of a Gaussian all move once \\(D\\) stops being small.',b:p56},
+ {p:66,pl:'66, 68',sec:S4,t:'Minimizing the misclassification rate',
+  g:'Where to put the decision boundary \\(\\hat x\\) so that \\(p(\\text{mistake})\\) is as small as it can be.',b:p66}
 ];
 MODULES.forEach((m,i)=>{m.ready=true;m.no=i+1});
 export{MODULES};
