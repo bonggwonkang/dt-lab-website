@@ -32,7 +32,6 @@ export function p75(root){
 
   const ways=btnrow(b.pn,[{l:'(I) Generative',on:()=>pick(0)},{l:'(II) Discriminative',on:()=>pick(1)},
     {l:'(III) Discriminant',on:()=>pick(2)}]);
-  btnrow(b.pn,[{l:'Retrain \\(f(x)\\)',on:()=>{st.xf=opt();draw()}}]);
   b.pn.appendChild(el('div','hr'));
   slider(b.pn,{label:'Class prior \\(p(\\mathcal C_1)\\)',min:.05,max:.95,step:.01,value:st.pi,
     fmt:v=>fmt(v,2),on:v=>{st.pi=v;draw()}});
@@ -49,11 +48,6 @@ export function p75(root){
     {k:'pm',l:'\\(p(\\text{mistake})\\)'},{k:'el',l:'\\(\\mathbb E[L]\\)',big:true},
     {k:'rj',l:'Rejected share of \\(p(x)\\)'},{k:'pv',l:'\\(p(\\hat x)\\), the evidence'},
     {k:'po',l:'\\(p(\\mathcal C_1\\mid\\hat x)\\)'}]);
-  b.pn.appendChild(el('div','hr'));
-  const cap=readout(b.pn,[{k:'c1',l:'\\(p(x)\\), so novelty detection'},
-    {k:'c2',l:'\\(p(\\mathcal C_k\\mid x)\\), so a reject option'},
-    {k:'c3',l:'New \\(L_{kj}\\) without retraining'},
-    {k:'c4',l:'New \\(p(\\mathcal C_k)\\) without retraining'}]);
 
   eqbar(root,'Three routes from data to a decision',
     '(I) \\( p(\\mathcal C_k\\mid x)=\\dfrac{p(x\\mid\\mathcal C_k)p(\\mathcal C_k)}{p(x)}\\), '+
@@ -63,7 +57,7 @@ export function p75(root){
     'and the decision itself minimises \\( \\mathbb E[L]=\\sum_k\\sum_j\\int_{\\mathcal R_j}L_{kj}\\,p(x,\\mathcal C_k)\\,dx\\)');
   note(root,['Only (I) models \\(p(x)\\), so only (I) can call \\(\\hat x\\) an outlier.',
     'The left mode of \\(p(x\\mid\\mathcal C_1)\\) never reaches the posterior or the decision.',
-    'Raise \\(L_{12}\\): (I) and (II) move the boundary at once, (III) needs retraining.',
+    'Raise \\(L_{12}\\): (I) and (II) move the boundary at once, (III) cannot.',
     'Raise \\(\\theta\\): a reject band opens for (I) and (II), never for (III).']);
 
   const j1=x=>st.pi*px1(x),j2=x=>(1-st.pi)*px2(x);
@@ -92,8 +86,6 @@ export function p75(root){
     out({bd:sw.length?sw.join(', '):'none',pm:fmt(err,4),el:fmt(loss,4),rj:fmt(rej,4),
       pv:st.way===0?fmt(ev,3)+(ev<.05*mx?'  outlier':''):'not modelled',
       po:st.way===2?'not modelled':fmt(post(st.x0),3)});
-    const yes='yes',no='no';
-    cap({c1:st.way===0?yes:no,c2:st.way===2?no:yes,c3:st.way===2?no:yes,c4:st.way===2?no:yes});
     A.draw();B.draw()}
 
   A.render=p=>{const c=p.col;
