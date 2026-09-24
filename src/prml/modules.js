@@ -6,6 +6,7 @@ import{p34,p35,p36,p37,p38,p39}from'./modules-bayes.js'
 import{p45,p49}from'./modules-select.js'
 import{p56}from'./modules-dim.js'
 import{p66}from'./modules-decide.js'
+import{p75}from'./modules-infer.js'
 
 /* ===== slide 10 · Setup: fitting a polynomial to a synthetic function (I) ===== */
 function p10(root){
@@ -224,7 +225,9 @@ const MODULES=[
  {p:56,pl:'56, 58, 59',sec:S4,t:'Coefficients, volume and probability mass as the dimension grows',
   g:'How the number of polynomial coefficients, the volume of a sphere and the mass of a Gaussian all move once \\(D\\) stops being small.',b:p56},
  {p:66,pl:'66, 68',sec:S4,t:'Minimizing the misclassification rate',
-  g:'Where to put the decision boundary \\(\\hat x\\) so that \\(p(\\text{mistake})\\) is as small as it can be.',b:p66}
+  g:'Where to put the decision boundary \\(\\hat x\\) so that \\(p(\\text{mistake})\\) is as small as it can be.',b:p66},
+ {p:75,pl:'75, 76, 77',sec:S4,t:'Three approaches to inference and decision',
+  g:'One classification problem seen through a generative model, a discriminative model and a discriminant function, and what each one can still answer when the prior, the loss matrix or the input changes.',b:p75}
 ];
 MODULES.forEach((m,i)=>{m.ready=true;m.no=i+1});
 export{MODULES};
