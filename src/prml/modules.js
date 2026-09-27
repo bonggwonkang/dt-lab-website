@@ -8,6 +8,7 @@ import{p56}from'./modules-dim.js'
 import{p66}from'./modules-decide.js'
 import{p75}from'./modules-infer.js'
 import{p86,p88}from'./modules-loss.js'
+import{p92,p100,p102}from'./modules-info.js'
 
 /* ===== slide 10 · Setup: fitting a polynomial to a synthetic function (I) ===== */
 function p10(root){
@@ -232,7 +233,13 @@ const MODULES=[
  {p:86,sec:S4,t:'The expected loss and its two terms',
   g:'How the expected loss of a regression function splits into a prediction error that \\(y(x)\\) can reduce and an intrinsic variance that it cannot.',b:p86},
  {p:88,pl:'88, 89, 90',sec:S4,t:'The Minkowski loss and the conditional mean, median and mode',
-  g:'What the exponent \\(q\\) does to the best \\(y(x)\\), and why the squared loss can fall between the modes when \\(p(t|x)\\) is multimodal.',b:p88}
+  g:'What the exponent \\(q\\) does to the best \\(y(x)\\), and why the squared loss can fall between the modes when \\(p(t|x)\\) is multimodal.',b:p88},
+ {p:92,pl:'92, 93, 94, 95',sec:S4,t:'Information and entropy',
+  g:'How the information content \\(h(x)=-\\log_2 p(x)\\) grows as \\(p(x)\\) falls, and what its expectation, the entropy, does when the mean and the standard deviation move.',b:p92},
+ {p:100,pl:'100, 101',sec:S4,t:'The relative entropy and its two terms',
+  g:'The average additional surprise by believing \\(q(x)\\), split into the two terms it is made of.',b:p100},
+ {p:102,pl:'102, 103',sec:S4,t:'Minimizing the KL divergence is maximizing the likelihood',
+  g:'Why minimizing the KL divergence over a set of training points is maximizing the likelihood function.',b:p102}
 ];
 MODULES.forEach((m,i)=>{m.ready=true;m.no=i+1});
 export{MODULES};
