@@ -40,7 +40,7 @@ export function p45(root){
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
   slider(b.pn,{label:'Noise \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
     on:v=>{st.sigma=v;gen()}});
-  btnrow(b.pn,[{l:'Draw a new sample',on:()=>{st.seed++;gen()}}]);
+  btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'lam',l:'\\(\\ln\\lambda^{*}\\)'},
     {k:'tr',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{train}}(\\lambda^{*})\\)'},
@@ -120,10 +120,8 @@ export function p49(root){
   const sM=slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;paint()}});
   slider(b.pn,{label:'Noise \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
     on:v=>{st.sigma=v;gen()}});
-  btnrow(b.pn,[{l:'Draw a new sample',on:()=>{st.seed++;gen()}}]);
-  btnrow(b.pn,[{l:'Go to the \\(\\mathrm{CV}\\) choice',on:()=>{st.M=st.mcv;sM.set(st.M);paint()}},
-    {l:'\\(\\mathrm{AIC}\\)',on:()=>{st.M=st.maic;sM.set(st.M);paint()}},
-    {l:'\\(\\mathrm{BIC}\\)',on:()=>{st.M=st.mbic;sM.set(st.M);paint()}}]);
+  btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}}]);
+  btnrow(b.pn,[{l:'Go to the \\(\\mathrm{CV}\\) choice',on:()=>{st.M=st.mcv;sM.set(st.M);paint()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'cv',l:'\\(M\\) chosen by \\(\\mathrm{CV}\\)'},
     {k:'aic',l:'\\(M\\) chosen by \\(\\mathrm{AIC}\\)'},{k:'bic',l:'\\(M\\) chosen by \\(\\mathrm{BIC}\\)'},

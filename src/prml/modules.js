@@ -95,7 +95,7 @@ function p12(root){
   const W=wPanel(b.pn,st,()=>draw());
   btnrow(b.pn,[{l:'Move to \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
     {l:'Reset \\(\\mathbf{w}\\) to \\(\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=st.rngMin;W.sync();draw()}},
-    {l:'New sample',on:()=>{st.d=makeData(10,.25,st.d.seed+1);draw()}}]);
+    {l:'New data set',on:()=>{st.d=makeData(10,.25,st.d.seed+1);draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'E',l:'\\(E(\\mathbf{w})\\)',big:true},{k:'Em',l:'Minimum \\(E(\\mathbf{w}^{*})\\)'},
     {k:'gap',l:'\\(E(\\mathbf{w})-E(\\mathbf{w}^{*})\\)'},
