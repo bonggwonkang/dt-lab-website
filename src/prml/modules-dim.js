@@ -63,7 +63,7 @@ export function p56(root){
   note(root,['Coefficients grow like \\(D^{M}\\): 4 at \\(D=1\\), 286 at \\(D=10\\).',
     'At \\(\\epsilon=0.1\\) the shell holds 10% of the volume at \\(D=1\\), 88% at \\(D=20\\).',
     'Gaussian mass leaves the centre for a shell at \\(r=\\sqrt{D-1}\\).',
-    'In high \\(D\\) almost every point is near the boundary.']);
+    'In high \\(D\\) almost every point sits near the surface.']);
 
   function draw(){const D=st.D,M=st.M,c=comb(D+M,M);
     oA({c:big(c),e:big(comb(D+M-1,M)),p:big(Math.pow(D,M))});

@@ -17,11 +17,11 @@ function p10(root){
     {c:'var(--muted)',t:'dash',l:'\\(\\epsilon_n\\)'}]);
   const P=new Plot(b.pc,{h:340});
   const out=readout(b.pn,[{k:'N',l:'Points \\(N\\)'},{k:'sg',l:'Noise \\(\\sigma\\)'},
-    {k:'me',l:'Sample mean of \\(\\epsilon\\)'},{k:'se',l:'Sample s.d. of \\(\\epsilon\\)'}]);
+    {k:'me',l:'Mean of \\(\\epsilon\\)'},{k:'se',l:'Standard deviation of \\(\\epsilon\\)'}]);
   b.pn.appendChild(el('div','hr'));
   const sN=slider(b.pn,{label:'Number of points \\(N\\)',min:2,max:100,step:1,value:st.N,on:v=>{st.N=v;gen()}});
-  const sS=slider(b.pn,{label:'Noise level \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
-  btnrow(b.pn,[{l:'Draw a new sample',on:()=>{st.seed++;gen()}},
+  const sS=slider(b.pn,{label:'Noise \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
+  btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
     {l:'Reset \\((N=10,\\ \\sigma=0.25)\\)',on:()=>{st.N=10;st.sigma=.25;sN.set(10);sS.set(.25);gen()}}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show \\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
@@ -29,9 +29,9 @@ function p10(root){
   eqbar(b.lc,'Synthetic data set',
     '\\( x_n=\\dfrac{n}{N-1}\\in[0,1]\\), \\(t_n=\\sin(2\\pi x_n)+\\epsilon\\), \\(\\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
     'training set \\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), target vector \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
-  note(root,['\\(\\sin(2\\pi x)\\) is the target, \\(t_n\\) is all we are given.',
-    'Larger \\(N\\), clearer shape, every single point still wrong.',
-    'A new sample keeps \\(\\sigma\\) and redraws the noise \\(\\epsilon_n\\).']);
+  note(root,['\\(\\sin(2\\pi x)\\) generates the data, \\(t_n\\) is all we are given.',
+    'Larger \\(N\\) shows the shape better, every \\(t_n\\) still carries \\(\\epsilon\\).',
+    'A new data set keeps \\(\\sigma\\) and redraws the noise \\(\\epsilon_n\\).']);
   function gen(){st.d=makeData(st.N,st.sigma,st.seed);
     const m=st.d.es.reduce((a,b)=>a+b,0)/st.N,v=st.d.es.reduce((a,b)=>a+(b-m)*(b-m),0)/Math.max(1,st.N-1);
     out({N:st.N,sg:fmt(st.sigma,2),me:fmt(m,3),se:fmt(Math.sqrt(v),3)});P.draw()}
@@ -66,8 +66,8 @@ function p11(root){
     '\\( y(x,\\mathbf{w}) = w_0+w_1x+w_2x^2+\\cdots+w_Mx^M=\\sum_{j=0}^{M}w_jx^{j}\\)<br>'+
     'a nonlinear function of \\(x\\), but a <b>linear function of the coefficients</b> \\(\\mathbf{w}\\).');
   note(root,['\\(w_0\\) shifts, \\(w_1\\) tilts, \\(w_2,\\dots,w_M\\) bend the curve.',
-    'Double \\(\\mathbf{w}\\) and \\(y\\) doubles: linear in \\(\\mathbf{w}\\), not in \\(x\\).',
-    '\\(M=9\\) passes through every point and wiggles: over-fitting.']);
+    'Double \\(\\mathbf{w}\\) and \\(y\\) doubles: a linear function of the coefficients.',
+    '\\(M=9\\) passes through every point, tuned to the random noise: over-fitting.']);
   function draw(){out({M:st.w.length-1,np:st.w.length,E:fmt(sse(st.d.xs,st.d.ts,st.w),3)});P.draw()}
   P.render=p=>{const c=p.col;
     if(st.terms)st.w.forEach((wj,j)=>{if(!wj)return;p.path(x=>wj*Math.pow(x,j),c.muted,1.2,[4,3]);
@@ -188,10 +188,10 @@ const S1='Synthetic function and polynomial curve',
       S4='Fundamental concepts';
 const MODULES=[
  {p:10,sec:S1,t:'Setup: fitting a polynomial to a synthetic function (I)',
-  g:'The target we want to learn, \\(\\sin(2\\pi x)\\), against the observations \\(t_n\\) we are actually given, controlled by the number of points \\(N\\) and the noise level \\(\\sigma\\).',b:p10},
+  g:'The function \\(\\sin(2\\pi x)\\) used to generate the data, against the target values \\(t_n\\) we are actually given, controlled by the size \\(N\\) of the training set and the noise \\(\\sigma\\).',b:p10},
  {p:11,sec:S1,t:'Setup: fitting a polynomial to a synthetic function (II)',
   g:'Move the coefficients \\(\\mathbf{w}\\) and watch the polynomial \\(y(x,\\mathbf{w})\\) respond, and see why it is a linear function of \\(\\mathbf{w}\\).',b:p11},
- {p:12,sec:S1,t:'Prediction error function (I)',
+ {p:12,sec:S1,t:'The sum-of-squares error function',
   g:'How the sum-of-squares error \\(E(\\mathbf{w})\\) changes with the choice of \\(\\mathbf{w}\\), shown as displacement bars and as an error surface.',b:p12},
  {p:15,sec:S1,t:'The root-mean-square (RMS) error',
   g:'\\(E_{\\mathrm{RMS}}\\) on the training set and on an independent test set for various values of \\(M\\), together with the learned \\(\\mathbf{w}^*\\).',b:p15},
@@ -203,7 +203,7 @@ const MODULES=[
   g:'How the likelihood \\(p(\\mathbf{t}|\\mathbf{x},\\mathbf{w},\\beta)\\) responds as the coefficients \\(\\mathbf{w}\\) move.',b:p25},
  {p:28,sec:S2,t:'Maximum likelihood (MLE): the predictive distribution',
   g:'How \\(\\mathbf{w}_{\\mathrm{ML}}\\) and \\(\\beta_{\\mathrm{ML}}\\) are updated as the number of data points grows.',b:p28},
- {p:30,sec:S2,t:'Maximum a posteriori (MAP): the posterior over w (I)',
+ {p:30,sec:S2,t:'Maximum posterior (MAP): the posterior over w (I)',
   g:'How the prior \\(p(\\mathbf{w}|\\alpha)\\) pulls \\(\\mathbf{w}_{\\mathrm{MAP}}\\) away from \\(\\mathbf{w}_{\\mathrm{ML}}\\).',b:p30},
  {p:33,sec:S3,t:'Bayesian polynomial function (I)',
   g:'What “integrating a variable out” means, first for a two-valued \\(X\\) and a continuous \\(Y\\), then for two candidate coefficient vectors \\(\\mathbf{w}^{(1)},\\mathbf{w}^{(2)}\\) of the polynomial example.',b:p33},

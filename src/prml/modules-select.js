@@ -48,7 +48,7 @@ export function p45(root){
     {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(\\lambda^{*})\\)',big:true},
     {k:'best',l:'Lowest \\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\) on the grid'},
     {k:'bl',l:'\\(\\ln\\lambda\\) that reaches it'},
-    {k:'gap',l:'Cost of choosing on \\(\\mathcal D_{\\mathrm{Valid}}\\)'}]);
+    {k:'gap',l:'Gap to that lowest value'}]);
   eqbar(root,'Training, validation and test',
     '\\( \\mathbf{w}^{*}_{\\mathrm{MAP}}(\\lambda)=\\arg\\min_{\\mathbf{w}}\\left[\\dfrac{1}{2}'+
     '\\sum_{n=1}^{N_{\\mathrm{Train}}}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}+\\dfrac{\\lambda}{2}'+
@@ -59,9 +59,9 @@ export function p45(root){
     '\\( E_{\\mathrm{RMS}}^{\\mathrm{test}}=\\sqrt{\\dfrac{1}{N_{\\mathrm{Test}}}\\sum_{n=1}^{N_{\\mathrm{Test}}}'+
     '\\left\\{y\\!\\left(x_n,\\mathbf{w}^{*}_{\\mathrm{MAP}}(\\lambda^{*})\\right)-t_n\\right\\}^{2}}\\)');
   note(root,['Train fixes \\(\\mathbf{w}\\), validation picks \\(\\lambda\\), test only reports.',
-    'Small \\(N_{\\mathrm{Valid}}\\): \\(\\lambda^{*}\\) jumps from sample to sample.',
-    'That jumping is what the last readout charges in test error.',
-    'Small \\(N_{\\mathrm{Test}}\\): same model, unreliable score.']);
+    'Small \\(N_{\\mathrm{Valid}}\\): a noisy estimate, so \\(\\lambda^{*}\\) jumps about.',
+    'A \\(\\lambda^{*}\\) picked from noise shows up in the test error.',
+    'Small \\(N_{\\mathrm{Test}}\\): the same model, a noisy estimate of it.']);
   function near(x){let k=0;for(let i=1;i<st.rows.length;i++)
     if(Math.abs(st.rows[i].l-x)<Math.abs(st.rows[k].l-x))k=i;return st.rows[k]}
   function gen(){st.d={tr:sample(st.ntr,st.sigma,st.seed),va:sample(st.nva,st.sigma,st.seed+101),
@@ -117,7 +117,7 @@ export function p49(root){
     xt:[0,3,6,9],yt:[0,1],pad:[16,18,28,46]});
   slider(b.pn,{label:'Data points \\(N\\)',min:10,max:100,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Folds \\(S\\)',min:2,max:10,step:1,value:st.S,on:v=>{st.S=v;draw()}});
-  const sM=slider(b.pn,{label:'Order \\(M\\) on show',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;paint()}});
+  const sM=slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;paint()}});
   slider(b.pn,{label:'Noise \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
     on:v=>{st.sigma=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new sample',on:()=>{st.seed++;gen()}}]);
@@ -128,19 +128,19 @@ export function p49(root){
   const out=readout(b.pn,[{k:'cv',l:'\\(M\\) chosen by \\(\\mathrm{CV}\\)'},
     {k:'aic',l:'\\(M\\) chosen by \\(\\mathrm{AIC}\\)'},{k:'bic',l:'\\(M\\) chosen by \\(\\mathrm{BIC}\\)'},
     {k:'mte',l:'\\(M\\) with the lowest \\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
-    {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\) at the \\(M\\) on show',big:true},
+    {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\) at this \\(M\\)',big:true},
     {k:'runs',l:'Training runs, \\(\\mathrm{CV}\\)'},
     {k:'runs1',l:'Training runs, \\(\\mathrm{AIC}\\) or \\(\\mathrm{BIC}\\)'}]);
   eqbar(root,'Two ways to choose a model without a test set',
     '\\( E_{\\mathrm{CV}}(M)=\\dfrac{1}{S}\\sum_{s=1}^{S}E_{\\mathrm{RMS}}^{(s)}(M)\\), where run \\(s\\) fits on '+
-    '\\((S-1)/S\\) of the data and scores the held-out group<br>'+
+    '\\((S-1)/S\\) of the data and evaluates the remaining group<br>'+
     '\\( \\mathrm{AIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-M\\), '+
     '\\( \\mathrm{BIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-\\dfrac{M}{2}\\ln N\\), '+
     'where \\(M\\) counts the adjustable parameters, \\(M+1\\) for a polynomial of order \\(M\\)');
-  note(root,['Cross-validation is steadier, at \\(S\\) times the training runs.',
+  note(root,['Cross-validation is less noisy, at \\(S\\) times the training runs.',
     'Larger \\(S\\): more data per run, more runs.',
     '\\(\\mathrm{AIC}\\) and \\(\\mathrm{BIC}\\) need one fit and no held-out data.',
-    '\\(\\mathrm{BIC}\\) charges \\(\\ln N\\) per parameter, so it picks simpler.']);
+    '\\(\\mathrm{BIC}\\) penalises \\(\\ln N\\) per adjustable parameter, so it favours simpler models.']);
   function logLik(xs,ts,w){const N=xs.length;let s=0;
     for(let n=0;n<N;n++){const d=polyval(w,xs[n])-ts[n];s+=d*d}
     const be=N/Math.max(s,1e-12);

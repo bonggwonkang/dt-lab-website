@@ -28,9 +28,9 @@ export function p34(root){
     {l:'No data at all',on:()=>{st.N=0;sN.set(0);gen()}},
     {l:'\\(N=15\\)',on:()=>{st.N=15;sN.set(15);gen()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'n',l:'Points seen'},{k:'sd0',l:'Posterior sd of \\(w_0\\)'},
-    {k:'sdm',l:'Largest posterior sd'},{k:'s1',l:'Spread of the curves at \\(x=0.5\\)',big:true},
-    {k:'s2',l:'Spread of the curves at \\(x=1\\)'}]);
+  const out=readout(b.pn,[{k:'n',l:'Points seen'},{k:'sd0',l:'Posterior standard deviation of \\(w_0\\)'},
+    {k:'sdm',l:'Largest posterior standard deviation'},{k:'s1',l:'Standard deviation at \\(x=0.5\\)',big:true},
+    {k:'s2',l:'Standard deviation at \\(x=1\\)'}]);
   const cm=wchips(b.pn,'Posterior mean \\(\\mathbf{m}_N\\)'),cs=wchips(b.pn,'Posterior standard deviations');
   eqbar(root,'A distribution over the coefficients, not a single value',
     '\\( p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t},\\alpha,\\beta)\\propto '+
@@ -39,8 +39,8 @@ export function p34(root){
     'determine \\(\\mathbf{w}\\) uniquely, and every curve drawn here is one \\(\\mathbf{w}\\) the data '+
     'still consider plausible.');
   note(root,['With no data the curves are whatever \\(\\alpha\\) allows.',
-    'Each point tightens the bundle where it sits.',
-    'The posterior spread shrinks as \\(N\\) grows.']);
+    'Each data point narrows the posterior distribution where it sits.',
+    'The posterior distribution narrows as \\(N\\) grows.']);
   function gen(){st.d=makeData(Math.max(st.N,0),.25,st.seed);
     if(st.N===0){st.d={xs:[],ts:[],N:0,seed:st.seed}}draw()}
   function draw(){const al=Math.exp(st.lnAlpha);
@@ -91,9 +91,9 @@ export function p35(root){
     'p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\)<br>'+
     '\\( m(x)=\\beta\\,\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)t_n'+
     '\\), \\(s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\,\\boldsymbol\\phi(x)\\)');
-  note(root,['The band is the spread of those curves, in closed form.',
+  note(root,['The band is \\(\\pm1\\) standard deviation around the mean.',
     '\\(s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi\\): noise plus model.',
-    'The band flares at the edges, so the variance depends on \\(x\\).']);
+    'The band widens at the edges, so the variance depends on \\(x\\).']);
   function gen(){st.d=makeData(st.N,.25,st.seed);draw()}
   function draw(){const al=Math.exp(st.lnAlpha);
     st.post=posterior(st.d.xs,st.d.ts,st.M,al,st.beta);
@@ -146,7 +146,7 @@ export function p36(root){
     'where \\(\\boldsymbol\\phi(x)=\\left(x^{0},x^{1},\\dots,x^{M}\\right)^{\\mathrm T}\\in\\mathbb R^{M+1}\\).');
   note(root,['Fixed shapes \\(x^{0},\\dots,x^{M}\\), only \\(\\mathbf{w}\\) moves.',
     'At \\(x_0\\) the model is one inner product \\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\).',
-    'Any \\(\\boldsymbol\\phi\\) works: powers, Gaussians, sigmoids.']);
+    'The same inner product holds for any basis function vector \\(\\boldsymbol\\phi(x)\\).']);
   function draw(){const p0=phi(st.x0,st.w.length-1),terms=p0.map((v,j)=>v*st.w[j]);
     let big=0;terms.forEach(v=>{if(Math.abs(v)>Math.abs(big))big=v});
     out({y:fmt(polyval(st.w,st.x0),3),d:st.w.length,big:fmt(big,3)});
@@ -193,7 +193,7 @@ export function p37(root){
     '\\( \\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)'+
     '\\boldsymbol\\phi(x_n)^{\\mathrm T}\\), \\('+
     '\\mathbf{S}^{-1}\\mathbf{m}_N=\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)t_n\\)');
-  note(root,['Each point adds one rank-one block \\(\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\).',
+  note(root,['Each data point adds one \\(\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\).',
     '\\(\\alpha\\) enters only on the diagonal and keeps \\(\\mathbf{S}^{-1}\\) invertible.',
     '\\(\\mathbf{S}\\) depends on the \\(x_n\\), \\(\\mathbf{m}_N\\) on the \\(t_n\\) as well.']);
   function reset(){views=null;holder.innerHTML=''}
@@ -242,7 +242,7 @@ export function p38(root){
     {l:'No data at all',on:()=>{st.N=0;sN.set(0);gen()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'q',l:'\\(-\\tfrac12\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{w}\\)'},{k:'l',l:'\\(+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N\\)'},{k:'c',l:'\\(+C_3\\) (constant)'},
-    {k:'s',l:'\\(\\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})\\)',big:true},{k:'md',l:'Mahalanobis distance from \\(\\mathbf{m}_N\\)'}]);
+    {k:'s',l:'\\(\\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})\\)',big:true},{k:'md',l:'The quadratic form at \\(\\mathbf{w}\\)'}]);
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const holder=el('div','matrow');card.appendChild(holder);
   const vm=matview(holder,{cap:'\\(\\mathbf{m}_N\\)',rows:2,cols:1,digits:3});

@@ -19,7 +19,7 @@ export function p15(root){
   const sM=slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
   const sN=slider(b.pn,{label:'Training points \\(N\\)',min:4,max:60,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Noise \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
-  btnrow(b.pn,[{l:'Draw a new sample',on:()=>{st.seed++;gen()}},
+  btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
     {l:'Jump to the best \\(M\\)',on:()=>{st.M=st.best;sM.set(st.best);draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'tr',l:'\\(E_{\\mathrm{RMS}}\\) training'},{k:'te',l:'\\(E_{\\mathrm{RMS}}\\) test'},
@@ -29,8 +29,8 @@ export function p15(root){
     '\\( E_{\\mathrm{RMS}}=\\sqrt{2E(\\mathbf{w}^{*})/N}\\), where dividing by \\(N\\) lets us compare data sets of '+
     'different sizes on an equal footing and the square root puts the error on the same scale as the target \\(t\\).');
   note(root,['Training error reaches zero at \\(M=9\\) with \\(N=10\\).',
-    'Test error is flat near \\(M=3\\dots 8\\), then explodes.',
-    'Larger \\(N\\) moves the explosion to larger \\(M\\).']);
+    'Test error is flat near \\(M=3\\dots 8\\), then rises sharply.',
+    'The larger the data set, the more complex the model we can afford to fit.']);
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
     st.rows=[];let best=0,bv=Infinity;
     for(let M=0;M<=9;M++){const w=fit(st.tr.xs,st.tr.ts,M),a=erms(st.tr.xs,st.tr.ts,w),e=erms(st.te.xs,st.te.ts,w);
@@ -70,7 +70,7 @@ export function p19(root){
     fmt:v=>fmt(v,1),on:v=>{st.lnLam=v;draw()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
   slider(b.pn,{label:'Training points \\(N\\)',min:4,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
-  btnrow(b.pn,[{l:'Draw a new sample',on:()=>{st.seed++;gen()}},
+  btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
     {l:'No penalty \\((\\lambda\\to0)\\)',on:()=>{st.lnLam=-40;sL.set(-40);draw()}},
     {l:'Jump to the best \\(\\lambda\\)',on:()=>{st.lnLam=st.best;sL.set(st.best);draw()}}]);
   b.pn.appendChild(el('div','hr'));
@@ -84,7 +84,7 @@ export function p19(root){
     '\\(\\lVert\\mathbf{w}\\rVert^{2}=\\mathbf{w}^{\\mathrm T}\\mathbf{w}=w_0^2+w_1^2+\\cdots+w_M^2\\). '+
     'This quadratic case is ridge regression, known as weight decay in the context of neural networks.');
   note(root,['\\(\\ln\\lambda=-40\\): no penalty, huge coefficients.',
-    'Middle \\(\\lambda\\): lowest test error, tame coefficients.',
+    'Middle \\(\\lambda\\): lowest test error, smaller coefficients.',
     'Large \\(\\lambda\\): \\(\\mathbf{w}\\to\\mathbf{0}\\) and the curve flattens.']);
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
     st.rows=[];let best=-40,bv=Infinity;
@@ -137,7 +137,7 @@ export function p23(root){
     'where the mean is the polynomial \\(y(x,\\mathbf{w})\\) and the precision \\(\\beta\\) is the inverse variance, '+
     '\\(\\beta^{-1}=\\sigma^{2}\\).');
   note(root,['Every \\(x\\) carries a Gaussian centred on \\(y(x,\\mathbf{w})\\).',
-    'Small \\(\\beta\\), wide bell, since \\(\\beta^{-1}=\\sigma^{2}\\).',
+    'Small \\(\\beta\\) widens the distribution, since \\(\\beta^{-1}=\\sigma^{2}\\).',
     'Move \\(\\mathbf{w}\\) and the whole distribution moves with it.']);
   function draw(){const sd=1/Math.sqrt(st.beta);let inside=0;
     st.d.xs.forEach((x,n)=>{if(Math.abs(st.d.ts[n]-polyval(st.w,x))<=sd)inside++});
@@ -183,7 +183,7 @@ export function p25(root){
   const W=wPanel(b.pn,st,()=>draw());
   btnrow(b.pn,[{l:'Set \\(\\mathbf{w}\\) to \\(\\mathbf{w}_{\\mathrm{ML}}\\)',on:()=>{applyFit(st,W);draw()}},
     {l:'Reset \\(\\mathbf{w}\\) to \\(\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}},
-    {l:'New sample',on:()=>{st.d=makeData(10,.25,st.d.seed+1);draw()}}]);
+    {l:'New data set',on:()=>{st.d=makeData(10,.25,st.d.seed+1);draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'ll',l:'\\(\\ln p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)\\)',big:true},{k:'t1',l:'\\(-\\tfrac{\\beta}{2}\\sum\\{y-t\\}^{2}\\)'},
     {k:'t2',l:'\\(+\\tfrac{N}{2}\\ln\\beta\\)'},{k:'t3',l:'\\(-\\tfrac{N}{2}\\ln(2\\pi)\\)'},{k:'e',l:'\\(E(\\mathbf{w})\\)'},{k:'gap',l:'\\(\\ln p\\) at \\(\\mathbf{w}_{\\mathrm{ML}}\\)'}]);
@@ -192,7 +192,7 @@ export function p25(root){
     '\\mathcal N\\!\\left(t_n\\mid y(x_n,\\mathbf{w}),\\beta^{-1}\\right)\\)<br>'+
     '\\( \\ln p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)=-\\dfrac{\\beta}{2}\\sum_{n=1}^{N}'+
     '\\{y(x_n,\\mathbf{w})-t_n\\}^{2}+\\dfrac{N}{2}\\ln\\beta-\\dfrac{N}{2}\\ln(2\\pi)\\)');
-  note(root,['The likelihood is a product of bells read at each \\(t_n\\).',
+  note(root,['The likelihood function is a product of \\(\\mathcal N(t_n\\mid y(x_n,\\mathbf{w}),\\beta^{-1})\\).',
     'Only \\(-\\tfrac{\\beta}{2}\\sum\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\) depends on \\(\\mathbf{w}\\).',
     'Maximizing \\(\\ln p\\) is minimizing \\(E(\\mathbf{w})\\).']);
   const logLik=(w,beta)=>{let s=0;st.d.xs.forEach((x,n)=>{const r=polyval(w,x)-st.d.ts[n];s+=r*r});
@@ -250,7 +250,7 @@ export function p28(root){
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
   slider(b.pn,{label:'True noise \\(\\sigma\\)',min:.05,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
     on:v=>{st.sigma=v;gen()}});
-  btnrow(b.pn,[{l:'Draw a new sample',on:()=>{st.seed++;gen()}},
+  btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
     {l:'\\(N=10\\)',on:()=>{st.N=10;sN.set(10);gen()}},{l:'\\(N=80\\)',on:()=>{st.N=80;sN.set(80);gen()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'b',l:'\\(\\beta_{\\mathrm{ML}}\\)',big:true},{k:'s',l:'\\(\\sigma_{\\mathrm{ML}}=\\beta_{\\mathrm{ML}}^{-1/2}\\)'},
@@ -260,8 +260,8 @@ export function p28(root){
     '\\( \\dfrac{1}{\\beta_{\\mathrm{ML}}}=\\dfrac{1}{N}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w}_{\\mathrm{ML}})-t_n\\}^{2}'+
     '\\), \\(p(t\\mid x,\\mathbf{w}_{\\mathrm{ML}},\\beta_{\\mathrm{ML}})='+
     '\\mathcal N\\!\\left(t\\mid y(x,\\mathbf{w}_{\\mathrm{ML}}),\\beta_{\\mathrm{ML}}^{-1}\\right)\\)');
-  note(root,['\\(\\beta_{\\mathrm{ML}}\\) is read straight off the residuals.',
-    '\\(M=9\\) with \\(N=10\\): residuals vanish, \\(\\beta_{\\mathrm{ML}}\\to\\infty\\).',
+  note(root,['\\(\\beta_{\\mathrm{ML}}^{-1}\\) is the mean of \\(\\{y(x_n,\\mathbf{w}_{\\mathrm{ML}})-t_n\\}^{2}\\).',
+    '\\(M=9\\) with \\(N=10\\): those squares vanish, \\(\\beta_{\\mathrm{ML}}\\to\\infty\\).',
     'More data and \\(\\sigma_{\\mathrm{ML}}\\) settles near the true \\(\\sigma\\).']);
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
     st.curve=[];
@@ -313,7 +313,7 @@ export function p30(root){
   slider(b.pn,{label:'Data points \\(N\\)',min:4,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Noise precision \\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;gen()}});
-  btnrow(b.pn,[{l:'Draw a new sample',on:()=>{st.seed++;gen()}},
+  btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
     {l:'Jump to the best \\(\\alpha\\)',on:()=>{st.lnAlpha=st.best;sA.set(st.best);draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'a',l:'\\(\\alpha\\)'},{k:'lam',l:'\\(\\lambda=\\alpha/\\beta\\)'},{k:'nml',l:'\\(\\lVert\\mathbf{w}_{\\mathrm{ML}}\\rVert\\)'},
@@ -327,7 +327,7 @@ export function p30(root){
     '\\mathbf{w}^{\\mathrm T}\\mathbf{w}\\right\\}\\)<br>'+
     '\\( \\mathbf{w}_{\\mathrm{MAP}}=\\arg\\min_{\\mathbf{w}}\\left[\\dfrac{\\beta}{2}\\sum_{n=1}^{N}'+
     '\\{y(x_n,\\mathbf{w})-t_n\\}^{2}+\\dfrac{\\alpha}{2}\\mathbf{w}^{\\mathrm T}\\mathbf{w}\\right]\\)');
-  note(root,['The prior is one bell \\(\\mathcal N(w_j\\mid0,\\alpha^{-1})\\) per coefficient.',
+  note(root,['The prior distribution \\(\\mathcal N(\\mathbf{w}\\mid0,\\alpha^{-1}\\mathbf{I})\\) is one Gaussian per coefficient.',
     '\\(\\mathbf{w}_{\\mathrm{ML}}\\) ignores it, \\(\\mathbf{w}_{\\mathrm{MAP}}\\) is pulled towards \\(\\mathbf{0}\\).',
     'MAP is regularization with \\(\\lambda=\\alpha/\\beta\\).']);
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
@@ -479,7 +479,7 @@ export function p33(root){
   note(root,['The marginal is a weighted mixture, not an average shape.',
     'A mix of 1 : 0 collapses it onto one conditional.',
     '\\(X\\to\\mathbf{w}\\) and \\(Y\\to t\\): the same sum, one slide later.',
-    '\\(s^{2}(x)=\\beta^{-1}+\\mathrm{Var}_{\\mathbf{w}}(y)\\): noise plus spread.']);
+    '\\(s^{2}(x)=\\beta^{-1}+\\mathrm{Var}_{\\mathbf{w}}(y)\\): noise plus the uncertainty in \\(\\mathbf{w}\\).']);
   function draw(){const pf=st.pF,pm=1-pf,mean=pm*st.muM+pf*st.muF,
     sec=pm*(st.sdM*st.sdM+st.muM*st.muM)+pf*(st.sdF*st.sdF+st.muF*st.muF);
     setBar(pf);

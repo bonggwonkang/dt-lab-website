@@ -33,9 +33,9 @@ export function p66(root){
     on:v=>{st.m1=v;gen()}});
   slider(b.pn,{label:'Mean \\(\\mu_2\\)',min:.2,max:4,step:.1,value:st.m2,fmt:v=>fmt(v,1),
     on:v=>{st.m2=v;gen()}});
-  slider(b.pn,{label:'Spread \\(\\sigma_1\\)',min:.3,max:2,step:.05,value:st.s1,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'Standard deviation \\(\\sigma_1\\)',min:.3,max:2,step:.05,value:st.s1,fmt:v=>fmt(v,2),
     on:v=>{st.s1=v;gen()}});
-  slider(b.pn,{label:'Spread \\(\\sigma_2\\)',min:.3,max:2,step:.05,value:st.s2,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'Standard deviation \\(\\sigma_2\\)',min:.3,max:2,step:.05,value:st.s2,fmt:v=>fmt(v,2),
     on:v=>{st.s2=v;gen()}});
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'x0',l:'\\(x_0\\), where the curves cross'},
@@ -43,7 +43,7 @@ export function p66(root){
     {k:'e1',l:'\\(\\int_{\\mathcal R_2}p(x,\\mathcal C_1)\\,dx\\)'},
     {k:'pm',l:'\\(p(\\text{mistake})\\)',big:true},
     {k:'best',l:'\\(p(\\text{mistake})\\) at \\(\\hat x=x_0\\)'},
-    {k:'red',l:'Excess, the red area'}]);
+    {k:'red',l:'Excess, the red region'}]);
 
   eqbar(root,'The probability of a mistake',
     '\\( p(\\text{mistake})=p(\\mathbf{x}\\in\\mathcal R_1,\\mathcal C_2)+p(\\mathbf{x}\\in\\mathcal R_2,\\mathcal C_1)'+
@@ -51,7 +51,7 @@ export function p66(root){
     'with \\( p(x,\\mathcal C_k)=p(x\\mid\\mathcal C_k)p(\\mathcal C_k)\\), \\(\\mathcal R_1=\\{x<\\hat x\\}\\), '+
     '\\(\\mathcal R_2=\\{x\\geq\\hat x\\}\\), and the minimum at \\(\\hat x=x_0\\), '+
     'where \\(p(x,\\mathcal C_1)=p(x,\\mathcal C_2)\\), that is where \\(p(\\mathcal C_k\\mid x)\\) is largest');
-  note(root,['Every \\(x\\) has a true class and a decided class; mistakes are the two off-diagonal pairs.',
+  note(root,['Every \\(x\\) has a true class and an assigned class; a mistake is the two that differ.',
     'Green and blue never move, so only the red area changes with \\(\\hat x\\).',
     'Red vanishes at \\(\\hat x=x_0\\), which is the minimum of the lower curve.',
     'Raise \\(p(\\mathcal C_1)\\) and \\(x_0\\) slides towards \\(\\mathcal C_2\\): a rarer class needs stronger evidence.']);
