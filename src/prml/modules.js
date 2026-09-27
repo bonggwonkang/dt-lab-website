@@ -7,6 +7,7 @@ import{p45,p49}from'./modules-select.js'
 import{p56}from'./modules-dim.js'
 import{p66}from'./modules-decide.js'
 import{p75}from'./modules-infer.js'
+import{p86}from'./modules-loss.js'
 
 /* ===== slide 10 · Setup: fitting a polynomial to a synthetic function (I) ===== */
 function p10(root){
@@ -227,7 +228,9 @@ const MODULES=[
  {p:66,pl:'66, 68',sec:S4,t:'Minimizing the misclassification rate',
   g:'Where to put the decision boundary \\(\\hat x\\) so that \\(p(\\text{mistake})\\) is as small as it can be.',b:p66},
  {p:75,pl:'75, 76, 77',sec:S4,t:'Three approaches to inference and decision',
-  g:'One classification problem seen through a generative model, a discriminative model and a discriminant function, and what each one can still answer when the prior, the loss matrix or the input changes.',b:p75}
+  g:'One classification problem seen through a generative model, a discriminative model and a discriminant function, and what each one can still answer when the prior, the loss matrix or the input changes.',b:p75},
+ {p:86,pl:'86, 88, 89, 90',sec:S4,t:'Expected loss for regression and its two terms',
+  g:'How the expected loss splits into a prediction error that \\(y(x)\\) can reduce and an intrinsic variance that it cannot, and which \\(y(x)\\) the Minkowski exponent \\(q\\) makes optimal.',b:p86}
 ];
 MODULES.forEach((m,i)=>{m.ready=true;m.no=i+1});
 export{MODULES};
