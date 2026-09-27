@@ -203,7 +203,7 @@ const MODULES=[
   g:'How the likelihood \\(p(\\mathbf{t}|\\mathbf{x},\\mathbf{w},\\beta)\\) responds as the coefficients \\(\\mathbf{w}\\) move.',b:p25},
  {p:28,sec:S2,t:'Maximum likelihood (MLE): the predictive distribution',
   g:'How \\(\\mathbf{w}_{\\mathrm{ML}}\\) and \\(\\beta_{\\mathrm{ML}}\\) are updated as the number of data points grows.',b:p28},
- {p:30,sec:S2,t:'Maximum posterior (MAP): the posterior over w (I)',
+ {p:30,sec:S2,t:'Maximum a posteriori (MAP): the posterior over w (I)',
   g:'How the prior \\(p(\\mathbf{w}|\\alpha)\\) pulls \\(\\mathbf{w}_{\\mathrm{MAP}}\\) away from \\(\\mathbf{w}_{\\mathrm{ML}}\\).',b:p30},
  {p:33,sec:S3,t:'Bayesian polynomial function (I)',
   g:'What “integrating a variable out” means, first for a two-valued \\(X\\) and a continuous \\(Y\\), then for two candidate coefficient vectors \\(\\mathbf{w}^{(1)},\\mathbf{w}^{(2)}\\) of the polynomial example.',b:p33},
