@@ -33,11 +33,11 @@ export function p86(root){
   const B=new Plot(c2,{h:210,xlim:[.05,.6],ylim:[0,1],xl:'\\(\\sigma\\)',yl:'\\(\\mathbb E[L]\\)',
     xt:[.1,.2,.3,.4,.5,.6],yt:[0,.5,1],pad:[16,18,28,46]});
 
-  slider(b.pn,{label:'Noise \\(\\sigma\\)',min:.05,max:.6,step:.01,value:st.sig,
+  slider(b.pn,{label:'\\(\\sigma\\)',min:.05,max:.6,step:.01,value:st.sig,
     fmt:v=>fmt(v,2),on:v=>{st.sig=v;draw()}});
-  slider(b.pn,{label:'Order \\(M\\) of the polynomial',min:0,max:9,step:1,value:st.M,
+  slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,
     on:v=>{st.M=v;draw()}});
-  slider(b.pn,{label:'Size \\(N\\) of the training set',min:4,max:50,step:1,value:st.N,
+  slider(b.pn,{label:'\\(N\\)',min:4,max:50,step:1,value:st.N,
     on:v=>{st.N=v;draw()}});
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'tot',l:'\\(\\mathbb E[L]\\) for \\(y(x,\\mathbf{w}^*)\\)',big:true},
@@ -45,7 +45,7 @@ export function p86(root){
     {k:'sm',l:'Sum of the two terms'}]);
   b.pn.appendChild(el('div','hr'));
   const cmp=readout(b.pn,[{k:'ct',l:'\\(\\mathbb E[L]\\) for \\(y(x)=\\mathbb E_t[t\\mid x]\\)'},
-    {k:'cp',l:'Its prediction error'}]);
+    {k:'cp',l:'Prediction error'}]);
 
   eqbar(root,'The expected loss and the two terms it is made of',
     '\\( \\mathbb E[L]=\\int\\!\\!\\int\\{y(x)-t\\}^{2}p(x,t)\\,dx\\,dt \\)<br>'+
@@ -135,18 +135,18 @@ export function p88(root){
   const ways=btnrow(b.pn,[{l:'Unimodal \\(p(t\\mid x)\\)',on:()=>pick(0)},
     {l:'Multimodal \\(p(t\\mid x)\\)',on:()=>pick(1)}]);
   b.pn.appendChild(el('div','hr'));
-  slider(b.pn,{label:'Minkowski exponent \\(q\\)',min:.1,max:4,step:.1,value:st.q,
+  slider(b.pn,{label:'\\(q\\)',min:.1,max:4,step:.1,value:st.q,
     fmt:v=>fmt(v,1),on:v=>{st.q=v;draw()}});
-  slider(b.pn,{label:'Noise \\(\\sigma\\)',min:.1,max:.5,step:.01,value:st.sig,
+  slider(b.pn,{label:'\\(\\sigma\\)',min:.1,max:.5,step:.01,value:st.sig,
     fmt:v=>fmt(v,2),on:v=>{st.sig=v;draw()}});
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'a',l:'\\(\\mathbb E[L_q]\\) at the conditional mean'},
-    {k:'b',l:'\\(\\mathbb E[L_q]\\) at the conditional median'},
-    {k:'c',l:'\\(\\mathbb E[L_q]\\) at the conditional mode'}]);
+  const out=readout(b.pn,[{k:'a',l:'\\(\\mathbb E[L_q]\\) at \\(\\mathbb E_t[t\\mid x]\\)'},
+    {k:'b',l:'\\(\\mathbb E[L_q]\\) at \\(\\mathrm{median}[t\\mid x]\\)'},
+    {k:'c',l:'\\(\\mathbb E[L_q]\\) at \\(\\mathrm{argmax}_t\\,p(t\\mid x)\\)'}]);
   b.pn.appendChild(el('div','hr'));
-  const den=readout(b.pn,[{k:'a',l:'\\(p(t\\mid x)\\) at the conditional mean'},
-    {k:'b',l:'\\(p(t\\mid x)\\) at the conditional median'},
-    {k:'c',l:'\\(p(t\\mid x)\\) at the conditional mode'}]);
+  const den=readout(b.pn,[{k:'a',l:'\\(p(t\\mid x)\\) at \\(\\mathbb E_t[t\\mid x]\\)'},
+    {k:'b',l:'\\(p(t\\mid x)\\) at \\(\\mathrm{median}[t\\mid x]\\)'},
+    {k:'c',l:'\\(p(t\\mid x)\\) at \\(\\mathrm{argmax}_t\\,p(t\\mid x)\\)'}]);
 
   eqbar(root,'The Minkowski loss and where its minimum sits',
     '\\( \\mathbb E[L_q]=\\int\\!\\!\\int|y(x)-t|^{q}p(x,t)\\,dx\\,dt \\), which is the squared loss for \\(q=2\\)<br>'+

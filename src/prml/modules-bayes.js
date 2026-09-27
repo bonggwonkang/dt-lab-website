@@ -17,19 +17,19 @@ export function p34(root){
   legend(b.pc,[{c:'var(--accent)',l:'\\(y(x,\\mathbf{w}),\\ \\mathbf{w}\\sim p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\)'},{c:'var(--fit)',l:'\\(m(x)\\)'},
     {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'}]);
   const P=new Plot(b.pc,{h:360,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  const sN=slider(b.pn,{label:'Data points \\(N\\)',min:0,max:25,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  const sN=slider(b.pn,{label:'\\(N\\)',min:0,max:25,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
-  slider(b.pn,{label:'Prior precision \\(\\ln\\alpha\\)',min:-10,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'\\(\\ln\\alpha\\)',min:-10,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
     on:v=>{st.lnAlpha=v;draw()}});
-  slider(b.pn,{label:'Noise precision \\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;draw()}});
   slider(b.pn,{label:'Curves drawn',min:1,max:60,step:1,value:st.K,on:v=>{st.K=v;draw()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
-    {l:'No data at all',on:()=>{st.N=0;sN.set(0);gen()}},
+    {l:'\\(N=0\\)',on:()=>{st.N=0;sN.set(0);gen()}},
     {l:'\\(N=15\\)',on:()=>{st.N=15;sN.set(15);gen()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'n',l:'Points seen'},{k:'sd0',l:'Posterior standard deviation of \\(w_0\\)'},
-    {k:'sdm',l:'Largest posterior standard deviation'},{k:'s1',l:'Standard deviation at \\(x=0.5\\)',big:true},
+  const out=readout(b.pn,[{k:'n',l:'\\(N\\)'},{k:'sd0',l:'\\(\\sqrt{S_{00}}\\)'},
+    {k:'sdm',l:'\\(\\max_j\\sqrt{S_{jj}}\\)'},{k:'s1',l:'Standard deviation at \\(x=0.5\\)',big:true},
     {k:'s2',l:'Standard deviation at \\(x=1\\)'}]);
   const cm=wchips(b.pn,'Posterior mean \\(\\mathbf{m}_N\\)'),cs=wchips(b.pn,'Posterior standard deviations');
   eqbar(root,'A distribution over the coefficients, not a single value',
@@ -71,18 +71,18 @@ export function p35(root){
     {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--accent)',l:'\\(y(x,\\mathbf{w}),\\ \\mathbf{w}\\sim p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\)'}]);
   const P=new Plot(b.pc,{h:360,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  slider(b.pn,{label:'Data points \\(N\\)',min:1,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  slider(b.pn,{label:'\\(N\\)',min:1,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
-  slider(b.pn,{label:'Prior precision \\(\\ln\\alpha\\)',min:-10,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'\\(\\ln\\alpha\\)',min:-10,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
     on:v=>{st.lnAlpha=v;draw()}});
-  slider(b.pn,{label:'Noise precision \\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;draw()}});
-  slider(b.pn,{label:'Inspect the width at \\(x_0\\)',min:0,max:1,step:.01,value:st.x0,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'\\(x_0\\)',min:0,max:1,step:.01,value:st.x0,fmt:v=>fmt(v,2),
     on:v=>{st.x0=v;draw()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'m',l:'\\(m(x_0)\\)'},{k:'s',l:'\\(s(x_0)\\)',big:true},{k:'sn',l:'noise part \\(\\beta^{-1}\\)'},
-    {k:'sm',l:'model part \\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi(x_0)\\)'},{k:'sh',l:'width at \\(x=0.05\\)'},{k:'sl',l:'width at \\(x=0.95\\)'}]);
+  const out=readout(b.pn,[{k:'m',l:'\\(m(x_0)\\)'},{k:'s',l:'\\(s(x_0)\\)',big:true},{k:'sn',l:'\\(\\beta^{-1}\\)'},
+    {k:'sm',l:'\\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi(x_0)\\)'},{k:'sh',l:'\\(s(0.05)\\)'},{k:'sl',l:'\\(s(0.95)\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Overlay curves from the posterior',st.samples,v=>{st.samples=v;P.draw()});
   eqbar(b.lc,'Marginalizing over w',
@@ -126,15 +126,15 @@ export function p36(root){
   const P=new Plot(b.pc,{h:340,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();mv=null;draw()}});
-  const sX=slider(b.pn,{label:'Evaluate the inner product at \\(x_0\\)',min:0,max:1,step:.01,value:st.x0,
+  const sX=slider(b.pn,{label:'\\(x_0\\)',min:0,max:1,step:.01,value:st.x0,
     fmt:v=>fmt(v,2),on:v=>{st.x0=v;draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
-  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}\\) to \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
-    {l:'Reset \\(\\mathbf{w}\\) to \\(\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
+  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
+    {l:'Set \\(\\mathbf{w}=\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'y',l:'\\(y(x_0,\\mathbf{w})=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\)',big:true},{k:'d',l:'Dimension \\(M+1\\)'},
-    {k:'big',l:'Largest single term'}]);
+    {k:'big',l:'Largest \\(w_jx_0^{j}\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show \\(w_j\\phi_j(x)\\)',st.basis,v=>{st.basis=v;P.draw()});
   const card=el('div','card plotcard');b.lc.appendChild(card);
@@ -174,17 +174,17 @@ export function p37(root){
   legend(b.pc,[{c:'var(--fit)',l:'\\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(m(x)\\pm s(x)\\)'},
     {c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'}]);
   const P=new Plot(b.pc,{h:250,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  const sN=slider(b.pn,{label:'Data points \\(N\\)',min:1,max:8,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  const sN=slider(b.pn,{label:'\\(N\\)',min:1,max:8,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:4,step:1,value:st.M,on:v=>{st.M=v;reset();gen()}});
-  slider(b.pn,{label:'Prior precision \\(\\ln\\alpha\\)',min:-8,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'\\(\\ln\\alpha\\)',min:-8,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
     on:v=>{st.lnAlpha=v;draw()}});
-  slider(b.pn,{label:'Noise precision \\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;draw()}});
   btnrow(b.pn,[{l:'Add a point',on:()=>{st.N=clamp(st.N+1,1,8);sN.set(st.N);gen()}},
     {l:'Draw a new data set',on:()=>{st.seed++;gen()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'n',l:'Points seen'},{k:'d',l:'Matrix size \\((M+1)\\)'},
-    {k:'a',l:'\\(\\alpha\\)'},{k:'tr',l:'Trace of \\(\\mathbf{S}\\)'}]);
+  const out=readout(b.pn,[{k:'n',l:'\\(N\\)'},{k:'d',l:'\\((M+1)\\times(M+1)\\)'},
+    {k:'a',l:'\\(\\alpha\\)'},{k:'tr',l:'\\(\\mathrm{tr}\\,\\mathbf{S}\\)'}]);
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const holder=el('div','matrow');card.appendChild(holder);
   let views=null;
@@ -231,17 +231,17 @@ export function p38(root){
   const b=board(root,'Controls');
   const P=new Plot(b.pc,{h:330,xlim:[-1.4,2.6],ylim:[-4.2,1.2],xl:'\\(w_0\\)',yl:'\\(w_1\\)',
     xt:[-1,0,1,2],yt:[-4,-2,0],pad:[16,18,28,40]});
-  const sN=slider(b.pn,{label:'Data points \\(N\\)',min:0,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
-  slider(b.pn,{label:'Prior precision \\(\\ln\\alpha\\)',min:-8,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
+  const sN=slider(b.pn,{label:'\\(N\\)',min:0,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  slider(b.pn,{label:'\\(\\ln\\alpha\\)',min:-8,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
     on:v=>{st.lnAlpha=v;draw()}});
-  slider(b.pn,{label:'Noise precision \\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;draw()}});
-  btnrow(b.pn,[{l:'Move \\(\\mathbf{w}\\) to the mean',on:()=>{st.w=st.post.m.slice();draw()}},
+  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}=\\mathbf{m}_N\\)',on:()=>{st.w=st.post.m.slice();draw()}},
     {l:'Draw a new data set',on:()=>{st.seed++;gen()}},
-    {l:'No data at all',on:()=>{st.N=0;sN.set(0);gen()}}]);
+    {l:'\\(N=0\\)',on:()=>{st.N=0;sN.set(0);gen()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'q',l:'\\(-\\tfrac12\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{w}\\)'},{k:'l',l:'\\(+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N\\)'},{k:'c',l:'\\(+C_3\\) (constant)'},
-    {k:'s',l:'\\(\\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})\\)',big:true},{k:'md',l:'The quadratic form at \\(\\mathbf{w}\\)'}]);
+  const out=readout(b.pn,[{k:'q',l:'\\(-\\tfrac12\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{w}\\)'},{k:'l',l:'\\(+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N\\)'},{k:'c',l:'\\(+C_3\\)'},
+    {k:'s',l:'\\(\\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})\\)',big:true},{k:'md',l:'\\((\\mathbf{w}-\\mathbf{m}_N)^{\\mathrm T}\\mathbf{S}^{-1}(\\mathbf{w}-\\mathbf{m}_N)\\)'}]);
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const holder=el('div','matrow');card.appendChild(holder);
   const vm=matview(holder,{cap:'\\(\\mathbf{m}_N\\)',rows:2,cols:1,digits:3});
@@ -293,15 +293,15 @@ export function p39(root){
     {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'}]);
   const P=new Plot(b.pc,{h:380,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
-  slider(b.pn,{label:'Prior precision \\(\\ln\\alpha\\)',min:-10,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'\\(\\ln\\alpha\\)',min:-10,max:6,step:.25,value:st.lnAlpha,fmt:v=>fmt(v,2),
     on:v=>{st.lnAlpha=v;draw()}});
-  slider(b.pn,{label:'Noise precision \\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;draw()}});
   btnrow(b.pn,[{l:'Clear the points',on:()=>{st.xs=[];st.ts=[];draw()}},
     {l:'10 points from \\(\\sin(2\\pi x)\\)',on:()=>{const d=makeData(10,.25,++st.seed);
       st.xs=d.xs.slice();st.ts=d.ts.slice();draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'n',l:'Points placed'},{k:'s1',l:'\\(s(x)\\) at \\(x=0.1\\)'},
+  const out=readout(b.pn,[{k:'n',l:'\\(N\\)'},{k:'s1',l:'\\(s(x)\\) at \\(x=0.1\\)'},
     {k:'s2',l:'\\(s(x)\\) at \\(x=0.5\\)'},{k:'s3',l:'\\(s(x)\\) at \\(x=0.9\\)'},{k:'wid',l:'Widest point of the band',big:true}]);
   eqbar(root,'The predictive distribution, once more',
     '\\( p(t\\mid x,\\mathbf{x},\\mathbf{t})=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\), '+

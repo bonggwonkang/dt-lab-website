@@ -22,19 +22,19 @@ export function p92(root){
   const c2=el('div','card plotcard');b.lc.appendChild(c2);
   legend(c2,[{c:'var(--fit)',l:'\\(h(x)=-\\log_2 p(x)\\)'},{c:'var(--truth)',t:'dash',l:'\\(H[x]\\)'},
     {c:'var(--accent)',t:'dash',l:'\\(\\hat x\\)'}]);
-  const B=new Plot(c2,{h:210,xlim:[-7,7],ylim:[0,9],xl:'\\(x\\)',yl:'\\(h(x)\\), bits',
+  const B=new Plot(c2,{h:210,xlim:[-7,7],ylim:[0,9],xl:'\\(x\\)',yl:'\\(h(x)\\)',
     xt:[-6,-3,0,3,6],yt:[0,3,6,9],pad:[16,18,28,40]});
 
-  slider(b.pn,{label:'Mean \\(\\mu\\)',min:-1.5,max:1.5,step:.05,value:st.mu,
+  slider(b.pn,{label:'\\(\\mu\\)',min:-1.5,max:1.5,step:.05,value:st.mu,
     fmt:v=>fmt(v,2),on:v=>{st.mu=v;draw()}});
-  slider(b.pn,{label:'Standard deviation \\(\\sigma\\)',min:.45,max:1.8,step:.01,value:st.sd,
+  slider(b.pn,{label:'\\(\\sigma\\)',min:.45,max:1.8,step:.01,value:st.sd,
     fmt:v=>fmt(v,2),on:v=>{st.sd=v;draw()}});
-  const sX=slider(b.pn,{label:'Observed value \\(\\hat x\\)',min:-7,max:7,step:.05,value:st.x0,
+  const sX=slider(b.pn,{label:'\\(\\hat x\\)',min:-7,max:7,step:.05,value:st.x0,
     fmt:v=>fmt(v,2),on:v=>{st.x0=v;draw()}});
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'H',l:'Entropy \\(H[x]\\), bits',big:true},
-    {k:'p',l:'\\(p(\\hat x)\\)'},{k:'h',l:'Information \\(h(\\hat x)\\), bits'},
-    {k:'h0',l:'Information at \\(x=\\mu\\), bits'}]);
+  const out=readout(b.pn,[{k:'H',l:'\\(H[x]\\)',big:true},
+    {k:'p',l:'\\(p(\\hat x)\\)'},{k:'h',l:'\\(h(\\hat x)\\)'},
+    {k:'h0',l:'\\(h(\\mu)\\)'}]);
 
   eqbar(root,'The information content and its expectation',
     '\\( h(x)=-\\log_2 p(x) \\), so a less probable \\(x\\) carries more information<br>'+
@@ -61,7 +61,7 @@ export function p92(root){
     p.path(hx,c.fit,2.6);
     p.seg(st.x0,0,clamp(hx(st.x0),0,9),c.acc,1.6,[5,4]);
     p.mark(st.x0,clamp(hx(st.x0),0,9),c.acc,4.4)};
-  B.hoverFmt=x=>[{t:'x = '+fmt(x,2)},{t:'h(x) = '+fmt(hx(x),3)+' bits',c:B.col.fit}];
+  B.hoverFmt=x=>[{t:'x = '+fmt(x,2)},{t:'h(x) = '+fmt(hx(x),3),c:B.col.fit}];
   B.onClick=x=>{st.x0=clamp(Math.round(x*20)/20,-7,7);sX.set(st.x0);draw()};
 
   draw()}
@@ -86,19 +86,19 @@ export function p100(root){
   const B=new Plot(c2,{h:200,xlim:[-6,6],ylim:[-.3,.6],xl:'\\(x\\)',yl:'integrand',
     xt:[-6,-3,0,3,6],yt:[-.2,0,.2,.4],pad:[16,18,28,44]});
 
-  slider(b.pn,{label:'Mean of \\(p\\)',min:-2,max:2,step:.05,value:st.mp,
+  slider(b.pn,{label:'\\(\\mu_p\\)',min:-2,max:2,step:.05,value:st.mp,
     fmt:v=>fmt(v,2),on:v=>{st.mp=v;draw()}});
-  slider(b.pn,{label:'Standard deviation of \\(p\\)',min:.45,max:2,step:.01,value:st.sp,
+  slider(b.pn,{label:'\\(\\sigma_p\\)',min:.45,max:2,step:.01,value:st.sp,
     fmt:v=>fmt(v,2),on:v=>{st.sp=v;draw()}});
-  slider(b.pn,{label:'Mean of \\(q\\)',min:-2,max:2,step:.05,value:st.mq,
+  slider(b.pn,{label:'\\(\\mu_q\\)',min:-2,max:2,step:.05,value:st.mq,
     fmt:v=>fmt(v,2),on:v=>{st.mq=v;draw()}});
-  slider(b.pn,{label:'Standard deviation of \\(q\\)',min:.45,max:2,step:.01,value:st.sq,
+  slider(b.pn,{label:'\\(\\sigma_q\\)',min:.45,max:2,step:.01,value:st.sq,
     fmt:v=>fmt(v,2),on:v=>{st.sq=v;draw()}});
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'kl',l:'\\(\\mathrm{KL}(p\\|q)\\), their difference',big:true},
-    {k:'cr',l:'\\(\\mathbb E_p[-\\ln q]\\), the left term'},
-    {k:'en',l:'\\(\\mathbb E_p[-\\ln p]\\), the right term'},
-    {k:'cf',l:'\\(\\mathrm{KL}(p\\|q)\\) in closed form'}]);
+  const out=readout(b.pn,[{k:'kl',l:'\\(\\mathrm{KL}(p\\|q)\\)',big:true},
+    {k:'cr',l:'\\(\\mathbb E_p[-\\ln q]\\)'},
+    {k:'en',l:'\\(\\mathbb E_p[-\\ln p]\\)'},
+    {k:'cf',l:'\\(\\ln(\\sigma_q/\\sigma_p)+\\tfrac{\\sigma_p^{2}+(\\mu_p-\\mu_q)^{2}}{2\\sigma_q^{2}}-\\tfrac12\\)'}]);
 
   eqbar(root,'The relative entropy, or KL divergence',
     '\\( \\mathrm{KL}(p\\|q)=\\underbrace{-\\int p(x)\\ln q(x)\\,dx}_{\\mathbb E_p[-\\ln q]}'+
@@ -151,25 +151,25 @@ export function p102(root){
   const B=new Plot(c2,{h:200,xlim:[-2,3],ylim:[0,1],xl:'mean of \\(q(x\\mid\\theta)\\)',
     yl:'\\(\\sum_n\\{-\\ln q\\}\\)',xt:[-2,-1,0,1,2,3],yt:[0,.5,1],pad:[16,18,28,46]});
 
-  slider(b.pn,{label:'Number of training points \\(N\\)',min:5,max:80,step:1,value:st.N,
+  slider(b.pn,{label:'\\(N\\)',min:5,max:80,step:1,value:st.N,
     on:v=>{st.N=v;draw()}});
   const sM=slider(b.pn,{label:'Mean of \\(q(x\\mid\\theta)\\)',min:-2,max:3,step:.02,value:st.mq,
     fmt:v=>fmt(v,2),on:v=>{st.mq=v;draw()}});
   const sS=slider(b.pn,{label:'Standard deviation of \\(q(x\\mid\\theta)\\)',min:.45,max:2.5,step:.01,
     value:st.sq,fmt:v=>fmt(v,2),on:v=>{st.sq=v;draw()}});
-  btnrow(b.pn,[{l:'Set \\(\\theta\\) to the maximum likelihood solution',on:()=>{
+  btnrow(b.pn,[{l:'Set \\(\\boldsymbol\\theta_{\\mathrm{ML}}\\)',on:()=>{
     const d=xs(),m=d.reduce((a,c)=>a+c,0)/d.length;
     let v=0;d.forEach(z=>{v+=(z-m)*(z-m)});
     st.mq=clamp(Math.round(m*50)/50,-2,3);st.sq=clamp(Math.round(Math.sqrt(v/d.length)*100)/100,.45,2.5);
     sM.set(st.mq);sS.set(st.sq);draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'nl',l:'\\(\\sum_n\\{-\\ln q(x_n\\mid\\theta)\\}\\)',big:true},
-    {k:'cn',l:'\\(\\sum_n\\ln p(x_n)\\), no \\(\\theta\\) in it'},
-    {k:'kl',l:'\\(\\mathrm{KL}(p\\|q)\\), the sum of the two'},
-    {k:'lo',l:'Its lowest value, at \\(\\theta_{\\mathrm{ML}}\\)'}]);
+    {k:'cn',l:'\\(\\sum_n\\ln p(x_n)\\)'},
+    {k:'kl',l:'\\(\\mathrm{KL}(p\\|q)\\)'},
+    {k:'lo',l:'\\(\\sum_n\\{-\\ln q(x_n\\mid\\theta_{\\mathrm{ML}})\\}\\)'}]);
   b.pn.appendChild(el('div','hr'));
-  const ml=readout(b.pn,[{k:'m',l:'Mean of the training points'},
-    {k:'s',l:'Standard deviation of the training points'}]);
+  const ml=readout(b.pn,[{k:'m',l:'\\(\\mu_{\\mathrm{ML}}=\\tfrac{1}{N}\\sum_n x_n\\)'},
+    {k:'s',l:'\\(\\sigma_{\\mathrm{ML}}\\)'}]);
 
   eqbar(root,'The same divergence, approximated by a sum over the training points',
     '\\( \\mathrm{KL}(p\\|q)\\approx\\sum_{n=1}^{N}\\left\\{'+

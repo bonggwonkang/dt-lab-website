@@ -19,31 +19,31 @@ export function p66(root){
   /* slide 68: how the total error moves with the boundary */
   const c2=el('div','card plotcard');b.lc.appendChild(c2);
   legend(c2,[{c:'var(--accent)',l:'\\(p(\\text{mistake})\\)'},
-    {c:'var(--muted)',t:'dash',l:'\\(p(\\text{mistake})\\) at \\(\\hat x=x_0\\)'}]);
+    {c:'var(--muted)',t:'dash',l:'\\(\\min_{\\hat x}p(\\text{mistake})\\)'}]);
   const B=new Plot(c2,{h:230,xlim:[-5,5],ylim:[0,.6],xl:'\\(\\hat x\\)',yl:'\\(p(\\text{mistake})\\)',
     xt:[-4,-2,0,2,4],yt:[0,.3,.6],pad:[16,18,28,44]});
 
-  const sX=slider(b.pn,{label:'Decision boundary \\(\\hat x\\)',min:-5,max:5,step:.05,value:st.xh,
+  const sX=slider(b.pn,{label:'\\(\\hat x\\)',min:-5,max:5,step:.05,value:st.xh,
     fmt:v=>fmt(v,2),on:v=>{st.xh=v;paint()}});
-  btnrow(b.pn,[{l:'Put \\(\\hat x\\) at \\(x_0\\)',on:()=>{st.xh=Math.round(st.x0*20)/20;sX.set(st.xh);paint()}}]);
+  btnrow(b.pn,[{l:'Set \\(\\hat x=x_0\\)',on:()=>{st.xh=Math.round(st.x0*20)/20;sX.set(st.xh);paint()}}]);
   b.pn.appendChild(el('div','hr'));
-  slider(b.pn,{label:'Prior \\(p(\\mathcal C_1)\\)',min:.05,max:.95,step:.01,value:st.pi1,
+  slider(b.pn,{label:'\\(p(\\mathcal C_1)\\)',min:.05,max:.95,step:.01,value:st.pi1,
     fmt:v=>fmt(v,2),on:v=>{st.pi1=v;gen()}});
-  slider(b.pn,{label:'Mean \\(\\mu_1\\)',min:-4,max:-.2,step:.1,value:st.m1,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'\\(\\mu_1\\)',min:-4,max:-.2,step:.1,value:st.m1,fmt:v=>fmt(v,1),
     on:v=>{st.m1=v;gen()}});
-  slider(b.pn,{label:'Mean \\(\\mu_2\\)',min:.2,max:4,step:.1,value:st.m2,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'\\(\\mu_2\\)',min:.2,max:4,step:.1,value:st.m2,fmt:v=>fmt(v,1),
     on:v=>{st.m2=v;gen()}});
-  slider(b.pn,{label:'Standard deviation \\(\\sigma_1\\)',min:.3,max:2,step:.05,value:st.s1,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'\\(\\sigma_1\\)',min:.3,max:2,step:.05,value:st.s1,fmt:v=>fmt(v,2),
     on:v=>{st.s1=v;gen()}});
-  slider(b.pn,{label:'Standard deviation \\(\\sigma_2\\)',min:.3,max:2,step:.05,value:st.s2,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'\\(\\sigma_2\\)',min:.3,max:2,step:.05,value:st.s2,fmt:v=>fmt(v,2),
     on:v=>{st.s2=v;gen()}});
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'x0',l:'\\(x_0\\), where the curves cross'},
+  const out=readout(b.pn,[{k:'x0',l:'\\(x_0\\)'},
     {k:'e2',l:'\\(\\int_{\\mathcal R_1}p(x,\\mathcal C_2)\\,dx\\)'},
     {k:'e1',l:'\\(\\int_{\\mathcal R_2}p(x,\\mathcal C_1)\\,dx\\)'},
     {k:'pm',l:'\\(p(\\text{mistake})\\)',big:true},
-    {k:'best',l:'\\(p(\\text{mistake})\\) at \\(\\hat x=x_0\\)'},
-    {k:'red',l:'Excess, the red region'}]);
+    {k:'best',l:'\\(\\min_{\\hat x}p(\\text{mistake})\\)'},
+    {k:'red',l:'The red region'}]);
 
   eqbar(root,'The probability of a mistake',
     '\\( p(\\text{mistake})=p(\\mathbf{x}\\in\\mathcal R_1,\\mathcal C_2)+p(\\mathbf{x}\\in\\mathcal R_2,\\mathcal C_1)'+

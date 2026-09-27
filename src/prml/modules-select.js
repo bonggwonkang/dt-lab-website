@@ -38,7 +38,7 @@ export function p45(root){
   slider(b.pn,{label:'Test points \\(N_{\\mathrm{Test}}\\)',min:5,max:200,step:5,value:st.nte,
     on:v=>{st.nte=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
-  slider(b.pn,{label:'Noise \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'\\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
     on:v=>{st.sigma=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}}]);
   b.pn.appendChild(el('div','hr'));
@@ -46,9 +46,9 @@ export function p45(root){
     {k:'tr',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{train}}(\\lambda^{*})\\)'},
     {k:'va',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{val}}(\\lambda^{*})\\)'},
     {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(\\lambda^{*})\\)',big:true},
-    {k:'best',l:'Lowest \\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\) on the grid'},
-    {k:'bl',l:'\\(\\ln\\lambda\\) that reaches it'},
-    {k:'gap',l:'Gap to that lowest value'}]);
+    {k:'best',l:'\\(\\min_{\\lambda} E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
+    {k:'bl',l:'\\(\\arg\\min_{\\ln\\lambda} E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
+    {k:'gap',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(\\lambda^{*})-\\min_{\\lambda}E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'}]);
   eqbar(root,'Training, validation and test',
     '\\( \\mathbf{w}^{*}_{\\mathrm{MAP}}(\\lambda)=\\arg\\min_{\\mathbf{w}}\\left[\\dfrac{1}{2}'+
     '\\sum_{n=1}^{N_{\\mathrm{Train}}}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}+\\dfrac{\\lambda}{2}'+
@@ -115,18 +115,18 @@ export function p49(root){
     {c:'var(--accent)',t:'dash',l:'\\(M\\)'}]);
   const I=new Plot(c2,{h:230,xlim:[-.6,9.6],ylim:[0,1],xl:'\\(M\\)',yl:'\\(\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-\\text{penalty}\\)',
     xt:[0,3,6,9],yt:[0,1],pad:[16,18,28,46]});
-  slider(b.pn,{label:'Data points \\(N\\)',min:10,max:100,step:1,value:st.N,on:v=>{st.N=v;gen()}});
-  slider(b.pn,{label:'Folds \\(S\\)',min:2,max:10,step:1,value:st.S,on:v=>{st.S=v;draw()}});
+  slider(b.pn,{label:'\\(N\\)',min:10,max:100,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  slider(b.pn,{label:'\\(S\\)',min:2,max:10,step:1,value:st.S,on:v=>{st.S=v;draw()}});
   const sM=slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;paint()}});
-  slider(b.pn,{label:'Noise \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'\\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
     on:v=>{st.sigma=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}}]);
-  btnrow(b.pn,[{l:'Go to the \\(\\mathrm{CV}\\) choice',on:()=>{st.M=st.mcv;sM.set(st.M);paint()}}]);
+  btnrow(b.pn,[{l:'Set \\(\\arg\\min_M E_{\\mathrm{CV}}\\)',on:()=>{st.M=st.mcv;sM.set(st.M);paint()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'cv',l:'\\(M\\) chosen by \\(\\mathrm{CV}\\)'},
-    {k:'aic',l:'\\(M\\) chosen by \\(\\mathrm{AIC}\\)'},{k:'bic',l:'\\(M\\) chosen by \\(\\mathrm{BIC}\\)'},
-    {k:'mte',l:'\\(M\\) with the lowest \\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
-    {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\) at this \\(M\\)',big:true},
+  const out=readout(b.pn,[{k:'cv',l:'\\(\\arg\\min_M E_{\\mathrm{CV}}\\)'},
+    {k:'aic',l:'\\(\\arg\\max_M \\mathrm{AIC}\\)'},{k:'bic',l:'\\(\\arg\\max_M \\mathrm{BIC}\\)'},
+    {k:'mte',l:'\\(\\arg\\min_M E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
+    {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(M)\\)',big:true},
     {k:'runs',l:'Training runs, \\(\\mathrm{CV}\\)'},
     {k:'runs1',l:'Training runs, \\(\\mathrm{AIC}\\) or \\(\\mathrm{BIC}\\)'}]);
   eqbar(root,'Two ways to choose a model without a test set',

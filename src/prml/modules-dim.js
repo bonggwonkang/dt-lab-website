@@ -37,23 +37,23 @@ export function p56(root){
   const C=new Plot(c3,{h:230,xlim:[-.05,8.05],ylim:[-.02,.88],xl:'\\(r\\)',yl:'\\(p(r)\\)',
     xt:[0,2,4,6,8],yt:[0,.4,.8],pad:[16,18,28,46]});
 
-  const sD=slider(b.pn,{label:'Dimension \\(D\\)',min:1,max:20,step:1,value:st.D,on:v=>{st.D=v;draw()}});
+  const sD=slider(b.pn,{label:'\\(D\\)',min:1,max:20,step:1,value:st.D,on:v=>{st.D=v;draw()}});
   b.pn.appendChild(el('div','hr'));
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
   const oA=readout(b.pn,[{k:'c',l:'\\(\\binom{D+M}{M}\\)',big:true},
     {k:'e',l:'Terms of order exactly \\(M\\)'},{k:'p',l:'\\(D^{M}\\)'}]);
   b.pn.appendChild(el('div','hr'));
-  const sE=slider(b.pn,{label:'Shell thickness \\(\\epsilon\\)',min:0,max:1,step:.01,value:st.eps,
+  const sE=slider(b.pn,{label:'\\(\\epsilon\\)',min:0,max:1,step:.01,value:st.eps,
     fmt:v=>fmt(v,2),on:v=>{st.eps=v;draw()}});
   const oB=readout(b.pn,[{k:'f',l:'\\(1-(1-\\epsilon)^{D}\\)',big:true},
     {k:'i',l:'\\((1-\\epsilon)^{D}\\)'}]);
   b.pn.appendChild(el('div','hr'));
-  const sA=slider(b.pn,{label:'Inner radius \\(r_1\\)',min:0,max:8,step:.05,value:st.a,
+  const sA=slider(b.pn,{label:'\\(r_1\\)',min:0,max:8,step:.05,value:st.a,
     fmt:v=>fmt(v,2),on:v=>{st.a=Math.min(v,st.b);sA.set(st.a);draw()}});
-  const sB=slider(b.pn,{label:'Outer radius \\(r_2\\)',min:0,max:8,step:.05,value:st.b,
+  const sB=slider(b.pn,{label:'\\(r_2\\)',min:0,max:8,step:.05,value:st.b,
     fmt:v=>fmt(v,2),on:v=>{st.b=Math.max(v,st.a);sB.set(st.b);draw()}});
   const oC=readout(b.pn,[{k:'m',l:'\\(\\int_{r_1}^{r_2}p(r)\\,dr\\)',big:true},
-    {k:'pk',l:'Peak at \\(r=\\sqrt{D-1}\\)'}]);
+    {k:'pk',l:'\\(\\arg\\max_r p(r)\\)'}]);
 
   eqbar(root,'Three ways the dimension bites',
     '\\( y(\\mathbf{x},\\mathbf{w})=w_0+\\sum_{i=1}^{D}w_ix_i+\\sum_{i=1}^{D}\\sum_{j=1}^{D}w_{ij}x_ix_j+\\cdots\\), '+

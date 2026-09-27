@@ -33,20 +33,20 @@ export function p75(root){
   const ways=btnrow(b.pn,[{l:'(I) Generative',on:()=>pick(0)},{l:'(II) Discriminative',on:()=>pick(1)},
     {l:'(III) Discriminant',on:()=>pick(2)}]);
   b.pn.appendChild(el('div','hr'));
-  slider(b.pn,{label:'Class prior \\(p(\\mathcal C_1)\\)',min:.05,max:.95,step:.01,value:st.pi,
+  slider(b.pn,{label:'\\(p(\\mathcal C_1)\\)',min:.05,max:.95,step:.01,value:st.pi,
     fmt:v=>fmt(v,2),on:v=>{st.pi=v;draw()}});
-  slider(b.pn,{label:'Loss \\(L_{12}\\), true \\(\\mathcal C_1\\) called \\(\\mathcal C_2\\)',
+  slider(b.pn,{label:'\\(L_{12}\\)',
     min:1,max:20,step:1,value:st.l12,on:v=>{st.l12=v;draw()}});
-  slider(b.pn,{label:'Loss \\(L_{21}\\), true \\(\\mathcal C_2\\) called \\(\\mathcal C_1\\)',
+  slider(b.pn,{label:'\\(L_{21}\\)',
     min:1,max:20,step:1,value:st.l21,on:v=>{st.l21=v;draw()}});
-  slider(b.pn,{label:'Reject threshold \\(\\theta\\)',min:.5,max:.99,step:.01,value:st.th,
+  slider(b.pn,{label:'\\(\\theta\\)',min:.5,max:.99,step:.01,value:st.th,
     fmt:v=>fmt(v,2),on:v=>{st.th=v;draw()}});
-  const sT=slider(b.pn,{label:'Test input \\(\\hat x\\)',min:0,max:1,step:.005,value:st.x0,
+  const sT=slider(b.pn,{label:'\\(\\hat x\\)',min:0,max:1,step:.005,value:st.x0,
     fmt:v=>fmt(v,3),on:v=>{st.x0=v;draw()}});
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'bd',l:'Decision boundary'},
     {k:'pm',l:'\\(p(\\text{mistake})\\)'},{k:'el',l:'\\(\\mathbb E[L]\\)',big:true},
-    {k:'rj',l:'Rejected share of \\(p(x)\\)'},{k:'pv',l:'\\(p(\\hat x)\\), the evidence'},
+    {k:'rj',l:'\\(\\int_{\\text{reject}}p(x)\\,dx\\)'},{k:'pv',l:'\\(p(\\hat x)\\)'},
     {k:'po',l:'\\(p(\\mathcal C_1\\mid\\hat x)\\)'}]);
 
   eqbar(root,'Three routes from data to a decision',

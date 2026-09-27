@@ -17,11 +17,11 @@ function p10(root){
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--muted)',t:'dash',l:'\\(\\epsilon_n\\)'}]);
   const P=new Plot(b.pc,{h:340});
-  const out=readout(b.pn,[{k:'N',l:'Points \\(N\\)'},{k:'sg',l:'Noise \\(\\sigma\\)'},
+  const out=readout(b.pn,[{k:'N',l:'\\(N\\)'},{k:'sg',l:'\\(\\sigma\\)'},
     {k:'me',l:'Mean of \\(\\epsilon\\)'},{k:'se',l:'Standard deviation of \\(\\epsilon\\)'}]);
   b.pn.appendChild(el('div','hr'));
-  const sN=slider(b.pn,{label:'Number of points \\(N\\)',min:2,max:100,step:1,value:st.N,on:v=>{st.N=v;gen()}});
-  const sS=slider(b.pn,{label:'Noise \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
+  const sN=slider(b.pn,{label:'\\(N\\)',min:2,max:100,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  const sS=slider(b.pn,{label:'\\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
     {l:'Reset \\((N=10,\\ \\sigma=0.25)\\)',on:()=>{st.N=10;st.sigma=.25;sN.set(10);sS.set(.25);gen()}}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
@@ -54,11 +54,11 @@ function p11(root){
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
-  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}\\) to \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
-    {l:'Double every \\(w_j\\)',on:()=>{st.w=st.w.map(v=>v*2);st.rng=niceRange(Math.max.apply(null,st.w.map(Math.abs))||1);W.sync();draw()}},
-    {l:'Reset \\(\\mathbf{w}\\) to \\(\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
+  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
+    {l:'\\(\\mathbf{w}\\to2\\mathbf{w}\\)',on:()=>{st.w=st.w.map(v=>v*2);st.rng=niceRange(Math.max.apply(null,st.w.map(Math.abs))||1);W.sync();draw()}},
+    {l:'Set \\(\\mathbf{w}=\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'M',l:'Order \\(M\\)'},{k:'np',l:'Coefficients \\(M+1\\)'},{k:'E',l:'\\(E(\\mathbf{w})\\)'}]);
+  const out=readout(b.pn,[{k:'M',l:'Order \\(M\\)'},{k:'np',l:'\\(M+1\\)'},{k:'E',l:'\\(E(\\mathbf{w})\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show each term \\(w_jx^{j}\\)',st.terms,v=>{st.terms=v;P.draw()});
   toggle(tg,'Show \\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
@@ -94,13 +94,13 @@ function p12(root){
     W.rebuild();buildPanels();draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
-  btnrow(b.pn,[{l:'Move to \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
-    {l:'Reset \\(\\mathbf{w}\\) to \\(\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=st.rngMin;W.sync();draw()}},
+  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
+    {l:'Set \\(\\mathbf{w}=\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=st.rngMin;W.sync();draw()}},
     {l:'New data set',on:()=>{st.d=makeData(10,.25,st.d.seed+1);draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'E',l:'\\(E(\\mathbf{w})\\)',big:true},{k:'Em',l:'Minimum \\(E(\\mathbf{w}^{*})\\)'},
+  const out=readout(b.pn,[{k:'E',l:'\\(E(\\mathbf{w})\\)',big:true},{k:'Em',l:'\\(E(\\mathbf{w}^{*})\\)'},
     {k:'gap',l:'\\(E(\\mathbf{w})-E(\\mathbf{w}^{*})\\)'},
-    {k:'rms',l:'\\(E_{\\mathrm{RMS}}\\)'},{k:'mx',l:'Largest displacement'}]);
+    {k:'rms',l:'\\(E_{\\mathrm{RMS}}\\)'},{k:'mx',l:'\\(\\max_n|y(x_n,\\mathbf{w})-t_n|\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the displacements',st.bars,v=>{st.bars=v;P.draw()});
   eqbar(root,'Sum-of-squares error',
@@ -236,9 +236,9 @@ const MODULES=[
   g:'What the exponent \\(q\\) does to the best \\(y(x)\\), and why the squared loss can fall between the modes when \\(p(t|x)\\) is multimodal.',b:p88},
  {p:92,pl:'92, 93, 94, 95',sec:S4,t:'Information and entropy',
   g:'How the information content \\(h(x)=-\\log_2 p(x)\\) grows as \\(p(x)\\) falls, and what its expectation, the entropy, does when the mean and the standard deviation move.',b:p92},
- {p:100,pl:'100, 101',sec:S4,t:'The relative entropy and its two terms',
+ {p:100,pl:'100, 101',sec:S4,t:'KL divergence',
   g:'The average additional surprise by believing \\(q(x)\\), split into the two terms it is made of.',b:p100},
- {p:102,pl:'102, 103',sec:S4,t:'Minimizing the KL divergence is maximizing the likelihood',
+ {p:102,pl:'102, 103',sec:S4,t:'KL divergence minimization',
   g:'Why minimizing the KL divergence over a set of training points is maximizing the likelihood function.',b:p102}
 ];
 MODULES.forEach((m,i)=>{m.ready=true;m.no=i+1});

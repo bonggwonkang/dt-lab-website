@@ -17,13 +17,13 @@ export function p15(root){
   const R=new Plot(card,{h:260,xlim:[-.6,9.6],ylim:[-.04,1.04],xl:'\\(M\\)',yl:'\\(E_{\\mathrm{RMS}}\\)',
     xt:[0,3,6,9],yt:[0,.5,1],pad:[16,18,28,40]});
   const sM=slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
-  const sN=slider(b.pn,{label:'Training points \\(N\\)',min:4,max:60,step:1,value:st.N,on:v=>{st.N=v;gen()}});
-  slider(b.pn,{label:'Noise \\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
+  const sN=slider(b.pn,{label:'\\(N\\)',min:4,max:60,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  slider(b.pn,{label:'\\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
-    {l:'Jump to the best \\(M\\)',on:()=>{st.M=st.best;sM.set(st.best);draw()}}]);
+    {l:'Best \\(M\\)',on:()=>{st.M=st.best;sM.set(st.best);draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'tr',l:'\\(E_{\\mathrm{RMS}}\\) training'},{k:'te',l:'\\(E_{\\mathrm{RMS}}\\) test'},
-    {k:'best',l:'Best \\(M\\) on the test set'},{k:'np',l:'Coefficients \\(M+1\\)'}]);
+  const out=readout(b.pn,[{k:'tr',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{train}}\\)'},{k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
+    {k:'best',l:'\\(\\arg\\min_M E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},{k:'np',l:'\\(M+1\\)'}]);
   const chips=wchips(b.pn,'Learned \\(\\mathbf{w}^{*}\\)');
   eqbar(root,'Root-mean-square error',
     '\\( E_{\\mathrm{RMS}}=\\sqrt{2E(\\mathbf{w}^{*})/N}\\), where dividing by \\(N\\) lets us compare data sets of '+
@@ -66,17 +66,17 @@ export function p19(root){
     {c:'var(--accent)',t:'dash',l:'\\(\\ln\\lambda\\)'}]);
   const R=new Plot(card,{h:250,xlim:[-40,0],ylim:[-.04,1.04],xl:'\\(\\ln\\lambda\\)',yl:'\\(E_{\\mathrm{RMS}}\\)',
     xt:[-35,-30,-25,-20,-15,-10,-5,0],yt:[0,.5,1],pad:[16,18,28,40]});
-  const sL=slider(b.pn,{label:'Regularization \\(\\ln\\lambda\\)',min:-40,max:0,step:.5,value:st.lnLam,
+  const sL=slider(b.pn,{label:'\\(\\ln\\lambda\\)',min:-40,max:0,step:.5,value:st.lnLam,
     fmt:v=>fmt(v,1),on:v=>{st.lnLam=v;draw()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
-  slider(b.pn,{label:'Training points \\(N\\)',min:4,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  slider(b.pn,{label:'\\(N\\)',min:4,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
-    {l:'No penalty \\((\\lambda\\to0)\\)',on:()=>{st.lnLam=-40;sL.set(-40);draw()}},
-    {l:'Jump to the best \\(\\lambda\\)',on:()=>{st.lnLam=st.best;sL.set(st.best);draw()}}]);
+    {l:'\\(\\lambda\\to0\\)',on:()=>{st.lnLam=-40;sL.set(-40);draw()}},
+    {l:'Best \\(\\lambda\\)',on:()=>{st.lnLam=st.best;sL.set(st.best);draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'lam',l:'\\(\\lambda\\)'},{k:'err',l:'Error term'},{k:'pen',l:'Penalty term'},
-    {k:'tot',l:'Total \\(\\tilde E(\\mathbf{w})\\)',big:true},{k:'nw',l:'\\(\\lVert\\mathbf{w}\\rVert\\)'},{k:'tr',l:'\\(E_{\\mathrm{RMS}}\\) training'},
-    {k:'te',l:'\\(E_{\\mathrm{RMS}}\\) test'}]);
+  const out=readout(b.pn,[{k:'lam',l:'\\(\\lambda\\)'},{k:'err',l:'\\(\\tfrac12\\sum\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\)'},{k:'pen',l:'\\(\\tfrac{\\lambda}{2}\\lVert\\mathbf{w}\\rVert^{2}\\)'},
+    {k:'tot',l:'\\(\\tilde E(\\mathbf{w})\\)',big:true},{k:'nw',l:'\\(\\lVert\\mathbf{w}\\rVert\\)'},{k:'tr',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{train}}\\)'},
+    {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'}]);
   const chips=wchips(b.pn,'Learned \\(\\mathbf{w}^{*}\\)');
   eqbar(root,'Error function with a quadratic regularizer',
     '\\( \\tilde E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}'+
@@ -118,17 +118,17 @@ export function p23(root){
   const P=new Plot(b.pc,{h:360,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();draw()}});
-  const sB=slider(b.pn,{label:'Precision \\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
+  const sB=slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;draw()}});
-  const sX=slider(b.pn,{label:'Show the distribution at \\(x_0\\)',min:0,max:1,step:.01,value:st.x0,
+  const sX=slider(b.pn,{label:'\\(x_0\\)',min:0,max:1,step:.01,value:st.x0,
     fmt:v=>fmt(v,2),on:v=>{st.x0=v;P.draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
-  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}\\) to \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
-    {l:'Reset \\(\\mathbf{w}\\) to \\(\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
+  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
+    {l:'Set \\(\\mathbf{w}=\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'sd',l:'\\(\\sigma=\\beta^{-1/2}\\)'},{k:'y0',l:'\\(y(x_0,\\mathbf{w})\\)'},
-    {k:'p0',l:'\\(p(t\\mid x_0,\\mathbf{w},\\beta)\\) at its peak'},{k:'in',l:'Points inside \\(\\pm1\\sigma\\)'}]);
+    {k:'p0',l:'\\(\\max_t p(t\\mid x_0,\\mathbf{w},\\beta)\\)'},{k:'in',l:'Points inside \\(\\pm1\\sigma\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the \\(\\pm1\\sigma\\) band',st.band,v=>{st.band=v;P.draw()});
   toggle(tg,'Show the Gaussian at \\(x_0\\)',st.bell,v=>{st.bell=v;P.draw()});
@@ -175,18 +175,18 @@ export function p25(root){
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;
     st.j=Math.min(st.j,v);sJ.setRange(0,v,1);sJ.set(st.j);W.rebuild();draw()}});
-  slider(b.pn,{label:'Precision \\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;draw()}});
   const sJ=slider(b.pn,{label:'Coefficient to sweep, \\(j\\)',min:0,max:3,step:1,value:st.j,
     on:v=>{st.j=v;draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
-  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}\\) to \\(\\mathbf{w}_{\\mathrm{ML}}\\)',on:()=>{applyFit(st,W);draw()}},
-    {l:'Reset \\(\\mathbf{w}\\) to \\(\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}},
+  btnrow(b.pn,[{l:'Set \\(\\mathbf{w}_{\\mathrm{ML}}\\)',on:()=>{applyFit(st,W);draw()}},
+    {l:'Set \\(\\mathbf{w}=\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}},
     {l:'New data set',on:()=>{st.d=makeData(10,.25,st.d.seed+1);draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'ll',l:'\\(\\ln p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)\\)',big:true},{k:'t1',l:'\\(-\\tfrac{\\beta}{2}\\sum\\{y-t\\}^{2}\\)'},
-    {k:'t2',l:'\\(+\\tfrac{N}{2}\\ln\\beta\\)'},{k:'t3',l:'\\(-\\tfrac{N}{2}\\ln(2\\pi)\\)'},{k:'e',l:'\\(E(\\mathbf{w})\\)'},{k:'gap',l:'\\(\\ln p\\) at \\(\\mathbf{w}_{\\mathrm{ML}}\\)'}]);
+    {k:'t2',l:'\\(+\\tfrac{N}{2}\\ln\\beta\\)'},{k:'t3',l:'\\(-\\tfrac{N}{2}\\ln(2\\pi)\\)'},{k:'e',l:'\\(E(\\mathbf{w})\\)'},{k:'gap',l:'\\(\\ln p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w}_{\\mathrm{ML}},\\beta)\\)'}]);
   eqbar(root,'Likelihood and log likelihood',
     '\\( p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)=\\prod_{n=1}^{N}'+
     '\\mathcal N\\!\\left(t_n\\mid y(x_n,\\mathbf{w}),\\beta^{-1}\\right)\\)<br>'+
@@ -246,15 +246,15 @@ export function p28(root){
   legend(card,[{c:'var(--truth)',t:'dash',l:'\\(\\sigma\\)'},{c:'var(--fit)',l:'\\(\\sigma_{\\mathrm{ML}}\\)'}]);
   const S=new Plot(card,{h:230,xlim:[2,80],ylim:[0,.65],xl:'\\(N\\)',yl:'\\(\\sigma_{\\mathrm{ML}}\\)',
     xt:[10,20,40,60,80],yt:[0,.25,.5],pad:[16,18,28,46]});
-  const sN=slider(b.pn,{label:'Data points \\(N\\)',min:4,max:80,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  const sN=slider(b.pn,{label:'\\(N\\)',min:4,max:80,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
-  slider(b.pn,{label:'True noise \\(\\sigma\\)',min:.05,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
+  slider(b.pn,{label:'\\(\\sigma\\)',min:.05,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
     on:v=>{st.sigma=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
     {l:'\\(N=10\\)',on:()=>{st.N=10;sN.set(10);gen()}},{l:'\\(N=80\\)',on:()=>{st.N=80;sN.set(80);gen()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'b',l:'\\(\\beta_{\\mathrm{ML}}\\)',big:true},{k:'s',l:'\\(\\sigma_{\\mathrm{ML}}=\\beta_{\\mathrm{ML}}^{-1/2}\\)'},
-    {k:'st',l:'True \\(\\sigma\\)'},{k:'e',l:'\\(E_{\\mathrm{RMS}}\\) training'},{k:'te',l:'\\(E_{\\mathrm{RMS}}\\) test'}]);
+    {k:'st',l:'True \\(\\sigma\\)'},{k:'e',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{train}}\\)'},{k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'}]);
   const chips=wchips(b.pn,'Learned \\(\\mathbf{w}_{\\mathrm{ML}}\\)');
   eqbar(root,'Maximum likelihood estimates and the predictive distribution',
     '\\( \\dfrac{1}{\\beta_{\\mathrm{ML}}}=\\dfrac{1}{N}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w}_{\\mathrm{ML}})-t_n\\}^{2}'+
@@ -307,19 +307,19 @@ export function p30(root){
     {c:'var(--accent)',t:'dash',l:'\\(\\ln\\alpha\\)'}]);
   const A=new Plot(card,{h:230,xlim:[-14,8],ylim:[-.04,1.04],xl:'\\(\\ln\\alpha\\)',yl:'\\(E_{\\mathrm{RMS}}\\)',
     xt:[-12,-8,-4,0,4,8],yt:[0,.5,1],pad:[16,18,28,40]});
-  const sA=slider(b.pn,{label:'Prior precision \\(\\ln\\alpha\\)',min:-14,max:8,step:.25,value:st.lnAlpha,
+  const sA=slider(b.pn,{label:'\\(\\ln\\alpha\\)',min:-14,max:8,step:.25,value:st.lnAlpha,
     fmt:v=>fmt(v,2),on:v=>{st.lnAlpha=v;draw()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;gen()}});
-  slider(b.pn,{label:'Data points \\(N\\)',min:4,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
-  slider(b.pn,{label:'Noise precision \\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
+  slider(b.pn,{label:'\\(N\\)',min:4,max:40,step:1,value:st.N,on:v=>{st.N=v;gen()}});
+  slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
-    {l:'Jump to the best \\(\\alpha\\)',on:()=>{st.lnAlpha=st.best;sA.set(st.best);draw()}}]);
+    {l:'Best \\(\\alpha\\)',on:()=>{st.lnAlpha=st.best;sA.set(st.best);draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'a',l:'\\(\\alpha\\)'},{k:'lam',l:'\\(\\lambda=\\alpha/\\beta\\)'},{k:'nml',l:'\\(\\lVert\\mathbf{w}_{\\mathrm{ML}}\\rVert\\)'},
     {k:'nmap',l:'\\(\\lVert\\mathbf{w}_{\\mathrm{MAP}}\\rVert\\)'},{k:'pml',l:'\\(-\\tfrac{\\alpha}{2}\\lVert\\mathbf{w}_{\\mathrm{ML}}\\rVert^{2}\\)'},
     {k:'pmap',l:'\\(-\\tfrac{\\alpha}{2}\\lVert\\mathbf{w}_{\\mathrm{MAP}}\\rVert^{2}\\)'},
-    {k:'eml',l:'\\(E_{\\mathrm{RMS}}\\) test, \\(\\mathbf{w}_{\\mathrm{ML}}\\)'},{k:'emap',l:'\\(E_{\\mathrm{RMS}}\\) test, \\(\\mathbf{w}_{\\mathrm{MAP}}\\)',big:true}]);
+    {k:'eml',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(\\mathbf{w}_{\\mathrm{ML}})\\)'},{k:'emap',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(\\mathbf{w}_{\\mathrm{MAP}})\\)',big:true}]);
   const cML=wchips(b.pn,'\\(\\mathbf{w}_{\\mathrm{ML}}\\)'),cMAP=wchips(b.pn,'\\(\\mathbf{w}_{\\mathrm{MAP}}\\)');
   eqbar(root,'Prior over the coefficients and the MAP estimate',
     '\\( p(\\mathbf{w}\\mid\\alpha)=\\mathcal N\\!\\left(\\mathbf{w}\\mid\\mathbf{0},\\alpha^{-1}\\mathbf{I}\\right)'+
@@ -393,7 +393,7 @@ export function p33(root){
     {c:'var(--truth)',l:'\\(p(Y)\\)'}]);
   const P=new Plot(b.pc,{h:340,xlim:[30,110],ylim:[0,.055],xl:'\\(Y\\)',yl:'\\(p(Y)\\)',
     xt:[40,60,80,100],yt:[0,.02,.04],pad:[16,18,28,52]});
-  slider(b.pn,{label:'Data mix \\(N_1:N_2\\)',min:0,max:1,step:.01,value:st.pF,
+  slider(b.pn,{label:'\\(N_1:N_2\\)',min:0,max:1,step:.01,value:st.pF,
     fmt:v=>Math.round((1-v)*100)+' : '+Math.round(v*100),on:v=>{st.pF=v;draw()}});
   /* a two-colour bar showing how the weight splits between the two components */
   function mixbar(host,l1,l2){const bar=el('div');
@@ -409,7 +409,7 @@ export function p33(root){
   const setBar=mixbar(b.pn,'x₁','x₂');
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'pm',l:'\\(p(X=x_1)=N_1/N\\)'},{k:'pf',l:'\\(p(X=x_2)=N_2/N\\)'},
-    {k:'em',l:'\\(\\mathbb{E}[Y\\mid X=x_1]\\)'},{k:'ef',l:'\\(\\mathbb{E}[Y\\mid X=x_2]\\)'},{k:'e',l:'\\(\\mathbb{E}[Y]\\) after marginalizing',big:true},
+    {k:'em',l:'\\(\\mathbb{E}[Y\\mid X=x_1]\\)'},{k:'ef',l:'\\(\\mathbb{E}[Y\\mid X=x_2]\\)'},{k:'e',l:'\\(\\mathbb{E}[Y]\\)',big:true},
     {k:'sd',l:'Standard deviation of \\(p(Y)\\)'},
     {k:'vw',l:'\\(\\mathbb{E}_X[\\mathrm{Var}(Y\\mid X)]\\)'},{k:'vb',l:'\\(\\mathrm{Var}_X(\\mathbb{E}[Y\\mid X])\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
@@ -435,13 +435,13 @@ export function p33(root){
     {l:'\\(1:1\\)',on:()=>{q.p2=.5;sQ.set(.5);draw2()}},
     {l:'\\(0:1\\)',on:()=>{q.p2=1;sQ.set(1);draw2()}}]);
   b2.pn.appendChild(el('div','hr'));
-  slider(b2.pn,{label:'New input \\(x_0\\)',min:0,max:1,step:.01,value:q.x0,fmt:v=>fmt(v,2),
+  slider(b2.pn,{label:'\\(x_0\\)',min:0,max:1,step:.01,value:q.x0,fmt:v=>fmt(v,2),
     on:v=>{q.x0=v;draw2()}});
-  slider(b2.pn,{label:'Noise precision \\(\\beta\\)',min:1,max:60,step:.5,value:q.beta,fmt:v=>fmt(v,1),
+  slider(b2.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:q.beta,fmt:v=>fmt(v,1),
     on:v=>{q.beta=v;draw2()}});
   b2.pn.appendChild(el('div','hr'));
   const out2=readout(b2.pn,[{k:'y1',l:'\\(y(x_0,\\mathbf{w}^{(1)})\\)'},{k:'y2',l:'\\(y(x_0,\\mathbf{w}^{(2)})\\)'},
-    {k:'m',l:'\\(\\mathbb{E}[t]\\) after marginalizing',big:true},
+    {k:'m',l:'\\(\\mathbb{E}[t]\\)',big:true},
     {k:'v',l:'\\(\\mathrm{Var}[t]\\)'},{k:'vw',l:'\\(\\beta^{-1}\\)'},
     {k:'vb',l:'\\(\\mathrm{Var}_{\\mathbf{w}}\\big(y(x_0,\\mathbf{w})\\big)\\)'}]);
   eqbar(b2.lc,'Marginalizing over w',
