@@ -76,7 +76,7 @@ function PageHeader() {
           </motion.h1>
           <motion.p variants={fadeUp} className="text-gray-600 dark:text-gray-200 text-lg max-w-2xl leading-relaxed">
             A collection of materials we build for fun: computer models of production layouts and material
-            handling configurations for digital twin systems, and statistical models behind the methods we teach.
+            handling configurations for digital twin systems, and statistical models we teach for digital twin applications.
           </motion.p>
         </motion.div>
       </div>
