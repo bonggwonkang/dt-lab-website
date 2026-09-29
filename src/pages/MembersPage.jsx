@@ -44,9 +44,9 @@ const students = [
   },
   {
     name: '강동혁', nameEn: 'Donghyeok Kang',
-    degree: 'Undergraduate Researcher',
+    degree: 'Assistant Researcher',
     color: 'teal',
-    research: 'Digital twin-based real-time decision-making',
+    research: 'AI applications',
     email: 'dhyeok.kang@gmail.com',
     photo: 'member-kang.jpg',
   },
