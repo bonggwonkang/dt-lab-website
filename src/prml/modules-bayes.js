@@ -1,6 +1,6 @@
 /* PRML simulators, slides 34 to 39: the fully Bayesian treatment. */
 import{el,fmt,clamp,sin2pi,makeData,polyval,phi,Plot,board,legend,slider,toggle,btnrow,
-  readout,eqbar,note,wchips,matview,posterior,predict,sampleW,rng,dot,quad,
+  readout,eqbar,note,wchips,matview,posterior,predict,sampleW,rng,gauss,tex,dot,quad,
   wPanel,applyFit}from'./core.js'
 
 const ALPHA0=Math.log(5e-3);          /* the prior precision used in Figure 1.17 */
@@ -119,53 +119,134 @@ export function p35(root){
   gen()}
 
 /* ===== slide 36 · Basis functions ===== */
+/* one colour per order j, the same in every panel of this module */
+const JC=['#CBD5E1','#7DD3FC','#FDE047','#C084FC','#F9A8D4','#5EEAD4','#FDBA74','#A5B4FC','#BEF264','#FCA5A5'];
+const SUBS='₀₁₂₃₄₅₆₇₈₉';
+const niceStep=r=>{const e=Math.pow(10,Math.floor(Math.log10(r))),f=r/e;return(f<=1?1:f<=2?2:f<=5?5:10)*e};
 export function p36(root){
-  const st={w:[.2,1.2,-2.2,1.1],rng:10,x0:.6,basis:true,d:makeData(10,.25,3)};
+  const st={w:[.2,1.2,-2.2,1.1],rng:10,x0:.6,basis:true,space:false,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\)'},{c:'var(--muted)',t:'dash',l:'\\(w_j\\phi_j(x)\\)'}]);
-  const P=new Plot(b.pc,{h:340,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
+  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})=\\sum_j w_j\\phi_j(x)\\)'},
+    {c:JC[3],t:'dash',l:'\\(w_j\\phi_j(x)\\), one colour per \\(j\\)'},
+    {c:'var(--accent)',l:'Other functions of the same space'}]);
+  const P=new Plot(b.pc,{h:320,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
+
+  /* the basis functions themselves, before any coefficient touches them */
+  const cB=el('div','card plotcard');b.lc.appendChild(cB);
+  cB.appendChild(el('div','cap','Basis functions \\(\\phi_j(x)=x^{j}\\) and the basis values \\(\\phi_j(x_0)\\) at the input'));
+  const legB=el('div');cB.appendChild(legB);
+  const B=new Plot(cB,{h:250,xlim:[-.04,1.04],ylim:[-.08,1.12],yt:[0,.5,1],yl:'\\(\\phi_j(x)\\)'});
+
+  /* the weighted basis values, added one order at a time */
+  const cS=el('div','card plotcard');b.lc.appendChild(cS);
+  cS.appendChild(el('div','cap','\\(w_j\\phi_j(x_0)\\) added from \\(j=0\\) to \\(M\\): the running sum ends at \\(y(x_0,\\mathbf{w})\\)'));
+  const S=new Plot(cS,{h:250,xlim:[-.6,4.6],ylim:[-1,1],xl:'\\(j\\)',yl:'\\(\\sum_{k\\le j}w_k\\phi_k(x_0)\\)',
+    xt:[0,1,2,3],yt:[-1,0,1],pad:[16,18,28,46]});
+  const holder=el('div','matrow');cS.appendChild(holder);
+  tex(cB);tex(cS);
+
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
-    const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();mv=null;draw()}});
-  const sX=slider(b.pn,{label:'\\(x_0\\)',min:0,max:1,step:.01,value:st.x0,
+    const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();mv=null;rebuild();draw()}});
+  const sX=slider(b.pn,{label:'Input \\(x_0\\)',min:0,max:1,step:.01,value:st.x0,
     fmt:v=>fmt(v,2),on:v=>{st.x0=v;draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
   btnrow(b.pn,[{l:'Set \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
     {l:'Set \\(\\mathbf{w}=\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'y',l:'\\(y(x_0,\\mathbf{w})=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\)',big:true},{k:'d',l:'Dimension \\(M+1\\)'},
-    {k:'big',l:'Largest \\(w_jx_0^{j}\\)'}]);
+  const out=readout(b.pn,[{k:'y',l:'\\(y(x_0,\\mathbf{w})=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\)',big:true},
+    {k:'d',l:'Dimension of the space \\(M+1\\)'},
+    {k:'big',l:'Largest \\(w_j\\phi_j(x_0)\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show \\(w_j\\phi_j(x)\\)',st.basis,v=>{st.basis=v;P.draw()});
-  const card=el('div','card plotcard');b.lc.appendChild(card);
-  const holder=el('div','matrow');card.appendChild(holder);
-  let mv=null;
-  eqbar(root,'The polynomial as an inner product',
-    '\\( y(x,\\mathbf{w})=\\sum_{j=0}^{M}w_jx^{j}=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\), '+
-    'where \\(\\boldsymbol\\phi(x)=\\left(x^{0},x^{1},\\dots,x^{M}\\right)^{\\mathrm T}\\in\\mathbb R^{M+1}\\).');
-  note(root,['Fixed shapes \\(x^{0},\\dots,x^{M}\\), only \\(\\mathbf{w}\\) moves.',
-    'At \\(x_0\\) the model is one inner product \\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\).',
-    'The same inner product holds for any basis function vector \\(\\boldsymbol\\phi(x)\\).']);
-  function draw(){const p0=phi(st.x0,st.w.length-1),terms=p0.map((v,j)=>v*st.w[j]);
+  toggle(tg,'Show other functions of the space',st.space,v=>{st.space=v;P.draw()});
+  let mv=null,others=[];
+
+  eqbar(root,'Basis, basis functions and the function space',
+    '<b>Basis functions</b>: fixed functions of the input, here \\(\\phi_j(x)=x^{j}\\). '+
+    'An input \\(x_0\\) turns them into the numbers \\(\\boldsymbol\\phi(x_0)=\\left(\\phi_0(x_0),\\dots,\\phi_M(x_0)\\right)^{\\mathrm T}\\in\\mathbb R^{M+1}\\).<br>'+
+    '<b>Basis</b>: the set \\(\\{\\phi_0,\\phi_1,\\dots,\\phi_M\\}=\\{1,x,\\dots,x^{M}\\}\\), none of which is a combination of the others.<br>'+
+    '<b>Function space</b>: every weighted sum of the basis, '+
+    '\\( \\mathcal F_M=\\left\\{\\,y(x,\\mathbf{w})=\\sum_{j=0}^{M}w_j\\phi_j(x)\\ :\\ \\mathbf{w}\\in\\mathbb R^{M+1}\\right\\}\\), '+
+    'of dimension \\(M+1\\); \\(\\mathbf{w}\\) are the coordinates of one function in it.<br>'+
+    'At one input the model is a single inner product, '+
+    '\\( y(x_0,\\mathbf{w})=\\sum_{j=0}^{M}w_j\\phi_j(x_0)=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\).');
+  note(root,['Move \\(x_0\\): every basis value \\(\\phi_j(x_0)=x_0^{j}\\) changes, higher \\(j\\) stay near 0 until \\(x_0\\) nears 1.',
+    'Each \\(\\phi_j(x_0)\\) is scaled by its \\(w_j\\), and the running sum ends exactly at the point on the curve.',
+    'Doing this at every \\(x\\) draws the whole curve: \\(y\\) is the sum of the coloured dashed curves.',
+    'Moving \\(\\mathbf{w}\\) picks another function of the same space; the faint curves are a few of them.',
+    'Raising \\(M\\) adds one basis function, so the space grows by one dimension.']);
+
+  function rebuild(){const M=st.w.length-1;legB.innerHTML='';
+    legend(legB,JC.slice(0,M+1).map((c,j)=>({c:c,l:'\\(\\phi_{'+j+'}=x^{'+j+'}\\)'})));tex(legB);
+    const r=rng(97+M);others=[];
+    for(let k=0;k<10;k++){const w=[];for(let j=0;j<=M;j++)w.push(1.6*gauss(r)/Math.sqrt(j+1));others.push(w)}
+    S.o.xlim=[-.6,M+1.6];S.o.xt=Array.from({length:M+1},(_,j)=>j)}
+
+  function draw(){const M=st.w.length-1,p0=phi(st.x0,M),terms=p0.map((v,j)=>v*st.w[j]);
     let big=0;terms.forEach(v=>{if(Math.abs(v)>Math.abs(big))big=v});
-    out({y:fmt(polyval(st.w,st.x0),3),d:st.w.length,big:fmt(big,3)});
+    const y0=polyval(st.w,st.x0);
+    out({y:fmt(y0,3),d:M+1,big:fmt(big,3)});
+    st.cum=[];let s=0,lo=0,hi=0;terms.forEach(v=>{s+=v;st.cum.push(s);lo=Math.min(lo,s);hi=Math.max(hi,s)});
+    const stp=niceStep(Math.max(hi-lo,.5)/3);lo=Math.floor(lo/stp-.25)*stp;hi=Math.ceil(hi/stp+.25)*stp;
+    S.o.ylim=[lo,hi];S.o.yt=[];for(let v=lo;v<=hi+1e-9;v+=stp)S.o.yt.push(+v.toFixed(6));
+    const padL=Math.max(46,14+7*Math.max.apply(null,S.o.yt.map(v=>String(v).length)));
+    if(S.o.pad[3]!==padL){S.o.pad[3]=padL;S.resize()}
     if(!mv){holder.innerHTML='';
-      const row=c=>matview(holder,{cap:c,rows:1,cols:st.w.length,digits:3});
+      const row=(c,d)=>matview(holder,{cap:c,rows:1,cols:M+1,digits:d||3});
       mv={p:row('\\(\\boldsymbol\\phi(x_0)^{\\mathrm T}=\\left(x_0^{0},x_0^{1},\\dots,x_0^{M}\\right)\\)'),
-        w:matview(holder,{cap:'\\(\\mathbf{w}\\)',rows:st.w.length,cols:1,digits:3}),
+        w:matview(holder,{cap:'\\(\\mathbf{w}\\)',rows:M+1,cols:1,digits:3}),
+        t:row('\\(\\left(w_0\\phi_0(x_0),\\dots,w_M\\phi_M(x_0)\\right)\\)'),
         y:matview(holder,{cap:'\\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}=y(x_0,\\mathbf{w})\\)',
           rows:1,cols:1,digits:3})}}
-    mv.p((i,j)=>p0[j]);mv.w(i=>st.w[i]);mv.y(()=>polyval(st.w,st.x0));
-    P.draw()}
-  P.render=p=>{const c=p.col,M=st.w.length-1;
-    if(st.basis)for(let j=0;j<=M;j++)if(st.w[j])p.path(x=>st.w[j]*Math.pow(x,j),c.muted,1.2,[4,3]);
+    mv.p((i,j)=>p0[j]);mv.w(i=>st.w[i]);mv.t((i,j)=>terms[j]);mv.y(()=>y0);
+    P.draw();B.draw();S.draw()}
+
+  P.render=p=>{const c=p.col,M=st.w.length-1,g=p.ctx;
+    if(st.space){g.save();g.globalAlpha=.35;others.forEach(w=>p.path(x=>polyval(w,x),c.acc,1.2));g.restore()}
+    if(st.basis)for(let j=0;j<=M;j++)if(st.w[j])p.path(x=>st.w[j]*Math.pow(x,j),JC[j],1.4,[5,4]);
     p.dots(st.d.xs,st.d.ts,c.obs,3.4);
     p.path(x=>polyval(st.w,x),c.fit,2.8);
     p.seg(st.x0,p.o.ylim[0],p.o.ylim[1],c.line2,1,[3,3]);
-    p.mark(st.x0,polyval(st.w,st.x0),c.fit,4.5)};
-  P.hoverFmt=x=>[{t:'x = '+fmt(x,2)},{t:'y(x, w) = '+fmt(polyval(st.w,x),2),c:P.col.fit}];
-  P.onClick=x=>{const v=clamp(Math.round(x*100)/100,0,1);st.x0=v;sX.set(v);draw()};
-  draw()}
+    if(st.basis)for(let j=0;j<=M;j++)if(st.w[j])p.mark(st.x0,st.w[j]*Math.pow(st.x0,j),JC[j],3.2);
+    p.mark(st.x0,polyval(st.w,st.x0),c.fit,5)};
+  P.hoverFmt=x=>{const M=st.w.length-1,rows=[{t:'x = '+fmt(x,2)},{t:'y(x, w) = '+fmt(polyval(st.w,x),3),c:P.col.fit}];
+    if(st.basis)for(let j=0;j<=M;j++)rows.push({t:'w'+SUBS[j]+'φ'+SUBS[j]+'(x) = '+fmt(st.w[j]*Math.pow(x,j),3),c:JC[j]});
+    return rows};
+  const setX=x=>{const v=clamp(Math.round(x*100)/100,0,1);st.x0=v;sX.set(v);draw()};
+  P.onClick=setX;
+
+  B.render=p=>{const c=p.col,M=st.w.length-1;
+    for(let j=0;j<=M;j++)p.path(x=>Math.pow(x,j),JC[j],1.8);
+    p.seg(st.x0,p.o.ylim[0],p.o.ylim[1],c.line2,1,[3,3]);
+    for(let j=0;j<=M;j++)p.mark(st.x0,Math.pow(st.x0,j),JC[j],4.2);
+    p.label(st.x0,p.o.ylim[1],' x₀ = '+fmt(st.x0,2),c.ink2,st.x0>.8?'right':'left',6)};
+  B.hoverFmt=x=>{const M=st.w.length-1,rows=[{t:'x = '+fmt(x,2)}];
+    for(let j=0;j<=M;j++)rows.push({t:'φ'+SUBS[j]+'(x) = x^'+j+' = '+fmt(Math.pow(x,j),3),c:JC[j]});
+    return rows};
+  B.onClick=setX;
+
+  /* waterfall: bar j runs from the sum up to j-1 to the sum up to j, the last bar is the total */
+  S.render=p=>{const c=p.col,g=p.ctx,M=st.w.length-1,hw=.32;
+    const bar=(x,a,z,col)=>{const X0=p.X(x-hw),X1=p.X(x+hw),Ya=p.Y(a),Yz=p.Y(z);
+      g.fillStyle=col;g.fillRect(X0,Math.min(Ya,Yz),X1-X0,Math.max(1.5,Math.abs(Yz-Ya)))};
+    g.save();
+    for(let j=0;j<=M;j++){const a=j?st.cum[j-1]:0;bar(j,a,st.cum[j],JC[j]);
+      if(j<M){g.strokeStyle=c.line2;g.setLineDash([2,3]);g.beginPath();
+        g.moveTo(p.X(j+hw),p.Y(st.cum[j]));g.lineTo(p.X(j+1-hw),p.Y(st.cum[j]));g.stroke();g.setLineDash([])}}
+    const yv=st.cum[M];bar(M+1,0,yv,c.fit);
+    g.strokeStyle=c.fit;g.setLineDash([4,4]);g.beginPath();
+    g.moveTo(p.X(p.o.xlim[0]),p.Y(yv));g.lineTo(p.X(M+1-hw),p.Y(yv));g.stroke();g.restore();
+    p.label(M+1,yv,'y(x₀,w)',c.fit,'center',yv<0?12:-12);
+    p.label(M+1,p.o.ylim[0],'Σ',c.muted,'center',13)};
+  S.hoverFmt=x=>{const M=st.w.length-1,j=Math.round(x);if(j<0||j>M+1)return null;
+    if(j===M+1)return[{t:'Σ wⱼφⱼ(x₀) = y(x₀, w) = '+fmt(st.cum[M],3),c:S.col.fit}];
+    const pv=Math.pow(st.x0,j);
+    return[{t:'j = '+j,c:JC[j]},{t:'φ'+SUBS[j]+'(x₀) = '+fmt(pv,3)},{t:'w'+SUBS[j]+' = '+fmt(st.w[j],3)},
+      {t:'w'+SUBS[j]+'φ'+SUBS[j]+'(x₀) = '+fmt(st.w[j]*pv,3),c:JC[j]},
+      {t:'sum up to j = '+fmt(st.cum[j],3)}]};
+
+  rebuild();draw()}
 
 /* ===== slide 37 · The matrices behind the posterior ===== */
 export function p37(root){

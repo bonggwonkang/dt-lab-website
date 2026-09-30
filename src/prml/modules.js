@@ -213,7 +213,7 @@ const MODULES=[
  {p:35,sec:S3,t:'Bayesian polynomial function (III)',
   g:'The predictive distribution \\(p(t|x,\\mathbf{x},\\mathbf{t})=\\int p(t|x,\\mathbf{w})p(\\mathbf{w}|\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}\\), obtained by marginalizing over \\(\\mathbf{w}\\).',b:p35},
  {p:36,sec:S3,t:'Basis functions that span the space of polynomials',
-  g:'The polynomial as an inner product, \\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\).',b:p36},
+  g:'How an input \\(x_0\\) sets the value of each basis function \\(\\phi_j(x_0)=x_0^{j}\\), how their weighted sum \\(y(x_0,\\mathbf{w})=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\) gives one point of the curve, and which functions the basis can make at all.',b:p36},
  {p:37,sec:S3,t:'Bayesian polynomial in basis functions: posterior mean and covariance',
   g:'The matrices behind the posterior: \\(\\sum_n\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\) and \\(\\sum_n\\boldsymbol\\phi(x_n)t_n\\).',b:p37},
  {p:38,sec:S3,t:'Bayesian polynomial in basis functions: matching the Gaussian form',
