@@ -43,7 +43,6 @@
 .prml .chip .msec{font-family:Inter,system-ui,sans-serif;font-size:12.5px;font-weight:500;color:var(--ink-2);letter-spacing:.01em}
 .prml .mtitle{margin:0;font-size:clamp(22px,2.6vw,30px);font-weight:800;line-height:1.2;
   letter-spacing:-.02em;color:#fff}
-.prml .mgoal{margin:0;color:var(--ink-2);max-width:72ch;font-weight:300}
 
 /* ---------- cards ---------- */
 .prml .board{display:grid;grid-template-columns:minmax(0,1fr) 286px;gap:18px;align-items:start}
