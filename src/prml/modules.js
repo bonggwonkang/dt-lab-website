@@ -9,7 +9,6 @@ import{p66}from'./modules-decide.js'
 import{p75}from'./modules-infer.js'
 import{p86,p88}from'./modules-loss.js'
 import{p92,p100,p102}from'./modules-info.js'
-import{p36b}from'./modules-space.js'
 
 /* ===== slide 10 · Setup: fitting a polynomial to a synthetic function (I) ===== */
 function p10(root){
@@ -215,8 +214,6 @@ const MODULES=[
   g:'The predictive distribution \\(p(t|x,\\mathbf{x},\\mathbf{t})=\\int p(t|x,\\mathbf{w})p(\\mathbf{w}|\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}\\), obtained by marginalizing over \\(\\mathbf{w}\\).',b:p35},
  {p:36,sec:S3,t:'Basis functions that span the space of polynomials',
   g:'The polynomial as an inner product, \\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\).',b:p36},
- {p:36.5,pl:'36',sec:S3,t:'The space the basis functions span',
-  g:'The coefficients \\(\\mathbf{w}\\) are the coordinates of \\(y\\) in the basis \\(\\phi_0,\\dots,\\phi_M\\), so moving them moves \\(y\\) inside the space and never out of it.',b:p36b},
  {p:37,sec:S3,t:'Bayesian polynomial in basis functions: posterior mean and covariance',
   g:'The matrices behind the posterior: \\(\\sum_n\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\) and \\(\\sum_n\\boldsymbol\\phi(x_n)t_n\\).',b:p37},
  {p:38,sec:S3,t:'Bayesian polynomial in basis functions: matching the Gaussian form',
