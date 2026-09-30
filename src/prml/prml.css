@@ -52,7 +52,6 @@
 .prml .card{background:var(--surface);border-radius:16px;box-shadow:0 20px 40px -24px rgba(0,0,0,.8);
   outline:1px solid var(--line);outline-offset:-1px}
 .prml .plotcard{padding:16px 18px 12px;display:flex;flex-direction:column;gap:10px}
-.prml .plotcard>.cap{font-size:11.5px;letter-spacing:.02em;color:var(--muted);font-weight:600}
 .prml .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--ink-2);align-items:center}
 .prml .legend span{display:inline-flex;align-items:center;gap:7px}
 .prml .legend i{display:inline-block;width:18px;height:0;border-top-width:2.5px;border-top-style:solid}

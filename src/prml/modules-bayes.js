@@ -1,6 +1,6 @@
 /* PRML simulators, slides 34 to 39: the fully Bayesian treatment. */
 import{el,fmt,clamp,sin2pi,makeData,polyval,phi,Plot,board,legend,slider,toggle,btnrow,
-  readout,eqbar,note,wchips,matview,posterior,predict,sampleW,rng,gauss,tex,dot,quad,
+  readout,eqbar,note,wchips,matview,posterior,predict,sampleW,rng,tex,dot,quad,
   wPanel,applyFit}from'./core.js'
 
 const ALPHA0=Math.log(5e-3);          /* the prior precision used in Figure 1.17 */
@@ -124,63 +124,45 @@ const JC=['#CBD5E1','#7DD3FC','#FDE047','#C084FC','#F9A8D4','#5EEAD4','#FDBA74',
 const SUBS='₀₁₂₃₄₅₆₇₈₉';
 const niceStep=r=>{const e=Math.pow(10,Math.floor(Math.log10(r))),f=r/e;return(f<=1?1:f<=2?2:f<=5?5:10)*e};
 export function p36(root){
-  const st={w:[.2,1.2,-2.2,1.1],rng:10,x0:.6,basis:true,space:false,d:makeData(10,.25,3)};
+  const st={w:[.2,1.2,-2.2,1.1],rng:10,x0:.6,basis:true,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
-  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})=\\sum_j w_j\\phi_j(x)\\)'},
-    {c:JC[3],t:'dash',l:'\\(w_j\\phi_j(x)\\), one colour per \\(j\\)'},
-    {c:'var(--accent)',l:'Other functions of the same space'}]);
+  legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\)'},{c:JC[3],t:'dash',l:'\\(w_j\\phi_j(x)\\)'}]);
   const P=new Plot(b.pc,{h:320,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
 
   /* the basis functions themselves, before any coefficient touches them */
   const cB=el('div','card plotcard');b.lc.appendChild(cB);
-  cB.appendChild(el('div','cap','Basis functions \\(\\phi_j(x)=x^{j}\\) and the basis values \\(\\phi_j(x_0)\\) at the input'));
   const legB=el('div');cB.appendChild(legB);
   const B=new Plot(cB,{h:250,xlim:[-.04,1.04],ylim:[-.08,1.12],yt:[0,.5,1],yl:'\\(\\phi_j(x)\\)'});
 
   /* the weighted basis values, added one order at a time */
   const cS=el('div','card plotcard');b.lc.appendChild(cS);
-  cS.appendChild(el('div','cap','\\(w_j\\phi_j(x_0)\\) added from \\(j=0\\) to \\(M\\): the running sum ends at \\(y(x_0,\\mathbf{w})\\)'));
   const S=new Plot(cS,{h:250,xlim:[-.6,4.6],ylim:[-1,1],xl:'\\(j\\)',yl:'\\(\\sum_{k\\le j}w_k\\phi_k(x_0)\\)',
     xt:[0,1,2,3],yt:[-1,0,1],pad:[16,18,28,46]});
   const holder=el('div','matrow');cS.appendChild(holder);
-  tex(cB);tex(cS);
-
   slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();mv=null;rebuild();draw()}});
-  const sX=slider(b.pn,{label:'Input \\(x_0\\)',min:0,max:1,step:.01,value:st.x0,
+  const sX=slider(b.pn,{label:'\\(x_0\\)',min:0,max:1,step:.01,value:st.x0,
     fmt:v=>fmt(v,2),on:v=>{st.x0=v;draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
   btnrow(b.pn,[{l:'Set \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
     {l:'Set \\(\\mathbf{w}=\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'y',l:'\\(y(x_0,\\mathbf{w})=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\)',big:true},
-    {k:'d',l:'Dimension of the space \\(M+1\\)'},
-    {k:'big',l:'Largest \\(w_j\\phi_j(x_0)\\)'}]);
+  const out=readout(b.pn,[{k:'y',l:'\\(y(x_0,\\mathbf{w})=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\)',big:true},{k:'d',l:'Dimension \\(M+1\\)'},
+    {k:'big',l:'Largest \\(w_jx_0^{j}\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show \\(w_j\\phi_j(x)\\)',st.basis,v=>{st.basis=v;P.draw()});
-  toggle(tg,'Show other functions of the space',st.space,v=>{st.space=v;P.draw()});
-  let mv=null,others=[];
+  let mv=null;
 
-  eqbar(root,'Basis, basis functions and the function space',
-    '<b>Basis functions</b>: fixed functions of the input, here \\(\\phi_j(x)=x^{j}\\). '+
-    'An input \\(x_0\\) turns them into the numbers \\(\\boldsymbol\\phi(x_0)=\\left(\\phi_0(x_0),\\dots,\\phi_M(x_0)\\right)^{\\mathrm T}\\in\\mathbb R^{M+1}\\).<br>'+
-    '<b>Basis</b>: the set \\(\\{\\phi_0,\\phi_1,\\dots,\\phi_M\\}=\\{1,x,\\dots,x^{M}\\}\\), none of which is a combination of the others.<br>'+
-    '<b>Function space</b>: every weighted sum of the basis, '+
-    '\\( \\mathcal F_M=\\left\\{\\,y(x,\\mathbf{w})=\\sum_{j=0}^{M}w_j\\phi_j(x)\\ :\\ \\mathbf{w}\\in\\mathbb R^{M+1}\\right\\}\\), '+
-    'of dimension \\(M+1\\); \\(\\mathbf{w}\\) are the coordinates of one function in it.<br>'+
-    'At one input the model is a single inner product, '+
-    '\\( y(x_0,\\mathbf{w})=\\sum_{j=0}^{M}w_j\\phi_j(x_0)=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\).');
-  note(root,['Move \\(x_0\\): every basis value \\(\\phi_j(x_0)=x_0^{j}\\) changes, higher \\(j\\) stay near 0 until \\(x_0\\) nears 1.',
-    'Each \\(\\phi_j(x_0)\\) is scaled by its \\(w_j\\), and the running sum ends exactly at the point on the curve.',
-    'Doing this at every \\(x\\) draws the whole curve: \\(y\\) is the sum of the coloured dashed curves.',
-    'Moving \\(\\mathbf{w}\\) picks another function of the same space; the faint curves are a few of them.',
-    'Raising \\(M\\) adds one basis function, so the space grows by one dimension.']);
+  eqbar(root,'The polynomial as an inner product',
+    '\\( y(x,\\mathbf{w})=\\sum_{j=0}^{M}w_jx^{j}=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\), '+
+    'where \\(\\boldsymbol\\phi(x)=\\left(x^{0},x^{1},\\dots,x^{M}\\right)^{\\mathrm T}\\in\\mathbb R^{M+1}\\).');
+  note(root,['Fixed shapes \\(x^{0},\\dots,x^{M}\\), only \\(\\mathbf{w}\\) moves.',
+    'At \\(x_0\\) the model is one inner product \\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\).',
+    'The same inner product holds for any basis function vector \\(\\boldsymbol\\phi(x)\\).']);
 
   function rebuild(){const M=st.w.length-1;legB.innerHTML='';
     legend(legB,JC.slice(0,M+1).map((c,j)=>({c:c,l:'\\(\\phi_{'+j+'}=x^{'+j+'}\\)'})));tex(legB);
-    const r=rng(97+M);others=[];
-    for(let k=0;k<10;k++){const w=[];for(let j=0;j<=M;j++)w.push(1.6*gauss(r)/Math.sqrt(j+1));others.push(w)}
     S.o.xlim=[-.6,M+1.6];S.o.xt=Array.from({length:M+1},(_,j)=>j)}
 
   function draw(){const M=st.w.length-1,p0=phi(st.x0,M),terms=p0.map((v,j)=>v*st.w[j]);
@@ -203,7 +185,6 @@ export function p36(root){
     P.draw();B.draw();S.draw()}
 
   P.render=p=>{const c=p.col,M=st.w.length-1,g=p.ctx;
-    if(st.space){g.save();g.globalAlpha=.35;others.forEach(w=>p.path(x=>polyval(w,x),c.acc,1.2));g.restore()}
     if(st.basis)for(let j=0;j<=M;j++)if(st.w[j])p.path(x=>st.w[j]*Math.pow(x,j),JC[j],1.4,[5,4]);
     p.dots(st.d.xs,st.d.ts,c.obs,3.4);
     p.path(x=>polyval(st.w,x),c.fit,2.8);
