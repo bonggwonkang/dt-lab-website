@@ -50,6 +50,14 @@ const students = [
     email: 'dhyeok.kang@gmail.com',
     photo: 'member-kang.jpg',
   },
+  {
+    name: '정도영', nameEn: 'Do-yeong Jeong',
+    degree: 'Assistant Researcher',
+    color: 'teal',
+    research: 'AI applications',
+    email: '2026111894@kumoh.ac.kr',
+    photo: 'member_jeong.jpg',
+  },
 ]
 
 const studentColorStyle = {
