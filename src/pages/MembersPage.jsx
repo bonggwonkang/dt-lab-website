@@ -63,7 +63,7 @@ const students = [
     degree: 'Assistant Researcher',
     color: 'teal',
     research: 'Digital twin applications',
-    email: '',
+    email: 'yoohyunjoo@kumoh.ac.kr',
     photo: 'member_you.jpg',
   },
 ]
