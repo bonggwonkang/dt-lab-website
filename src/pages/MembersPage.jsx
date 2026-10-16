@@ -27,7 +27,7 @@ const professor = {
 
 const students = [
   {
-    name: '오가영', nameEn: 'Gayoung Oh',
+    name: '오가영', nameEn: 'Ga-young Oh',
     degree: 'Combined BS/MS Researcher',
     color: 'violet',
     research: 'Statistical modeling of digital twin-based decision-making',
