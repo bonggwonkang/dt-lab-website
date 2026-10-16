@@ -58,6 +58,14 @@ const students = [
     email: '2026111894@kumoh.ac.kr',
     photo: 'member_jeong.jpg',
   },
+  {
+    name: '유현주', nameEn: 'Hyun-ju You',
+    degree: 'Assistant Researcher',
+    color: 'teal',
+    research: 'Digital twin applications',
+    email: '',
+    photo: 'member_you.jpg',
+  },
 ]
 
 const studentColorStyle = {
