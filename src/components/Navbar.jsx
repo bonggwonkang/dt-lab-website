@@ -40,11 +40,6 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2.5 min-w-0">
-            <span className="hidden xl:flex items-center bg-white rounded px-1.5 py-1 flex-shrink-0">
-              <img src={`${import.meta.env.BASE_URL}images/kit-logo.png`} className="h-4 w-auto"
-                alt="Kumoh National Institute of Technology" />
-            </span>
-            <span className="hidden xl:block w-px h-5 bg-gray-200 dark:bg-white/15 flex-shrink-0" />
             <Link to="/" className="flex items-center gap-2.5 min-w-0">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm bg-indigo-600 text-white flex-shrink-0">
                 DT
