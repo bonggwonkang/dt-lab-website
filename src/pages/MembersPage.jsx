@@ -66,6 +66,14 @@ const students = [
     email: 'yoohyunjoo@kumoh.ac.kr',
     photo: 'member_you.jpg',
   },
+  {
+    name: '김태훈', nameEn: 'Tae-hoon Kim',
+    degree: 'Assistant Researcher',
+    color: 'teal',
+    research: 'Statistical applications for digital twin',
+    email: 'hope060725@naver.com',
+    photo: 'member_kim.jpg',
+  },
 ]
 
 const studentColorStyle = {
