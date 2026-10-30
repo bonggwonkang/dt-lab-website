@@ -70,7 +70,7 @@ const students = [
     name: '김태훈', nameEn: 'Tae-hoon Kim',
     degree: 'Assistant Researcher',
     color: 'teal',
-    research: 'Statistical applications for digital twin',
+    research: 'Statistical applications\nfor digital twin',
     email: 'hope060725@naver.com',
     photo: 'member_kim.jpg',
   },
@@ -207,7 +207,7 @@ export default function MembersPage() {
                     <span className={`inline-block mt-2 px-2.5 py-0.5 text-xs font-medium rounded-full border ${studentColorStyle[s.color].badge}`}>
                       {s.degree}
                     </span>
-                    <p className="text-sm text-gray-500 dark:text-gray-300 mt-2 leading-relaxed">{s.research}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-300 mt-2 leading-relaxed whitespace-pre-line">{s.research}</p>
                     <a href={`mailto:${s.email}`}
                       className="mt-2 inline-block text-xs text-gray-400 hover:text-indigo-400 transition-colors">
                       {s.email}
