@@ -17,8 +17,6 @@ function p10(root){
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--muted)',t:'dash',l:'\\(\\epsilon_n\\)'}]);
   const P=new Plot(b.pc,{h:340});
-  const out=readout(b.pn,[{k:'me',l:'\\(\\tfrac{1}{N}\\sum_n\\epsilon_n\\)'},{k:'se',l:'\\(\\mathrm{sd}(\\epsilon_n)\\)'}]);
-  b.pn.appendChild(el('div','hr'));
   const sN=slider(b.pn,{label:'\\(N\\)',min:2,max:100,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   const sS=slider(b.pn,{label:'\\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
@@ -27,9 +25,7 @@ function p10(root){
   eqbar(b.lc,'Synthetic data set',
     '\\( x_n=\\dfrac{n}{N-1}\\in[0,1]\\), \\(t_n=\\sin(2\\pi x_n)+\\epsilon\\), \\(\\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
     '\\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
-  function gen(){st.d=makeData(st.N,st.sigma,st.seed);
-    const m=st.d.es.reduce((a,b)=>a+b,0)/st.N,v=st.d.es.reduce((a,b)=>a+(b-m)*(b-m),0)/Math.max(1,st.N-1);
-    out({N:st.N,sg:fmt(st.sigma,2),me:fmt(m,3),se:fmt(Math.sqrt(v),3)});P.draw()}
+  function gen(){st.d=makeData(st.N,st.sigma,st.seed);P.draw()}
   P.render=p=>{const c=p.col,d=st.d;
     if(st.eps)d.xs.forEach((x,n)=>p.seg(x,sin2pi(x),d.ts[n],c.muted,1.5,[3,3]));
     if(st.truth)p.path(sin2pi,c.truth,2.5);
@@ -39,12 +35,12 @@ function p10(root){
 
 /* ===== slide 11 · Setup: fitting a polynomial to a synthetic function (II) ===== */
 function p11(root){
-  const st={w:[0,0,0,0],rng:10,terms:false,truth:true,data:true,d:makeData(10,.25,3)};
+  const st={w:[0,0],rng:10,terms:false,truth:true,data:true,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},
     {c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},{c:'var(--muted)',t:'dash',l:'\\(w_jx^{j}\\)'}]);
   const P=new Plot(b.pc,{h:350,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
+  slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:1,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());

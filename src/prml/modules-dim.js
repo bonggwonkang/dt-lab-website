@@ -12,7 +12,7 @@ function mass(a,b,D){const n=800,h=(b-a)/n;let s=0;
   for(let i=0;i<=n;i++)s+=(i===0||i===n?.5:1)*rad(a+i*h,D);return s*h}
 
 export function p56(root){
-  const st={D:3,M:3,eps:.2,a:0,b:1};
+  const st={D:3,M:1,eps:.2,a:0,b:1};
   const REF=[1,2,20].map(D=>({D:D,Z:mass(0,40,D),m:Math.sqrt(Math.max(D-1,.04))}));
   const DS=[1,2,5,20];
   const b=board(root,'Controls');

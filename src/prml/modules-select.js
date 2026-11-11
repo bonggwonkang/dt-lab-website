@@ -15,7 +15,7 @@ function sample(N,sigma,seed){const r=rng(seed),xs=[],ts=[];
 
 /* ===== slide 45 · Training, validation and test sets ===== */
 export function p45(root){
-  const st={M:9,ntr:12,nva:12,nte:40,sigma:.25,seed:3};
+  const st={M:1,ntr:12,nva:12,nte:40,sigma:.25,seed:3};
   const LN=[];for(let v=-30;v<=2;v+=.5)LN.push(v);
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},
@@ -93,7 +93,7 @@ export function p45(root){
 
 /* ===== slide 49 · Cross-validation and information criteria ===== */
 export function p49(root){
-  const st={N:20,S:5,M:3,sigma:.25,seed:3};
+  const st={N:20,S:5,M:1,sigma:.25,seed:3};
   const MS=[0,1,2,3,4,5,6,7,8,9];
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},

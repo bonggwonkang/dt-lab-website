@@ -1,12 +1,12 @@
 /* PRML simulators, slides 15 to 33: model selection, regularization, MLE and MAP. */
 import{el,fmt,clamp,sin2pi,makeData,polyval,fit,sse,erms,Plot,board,legend,slider,
-  btnrow,readout,eqbar,sub,wchips,gaussPdf,wPanel,applyFit}from'./core.js'
+  btnrow,readout,eqbar,sub,gaussPdf,wPanel,applyFit}from'./core.js'
 
 const norm2=w=>w.reduce((a,v)=>a+v*v,0);
 
 /* ===== slide 15 · The root-mean-square (RMS) error ===== */
 export function p15(root){
-  const st={M:3,N:10,sigma:.25,seed:3};
+  const st={M:1,N:10,sigma:.25,seed:3};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}^{*})\\)'}]);
@@ -24,7 +24,6 @@ export function p15(root){
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'tr',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{train}}\\)'},{k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
     {k:'best',l:'\\(\\arg\\min_M E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'}]);
-  const chips=wchips(b.pn,'\\(\\mathbf{w}^{*}\\)');
   eqbar(root,'Root-mean-square error',
     '\\( E_{\\mathrm{RMS}}=\\sqrt{2E(\\mathbf{w}^{*})/N}\\)');
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
@@ -33,7 +32,7 @@ export function p15(root){
       st.rows.push({M:M,w:w,tr:a,te:e});if(e<bv){bv=e;best=M}}
     st.best=best;draw()}
   function draw(){const r=st.rows[st.M];
-    out({tr:fmt(r.tr,3),te:fmt(r.te,3),best:st.best,np:st.M+1});chips(r.w,2);P.draw();R.draw()}
+    out({tr:fmt(r.tr,3),te:fmt(r.te,3),best:st.best,np:st.M+1});P.draw();R.draw()}
   P.render=p=>{const c=p.col;p.path(sin2pi,c.truth,2.2);
     p.dots(st.tr.xs,st.tr.ts,c.obs,st.N>30?3:4.2);
     p.path(x=>polyval(st.rows[st.M].w,x),c.fit,2.6)};
@@ -52,7 +51,7 @@ export function p15(root){
 
 /* ===== slide 19 · An error function that discourages over-fitting ===== */
 export function p19(root){
-  const st={lnLam:-18,M:9,N:10,sigma:.25,seed:3};
+  const st={lnLam:-18,M:1,N:10,sigma:.25,seed:3};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}^{*})\\)'}]);
@@ -73,7 +72,6 @@ export function p19(root){
   const out=readout(b.pn,[{k:'err',l:'\\(\\tfrac12\\sum\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\)'},{k:'pen',l:'\\(\\tfrac{\\lambda}{2}\\lVert\\mathbf{w}\\rVert^{2}\\)'},
     {k:'tot',l:'\\(\\tilde E(\\mathbf{w})\\)',big:true},{k:'nw',l:'\\(\\lVert\\mathbf{w}\\rVert\\)'},{k:'tr',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{train}}\\)'},
     {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'}]);
-  const chips=wchips(b.pn,'\\(\\mathbf{w}^{*}\\)');
   eqbar(root,'Error function with a quadratic regularizer',
     '\\( \\tilde E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}'+
     '+\\dfrac{\\lambda}{2}\\lVert\\mathbf{w}\\rVert^{2}\\), '+
@@ -88,7 +86,7 @@ export function p19(root){
     err=sse(st.tr.xs,st.tr.ts,w),pen=.5*lam*norm2(w);
     st.w=w;out({lam:fmt(lam,lam<1?4:2),err:fmt(err,3),pen:fmt(pen,3),tot:fmt(err+pen,3),
       nw:fmt(Math.sqrt(norm2(w)),2),tr:fmt(erms(st.tr.xs,st.tr.ts,w),3),te:fmt(erms(st.te.xs,st.te.ts,w),3)});
-    chips(w,2);P.draw();R.draw()}
+    P.draw();R.draw()}
   P.render=p=>{const c=p.col;p.path(sin2pi,c.truth,2.2);p.dots(st.tr.xs,st.tr.ts,c.obs);
     p.path(x=>polyval(st.w,x),c.fit,2.6)};
   P.hoverFmt=x=>[{t:'x = '+fmt(x,2)},{t:'y(x, w*) = '+fmt(polyval(st.w,x),2),c:P.col.fit}];
@@ -103,12 +101,12 @@ export function p19(root){
 
 /* ===== slide 23 · From a deterministic curve to a probabilistic one ===== */
 export function p23(root){
-  const st={w:[.2,1.5,-2.4,.6],rng:10,beta:11.1,x0:.45,band:true,bell:true,d:makeData(10,.25,3)};
+  const st={w:[.9,-1.8],rng:10,beta:11.1,x0:.45,band:true,bell:true,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--fit)',t:'dash',l:'\\(y(x,\\mathbf{w})\\pm\\beta^{-1/2}\\)'},
     {c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'}]);
   const P=new Plot(b.pc,{h:360,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
-  slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
+  slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:1,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();draw()}});
   const sB=slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;draw()}});
@@ -149,7 +147,7 @@ export function p23(root){
 
 /* ===== slide 25 · Likelihood and maximum likelihood ===== */
 export function p25(root){
-  const st={w:[.2,1.5,-2.4,.6],rng:10,beta:11.1,j:1,d:makeData(10,.25,3)};
+  const st={w:[.9,-1.8],rng:10,beta:11.1,j:1,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',t:'dash',l:'\\(p(t\\mid x_n,\\mathbf{w},\\beta)\\)'},
@@ -158,12 +156,12 @@ export function p25(root){
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const L=new Plot(card,{h:240,xlim:[-10,10],ylim:[-200,60],xl:'\\(w_j\\)',yl:'\\(\\ln p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)\\)',
     xt:[-10,-5,0,5,10],yt:[-200,-100,0],pad:[16,18,28,46]});
-  slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
+  slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:1,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;
     st.j=Math.min(st.j,v);sJ.setRange(0,v,1);sJ.set(st.j);W.rebuild();draw()}});
   slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;draw()}});
-  const sJ=slider(b.pn,{label:'\\(w_j\\): \\(j\\)',min:0,max:3,step:1,value:st.j,
+  const sJ=slider(b.pn,{label:'\\(w_j\\): \\(j\\)',min:0,max:1,step:1,value:st.j,
     on:v=>{st.j=v;draw()}});
   b.pn.appendChild(el('div','hr'));
   const W=wPanel(b.pn,st,()=>draw());
@@ -220,7 +218,7 @@ export function p25(root){
 
 /* ===== slide 28 · Maximum likelihood: the predictive distribution ===== */
 export function p28(root){
-  const st={N:10,M:3,sigma:.25,seed:3};
+  const st={N:10,M:1,sigma:.25,seed:3};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',l:'\\(y(x,\\mathbf{w}_{\\mathrm{ML}})\\)'},{c:'var(--fit)',t:'dash',l:'\\(\\pm1\\,\\sigma_{\\mathrm{ML}}\\)'}]);
@@ -238,7 +236,6 @@ export function p28(root){
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'b',l:'\\(\\beta_{\\mathrm{ML}}\\)',big:true},{k:'s',l:'\\(\\sigma_{\\mathrm{ML}}=\\beta_{\\mathrm{ML}}^{-1/2}\\)'},
     {k:'e',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{train}}\\)'},{k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'}]);
-  const chips=wchips(b.pn,'\\(\\mathbf{w}_{\\mathrm{ML}}\\)');
   eqbar(root,'Maximum likelihood estimates and the predictive distribution',
     '\\( \\dfrac{1}{\\beta_{\\mathrm{ML}}}=\\dfrac{1}{N}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w}_{\\mathrm{ML}})-t_n\\}^{2}'+
     '\\), \\(p(t\\mid x,\\mathbf{w}_{\\mathrm{ML}},\\beta_{\\mathrm{ML}})='+
@@ -254,7 +251,7 @@ export function p28(root){
     const varML=s/st.N;st.sd=Math.sqrt(varML);
     out({b:fmt(1/Math.max(varML,1e-12),2),s:fmt(st.sd,3),st:fmt(st.sigma,2),
       e:fmt(erms(st.tr.xs,st.tr.ts,w),3),te:fmt(erms(st.te.xs,st.te.ts,w),3)});
-    chips(w,2);P.draw();S.draw()}
+    P.draw();S.draw()}
   P.render=p=>{const c=p.col,y=x=>polyval(st.w,x),sd=Math.max(st.sd,1e-3);
     p.band(x=>y(x)-sd,x=>y(x)+sd,c.fit,.15);
     p.path(x=>y(x)-sd,c.fit,1,[4,4]);p.path(x=>y(x)+sd,c.fit,1,[4,4]);
@@ -270,7 +267,7 @@ export function p28(root){
 
 /* ===== slide 30 · Maximum a posteriori and the role of the prior ===== */
 export function p30(root){
-  const st={lnAlpha:-5,M:9,N:10,sigma:.25,beta:11.1,seed:3};
+  const st={lnAlpha:-5,M:1,N:10,sigma:.25,beta:11.1,seed:3};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--fit)',t:'dash',l:'\\(y(x,\\mathbf{w}_{\\mathrm{ML}})\\)'},{c:'var(--accent)',l:'\\(y(x,\\mathbf{w}_{\\mathrm{MAP}})\\)'}]);
@@ -300,7 +297,6 @@ export function p30(root){
     {k:'nmap',l:'\\(\\lVert\\mathbf{w}_{\\mathrm{MAP}}\\rVert\\)'},{k:'pml',l:'\\(-\\tfrac{\\alpha}{2}\\lVert\\mathbf{w}_{\\mathrm{ML}}\\rVert^{2}\\)'},
     {k:'pmap',l:'\\(-\\tfrac{\\alpha}{2}\\lVert\\mathbf{w}_{\\mathrm{MAP}}\\rVert^{2}\\)'},
     {k:'eml',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(\\mathbf{w}_{\\mathrm{ML}})\\)'},{k:'emap',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(\\mathbf{w}_{\\mathrm{MAP}})\\)',big:true}]);
-  const cML=wchips(b.pn,'\\(\\mathbf{w}_{\\mathrm{ML}}\\)'),cMAP=wchips(b.pn,'\\(\\mathbf{w}_{\\mathrm{MAP}}\\)');
   eqbar(root,'Prior over the coefficients and the MAP estimate',
     '\\( p(\\mathbf{w}\\mid\\alpha)=\\mathcal N\\!\\left(\\mathbf{w}\\mid\\mathbf{0},\\alpha^{-1}\\mathbf{I}\\right)'+
     '=\\left(\\dfrac{\\alpha}{2\\pi}\\right)^{(M+1)/2}\\exp\\!\\left\\{-\\dfrac{\\alpha}{2}'+
@@ -323,7 +319,7 @@ export function p30(root){
       pml:fmt(-al/2*norm2(st.wML),2),pmap:fmt(-al/2*norm2(st.wMAP),3),
       nmap:fmt(Math.sqrt(norm2(st.wMAP)),2),eml:fmt(erms(st.te.xs,st.te.ts,st.wML),3),
       emap:fmt(erms(st.te.xs,st.te.ts,st.wMAP),3)});
-    cML(st.wML,1);cMAP(st.wMAP,2);P.draw();Q.draw();A.draw()}
+    P.draw();Q.draw();A.draw()}
   Q.render=q=>{const c=q.col,g=q.ctx,sd=st.sd,R=q.o.ylim[1],peak=gaussPdf(0,0,sd),
       Wd=(q.X(1)-q.X(0))*.62,lo=Math.max(-R,-4*sd),hi=Math.min(R,4*sd);
     for(let j=0;j<=st.M;j++){const X0=q.X(j),wm=st.wMAP[j],wl=st.wML[j];

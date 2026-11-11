@@ -1,6 +1,6 @@
 /* PRML simulators, slides 34 to 39: the fully Bayesian treatment. */
 import{el,fmt,clamp,sin2pi,makeData,polyval,phi,Plot,board,legend,slider,btnrow,
-  readout,eqbar,wchips,matview,posterior,predict,sampleW,rng,tex,dot,quad,
+  readout,eqbar,matview,posterior,predict,sampleW,rng,tex,dot,quad,
   wPanel,applyFit}from'./core.js'
 
 const ALPHA0=Math.log(5e-3);          /* the prior precision used in Figure 1.17 */
@@ -12,7 +12,7 @@ function curves(post,M,K,seed){const r=rng(seed),out=[];
 
 /* ===== slide 34 · How the uncertainty in w shrinks with data ===== */
 export function p34(root){
-  const st={N:2,M:9,lnAlpha:ALPHA0,beta:BETA0,K:24,seed:3,mean:true};
+  const st={N:2,M:1,lnAlpha:ALPHA0,beta:BETA0,K:24,seed:3,mean:true};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--accent)',l:'\\(y(x,\\mathbf{w}),\\ \\mathbf{w}\\sim p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\)'},{c:'var(--fit)',l:'\\(m(x)\\)'},
     {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'}]);
@@ -29,7 +29,6 @@ export function p34(root){
     {l:'\\(N=15\\)',on:()=>{st.N=15;sN.set(15);gen()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'s1',l:'\\(s(0.5)\\)',big:true},{k:'s2',l:'\\(s(1)\\)'}]);
-  const cm=wchips(b.pn,'\\(\\mathbf{m}_N\\)'),cs=wchips(b.pn,'\\(\\sqrt{S_{jj}}\\)');
   eqbar(root,'A distribution over the coefficients, not a single value',
     '\\( p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t},\\alpha,\\beta)\\propto '+
     'p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)\\,p(\\mathbf{w}\\mid\\alpha)\\)');
@@ -44,7 +43,7 @@ export function p34(root){
       return Math.sqrt(v.reduce((a,q)=>a+(q-m)*(q-m),0)/Math.max(1,v.length-1))};
     out({n:st.d.xs.length,sd0:fmt(sd[0],3),sdm:fmt(Math.max.apply(null,sd),2),
       s1:fmt(spread(.5),3),s2:fmt(spread(1),3)});
-    cm(st.post.m,2);cs(sd,2);P.draw()}
+    P.draw()}
   P.render=p=>{const c=p.col,g=p.ctx;
     g.save();g.globalAlpha=clamp(.55-st.K*.005,.12,.5);
     st.samples.forEach(w=>p.path(x=>polyval(w,x),c.acc,1.2));g.restore();
@@ -57,7 +56,7 @@ export function p34(root){
 
 /* ===== slide 35 · The predictive distribution ===== */
 export function p35(root){
-  const st={N:10,M:9,lnAlpha:ALPHA0,beta:BETA0,K:12,x0:.5,samples:false,seed:3};
+  const st={N:10,M:1,lnAlpha:ALPHA0,beta:BETA0,K:12,x0:.5,samples:false,seed:3};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--fit)',l:'\\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(m(x)\\pm s(x)\\)'},
     {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
@@ -112,7 +111,7 @@ const JC=['#CBD5E1','#7DD3FC','#FDE047','#C084FC','#F9A8D4','#5EEAD4','#FDBA74',
 const SUBS='₀₁₂₃₄₅₆₇₈₉';
 const niceStep=r=>{const e=Math.pow(10,Math.floor(Math.log10(r))),f=r/e;return(f<=1?1:f<=2?2:f<=5?5:10)*e};
 export function p36(root){
-  const st={w:[.2,1.2,-2.2,1.1],rng:10,x0:.6,basis:true,d:makeData(10,.25,3)};
+  const st={w:[.9,-1.8],rng:10,x0:.6,basis:true,d:makeData(10,.25,3)};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--fit)',l:'\\(y(x,\\mathbf{w})=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\)'},{c:JC[3],t:'dash',l:'\\(w_j\\phi_j(x)\\)'}]);
   const P=new Plot(b.pc,{h:320,ylim:[-2.1,2.1],yt:[-2,-1,0,1,2]});
@@ -127,7 +126,7 @@ export function p36(root){
   const S=new Plot(cS,{h:250,xlim:[-.6,4.6],ylim:[-1,1],xl:'\\(j\\)',yl:'\\(\\sum_{k\\le j}w_k\\phi_k(x_0)\\)',
     xt:[0,1,2,3],yt:[-1,0,1],pad:[16,18,28,46]});
   const holder=el('div','matrow');cS.appendChild(holder);
-  slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:3,on:v=>{
+  slider(b.pn,{label:'Order \\(M\\)',min:0,max:9,step:1,value:1,on:v=>{
     const w=new Array(v+1).fill(0);st.w.forEach((x,j)=>{if(j<=v)w[j]=x});st.w=w;W.rebuild();mv=null;rebuild();draw()}});
   const sX=slider(b.pn,{label:'\\(x_0\\)',min:0,max:1,step:.01,value:st.x0,
     fmt:v=>fmt(v,2),on:v=>{st.x0=v;draw()}});
@@ -215,7 +214,7 @@ export function p36(root){
 
 /* ===== slide 37 · The matrices behind the posterior ===== */
 export function p37(root){
-  const st={N:3,M:2,lnAlpha:-3,beta:BETA0,seed:3};
+  const st={N:3,M:1,lnAlpha:-3,beta:BETA0,seed:3};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--fit)',l:'\\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(m(x)\\pm s(x)\\)'},
     {c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'}]);
@@ -324,7 +323,7 @@ export function p38(root){
 
 /* ===== slide 39 · Where the data are decides what the model knows ===== */
 export function p39(root){
-  const st={M:9,lnAlpha:-1,beta:BETA0,xs:[],ts:[],seed:3};
+  const st={M:1,lnAlpha:-1,beta:BETA0,xs:[],ts:[],seed:3};
   const b=board(root,'Controls');
   legend(b.pc,[{c:'var(--fit)',l:'\\(m(x)\\)'},{c:'var(--fit)',t:'dash',l:'\\(m(x)\\pm s(x)\\)'},
     {c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'}]);

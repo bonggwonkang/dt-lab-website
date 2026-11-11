@@ -9,7 +9,7 @@ for(let i=0;i<GX;i++)XG.push((i+.5)/GX);
 const SS=[];for(let k=0;k<21;k++)SS.push(.05+.55*k/20);
 
 export function p86(root){
-  const st={sig:.25,M:3,N:20};
+  const st={sig:.25,M:1,N:20};
 
   /* the expected squared loss, by quadrature over t at every x */
   function loss(w){const s=st.sig,du=10*s/(GU-1),U=[],W=[];let z=0;
