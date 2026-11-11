@@ -54,7 +54,7 @@ export function p75(root){
     '\\( p(x)=\\sum_k p(x\\mid\\mathcal C_k)p(\\mathcal C_k)\\)<br>'+
     '(II) \\( p(\\mathcal C_1\\mid x,\\mathbf{w})=\\sigma\\!\\left(\\mathbf{w}^{\\mathrm T}\\boldsymbol\\phi(x)\\right)\\), '+
     '(III) \\( f(x)=0\\) if \\(\\mathbf{w}^{\\mathrm T}\\boldsymbol\\phi(x)+w_0<0\\), else \\(1\\)<br>'+
-    'and the decision itself minimises \\( \\mathbb E[L]=\\sum_k\\sum_j\\int_{\\mathcal R_j}L_{kj}\\,p(x,\\mathcal C_k)\\,dx\\)');
+    '\\( \\mathbb E[L]=\\sum_k\\sum_j\\int_{\\mathcal R_j}L_{kj}\\,p(x,\\mathcal C_k)\\,dx\\)');
 
   const j1=x=>st.pi*px1(x),j2=x=>(1-st.pi)*px2(x);
   const post=x=>{const a=j1(x),c=a+j2(x);return c>0?a/c:.5};

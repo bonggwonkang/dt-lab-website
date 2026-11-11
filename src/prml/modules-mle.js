@@ -26,8 +26,7 @@ export function p15(root){
     {k:'best',l:'\\(\\arg\\min_M E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},{k:'np',l:'\\(M+1\\)'}]);
   const chips=wchips(b.pn,'Learned \\(\\mathbf{w}^{*}\\)');
   eqbar(root,'Root-mean-square error',
-    '\\( E_{\\mathrm{RMS}}=\\sqrt{2E(\\mathbf{w}^{*})/N}\\), where dividing by \\(N\\) lets us compare data sets of '+
-    'different sizes on an equal footing and the square root puts the error on the same scale as the target \\(t\\).');
+    '\\( E_{\\mathrm{RMS}}=\\sqrt{2E(\\mathbf{w}^{*})/N}\\)');
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
     st.rows=[];let best=0,bv=Infinity;
     for(let M=0;M<=9;M++){const w=fit(st.tr.xs,st.tr.ts,M),a=erms(st.tr.xs,st.tr.ts,w),e=erms(st.te.xs,st.te.ts,w);
@@ -77,9 +76,8 @@ export function p19(root){
   const chips=wchips(b.pn,'Learned \\(\\mathbf{w}^{*}\\)');
   eqbar(root,'Error function with a quadratic regularizer',
     '\\( \\tilde E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}'+
-    '+\\dfrac{\\lambda}{2}\\lVert\\mathbf{w}\\rVert^{2}\\), with '+
-    '\\(\\lVert\\mathbf{w}\\rVert^{2}=\\mathbf{w}^{\\mathrm T}\\mathbf{w}=w_0^2+w_1^2+\\cdots+w_M^2\\). '+
-    'This quadratic case is ridge regression, known as weight decay in the context of neural networks.');
+    '+\\dfrac{\\lambda}{2}\\lVert\\mathbf{w}\\rVert^{2}\\), '+
+    '\\(\\lVert\\mathbf{w}\\rVert^{2}=\\mathbf{w}^{\\mathrm T}\\mathbf{w}=w_0^2+w_1^2+\\cdots+w_M^2\\)');
   function gen(){st.tr=makeData(st.N,st.sigma,st.seed);st.te=makeData(100,st.sigma,st.seed+977);
     st.rows=[];let best=-40,bv=Infinity;
     for(let l=-40;l<=0;l+=.5){const w=fit(st.tr.xs,st.tr.ts,st.M,Math.exp(l)),
@@ -128,8 +126,7 @@ export function p23(root){
   toggle(tg,'Show the Gaussian at \\(x_0\\)',st.bell,v=>{st.bell=v;P.draw()});
   eqbar(b.lc,'A Gaussian conditional distribution for the target',
     '\\( p(t\\mid x,\\mathbf{w},\\beta)=\\mathcal N\\!\\left(t\\mid y(x,\\mathbf{w}),\\beta^{-1}\\right)\\), '+
-    'where the mean is the polynomial \\(y(x,\\mathbf{w})\\) and the precision \\(\\beta\\) is the inverse variance, '+
-    '\\(\\beta^{-1}=\\sigma^{2}\\).');
+    '\\(\\beta^{-1}=\\sigma^{2}\\)');
   function draw(){const sd=1/Math.sqrt(st.beta);let inside=0;
     st.d.xs.forEach((x,n)=>{if(Math.abs(st.d.ts[n]-polyval(st.w,x))<=sd)inside++});
     out({sd:fmt(sd,3),y0:fmt(polyval(st.w,st.x0),3),p0:fmt(gaussPdf(0,0,sd),2),

@@ -37,10 +37,10 @@ export function p92(root){
     {k:'h0',l:'\\(h(\\mu)\\)'}]);
 
   eqbar(root,'The information content and its expectation',
-    '\\( h(x)=-\\log_2 p(x) \\), so a less probable \\(x\\) carries more information<br>'+
-    '\\( \\mathbb E[h(x)]\\equiv H[x]=-\\int p(x)\\log_2 p(x)\\,dx \\), the entropy<br>'+
-    'for \\( p(x)=\\mathcal N(x|\\mu,\\sigma^{2}) \\) this is '+
-    '\\( \\tfrac{1}{2}\\log_2\\!\\left(2\\pi e\\sigma^{2}\\right) \\), which does not contain \\(\\mu\\)');
+    '\\( h(x)=-\\log_2 p(x) \\)<br>'+
+    '\\( \\mathbb E[h(x)]\\equiv H[x]=-\\int p(x)\\log_2 p(x)\\,dx \\)<br>'+
+    '\\( p(x)=\\mathcal N(x|\\mu,\\sigma^{2})\\;\\Rightarrow\\;'+
+    'H[x]=\\tfrac{1}{2}\\log_2\\!\\left(2\\pi e\\sigma^{2}\\right) \\)');
 
   function draw(){const e=H();
     out({H:fmt(e,3),p:fmt(px(st.x0),4),h:fmt(hx(st.x0),3),h0:fmt(hx(st.mu),3)});
@@ -99,8 +99,7 @@ export function p100(root){
   eqbar(root,'The relative entropy, or KL divergence',
     '\\( \\mathrm{KL}(p\\|q)=\\underbrace{-\\int p(x)\\ln q(x)\\,dx}_{\\mathbb E_p[-\\ln q]}'+
     '-\\underbrace{\\left(-\\int p(x)\\ln p(x)\\,dx\\right)}_{\\mathbb E_p[-\\ln p]}'+
-    '=-\\int p(x)\\ln\\left\\{\\dfrac{q(x)}{p(x)}\\right\\}dx \\)<br>'+
-    'the average additional surprise by believing \\(q(x)\\) when the data come from \\(p(x)\\)');
+    '=-\\int p(x)\\ln\\left\\{\\dfrac{q(x)}{p(x)}\\right\\}dx \\)');
 
   function draw(){const cr=cross(),en=ent(),
     cf=Math.log(st.sq/st.sp)+(st.sp*st.sp+(st.mp-st.mq)*(st.mp-st.mq))/(2*st.sq*st.sq)-.5;
@@ -167,8 +166,8 @@ export function p102(root){
     '\\( \\mathrm{KL}(p\\|q)\\approx\\sum_{n=1}^{N}\\left\\{'+
     '\\underbrace{-\\ln q(x_n|\\boldsymbol\\theta)}_{\\text{negative log likelihood}}'+
     '+\\ln p(x_n)\\right\\} \\)<br>'+
-    'the second term does not contain \\(\\boldsymbol\\theta\\), so minimizing this KL divergence '+
-    'is maximizing the likelihood function');
+    '\\( \\arg\\min_{\\boldsymbol\\theta}\\mathrm{KL}(p\\|q)=\\arg\\max_{\\boldsymbol\\theta}'+
+    '\\sum_{n=1}^{N}\\ln q(x_n|\\boldsymbol\\theta) \\)');
 
   let cur={};
   function draw(){const d=xs(),m=d.reduce((a,c)=>a+c,0)/d.length;

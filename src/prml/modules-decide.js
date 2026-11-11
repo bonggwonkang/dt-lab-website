@@ -48,9 +48,9 @@ export function p66(root){
   eqbar(root,'The probability of a mistake',
     '\\( p(\\text{mistake})=p(\\mathbf{x}\\in\\mathcal R_1,\\mathcal C_2)+p(\\mathbf{x}\\in\\mathcal R_2,\\mathcal C_1)'+
     '=\\int_{\\mathcal R_1}p(x,\\mathcal C_2)\\,dx+\\int_{\\mathcal R_2}p(x,\\mathcal C_1)\\,dx\\)<br>'+
-    'with \\( p(x,\\mathcal C_k)=p(x\\mid\\mathcal C_k)p(\\mathcal C_k)\\), \\(\\mathcal R_1=\\{x<\\hat x\\}\\), '+
-    '\\(\\mathcal R_2=\\{x\\geq\\hat x\\}\\), and the minimum at \\(\\hat x=x_0\\), '+
-    'where \\(p(x,\\mathcal C_1)=p(x,\\mathcal C_2)\\), that is where \\(p(\\mathcal C_k\\mid x)\\) is largest');
+    '\\( p(x,\\mathcal C_k)=p(x\\mid\\mathcal C_k)p(\\mathcal C_k)\\), \\(\\mathcal R_1=\\{x<\\hat x\\}\\), '+
+    '\\(\\mathcal R_2=\\{x\\geq\\hat x\\}\\)<br>'+
+    '\\( x_0=\\arg\\min_{\\hat x}p(\\text{mistake})\\), \\( p(x_0,\\mathcal C_1)=p(x_0,\\mathcal C_2)\\)');
 
   const f1=x=>st.pi1*gaussPdf(x,st.m1,st.s1),f2=x=>(1-st.pi1)*gaussPdf(x,st.m2,st.s2);
   const at=(c,x)=>{const u=clamp((x-LO)/H,0,NG),i=Math.floor(u);

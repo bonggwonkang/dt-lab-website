@@ -34,10 +34,7 @@ export function p34(root){
   const cm=wchips(b.pn,'Posterior mean \\(\\mathbf{m}_N\\)'),cs=wchips(b.pn,'Posterior standard deviations');
   eqbar(root,'A distribution over the coefficients, not a single value',
     '\\( p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t},\\alpha,\\beta)\\propto '+
-    'p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)\\,p(\\mathbf{w}\\mid\\alpha)\\). '+
-    'Because the observed targets are corrupted by noise and the data set is finite, the data cannot '+
-    'determine \\(\\mathbf{w}\\) uniquely, and every curve drawn here is one \\(\\mathbf{w}\\) the data '+
-    'still consider plausible.');
+    'p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)\\,p(\\mathbf{w}\\mid\\alpha)\\)');
   function gen(){st.d=makeData(Math.max(st.N,0),.25,st.seed);
     if(st.N===0){st.d={xs:[],ts:[],N:0,seed:st.seed}}draw()}
   function draw(){const al=Math.exp(st.lnAlpha);
@@ -150,7 +147,7 @@ export function p36(root){
 
   eqbar(root,'The polynomial as an inner product',
     '\\( y(x,\\mathbf{w})=\\sum_{j=0}^{M}w_jx^{j}=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\), '+
-    'where \\(\\boldsymbol\\phi(x)=\\left(x^{0},x^{1},\\dots,x^{M}\\right)^{\\mathrm T}\\in\\mathbb R^{M+1}\\).');
+    '\\(\\boldsymbol\\phi(x)=\\left(x^{0},x^{1},\\dots,x^{M}\\right)^{\\mathrm T}\\in\\mathbb R^{M+1}\\)');
 
   function rebuild(){const M=st.w.length-1;legB.innerHTML='';
     legend(legB,JC.slice(0,M+1).map((c,j)=>({c:c,l:'\\(\\phi_{'+j+'}=x^{'+j+'}\\)'})));tex(legB);
@@ -300,9 +297,7 @@ export function p38(root){
   const vw=matview(holder,{cap:'\\(\\mathbf{w}\\)',rows:2,cols:1,digits:3});
   eqbar(root,'Matching the Gaussian form',
     '\\( \\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})=-\\dfrac{1}{2}\\mathbf{w}^{\\mathrm T}'+
-    '\\mathbf{S}^{-1}\\mathbf{w}+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N+C_3\\), '+
-    'so reading the quadratic term gives \\(\\mathbf{S}^{-1}\\) and reading the linear term gives '+
-    '\\(\\mathbf{S}^{-1}\\mathbf{m}_N\\), which is how the posterior mean and covariance are identified.');
+    '\\mathbf{S}^{-1}\\mathbf{w}+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N+C_3\\)');
   function gen(){st.d=st.N?makeData(st.N,.25,st.seed):{xs:[],ts:[],N:0,seed:st.seed};draw()}
   function draw(){const al=Math.exp(st.lnAlpha);
     st.post=posterior(st.d.xs,st.d.ts,M,al,st.beta);

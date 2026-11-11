@@ -51,8 +51,8 @@ export function p86(root){
     '\\( \\mathbb E[L]=\\int\\!\\!\\int\\{y(x)-t\\}^{2}p(x,t)\\,dx\\,dt \\)<br>'+
     '\\( =\\underbrace{\\int\\{y(x)-\\mathbb E_t[t|x]\\}^{2}p(x)dx}_{\\text{prediction error}}'+
     '+\\underbrace{\\int\\!\\!\\int\\{\\mathbb E_t[t|x]-t\\}^{2}p(x)\\,dt\\,dx}_{\\text{intrinsic variance}} \\)<br>'+
-    'with \\( t_n=\\sin(2\\pi x_n)+\\epsilon \\), \\( \\epsilon\\sim\\mathcal N(0,\\sigma^{2}) \\), '+
-    'so that \\( \\mathbb E_t[t|x]=\\sin(2\\pi x) \\)');
+    '\\( t_n=\\sin(2\\pi x_n)+\\epsilon \\), \\( \\epsilon\\sim\\mathcal N(0,\\sigma^{2}) \\), '+
+    '\\( \\mathbb E_t[t|x]=\\sin(2\\pi x) \\)');
 
   let cur={};
   function draw(){const d=makeData(st.N,st.sig,3),w=fit(d.xs,d.ts,st.M,1e-8),L=loss(w);
@@ -145,11 +145,11 @@ export function p88(root){
     {k:'c',l:'\\(p(t\\mid x)\\) at \\(\\mathrm{argmax}_t\\,p(t\\mid x)\\)'}]);
 
   eqbar(root,'The Minkowski loss and where its minimum sits',
-    '\\( \\mathbb E[L_q]=\\int\\!\\!\\int|y(x)-t|^{q}p(x,t)\\,dx\\,dt \\), which is the squared loss for \\(q=2\\)<br>'+
-    'its minimum is \\( \\mathbb E_t[t|x] \\) for \\(q=2\\), \\( \\mathrm{median}[t|x] \\) for \\(q=1\\), '+
-    'and \\( \\mathrm{argmax}_t\\,p(t|x) \\) for \\(q=0\\)<br>'+
-    'here \\( p(t|x)=0.6\\,\\mathcal N\\!\\left(t|\\sin(2\\pi x),\\sigma^{2}\\right)'+
-    '+0.4\\,\\mathcal N\\!\\left(t|-\\sin(2\\pi x),\\sigma^{2}\\right) \\) when it is multimodal');
+    '\\( \\mathbb E[L_q]=\\int\\!\\!\\int|y(x)-t|^{q}p(x,t)\\,dx\\,dt \\)<br>'+
+    '\\( y^{*}(x)=\\mathbb E_t[t|x]\\;(q=2) \\), \\( \\mathrm{median}[t|x]\\;(q=1) \\), '+
+    '\\( \\mathrm{argmax}_t\\,p(t|x)\\;(q\\to0) \\)<br>'+
+    '\\( p(t|x)=0.6\\,\\mathcal N\\!\\left(t|\\sin(2\\pi x),\\sigma^{2}\\right)'+
+    '+0.4\\,\\mathcal N\\!\\left(t|-\\sin(2\\pi x),\\sigma^{2}\\right) \\)');
 
   let cur={};
   function pick(k){st.multi=k;

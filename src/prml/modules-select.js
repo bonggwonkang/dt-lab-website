@@ -126,11 +126,9 @@ export function p49(root){
     {k:'runs',l:'Training runs, \\(\\mathrm{CV}\\)'},
     {k:'runs1',l:'Training runs, \\(\\mathrm{AIC}\\) or \\(\\mathrm{BIC}\\)'}]);
   eqbar(root,'Two ways to choose a model without a test set',
-    '\\( E_{\\mathrm{CV}}(M)=\\dfrac{1}{S}\\sum_{s=1}^{S}E_{\\mathrm{RMS}}^{(s)}(M)\\), where run \\(s\\) fits on '+
-    '\\((S-1)/S\\) of the data and evaluates the remaining group<br>'+
+    '\\( E_{\\mathrm{CV}}(M)=\\dfrac{1}{S}\\sum_{s=1}^{S}E_{\\mathrm{RMS}}^{(s)}(M)\\)<br>'+
     '\\( \\mathrm{AIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-M\\), '+
-    '\\( \\mathrm{BIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-\\dfrac{M}{2}\\ln N\\), '+
-    'where \\(M\\) counts the adjustable parameters, \\(M+1\\) for a polynomial of order \\(M\\)');
+    '\\( \\mathrm{BIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-\\dfrac{M}{2}\\ln N\\)');
   function logLik(xs,ts,w){const N=xs.length;let s=0;
     for(let n=0;n<N;n++){const d=polyval(w,xs[n])-ts[n];s+=d*d}
     const be=N/Math.max(s,1e-12);

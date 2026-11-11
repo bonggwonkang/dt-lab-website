@@ -29,7 +29,7 @@ function p10(root){
   toggle(tg,'Show the noise \\(\\epsilon_n\\)',st.eps,v=>{st.eps=v;P.draw()});
   eqbar(b.lc,'Synthetic data set',
     '\\( x_n=\\dfrac{n}{N-1}\\in[0,1]\\), \\(t_n=\\sin(2\\pi x_n)+\\epsilon\\), \\(\\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
-    'training set \\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), target vector \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
+    '\\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
   function gen(){st.d=makeData(st.N,st.sigma,st.seed);
     const m=st.d.es.reduce((a,b)=>a+b,0)/st.N,v=st.d.es.reduce((a,b)=>a+(b-m)*(b-m),0)/Math.max(1,st.N-1);
     out({N:st.N,sg:fmt(st.sigma,2),me:fmt(m,3),se:fmt(Math.sqrt(v),3)});P.draw()}
@@ -61,8 +61,7 @@ function p11(root){
   toggle(tg,'Show \\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
   toggle(tg,'Show the training data',st.data,v=>{st.data=v;P.draw()});
   eqbar(b.lc,'Polynomial curve',
-    '\\( y(x,\\mathbf{w}) = w_0+w_1x+w_2x^2+\\cdots+w_Mx^M=\\sum_{j=0}^{M}w_jx^{j}\\)<br>'+
-    'a nonlinear function of \\(x\\), but a <b>linear function of the coefficients</b> \\(\\mathbf{w}\\).');
+    '\\( y(x,\\mathbf{w}) = w_0+w_1x+w_2x^2+\\cdots+w_Mx^M=\\sum_{j=0}^{M}w_jx^{j}\\)');
   function draw(){out({M:st.w.length-1,np:st.w.length,E:fmt(sse(st.d.xs,st.d.ts,st.w),3)});P.draw()}
   P.render=p=>{const c=p.col;
     if(st.terms)st.w.forEach((wj,j)=>{if(!wj)return;p.path(x=>wj*Math.pow(x,j),c.muted,1.2,[4,3]);
@@ -98,8 +97,7 @@ function p12(root){
   const tg=el('div','toggles');b.pn.appendChild(tg);
   toggle(tg,'Show the displacements',st.bars,v=>{st.bars=v;P.draw()});
   eqbar(root,'Sum-of-squares error',
-    '\\( E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\). Each green bar is the displacement '+
-    '\\(|y(x_n,\\mathbf{w})-t_n|\\) of one data point from the curve, and \\(E(\\mathbf{w})\\) is one half of the sum of their squares.');
+    '\\( E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\)');
   b.lc.appendChild(surfWrap);
   const panels=el('div');panels.style.cssText='display:grid;gap:16px';surfWrap.appendChild(panels);
   const NX=52,NY=52;

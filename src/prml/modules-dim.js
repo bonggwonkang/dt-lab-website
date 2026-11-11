@@ -56,8 +56,8 @@ export function p56(root){
     {k:'pk',l:'\\(\\arg\\max_r p(r)\\)'}]);
 
   eqbar(root,'Three ways the dimension bites',
-    '\\( y(\\mathbf{x},\\mathbf{w})=w_0+\\sum_{i=1}^{D}w_ix_i+\\sum_{i=1}^{D}\\sum_{j=1}^{D}w_{ij}x_ix_j+\\cdots\\), '+
-    'with \\( \\binom{D+M}{M}\\) independent coefficients up to order \\(M\\), which grows like \\(D^{M}\\)<br>'+
+    '\\( y(\\mathbf{x},\\mathbf{w})=w_0+\\sum_{i=1}^{D}w_ix_i+\\sum_{i=1}^{D}\\sum_{j=1}^{D}w_{ij}x_ix_j+\\cdots\\)<br>'+
+    '\\( \\#\\mathbf{w}=\\binom{D+M}{M}\\sim D^{M}\\)<br>'+
     '\\( \\dfrac{V_D(1)-V_D(1-\\epsilon)}{V_D(1)}=1-(1-\\epsilon)^{D}\\), '+
     '\\( p(r)\\propto r^{D-1}\\exp\\!\\left(-\\dfrac{r^{2}}{2}\\right)\\)');
 
