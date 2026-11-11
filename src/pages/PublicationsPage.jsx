@@ -208,7 +208,7 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
         {item.jcr && (
           <>
             {' '}
-            <span className="text-gray-500 dark:text-gray-400">[JCR {item.jcr}]</span>
+            <span className={journalColor}>[JCR {item.jcr}]</span>
           </>
         )}
       </p>
