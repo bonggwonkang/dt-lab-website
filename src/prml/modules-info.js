@@ -144,9 +144,9 @@ export function p102(root){
 
   slider(b.pn,{label:'\\(N\\)',min:5,max:80,step:1,value:st.N,
     on:v=>{st.N=v;draw()}});
-  const sM=slider(b.pn,{label:'Mean of \\(q(x\\mid\\theta)\\)',min:-2,max:3,step:.02,value:st.mq,
+  const sM=slider(b.pn,{label:'\\(\\mu_q\\)',min:-2,max:3,step:.02,value:st.mq,
     fmt:v=>fmt(v,2),on:v=>{st.mq=v;draw()}});
-  const sS=slider(b.pn,{label:'Standard deviation of \\(q(x\\mid\\theta)\\)',min:.45,max:2.5,step:.01,
+  const sS=slider(b.pn,{label:'\\(\\sigma_q\\)',min:.45,max:2.5,step:.01,
     value:st.sq,fmt:v=>fmt(v,2),on:v=>{st.sq=v;draw()}});
   btnrow(b.pn,[{l:'Set \\(\\boldsymbol\\theta_{\\mathrm{ML}}\\)',on:()=>{
     const d=xs(),m=d.reduce((a,c)=>a+c,0)/d.length;

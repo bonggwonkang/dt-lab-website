@@ -17,16 +17,15 @@ function p10(root){
   legend(b.pc,[{c:'var(--truth)',l:'\\(\\sin(2\\pi x)\\)'},{c:'var(--obs)',t:'dot',l:'\\(t_n\\)'},
     {c:'var(--muted)',t:'dash',l:'\\(\\epsilon_n\\)'}]);
   const P=new Plot(b.pc,{h:340});
-  const out=readout(b.pn,[{k:'N',l:'\\(N\\)'},{k:'sg',l:'\\(\\sigma\\)'},
-    {k:'me',l:'Mean of \\(\\epsilon\\)'},{k:'se',l:'Standard deviation of \\(\\epsilon\\)'}]);
+  const out=readout(b.pn,[{k:'me',l:'\\(\\tfrac{1}{N}\\sum_n\\epsilon_n\\)'},{k:'se',l:'\\(\\mathrm{sd}(\\epsilon_n)\\)'}]);
   b.pn.appendChild(el('div','hr'));
   const sN=slider(b.pn,{label:'\\(N\\)',min:2,max:100,step:1,value:st.N,on:v=>{st.N=v;gen()}});
   const sS=slider(b.pn,{label:'\\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
     {l:'Reset \\((N=10,\\ \\sigma=0.25)\\)',on:()=>{st.N=10;st.sigma=.25;sN.set(10);sS.set(.25);gen()}}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'Show \\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
-  toggle(tg,'Show the noise \\(\\epsilon_n\\)',st.eps,v=>{st.eps=v;P.draw()});
+  toggle(tg,'\\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
+  toggle(tg,'\\(\\epsilon_n\\)',st.eps,v=>{st.eps=v;P.draw()});
   eqbar(b.lc,'Synthetic data set',
     '\\( x_n=\\dfrac{n}{N-1}\\in[0,1]\\), \\(t_n=\\sin(2\\pi x_n)+\\epsilon\\), \\(\\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
     '\\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
@@ -55,11 +54,11 @@ function p11(root){
     {l:'\\(\\mathbf{w}\\to2\\mathbf{w}\\)',on:()=>{st.w=st.w.map(v=>v*2);st.rng=niceRange(Math.max.apply(null,st.w.map(Math.abs))||1);W.sync();draw()}},
     {l:'Set \\(\\mathbf{w}=\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'M',l:'Order \\(M\\)'},{k:'np',l:'\\(M+1\\)'},{k:'E',l:'\\(E(\\mathbf{w})\\)'}]);
+  const out=readout(b.pn,[{k:'E',l:'\\(E(\\mathbf{w})\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'Show each term \\(w_jx^{j}\\)',st.terms,v=>{st.terms=v;P.draw()});
-  toggle(tg,'Show \\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
-  toggle(tg,'Show the training data',st.data,v=>{st.data=v;P.draw()});
+  toggle(tg,'\\(w_jx^{j}\\)',st.terms,v=>{st.terms=v;P.draw()});
+  toggle(tg,'\\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
+  toggle(tg,'\\(t_n\\)',st.data,v=>{st.data=v;P.draw()});
   eqbar(b.lc,'Polynomial curve',
     '\\( y(x,\\mathbf{w}) = w_0+w_1x+w_2x^2+\\cdots+w_Mx^M=\\sum_{j=0}^{M}w_jx^{j}\\)');
   function draw(){out({M:st.w.length-1,np:st.w.length,E:fmt(sse(st.d.xs,st.d.ts,st.w),3)});P.draw()}
@@ -92,10 +91,9 @@ function p12(root){
     {l:'New data set',on:()=>{st.d=makeData(10,.25,st.d.seed+1);draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'E',l:'\\(E(\\mathbf{w})\\)',big:true},{k:'Em',l:'\\(E(\\mathbf{w}^{*})\\)'},
-    {k:'gap',l:'\\(E(\\mathbf{w})-E(\\mathbf{w}^{*})\\)'},
-    {k:'rms',l:'\\(E_{\\mathrm{RMS}}\\)'},{k:'mx',l:'\\(\\max_n|y(x_n,\\mathbf{w})-t_n|\\)'}]);
+    {k:'rms',l:'\\(E_{\\mathrm{RMS}}\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'Show the displacements',st.bars,v=>{st.bars=v;P.draw()});
+  toggle(tg,'\\(|y(x_n,\\mathbf{w})-t_n|\\)',st.bars,v=>{st.bars=v;P.draw()});
   eqbar(root,'Sum-of-squares error',
     '\\( E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\)');
   b.lc.appendChild(surfWrap);

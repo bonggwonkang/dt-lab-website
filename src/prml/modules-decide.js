@@ -42,8 +42,7 @@ export function p66(root){
     {k:'e2',l:'\\(\\int_{\\mathcal R_1}p(x,\\mathcal C_2)\\,dx\\)'},
     {k:'e1',l:'\\(\\int_{\\mathcal R_2}p(x,\\mathcal C_1)\\,dx\\)'},
     {k:'pm',l:'\\(p(\\text{mistake})\\)',big:true},
-    {k:'best',l:'\\(\\min_{\\hat x}p(\\text{mistake})\\)'},
-    {k:'red',l:'The red region'}]);
+    {k:'best',l:'\\(\\min_{\\hat x}p(\\text{mistake})\\)'}]);
 
   eqbar(root,'The probability of a mistake',
     '\\( p(\\text{mistake})=p(\\mathbf{x}\\in\\mathcal R_1,\\mathcal C_2)+p(\\mathbf{x}\\in\\mathcal R_2,\\mathcal C_1)'+

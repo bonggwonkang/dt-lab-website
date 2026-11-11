@@ -23,15 +23,13 @@ export function p34(root){
     on:v=>{st.lnAlpha=v;draw()}});
   slider(b.pn,{label:'\\(\\beta\\)',min:1,max:60,step:.5,value:st.beta,fmt:v=>fmt(v,1),
     on:v=>{st.beta=v;draw()}});
-  slider(b.pn,{label:'Curves drawn',min:1,max:60,step:1,value:st.K,on:v=>{st.K=v;draw()}});
+  slider(b.pn,{label:'\\(\\#\\,\\mathbf{w}^{(k)}\\sim p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\)',min:1,max:60,step:1,value:st.K,on:v=>{st.K=v;draw()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
     {l:'\\(N=0\\)',on:()=>{st.N=0;sN.set(0);gen()}},
     {l:'\\(N=15\\)',on:()=>{st.N=15;sN.set(15);gen()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'n',l:'\\(N\\)'},{k:'sd0',l:'\\(\\sqrt{S_{00}}\\)'},
-    {k:'sdm',l:'\\(\\max_j\\sqrt{S_{jj}}\\)'},{k:'s1',l:'Standard deviation at \\(x=0.5\\)',big:true},
-    {k:'s2',l:'Standard deviation at \\(x=1\\)'}]);
-  const cm=wchips(b.pn,'Posterior mean \\(\\mathbf{m}_N\\)'),cs=wchips(b.pn,'Posterior standard deviations');
+  const out=readout(b.pn,[{k:'s1',l:'\\(s(0.5)\\)',big:true},{k:'s2',l:'\\(s(1)\\)'}]);
+  const cm=wchips(b.pn,'\\(\\mathbf{m}_N\\)'),cs=wchips(b.pn,'\\(\\sqrt{S_{jj}}\\)');
   eqbar(root,'A distribution over the coefficients, not a single value',
     '\\( p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t},\\alpha,\\beta)\\propto '+
     'p(\\mathbf{t}\\mid\\mathbf{x},\\mathbf{w},\\beta)\\,p(\\mathbf{w}\\mid\\alpha)\\)');
@@ -78,7 +76,7 @@ export function p35(root){
   const out=readout(b.pn,[{k:'m',l:'\\(m(x_0)\\)'},{k:'s',l:'\\(s(x_0)\\)',big:true},{k:'sn',l:'\\(\\beta^{-1}\\)'},
     {k:'sm',l:'\\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi(x_0)\\)'},{k:'sh',l:'\\(s(0.05)\\)'},{k:'sl',l:'\\(s(0.95)\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'Overlay curves from the posterior',st.samples,v=>{st.samples=v;P.draw()});
+  toggle(tg,'\\(y(x,\\mathbf{w}^{(k)})\\)',st.samples,v=>{st.samples=v;P.draw()});
   eqbar(b.lc,'Marginalizing over w',
     '\\( p(t\\mid x,\\mathbf{x},\\mathbf{t})=\\int p(t\\mid x,\\mathbf{w})\\,'+
     'p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\)<br>'+
@@ -139,10 +137,10 @@ export function p36(root){
   btnrow(b.pn,[{l:'Set \\(\\mathbf{w}^{*}\\)',on:()=>{applyFit(st,W);draw()}},
     {l:'Set \\(\\mathbf{w}=\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'y',l:'\\(y(x_0,\\mathbf{w})=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\)',big:true},{k:'d',l:'Dimension \\(M+1\\)'},
-    {k:'big',l:'Largest \\(w_jx_0^{j}\\)'}]);
+  const out=readout(b.pn,[{k:'y',l:'\\(y(x_0,\\mathbf{w})=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\)',big:true},
+    {k:'big',l:'\\(\\max_j|w_jx_0^{j}|\\)'}]);
   const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'Show \\(w_j\\phi_j(x)\\)',st.basis,v=>{st.basis=v;P.draw()});
+  toggle(tg,'\\(w_j\\phi_j(x)\\)',st.basis,v=>{st.basis=v;P.draw()});
   let mv=null;
 
   eqbar(root,'The polynomial as an inner product',
@@ -156,7 +154,7 @@ export function p36(root){
   function draw(){const M=st.w.length-1,p0=phi(st.x0,M),terms=p0.map((v,j)=>v*st.w[j]);
     let big=0;terms.forEach(v=>{if(Math.abs(v)>Math.abs(big))big=v});
     const y0=polyval(st.w,st.x0);
-    out({y:fmt(y0,3),d:M+1,big:fmt(big,3)});
+    out({y:fmt(y0,3),big:fmt(Math.abs(big),3)});
     st.cum=[];let s=0,lo=0,hi=0;terms.forEach(v=>{s+=v;st.cum.push(s);lo=Math.min(lo,s);hi=Math.max(hi,s)});
     const stp=niceStep(Math.max(hi-lo,.5)/3);lo=Math.floor(lo/stp-.25)*stp;hi=Math.ceil(hi/stp+.25)*stp;
     S.o.ylim=[lo,hi];S.o.yt=[];for(let v=lo;v<=hi+1e-9;v+=stp)S.o.yt.push(+v.toFixed(6));
@@ -233,8 +231,7 @@ export function p37(root){
   btnrow(b.pn,[{l:'Add a point',on:()=>{st.N=clamp(st.N+1,1,8);sN.set(st.N);gen()}},
     {l:'Draw a new data set',on:()=>{st.seed++;gen()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'n',l:'\\(N\\)'},{k:'d',l:'\\((M+1)\\times(M+1)\\)'},
-    {k:'a',l:'\\(\\alpha\\)'},{k:'tr',l:'\\(\\mathrm{tr}\\,\\mathbf{S}\\)'}]);
+  const out=readout(b.pn,[{k:'d',l:'\\(\\dim\\mathbf{S}\\)'},{k:'tr',l:'\\(\\mathrm{tr}\\,\\mathbf{S}\\)'}]);
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const holder=el('div','matrow');card.appendChild(holder);
   let views=null;
@@ -254,7 +251,7 @@ export function p37(root){
     let tr=0;for(let i=0;i<d;i++)tr+=st.post.S[i][i];
     out({n:st.d.xs.length,d:d,a:fmt(al,al<1?4:2),tr:fmt(tr,3)});
     if(!views){views={
-      phi:matview(holder,{cap:'\\(\\mathbf{\\Phi}\\): row \\(n\\) is \\(\\boldsymbol\\phi(x_n)^{\\mathrm T}\\)',rows:st.d.xs.length,cols:d,digits:3}),
+      phi:matview(holder,{cap:'\\(\\mathbf{\\Phi}=\\left(\\boldsymbol\\phi(x_1),\\dots,\\boldsymbol\\phi(x_N)\\right)^{\\mathrm T}\\)',rows:st.d.xs.length,cols:d,digits:3}),
       pp:matview(holder,{cap:'\\(\\sum_n\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\)',rows:d,cols:d,digits:3}),
       pt:matview(holder,{cap:'\\(\\sum_n\\boldsymbol\\phi(x_n)t_n\\)',rows:d,cols:1,digits:3}),
       si:matview(holder,{cap:'\\(\\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_n\\boldsymbol\\phi\\boldsymbol\\phi^{\\mathrm T}\\)',rows:d,cols:d,digits:2}),
@@ -292,8 +289,8 @@ export function p38(root){
   const card=el('div','card plotcard');b.lc.appendChild(card);
   const holder=el('div','matrow');card.appendChild(holder);
   const vm=matview(holder,{cap:'\\(\\mathbf{m}_N\\)',rows:2,cols:1,digits:3});
-  const vs=matview(holder,{cap:'\\(\\mathbf{S}\\) (covariance)',rows:2,cols:2,digits:4});
-  const vi=matview(holder,{cap:'\\(\\mathbf{S}^{-1}\\) (precision)',rows:2,cols:2,digits:2});
+  const vs=matview(holder,{cap:'\\(\\mathbf{S}\\)',rows:2,cols:2,digits:4});
+  const vi=matview(holder,{cap:'\\(\\mathbf{S}^{-1}\\)',rows:2,cols:2,digits:2});
   const vw=matview(holder,{cap:'\\(\\mathbf{w}\\)',rows:2,cols:1,digits:3});
   eqbar(root,'Matching the Gaussian form',
     '\\( \\ln\\mathcal N(\\mathbf{w}\\mid\\mathbf{m}_N,\\mathbf{S})=-\\dfrac{1}{2}\\mathbf{w}^{\\mathrm T}'+
@@ -343,8 +340,8 @@ export function p39(root){
     {l:'10 points from \\(\\sin(2\\pi x)\\)',on:()=>{const d=makeData(10,.25,++st.seed);
       st.xs=d.xs.slice();st.ts=d.ts.slice();draw()}}]);
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'n',l:'\\(N\\)'},{k:'s1',l:'\\(s(x)\\) at \\(x=0.1\\)'},
-    {k:'s2',l:'\\(s(x)\\) at \\(x=0.5\\)'},{k:'s3',l:'\\(s(x)\\) at \\(x=0.9\\)'},{k:'wid',l:'Widest point of the band',big:true}]);
+  const out=readout(b.pn,[{k:'n',l:'\\(N\\)'},{k:'s1',l:'\\(s(0.1)\\)'},
+    {k:'s2',l:'\\(s(0.5)\\)'},{k:'s3',l:'\\(s(0.9)\\)'},{k:'wid',l:'\\(\\max_x s(x)\\)',big:true}]);
   eqbar(root,'The predictive distribution, once more',
     '\\( p(t\\mid x,\\mathbf{x},\\mathbf{t})=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\), '+
     '\\( s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\,\\boldsymbol\\phi(x)\\), '+

@@ -31,11 +31,11 @@ export function p45(root){
     {c:'var(--accent)',t:'dash',l:'\\(\\ln\\lambda^{*}\\)'}]);
   const R=new Plot(card,{h:260,xlim:[-31,3],ylim:[-.04,1.24],xl:'\\(\\ln\\lambda\\)',
     yl:'\\(E_{\\mathrm{RMS}}\\)',xt:[-30,-20,-10,0],yt:[0,.5,1],pad:[16,18,28,40]});
-  slider(b.pn,{label:'Training points \\(N_{\\mathrm{Train}}\\)',min:4,max:40,step:1,value:st.ntr,
+  slider(b.pn,{label:'\\(N_{\\mathrm{Train}}\\)',min:4,max:40,step:1,value:st.ntr,
     on:v=>{st.ntr=v;gen()}});
-  slider(b.pn,{label:'Validation points \\(N_{\\mathrm{Valid}}\\)',min:2,max:40,step:1,value:st.nva,
+  slider(b.pn,{label:'\\(N_{\\mathrm{Valid}}\\)',min:2,max:40,step:1,value:st.nva,
     on:v=>{st.nva=v;gen()}});
-  slider(b.pn,{label:'Test points \\(N_{\\mathrm{Test}}\\)',min:5,max:200,step:5,value:st.nte,
+  slider(b.pn,{label:'\\(N_{\\mathrm{Test}}\\)',min:5,max:200,step:5,value:st.nte,
     on:v=>{st.nte=v;gen()}});
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
   slider(b.pn,{label:'\\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),
@@ -47,8 +47,7 @@ export function p45(root){
     {k:'va',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{val}}(\\lambda^{*})\\)'},
     {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(\\lambda^{*})\\)',big:true},
     {k:'best',l:'\\(\\min_{\\lambda} E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
-    {k:'bl',l:'\\(\\arg\\min_{\\ln\\lambda} E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
-    {k:'gap',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(\\lambda^{*})-\\min_{\\lambda}E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'}]);
+    {k:'bl',l:'\\(\\arg\\min_{\\ln\\lambda} E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},]);
   eqbar(root,'Training, validation and test',
     '\\( \\mathbf{w}^{*}_{\\mathrm{MAP}}(\\lambda)=\\arg\\min_{\\mathbf{w}}\\left[\\dfrac{1}{2}'+
     '\\sum_{n=1}^{N_{\\mathrm{Train}}}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}+\\dfrac{\\lambda}{2}'+
@@ -123,8 +122,8 @@ export function p49(root){
     {k:'aic',l:'\\(\\arg\\max_M \\mathrm{AIC}\\)'},{k:'bic',l:'\\(\\arg\\max_M \\mathrm{BIC}\\)'},
     {k:'mte',l:'\\(\\arg\\min_M E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
     {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(M)\\)',big:true},
-    {k:'runs',l:'Training runs, \\(\\mathrm{CV}\\)'},
-    {k:'runs1',l:'Training runs, \\(\\mathrm{AIC}\\) or \\(\\mathrm{BIC}\\)'}]);
+    {k:'runs',l:'\\(\\#\\,\\mathrm{fits}_{\\mathrm{CV}}\\)'},
+    {k:'runs1',l:'\\(\\#\\,\\mathrm{fits}_{\\mathrm{AIC/BIC}}\\)'}]);
   eqbar(root,'Two ways to choose a model without a test set',
     '\\( E_{\\mathrm{CV}}(M)=\\dfrac{1}{S}\\sum_{s=1}^{S}E_{\\mathrm{RMS}}^{(s)}(M)\\)<br>'+
     '\\( \\mathrm{AIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-M\\), '+

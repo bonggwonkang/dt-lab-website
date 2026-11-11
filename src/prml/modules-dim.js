@@ -41,7 +41,7 @@ export function p56(root){
   b.pn.appendChild(el('div','hr'));
   slider(b.pn,{label:'Order \\(M\\)',min:1,max:9,step:1,value:st.M,on:v=>{st.M=v;draw()}});
   const oA=readout(b.pn,[{k:'c',l:'\\(\\binom{D+M}{M}\\)',big:true},
-    {k:'e',l:'Terms of order exactly \\(M\\)'},{k:'p',l:'\\(D^{M}\\)'}]);
+    {k:'e',l:'\\(\\binom{D+M-1}{M}\\)'},{k:'p',l:'\\(D^{M}\\)'}]);
   b.pn.appendChild(el('div','hr'));
   const sE=slider(b.pn,{label:'\\(\\epsilon\\)',min:0,max:1,step:.01,value:st.eps,
     fmt:v=>fmt(v,2),on:v=>{st.eps=v;draw()}});

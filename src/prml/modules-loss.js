@@ -41,11 +41,9 @@ export function p86(root){
     on:v=>{st.N=v;draw()}});
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'tot',l:'\\(\\mathbb E[L]\\) for \\(y(x,\\mathbf{w}^*)\\)',big:true},
-    {k:'pe',l:'Prediction error'},{k:'iv',l:'Intrinsic variance'},
-    {k:'sm',l:'Sum of the two terms'}]);
-  b.pn.appendChild(el('div','hr'));
-  const cmp=readout(b.pn,[{k:'ct',l:'\\(\\mathbb E[L]\\) for \\(y(x)=\\mathbb E_t[t\\mid x]\\)'},
-    {k:'cp',l:'Prediction error'}]);
+    {k:'pe',l:'\\(\\int\\{y(x)-\\mathbb E_t[t|x]\\}^{2}p(x)dx\\)'},
+    {k:'iv',l:'\\(\\int\\!\\!\\int\\{\\mathbb E_t[t|x]-t\\}^{2}p(x,t)dxdt\\)'}]);
+  const cmp=()=>{};
 
   eqbar(root,'The expected loss and the two terms it is made of',
     '\\( \\mathbb E[L]=\\int\\!\\!\\int\\{y(x)-t\\}^{2}p(x,t)\\,dx\\,dt \\)<br>'+

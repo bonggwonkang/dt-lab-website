@@ -44,7 +44,7 @@ export function p75(root){
   const sT=slider(b.pn,{label:'\\(\\hat x\\)',min:0,max:1,step:.005,value:st.x0,
     fmt:v=>fmt(v,3),on:v=>{st.x0=v;draw()}});
   b.pn.appendChild(el('div','hr'));
-  const out=readout(b.pn,[{k:'bd',l:'Decision boundary'},
+  const out=readout(b.pn,[{k:'bd',l:'\\(\\partial\\mathcal R_1\\)'},
     {k:'pm',l:'\\(p(\\text{mistake})\\)'},{k:'el',l:'\\(\\mathbb E[L]\\)',big:true},
     {k:'rj',l:'\\(\\int_{\\text{reject}}p(x)\\,dx\\)'},{k:'pv',l:'\\(p(\\hat x)\\)'},
     {k:'po',l:'\\(p(\\mathcal C_1\\mid\\hat x)\\)'}]);
