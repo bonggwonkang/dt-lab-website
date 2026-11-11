@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -59,23 +58,9 @@ function Contact() {
           <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl font-bold text-white mb-3">
             Join the Digital Transformation Lab!
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-indigo-100 text-base mb-4 max-w-lg mx-auto">
+          <motion.p variants={fadeUp} className="text-indigo-100 text-base max-w-lg mx-auto">
             The Digital Transformation Lab welcomes highly motivated students who are interested in our research areas.
           </motion.p>
-          <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
-            <a href="mailto:kbk@kumoh.ac.kr" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-indigo-700 font-bold rounded-xl hover:bg-indigo-50 transition-colors shadow-xl shadow-indigo-900/30">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              Contact Us
-            </a>
-            <Link to="/members"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white/15 text-white font-bold rounded-xl border border-white/30 hover:bg-white/25 transition-colors">
-              Meet the Team
-            </Link>
-          </motion.div>
         </motion.div>
       </div>
     </section>
