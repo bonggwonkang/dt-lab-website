@@ -173,7 +173,13 @@ function SectionHeader({ label, color = 'indigo' }) {
   )
 }
 
-function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300' }) {
+const pillStyle = {
+  indigo: 'bg-indigo-500/60 dark:bg-indigo-600/60 border-indigo-500/60 dark:border-indigo-600/60',
+  blue:   'bg-blue-500/60 dark:bg-blue-600/60 border-blue-500/60 dark:border-blue-600/60',
+}
+
+function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300', pillColor = 'indigo' }) {
+  const pill = pillStyle[pillColor] || pillStyle.indigo
   return (
     <motion.div variants={fadeUp}>
       <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8">
@@ -208,7 +214,9 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
         {item.jcr && (
           <>
             {' '}
-            <span className={journalColor}>[JCR {item.jcr}]</span>
+            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium align-middle border text-white ${pill}`}>
+              JCR {item.jcr}
+            </span>
           </>
         )}
       </p>
@@ -252,7 +260,7 @@ export default function PublicationsPage() {
               <SectionHeader label="International Journals" color="indigo" />
               <div className="space-y-5">
                 {internationalJournals.map((item, i) => (
-                  <JournalEntry key={i} num={internationalJournals.length - i} item={item} journalColor="text-indigo-500 dark:text-indigo-300" />
+                  <JournalEntry key={i} num={internationalJournals.length - i} item={item} journalColor="text-indigo-500 dark:text-indigo-300" pillColor="indigo" />
                 ))}
               </div>
             </motion.div>
@@ -262,7 +270,7 @@ export default function PublicationsPage() {
               <SectionHeader label="Korean Journals" color="blue" />
               <div className="space-y-5">
                 {koreanJournals.map((item, i) => (
-                  <JournalEntry key={i} num={koreanJournals.length - i} item={item} journalColor="text-blue-500 dark:text-blue-300" />
+                  <JournalEntry key={i} num={koreanJournals.length - i} item={item} journalColor="text-blue-500 dark:text-blue-300" pillColor="blue" />
                 ))}
               </div>
             </motion.div>
