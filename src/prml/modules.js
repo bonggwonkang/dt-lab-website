@@ -1,6 +1,6 @@
 /* PRML simulators: one builder per slide, registered in MODULES. */
 import{el,fmt,clamp,tex,sin2pi,makeData,polyval,fit,sse,erms,Plot,board,legend,slider,
-  toggle,btnrow,readout,eqbar,sub,niceRange,wPanel,applyFit}from'./core.js'
+  btnrow,readout,eqbar,sub,niceRange,wPanel,applyFit}from'./core.js'
 import{p15,p19,p23,p25,p28,p30,p33}from'./modules-mle.js'
 import{p34,p35,p36,p37,p38,p39}from'./modules-bayes.js'
 import{p45,p49}from'./modules-select.js'
@@ -23,9 +23,7 @@ function p10(root){
   const sS=slider(b.pn,{label:'\\(\\sigma\\)',min:0,max:.6,step:.01,value:st.sigma,fmt:v=>fmt(v,2),on:v=>{st.sigma=v;gen()}});
   btnrow(b.pn,[{l:'Draw a new data set',on:()=>{st.seed++;gen()}},
     {l:'Reset \\((N=10,\\ \\sigma=0.25)\\)',on:()=>{st.N=10;st.sigma=.25;sN.set(10);sS.set(.25);gen()}}]);
-  const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'\\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
-  toggle(tg,'\\(\\epsilon_n\\)',st.eps,v=>{st.eps=v;P.draw()});
+  st.truth=st.eps=true;
   eqbar(b.lc,'Synthetic data set',
     '\\( x_n=\\dfrac{n}{N-1}\\in[0,1]\\), \\(t_n=\\sin(2\\pi x_n)+\\epsilon\\), \\(\\epsilon\\sim\\mathcal N(0,\\sigma^2)\\)<br>'+
     '\\(\\mathbf{x}\\equiv(x_1,\\dots,x_N)^{\\mathrm T}\\), \\(\\mathbf{t}\\equiv(t_1,\\dots,t_N)^{\\mathrm T}\\)');
@@ -55,10 +53,7 @@ function p11(root){
     {l:'Set \\(\\mathbf{w}=\\mathbf{0}\\)',on:()=>{st.w=st.w.map(()=>0);st.rng=10;W.sync();draw()}}]);
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'E',l:'\\(E(\\mathbf{w})\\)'}]);
-  const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'\\(w_jx^{j}\\)',st.terms,v=>{st.terms=v;P.draw()});
-  toggle(tg,'\\(\\sin(2\\pi x)\\)',st.truth,v=>{st.truth=v;P.draw()});
-  toggle(tg,'\\(t_n\\)',st.data,v=>{st.data=v;P.draw()});
+  st.terms=st.truth=st.data=true;
   eqbar(b.lc,'Polynomial curve',
     '\\( y(x,\\mathbf{w}) = w_0+w_1x+w_2x^2+\\cdots+w_Mx^M=\\sum_{j=0}^{M}w_jx^{j}\\)');
   function draw(){out({M:st.w.length-1,np:st.w.length,E:fmt(sse(st.d.xs,st.d.ts,st.w),3)});P.draw()}
@@ -92,8 +87,7 @@ function p12(root){
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'E',l:'\\(E(\\mathbf{w})\\)',big:true},{k:'Em',l:'\\(E(\\mathbf{w}^{*})\\)'},
     {k:'rms',l:'\\(E_{\\mathrm{RMS}}\\)'}]);
-  const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'\\(|y(x_n,\\mathbf{w})-t_n|\\)',st.bars,v=>{st.bars=v;P.draw()});
+  st.bars=true;
   eqbar(root,'Sum-of-squares error',
     '\\( E(\\mathbf{w})=\\dfrac{1}{2}\\sum_{n=1}^{N}\\{y(x_n,\\mathbf{w})-t_n\\}^{2}\\)');
   b.lc.appendChild(surfWrap);

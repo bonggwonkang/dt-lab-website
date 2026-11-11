@@ -121,9 +121,7 @@ export function p49(root){
   const out=readout(b.pn,[{k:'cv',l:'\\(\\arg\\min_M E_{\\mathrm{CV}}\\)'},
     {k:'aic',l:'\\(\\arg\\max_M \\mathrm{AIC}\\)'},{k:'bic',l:'\\(\\arg\\max_M \\mathrm{BIC}\\)'},
     {k:'mte',l:'\\(\\arg\\min_M E_{\\mathrm{RMS}}^{\\mathrm{test}}\\)'},
-    {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(M)\\)',big:true},
-    {k:'runs',l:'\\(\\#\\,\\mathrm{fits}_{\\mathrm{CV}}\\)'},
-    {k:'runs1',l:'\\(\\#\\,\\mathrm{fits}_{\\mathrm{AIC/BIC}}\\)'}]);
+    {k:'te',l:'\\(E_{\\mathrm{RMS}}^{\\mathrm{test}}(M)\\)',big:true}]);
   eqbar(root,'Two ways to choose a model without a test set',
     '\\( E_{\\mathrm{CV}}(M)=\\dfrac{1}{S}\\sum_{s=1}^{S}E_{\\mathrm{RMS}}^{(s)}(M)\\)<br>'+
     '\\( \\mathrm{AIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-M\\), '+
@@ -155,8 +153,7 @@ export function p49(root){
     I.o.yt=[Math.round(lo),Math.round((lo+hi)/2),Math.round(hi)];
     paint()}
   function paint(){const r=st.rows[st.M];
-    out({cv:st.mcv,aic:st.maic,bic:st.mbic,mte:st.mte,te:fmt(r.te,3),
-      runs:Math.min(st.S,st.d.N)*MS.length,runs1:MS.length});
+    out({cv:st.mcv,aic:st.maic,bic:st.mbic,mte:st.mte,te:fmt(r.te,3)});
     P.draw();R.draw();I.draw()}
   P.render=p=>{const c=p.col;p.path(sin2pi,c.truth,2.2);
     p.dots(st.d.xs,st.d.ts,c.obs,st.N>40?3:4.2);

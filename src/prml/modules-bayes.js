@@ -1,5 +1,5 @@
 /* PRML simulators, slides 34 to 39: the fully Bayesian treatment. */
-import{el,fmt,clamp,sin2pi,makeData,polyval,phi,Plot,board,legend,slider,toggle,btnrow,
+import{el,fmt,clamp,sin2pi,makeData,polyval,phi,Plot,board,legend,slider,btnrow,
   readout,eqbar,wchips,matview,posterior,predict,sampleW,rng,tex,dot,quad,
   wPanel,applyFit}from'./core.js'
 
@@ -75,8 +75,7 @@ export function p35(root){
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'m',l:'\\(m(x_0)\\)'},{k:'s',l:'\\(s(x_0)\\)',big:true},{k:'sn',l:'\\(\\beta^{-1}\\)'},
     {k:'sm',l:'\\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi(x_0)\\)'},{k:'sh',l:'\\(s(0.05)\\)'},{k:'sl',l:'\\(s(0.95)\\)'}]);
-  const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'\\(y(x,\\mathbf{w}^{(k)})\\)',st.samples,v=>{st.samples=v;P.draw()});
+  st.samples=true;
   eqbar(b.lc,'Marginalizing over w',
     '\\( p(t\\mid x,\\mathbf{x},\\mathbf{t})=\\int p(t\\mid x,\\mathbf{w})\\,'+
     'p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\)<br>'+
@@ -139,8 +138,7 @@ export function p36(root){
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'y',l:'\\(y(x_0,\\mathbf{w})=\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\)',big:true},
     {k:'big',l:'\\(\\max_j|w_jx_0^{j}|\\)'}]);
-  const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'\\(w_j\\phi_j(x)\\)',st.basis,v=>{st.basis=v;P.draw()});
+  st.basis=true;
   let mv=null;
 
   eqbar(root,'The polynomial as an inner product',

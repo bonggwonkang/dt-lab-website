@@ -1,5 +1,5 @@
 /* PRML simulators, slides 15 to 33: model selection, regularization, MLE and MAP. */
-import{el,fmt,clamp,sin2pi,makeData,polyval,fit,sse,erms,Plot,board,legend,slider,toggle,
+import{el,fmt,clamp,sin2pi,makeData,polyval,fit,sse,erms,Plot,board,legend,slider,
   btnrow,readout,eqbar,sub,wchips,gaussPdf,wPanel,applyFit}from'./core.js'
 
 const norm2=w=>w.reduce((a,v)=>a+v*v,0);
@@ -121,9 +121,7 @@ export function p23(root){
   b.pn.appendChild(el('div','hr'));
   const out=readout(b.pn,[{k:'sd',l:'\\(\\sigma=\\beta^{-1/2}\\)'},{k:'y0',l:'\\(y(x_0,\\mathbf{w})\\)'},
     {k:'in',l:'\\(\\#\\{n:|t_n-y(x_n,\\mathbf{w})|\\leq\\sigma\\}\\)'}]);
-  const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'\\(y(x,\\mathbf{w})\\pm\\sigma\\)',st.band,v=>{st.band=v;P.draw()});
-  toggle(tg,'\\(p(t\\mid x_0,\\mathbf{w},\\beta)\\)',st.bell,v=>{st.bell=v;P.draw()});
+  st.band=st.bell=true;
   eqbar(b.lc,'A Gaussian conditional distribution for the target',
     '\\( p(t\\mid x,\\mathbf{w},\\beta)=\\mathcal N\\!\\left(t\\mid y(x,\\mathbf{w}),\\beta^{-1}\\right)\\), '+
     '\\(\\beta^{-1}=\\sigma^{2}\\)');
@@ -390,8 +388,7 @@ export function p33(root){
   const out=readout(b.pn,[{k:'em',l:'\\(\\mathbb{E}[Y\\mid X=x_1]\\)'},{k:'ef',l:'\\(\\mathbb{E}[Y\\mid X=x_2]\\)'},{k:'e',l:'\\(\\mathbb{E}[Y]\\)',big:true},
     {k:'sd',l:'\\(\\sqrt{\\mathrm{Var}[Y]}\\)'},
     {k:'vw',l:'\\(\\mathbb{E}_X[\\mathrm{Var}(Y\\mid X)]\\)'},{k:'vb',l:'\\(\\mathrm{Var}_X(\\mathbb{E}[Y\\mid X])\\)'}]);
-  const tg=el('div','toggles');b.pn.appendChild(tg);
-  toggle(tg,'\\(p(Y\\mid X=x_k)\\)',st.show,v=>{st.show=v;P.draw()});
+  st.show=true;
   /* ---- the same computation in the notation of the polynomial example ---- */
   const q={p2:.5,x0:.9,beta:11.1,d:makeData(10,.25,3)},d2=makeData(10,.25,8);
   q.w1=fit(q.d.xs,q.d.ts,3);q.w2=fit(d2.xs,d2.ts,3);
