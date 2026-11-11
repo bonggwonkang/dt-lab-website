@@ -1,6 +1,6 @@
 /* PRML simulators, slides 66 and 68: the misclassification rate and where the
    decision boundary should sit. */
-import{el,fmt,clamp,gaussPdf,Plot,board,legend,slider,btnrow,readout,eqbar,note}from'./core.js'
+import{el,fmt,clamp,gaussPdf,Plot,board,legend,slider,btnrow,readout,eqbar}from'./core.js'
 
 const LO=-8,HI=8,NG=1600,H=(HI-LO)/NG;
 
@@ -51,10 +51,6 @@ export function p66(root){
     'with \\( p(x,\\mathcal C_k)=p(x\\mid\\mathcal C_k)p(\\mathcal C_k)\\), \\(\\mathcal R_1=\\{x<\\hat x\\}\\), '+
     '\\(\\mathcal R_2=\\{x\\geq\\hat x\\}\\), and the minimum at \\(\\hat x=x_0\\), '+
     'where \\(p(x,\\mathcal C_1)=p(x,\\mathcal C_2)\\), that is where \\(p(\\mathcal C_k\\mid x)\\) is largest');
-  note(root,['Every \\(x\\) has a true class and an assigned class; a mistake is the two that differ.',
-    'Green and blue never move, so only the red area changes with \\(\\hat x\\).',
-    'Red vanishes at \\(\\hat x=x_0\\), which is the minimum of the lower curve.',
-    'Raise \\(p(\\mathcal C_1)\\) and \\(x_0\\) slides towards \\(\\mathcal C_2\\): a rarer class needs stronger evidence.']);
 
   const f1=x=>st.pi1*gaussPdf(x,st.m1,st.s1),f2=x=>(1-st.pi1)*gaussPdf(x,st.m2,st.s2);
   const at=(c,x)=>{const u=clamp((x-LO)/H,0,NG),i=Math.floor(u);

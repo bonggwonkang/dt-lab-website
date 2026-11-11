@@ -147,8 +147,6 @@ function readout(host,keys){const r=el('div','readout'),vs={};keys.forEach(k=>{r
   return o=>{for(const k in o)if(vs[k])vs[k].textContent=o[k]}}
 function eqbar(host,cap,body){const e=el('div','eqbar');e.append(el('div','cap',cap),el('div','eq',body));
   host.appendChild(e);tex(e);return e}
-function note(host,items,title){const n=el('div','note');n.appendChild(el('b',null,title||'What to look for'));
-  const u=el('ul');items.forEach(t=>u.appendChild(el('li',null,t)));n.appendChild(u);host.appendChild(n);tex(n);return n}
 const SUB='₀₁₂₃₄₅₆₇₈₉';const sub=j=>String(j).split('').map(d=>SUB[+d]).join('');
 
 /* ---- linear algebra and Bayesian pieces shared by the later slides ---- */
@@ -222,5 +220,5 @@ function matview(host,o){const one=o.rows===1&&o.cols===1,vec=!one&&(o.cols===1|
         const t=Math.min(1,Math.abs(v)/mx);c.style.background='rgba(99,102,241,'+(.06+.5*t).toFixed(3)+')';
         if(t>.55)c.style.color='#fff';g.appendChild(c)}}}
 
-export{el,cssv,setRoot,clamp,fmt,tex,ensureMathJax,rng,gauss,sin2pi,makeData,phi,polyval,solve,fit,sse,erms,Plot,board,legend,slider,toggle,btnrow,readout,eqbar,note,sub,
+export{el,cssv,setRoot,clamp,fmt,tex,ensureMathJax,rng,gauss,sin2pi,makeData,phi,polyval,solve,fit,sse,erms,Plot,board,legend,slider,toggle,btnrow,readout,eqbar,sub,
   zeros,dot,matVec,quad,inv,chol,posterior,predict,sampleW,gaussPdf,logGaussPdf,matview,wchips,niceRange,wPanel,applyFit};

@@ -1,6 +1,6 @@
 /* PRML simulators, slides 34 to 39: the fully Bayesian treatment. */
 import{el,fmt,clamp,sin2pi,makeData,polyval,phi,Plot,board,legend,slider,toggle,btnrow,
-  readout,eqbar,note,wchips,matview,posterior,predict,sampleW,rng,tex,dot,quad,
+  readout,eqbar,wchips,matview,posterior,predict,sampleW,rng,tex,dot,quad,
   wPanel,applyFit}from'./core.js'
 
 const ALPHA0=Math.log(5e-3);          /* the prior precision used in Figure 1.17 */
@@ -38,9 +38,6 @@ export function p34(root){
     'Because the observed targets are corrupted by noise and the data set is finite, the data cannot '+
     'determine \\(\\mathbf{w}\\) uniquely, and every curve drawn here is one \\(\\mathbf{w}\\) the data '+
     'still consider plausible.');
-  note(root,['With no data the curves are whatever \\(\\alpha\\) allows.',
-    'Each data point narrows the posterior distribution where it sits.',
-    'The posterior distribution narrows as \\(N\\) grows.']);
   function gen(){st.d=makeData(Math.max(st.N,0),.25,st.seed);
     if(st.N===0){st.d={xs:[],ts:[],N:0,seed:st.seed}}draw()}
   function draw(){const al=Math.exp(st.lnAlpha);
@@ -90,9 +87,6 @@ export function p35(root){
     'p(\\mathbf{w}\\mid\\mathbf{x},\\mathbf{t})\\,d\\mathbf{w}=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\)<br>'+
     '\\( m(x)=\\beta\\,\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)t_n'+
     '\\), \\(s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\,\\boldsymbol\\phi(x)\\)');
-  note(root,['The band is \\(\\pm1\\) standard deviation around the mean.',
-    '\\(s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi^{\\mathrm T}\\mathbf{S}\\boldsymbol\\phi\\): noise plus model.',
-    'The band widens at the edges, so the variance depends on \\(x\\).']);
   function gen(){st.d=makeData(st.N,.25,st.seed);draw()}
   function draw(){const al=Math.exp(st.lnAlpha);
     st.post=posterior(st.d.xs,st.d.ts,st.M,al,st.beta);
@@ -157,9 +151,6 @@ export function p36(root){
   eqbar(root,'The polynomial as an inner product',
     '\\( y(x,\\mathbf{w})=\\sum_{j=0}^{M}w_jx^{j}=\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{w}\\), '+
     'where \\(\\boldsymbol\\phi(x)=\\left(x^{0},x^{1},\\dots,x^{M}\\right)^{\\mathrm T}\\in\\mathbb R^{M+1}\\).');
-  note(root,['Fixed shapes \\(x^{0},\\dots,x^{M}\\), only \\(\\mathbf{w}\\) moves.',
-    'At \\(x_0\\) the model is one inner product \\(\\boldsymbol\\phi(x_0)^{\\mathrm T}\\mathbf{w}\\).',
-    'The same inner product holds for any basis function vector \\(\\boldsymbol\\phi(x)\\).']);
 
   function rebuild(){const M=st.w.length-1;legB.innerHTML='';
     legend(legB,JC.slice(0,M+1).map((c,j)=>({c:c,l:'\\(\\phi_{'+j+'}=x^{'+j+'}\\)'})));tex(legB);
@@ -254,9 +245,6 @@ export function p37(root){
     '\\( \\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)'+
     '\\boldsymbol\\phi(x_n)^{\\mathrm T}\\), \\('+
     '\\mathbf{S}^{-1}\\mathbf{m}_N=\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)t_n\\)');
-  note(root,['Each data point adds one \\(\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\).',
-    '\\(\\alpha\\) enters only on the diagonal and keeps \\(\\mathbf{S}^{-1}\\) invertible.',
-    '\\(\\mathbf{S}\\) depends on the \\(x_n\\), \\(\\mathbf{m}_N\\) on the \\(t_n\\) as well.']);
   function reset(){views=null;holder.innerHTML=''}
   function gen(){st.d=makeData(st.N,.25,st.seed);reset();draw()}
   function draw(){const al=Math.exp(st.lnAlpha),M=st.M,d=M+1;
@@ -315,9 +303,6 @@ export function p38(root){
     '\\mathbf{S}^{-1}\\mathbf{w}+\\mathbf{w}^{\\mathrm T}\\mathbf{S}^{-1}\\mathbf{m}_N+C_3\\), '+
     'so reading the quadratic term gives \\(\\mathbf{S}^{-1}\\) and reading the linear term gives '+
     '\\(\\mathbf{S}^{-1}\\mathbf{m}_N\\), which is how the posterior mean and covariance are identified.');
-  note(root,['Only the quadratic and the linear term depend on \\(\\mathbf{w}\\).',
-    'Away from \\(\\mathbf{m}_N\\) the quadratic term falls fastest.',
-    'Data shrinks the ellipse, the tilt is \\(w_0,w_1\\) correlation.']);
   function gen(){st.d=st.N?makeData(st.N,.25,st.seed):{xs:[],ts:[],N:0,seed:st.seed};draw()}
   function draw(){const al=Math.exp(st.lnAlpha);
     st.post=posterior(st.d.xs,st.d.ts,M,al,st.beta);
@@ -369,9 +354,6 @@ export function p39(root){
     '\\( p(t\\mid x,\\mathbf{x},\\mathbf{t})=\\mathcal N\\!\\left(t\\mid m(x),s^{2}(x)\\right)\\), '+
     '\\( s^{2}(x)=\\beta^{-1}+\\boldsymbol\\phi(x)^{\\mathrm T}\\mathbf{S}\\,\\boldsymbol\\phi(x)\\), '+
     '\\( \\mathbf{S}^{-1}=\\alpha\\mathbf{I}+\\beta\\sum_{n=1}^{N}\\boldsymbol\\phi(x_n)\\boldsymbol\\phi(x_n)^{\\mathrm T}\\).');
-  note(root,['With no data the band is the prior, wide and centred on zero.',
-    'Tight where the points are, wide where they are not.',
-    'One far point moves the mean less once \\(N\\) is large.']);
   function draw(){const al=Math.exp(st.lnAlpha);
     st.post=posterior(st.xs,st.ts,st.M,al,st.beta);
     const s=x=>Math.sqrt(predict(x,st.M,st.post,st.beta).var);

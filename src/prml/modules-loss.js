@@ -1,7 +1,7 @@
 /* PRML simulators for decision theory applied to regression:
    slide 86, the expected loss and the two terms it is made of, and
    slides 88 to 90, the Minkowski loss and the conditional mean, median and mode. */
-import{el,fmt,clamp,sin2pi,makeData,fit,polyval,gaussPdf,Plot,board,legend,slider,btnrow,readout,eqbar,note}from'./core.js'
+import{el,fmt,clamp,sin2pi,makeData,fit,polyval,gaussPdf,Plot,board,legend,slider,btnrow,readout,eqbar}from'./core.js'
 
 /* ============ slide 86: the expected loss and its two terms ============ */
 const GX=201,GU=81,XG=[];
@@ -53,10 +53,6 @@ export function p86(root){
     '+\\underbrace{\\int\\!\\!\\int\\{\\mathbb E_t[t|x]-t\\}^{2}p(x)\\,dt\\,dx}_{\\text{intrinsic variance}} \\)<br>'+
     'with \\( t_n=\\sin(2\\pi x_n)+\\epsilon \\), \\( \\epsilon\\sim\\mathcal N(0,\\sigma^{2}) \\), '+
     'so that \\( \\mathbb E_t[t|x]=\\sin(2\\pi x) \\)');
-  note(root,['Only the first term moves with \\(y(x)\\), and it is zero at \\(y(x)=\\mathbb E_t[t|x]\\).',
-    'The second term is the noise itself, so it is a floor no \\(y(x)\\) can go below.',
-    'Raise \\(\\sigma\\): the floor rises as \\(\\sigma^{2}\\) and the fitted curve also gets worse.',
-    'Raise \\(M\\) with a small \\(N\\): over-fitting shows up in the first term alone.']);
 
   let cur={};
   function draw(){const d=makeData(st.N,st.sig,3),w=fit(d.xs,d.ts,st.M,1e-8),L=loss(w);
@@ -154,10 +150,6 @@ export function p88(root){
     'and \\( \\mathrm{argmax}_t\\,p(t|x) \\) for \\(q=0\\)<br>'+
     'here \\( p(t|x)=0.6\\,\\mathcal N\\!\\left(t|\\sin(2\\pi x),\\sigma^{2}\\right)'+
     '+0.4\\,\\mathcal N\\!\\left(t|-\\sin(2\\pi x),\\sigma^{2}\\right) \\) when it is multimodal');
-  note(root,['Each curve is \\(p(t|x)\\) at one fixed \\(x\\), and the red mark is the best \\(y(x)\\).',
-    'With \\(q=2\\) and two modes the mark falls between them, where almost no mass lies.',
-    'Lower \\(q\\) towards 0 and the mark jumps onto a mode, a value that \\(t\\) can take.',
-    'The lower panel is \\(|y-t|^{q}\\) itself: small \\(q\\) barely punishes a far miss.']);
 
   let cur={};
   function pick(k){st.multi=k;

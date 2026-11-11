@@ -1,7 +1,7 @@
 /* PRML simulators, slides 75 to 77: the generative approach, the discriminative
    model and the discriminant function on one classification problem, with the
    consequences listed on slides 78 to 81. */
-import{el,tex,fmt,clamp,gaussPdf,Plot,board,legend,slider,btnrow,readout,eqbar,note}from'./core.js'
+import{el,tex,fmt,clamp,gaussPdf,Plot,board,legend,slider,btnrow,readout,eqbar}from'./core.js'
 
 /* the class conditional densities of Figure 1.27, the left mode of class 1
    deliberately far from the overlap */
@@ -55,10 +55,6 @@ export function p75(root){
     '(II) \\( p(\\mathcal C_1\\mid x,\\mathbf{w})=\\sigma\\!\\left(\\mathbf{w}^{\\mathrm T}\\boldsymbol\\phi(x)\\right)\\), '+
     '(III) \\( f(x)=0\\) if \\(\\mathbf{w}^{\\mathrm T}\\boldsymbol\\phi(x)+w_0<0\\), else \\(1\\)<br>'+
     'and the decision itself minimises \\( \\mathbb E[L]=\\sum_k\\sum_j\\int_{\\mathcal R_j}L_{kj}\\,p(x,\\mathcal C_k)\\,dx\\)');
-  note(root,['Only (I) models \\(p(x)\\), so only (I) can call \\(\\hat x\\) an outlier.',
-    'The left mode of \\(p(x\\mid\\mathcal C_1)\\) never reaches the posterior or the decision.',
-    'Raise \\(L_{12}\\): (I) and (II) move the boundary at once, (III) cannot.',
-    'Raise \\(\\theta\\): a reject band opens for (I) and (II), never for (III).']);
 
   const j1=x=>st.pi*px1(x),j2=x=>(1-st.pi)*px2(x);
   const post=x=>{const a=j1(x),c=a+j2(x);return c>0?a/c:.5};

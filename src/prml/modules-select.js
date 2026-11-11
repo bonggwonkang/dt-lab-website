@@ -1,7 +1,7 @@
 /* PRML simulators, slides 45 and 49: choosing a model with a validation set,
    with cross-validation, and with information criteria. */
 import{el,cssv,fmt,clamp,rng,gauss,sin2pi,polyval,fit,erms,Plot,board,legend,slider,
-  btnrow,readout,eqbar,note}from'./core.js'
+  btnrow,readout,eqbar}from'./core.js'
 
 /* the normal equations stay solvable when a fold leaves fewer points than coefficients */
 const RIDGE=1e-9;
@@ -58,10 +58,6 @@ export function p45(root){
     '\\sum_{n=1}^{N_{\\mathrm{Valid}}}\\left\\{y\\!\\left(x_n,\\mathbf{w}^{*}_{\\mathrm{MAP}}(\\lambda)\\right)-t_n\\right\\}^{2}}\\), '+
     '\\( E_{\\mathrm{RMS}}^{\\mathrm{test}}=\\sqrt{\\dfrac{1}{N_{\\mathrm{Test}}}\\sum_{n=1}^{N_{\\mathrm{Test}}}'+
     '\\left\\{y\\!\\left(x_n,\\mathbf{w}^{*}_{\\mathrm{MAP}}(\\lambda^{*})\\right)-t_n\\right\\}^{2}}\\)');
-  note(root,['Train fixes \\(\\mathbf{w}\\), validation picks \\(\\lambda\\), test only reports.',
-    'Small \\(N_{\\mathrm{Valid}}\\): a noisy estimate, so \\(\\lambda^{*}\\) jumps about.',
-    'A \\(\\lambda^{*}\\) picked from noise shows up in the test error.',
-    'Small \\(N_{\\mathrm{Test}}\\): the same model, a noisy estimate of it.']);
   function near(x){let k=0;for(let i=1;i<st.rows.length;i++)
     if(Math.abs(st.rows[i].l-x)<Math.abs(st.rows[k].l-x))k=i;return st.rows[k]}
   function gen(){st.d={tr:sample(st.ntr,st.sigma,st.seed),va:sample(st.nva,st.sigma,st.seed+101),
@@ -135,10 +131,6 @@ export function p49(root){
     '\\( \\mathrm{AIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-M\\), '+
     '\\( \\mathrm{BIC}=\\ln p(\\mathcal D\\mid\\mathbf{w}_{\\mathrm{ML}})-\\dfrac{M}{2}\\ln N\\), '+
     'where \\(M\\) counts the adjustable parameters, \\(M+1\\) for a polynomial of order \\(M\\)');
-  note(root,['Cross-validation is less noisy, at \\(S\\) times the training runs.',
-    'Larger \\(S\\): more data per run, more runs.',
-    '\\(\\mathrm{AIC}\\) and \\(\\mathrm{BIC}\\) need one fit and no held-out data.',
-    '\\(\\mathrm{BIC}\\) penalises \\(\\ln N\\) per adjustable parameter, so it favours simpler models.']);
   function logLik(xs,ts,w){const N=xs.length;let s=0;
     for(let n=0;n<N;n++){const d=polyval(w,xs[n])-ts[n];s+=d*d}
     const be=N/Math.max(s,1e-12);

@@ -1,7 +1,7 @@
 /* PRML simulators for information theory: slides 92 to 95, the information
    content and the entropy, and slides 100 to 103, the relative entropy and the
    training points that turn it into a likelihood. */
-import{el,fmt,clamp,rng,gauss,gaussPdf,Plot,board,legend,slider,btnrow,readout,eqbar,note}from'./core.js'
+import{el,fmt,clamp,rng,gauss,gaussPdf,Plot,board,legend,slider,btnrow,readout,eqbar}from'./core.js'
 
 const integ=(f,a,b,n)=>{const d=(b-a)/(n-1);let s=0;
   for(let i=0;i<n;i++)s+=((i===0||i===n-1)?.5:1)*f(a+i*d);return s*d};
@@ -41,10 +41,6 @@ export function p92(root){
     '\\( \\mathbb E[h(x)]\\equiv H[x]=-\\int p(x)\\log_2 p(x)\\,dx \\), the entropy<br>'+
     'for \\( p(x)=\\mathcal N(x|\\mu,\\sigma^{2}) \\) this is '+
     '\\( \\tfrac{1}{2}\\log_2\\!\\left(2\\pi e\\sigma^{2}\\right) \\), which does not contain \\(\\mu\\)');
-  note(root,['Move \\(\\hat x\\) into the tail: \\(p(\\hat x)\\) falls and \\(h(\\hat x)\\) rises.',
-    'Move \\(\\mu\\): everything slides sideways and \\(H[x]\\) does not change.',
-    'Raise \\(\\sigma\\): the distribution flattens and \\(H[x]\\) rises.',
-    'The dashed line is \\(H[x]\\), the average of \\(h(x)\\) weighted by \\(p(x)\\).']);
 
   function draw(){const e=H();
     out({H:fmt(e,3),p:fmt(px(st.x0),4),h:fmt(hx(st.x0),3),h0:fmt(hx(st.mu),3)});
@@ -105,10 +101,6 @@ export function p100(root){
     '-\\underbrace{\\left(-\\int p(x)\\ln p(x)\\,dx\\right)}_{\\mathbb E_p[-\\ln p]}'+
     '=-\\int p(x)\\ln\\left\\{\\dfrac{q(x)}{p(x)}\\right\\}dx \\)<br>'+
     'the average additional surprise by believing \\(q(x)\\) when the data come from \\(p(x)\\)');
-  note(root,['Move \\(q\\) away from \\(p\\): the left term rises, the right term does not move.',
-    'The right term is the entropy of \\(p\\), so it is fixed once \\(p\\) is fixed.',
-    '\\(\\mathrm{KL}(p\\|q)=0\\) only when \\(q\\) matches \\(p\\) everywhere.',
-    'The lower curve shows which \\(x\\) the divergence is collected from.']);
 
   function draw(){const cr=cross(),en=ent(),
     cf=Math.log(st.sq/st.sp)+(st.sp*st.sp+(st.mp-st.mq)*(st.mp-st.mq))/(2*st.sq*st.sq)-.5;
@@ -177,10 +169,6 @@ export function p102(root){
     '+\\ln p(x_n)\\right\\} \\)<br>'+
     'the second term does not contain \\(\\boldsymbol\\theta\\), so minimizing this KL divergence '+
     'is maximizing the likelihood function');
-  note(root,['The second term only shifts the curve, it never moves the minimum.',
-    'The best mean is the mean of the training points, whatever \\(\\sigma\\) is.',
-    'Press the button: \\(\\theta\\) lands on the lowest point of the curve.',
-    'Raise \\(N\\) and \\(\\theta_{\\mathrm{ML}}\\) settles near the \\(p(x)\\) that made the points.']);
 
   let cur={};
   function draw(){const d=xs(),m=d.reduce((a,c)=>a+c,0)/d.length;

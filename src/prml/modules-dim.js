@@ -1,6 +1,6 @@
 /* PRML simulators, slides 56, 58 and 59: the curse of dimensionality,
    gathered into one module because all three say the same thing about D. */
-import{el,fmt,clamp,Plot,board,legend,slider,readout,eqbar,note}from'./core.js'
+import{el,fmt,clamp,Plot,board,legend,slider,readout,eqbar}from'./core.js'
 
 /* the binomial coefficient, exact over the range the sliders allow */
 function comb(n,k){k=Math.min(k,n-k);let r=1;for(let i=1;i<=k;i++)r=r*(n-k+i)/i;return Math.round(r)}
@@ -60,10 +60,6 @@ export function p56(root){
     'with \\( \\binom{D+M}{M}\\) independent coefficients up to order \\(M\\), which grows like \\(D^{M}\\)<br>'+
     '\\( \\dfrac{V_D(1)-V_D(1-\\epsilon)}{V_D(1)}=1-(1-\\epsilon)^{D}\\), '+
     '\\( p(r)\\propto r^{D-1}\\exp\\!\\left(-\\dfrac{r^{2}}{2}\\right)\\)');
-  note(root,['Coefficients grow like \\(D^{M}\\): 4 at \\(D=1\\), 286 at \\(D=10\\).',
-    'At \\(\\epsilon=0.1\\) the shell holds 10% of the volume at \\(D=1\\), 88% at \\(D=20\\).',
-    'Gaussian mass leaves the centre for a shell at \\(r=\\sqrt{D-1}\\).',
-    'In high \\(D\\) almost every point sits near the surface.']);
 
   function draw(){const D=st.D,M=st.M,c=comb(D+M,M);
     oA({c:big(c),e:big(comb(D+M-1,M)),p:big(Math.pow(D,M))});
