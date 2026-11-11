@@ -198,15 +198,7 @@ function renderDesc(desc) {
     return <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{desc}</p>
   }
   const before = desc.slice(0, idx).trim()
-  const after = desc.slice(idx + marker.length).trim()
-  return (
-    <>
-      {before && <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{before}</p>}
-      <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
-        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{after}</p>
-      </div>
-    </>
-  )
+  return before ? <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{before}</p> : null
 }
 
 function NewsModal({ item, onClose }) {
