@@ -173,13 +173,7 @@ function SectionHeader({ label, color = 'indigo' }) {
   )
 }
 
-const pillStyle = {
-  indigo: 'bg-indigo-500/80 dark:bg-indigo-600/80 border-indigo-500/80 dark:border-indigo-600/80',
-  blue:   'bg-blue-500/80 dark:bg-blue-600/80 border-blue-500/80 dark:border-blue-600/80',
-}
-
-function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300', pillColor = 'indigo' }) {
-  const pill = pillStyle[pillColor] || pillStyle.indigo
+function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-indigo-300' }) {
   return (
     <motion.div variants={fadeUp}>
       <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8">
@@ -198,27 +192,23 @@ function JournalEntry({ num, item, journalColor = 'text-indigo-500 dark:text-ind
         {item.pdf && (
           <>
             {' '}
-            <a href={item.pdf} target="_blank" rel="noreferrer"
-              className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium align-middle border text-white hover:opacity-80 transition-opacity ${pill}`}>
-              PDF
+            <a href={item.pdf} target="_blank" rel="noreferrer" className={`${journalColor} hover:underline`}>
+              [PDF]
             </a>
           </>
         )}
         {item.doi && (
           <>
             {' '}
-            <a href={item.doi} target="_blank" rel="noreferrer"
-              className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium align-middle border text-white hover:opacity-80 transition-opacity ${pill}`}>
-              DOI
+            <a href={item.doi} target="_blank" rel="noreferrer" className={`${journalColor} hover:underline`}>
+              [DOI]
             </a>
           </>
         )}
         {item.jcr && (
           <>
             {' '}
-            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium align-middle border text-white ${pill}`}>
-              JCR {item.jcr}
-            </span>
+            <span className="text-gray-500 dark:text-gray-400">[JCR {item.jcr}]</span>
           </>
         )}
       </p>
@@ -262,7 +252,7 @@ export default function PublicationsPage() {
               <SectionHeader label="International Journals" color="indigo" />
               <div className="space-y-5">
                 {internationalJournals.map((item, i) => (
-                  <JournalEntry key={i} num={internationalJournals.length - i} item={item} journalColor="text-indigo-500 dark:text-indigo-300" pillColor="indigo" />
+                  <JournalEntry key={i} num={internationalJournals.length - i} item={item} journalColor="text-indigo-500 dark:text-indigo-300" />
                 ))}
               </div>
             </motion.div>
@@ -272,7 +262,7 @@ export default function PublicationsPage() {
               <SectionHeader label="Korean Journals" color="blue" />
               <div className="space-y-5">
                 {koreanJournals.map((item, i) => (
-                  <JournalEntry key={i} num={koreanJournals.length - i} item={item} journalColor="text-blue-500 dark:text-blue-300" pillColor="blue" />
+                  <JournalEntry key={i} num={koreanJournals.length - i} item={item} journalColor="text-blue-500 dark:text-blue-300" />
                 ))}
               </div>
             </motion.div>
