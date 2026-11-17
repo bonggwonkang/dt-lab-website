@@ -27,7 +27,7 @@ const internationalJournals = [
     year: '2026',
     doi: 'https://www.tandfonline.com/doi/full/10.1080/00401706.2025.2561746',
     pdf: `${base}publications/park-2025-piecewise-gp.pdf`,
-    jcr: 'Top 15%',
+    jcr: 'Top 15.0%',
   },
   {
     authors: 'B. Kang, C. Park, H. Kim, S. Hong',
@@ -49,7 +49,7 @@ const internationalJournals = [
     year: '2024',
     doi: 'https://ieeexplore.ieee.org/document/10278155',
     pdf: `${base}publications/kang-2024-bayesian-optimization.pdf`,
-    jcr: 'Top 10.80%',
+    jcr: 'Top 11.9%',
   },
   {
     authors: 'B. Kang, B. Kim, S. Hong',
@@ -60,7 +60,7 @@ const internationalJournals = [
     year: '2023',
     doi: 'https://ieeexplore.ieee.org/document/10285297',
     pdf: `${base}publications/kang-2023-twin-cranes.pdf`,
-    jcr: 'Top 33.5%',
+    jcr: 'Top 33.6%',
   },
   {
     authors: 'H.Y. Fibrianto*, B. Kang*, S. Hong',
@@ -72,7 +72,7 @@ const internationalJournals = [
     coNote: '*co-first authors',
     doi: 'https://ieeexplore.ieee.org/abstract/document/9174991',
     pdf: `${base}publications/fibrianto-2020-job-sequencing.pdf`,
-    jcr: 'Top 33.5%',
+    jcr: 'Top 33.6%',
   },
 ]
 
