@@ -16,7 +16,7 @@ const internationalJournals = [
     year: '2026',
     doi: 'https://doi.org/10.1080/00207543.2026.2696434',
     pdf: `${base}publications/kang-2026-yard-template-planning.pdf`,
-    jcr: 'Top 8.8%',
+    jcr: 'Top 7.8%',
   },
   {
     authors: 'C. Park, R. Waelder, B. Kang, B. Maruyama, S. Hong, R.B. Gramacy',
