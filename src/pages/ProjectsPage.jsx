@@ -15,6 +15,11 @@ const projects = [
     period: '2026.03 – 2028.02',
   },
   {
+    title: '혼합형 자동화터미널 내 템플릿 기반 AGV 운영지능 연구',
+    role: '공동연구원',
+    period: '2026.01 – 2026.12',
+  },
+  {
     title: '스마트 저장물류시스템을 위한 인공지능형 시뮬레이션 최적화 연구',
     role: '연구책임자',
     sponsor: '한국연구재단',
@@ -87,7 +92,7 @@ function Entry({ label, item, details }) {
       <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8">
         <span className="text-gray-900 dark:text-white font-mono -ml-8">[{label}] </span>
         <span className="text-gray-900 dark:text-white font-medium">{item.title}</span>
-        {details.map((d, i) => (
+        {details.filter(d => d.text).map((d, i) => (
           <span key={i}>
             <span className="text-gray-500 dark:text-gray-400">, </span>
             {d.color
@@ -122,7 +127,7 @@ function PageHeader() {
             <span className="text-indigo-400 font-semibold">의사결정</span>{' '}
             <span className="text-teal-400 font-semibold">지능화</span>를 위한 최적화 및 보정 알고리즘을 연구하고 있습니다.
             산학협력을 통해 디지털트윈 기반 의사결정의 고도화를 함께 실현하실{' '}
-            <span className="text-violet-400 font-semibold">파트너</span>를 찾고 있습니다.
+            <span className="text-violet-400 font-semibold">파트너</span>를 찾습니다.
           </motion.p>
         </motion.div>
       </div>
