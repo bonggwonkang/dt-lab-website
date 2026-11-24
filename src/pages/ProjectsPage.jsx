@@ -143,7 +143,7 @@ export default function ProjectsPage() {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
               <motion.div variants={fadeUp}
                 className="flex items-center gap-4 mb-8 pb-4 border-b text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800/40">
-                <h2 className="text-xl font-bold tracking-tight text-indigo-600 dark:text-indigo-400">Research Projects</h2>
+                <h2 className="text-xl font-bold tracking-tight text-indigo-600 dark:text-indigo-400">Research and Industrial Projects</h2>
               </motion.div>
               <div className="space-y-5">
                 {projects.map((item, i) => (
