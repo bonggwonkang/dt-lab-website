@@ -185,7 +185,10 @@ export default function ProjectsPage() {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
               <motion.div variants={fadeUp}
                 className="flex items-center gap-4 mb-8 pb-4 border-b text-teal-600 dark:text-teal-400 border-teal-200 dark:border-teal-800/40">
-                <h2 className="text-xl font-bold tracking-tight text-teal-600 dark:text-teal-400">Industrial Education (직장인 대상 교육과정)</h2>
+                <h2 className="text-xl font-bold tracking-tight text-teal-600 dark:text-teal-400">
+                  Industrial Education (직장인 대상 교육과정,{' '}
+                  <a href={courseUrl} target="_blank" rel="noreferrer" className="hover:underline">Link</a>)
+                </h2>
               </motion.div>
               <div className="space-y-5">
                 {courses.map((item, i) => (
@@ -193,9 +196,6 @@ export default function ProjectsPage() {
                     <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8">
                       <span className="text-gray-900 dark:text-white font-mono -ml-8">[E{i + 1}] </span>
                       <span className="text-gray-900 dark:text-white font-medium">{item.title}</span>
-                      <span className="text-gray-500 dark:text-gray-400"> (</span>
-                      <a href={courseUrl} target="_blank" rel="noreferrer" className="text-teal-500 dark:text-teal-300 hover:underline">Link</a>
-                      <span className="text-gray-500 dark:text-gray-400">)</span>
                     </p>
                   </motion.div>
                 ))}
