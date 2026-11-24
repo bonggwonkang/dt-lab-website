@@ -10,7 +10,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.07 } }
 const projects = [
   {
     title: '스마트 생산물류시스템 디지털트윈 위한 동시 보정·최적화 연구',
-    role: '참여연구자',
+    role: '공동연구원',
     sponsor: '한국연구재단',
     period: '2026.03 – 2028.02',
   },
