@@ -121,7 +121,7 @@ function PageHeader() {
             본 연구실에서는 컴퓨터 모델 기반{' '}
             <span className="text-indigo-400 font-semibold">의사결정</span>{' '}
             <span className="text-teal-400 font-semibold">지능화</span>를 위한 최적화 및 보정 알고리즘을 연구하고 있습니다.
-            산학협력을 통해 함께 디지털트윈 기반 의사결정의 고도화를 실현하실{' '}
+            산학협력을 통해 디지털트윈 기반 의사결정의 고도화를 함께 실현하실{' '}
             <span className="text-violet-400 font-semibold">파트너</span>를 찾고 있습니다.
           </motion.p>
         </motion.div>
