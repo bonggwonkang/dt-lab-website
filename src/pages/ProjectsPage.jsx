@@ -17,6 +17,7 @@ const projects = [
   {
     title: '혼합형 자동화터미널 내 템플릿 기반 AGV 운영지능 연구',
     role: '공동연구원',
+    sponsor: '정석물류학술재단',
     period: '2026.01 – 2026.12',
   },
   {
@@ -83,6 +84,15 @@ const patents = [
     country: '대한민국',
     date: '2024.02',
   },
+]
+
+// Courses for working professionals, in the program's own course order.
+const educationUrl = 'https://smartfactory.kumoh.ac.kr/'
+const courseUrl = 'https://smartfactory.kumoh.ac.kr/28'
+const courses = [
+  { title: 'Layout 및 공정최적화를 위한 시뮬레이션', duration: '2박 3일' },
+  { title: '공정최적화를 위한 작업분석과 시뮬레이션', duration: '2박 3일' },
+  { title: 'CPS 기반 디지털 트윈', duration: '2박 3일' },
 ]
 
 // details: [{ text, color? }] — a color renders the item italic in that color, like a journal name.
@@ -168,6 +178,35 @@ export default function ProjectsPage() {
                 {patents.map((item, i) => (
                   <Entry key={i} label={`T${patents.length - i}`} item={item}
                     details={[{ text: item.country }, { text: item.status, color: 'text-blue-500 dark:text-blue-300' }, { text: item.date }]} />
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Industrial Education */}
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
+              <motion.div variants={fadeUp}
+                className="flex items-center gap-4 mb-8 pb-4 border-b text-teal-600 dark:text-teal-400 border-teal-200 dark:border-teal-800/40">
+                <h2 className="text-xl font-bold tracking-tight text-teal-600 dark:text-teal-400">Industrial Education</h2>
+              </motion.div>
+              <motion.p variants={fadeUp} className="text-sm text-gray-500 dark:text-gray-400 mb-5">
+                직장인 대상 교육과정{' '}
+                <a href={educationUrl} target="_blank" rel="noreferrer" className="text-teal-500 dark:text-teal-300 hover:underline">
+                  [Link]
+                </a>
+              </motion.p>
+              <div className="space-y-5">
+                {courses.map((item, i) => (
+                  <motion.div key={i} variants={fadeUp}>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-8">
+                      <span className="text-gray-900 dark:text-white font-mono -ml-8">[E{i + 1}] </span>
+                      <span className="text-gray-900 dark:text-white font-medium">{item.title}</span>
+                      <span className="text-gray-500 dark:text-gray-400"> (</span>
+                      <em className="text-teal-500 dark:text-teal-300">{item.duration}</em>
+                      <span className="text-gray-500 dark:text-gray-400">, </span>
+                      <a href={courseUrl} target="_blank" rel="noreferrer" className="text-teal-500 dark:text-teal-300 hover:underline">Link</a>
+                      <span className="text-gray-500 dark:text-gray-400">)</span>
+                    </p>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
