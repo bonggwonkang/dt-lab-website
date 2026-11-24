@@ -8,6 +8,7 @@ import BookPage from './pages/BookPage'
 import MembersPage from './pages/MembersPage'
 import ProfessorPage from './pages/ProfessorPage'
 import PublicationsPage from './pages/PublicationsPage'
+import ProjectsPage from './pages/ProjectsPage'
 import PlaygroundPage from './pages/PlaygroundPage'
 
 function ScrollToTop() {
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/members" element={<MembersPage />} />
             <Route path="/professor" element={<ProfessorPage />} />
             <Route path="/publications" element={<PublicationsPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/playground" element={<PlaygroundPage />} />
           </Routes>
         </main>
