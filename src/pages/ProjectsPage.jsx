@@ -12,43 +12,43 @@ const projects = [
     title: '스마트 생산물류시스템 디지털트윈 위한 동시 보정·최적화 연구',
     role: '공동연구원',
     sponsor: '한국연구재단',
-    period: '2026.03 – 2028.02',
+    period: '2026.03~2028.02',
   },
   {
     title: '혼합형 자동화터미널 내 템플릿 기반 AGV 운영지능 연구',
     role: '공동연구원',
     sponsor: '정석물류학술재단',
-    period: '2026.01 – 2026.12',
+    period: '2026.01~2026.12',
   },
   {
     title: '스마트 저장물류시스템을 위한 인공지능형 시뮬레이션 최적화 연구',
     role: '연구책임자',
     sponsor: '한국연구재단',
-    period: '2024.09 – 2026.02',
+    period: '2024.09~2026.02',
   },
   {
     title: '물류시스템 지능화를 위한 운영 알고리즘 개발',
     role: '참여연구자',
     sponsor: '삼성디스플레이',
-    period: '2023.03 – 2025.08',
+    period: '2023.03~2025.08',
   },
   {
     title: '컨테이너 랜덤 적재 기반 자동화 항만 터미널의 통합 야드 운영전략 연구',
     role: '참여연구자',
     sponsor: '한국연구재단',
-    period: '2022.09 – 2024.08',
+    period: '2022.09~2024.08',
   },
   {
     title: '영상기반 데이터 활용한 라인밸런싱 시뮬레이션 프로토타입 연구',
     role: '참여연구자',
     sponsor: '현대건설기계',
-    period: '2019.09 – 2019.12',
+    period: '2019.09~2019.12',
   },
   {
     title: '전략주도 터미널운영시스템(TOS)을 위한 정책모델 연구 사업',
     role: '참여연구자',
     sponsor: '한국연구재단',
-    period: '2018.03 – 2020.11',
+    period: '2018.03~2020.11',
   },
 ]
 
@@ -87,7 +87,6 @@ const patents = [
 ]
 
 // Courses for working professionals, in the program's own course order.
-const educationUrl = 'https://smartfactory.kumoh.ac.kr/'
 const courseUrl = 'https://smartfactory.kumoh.ac.kr/28'
 const courses = [
   { title: 'Layout 및 공정최적화를 위한 시뮬레이션', duration: '2박 3일' },
@@ -186,14 +185,8 @@ export default function ProjectsPage() {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}>
               <motion.div variants={fadeUp}
                 className="flex items-center gap-4 mb-8 pb-4 border-b text-teal-600 dark:text-teal-400 border-teal-200 dark:border-teal-800/40">
-                <h2 className="text-xl font-bold tracking-tight text-teal-600 dark:text-teal-400">Industrial Education</h2>
+                <h2 className="text-xl font-bold tracking-tight text-teal-600 dark:text-teal-400">Industrial Education (직장인 대상 교육과정)</h2>
               </motion.div>
-              <motion.p variants={fadeUp} className="text-sm text-gray-500 dark:text-gray-400 mb-5">
-                직장인 대상 교육과정{' '}
-                <a href={educationUrl} target="_blank" rel="noreferrer" className="text-teal-500 dark:text-teal-300 hover:underline">
-                  [Link]
-                </a>
-              </motion.p>
               <div className="space-y-5">
                 {courses.map((item, i) => (
                   <motion.div key={i} variants={fadeUp}>
@@ -201,7 +194,7 @@ export default function ProjectsPage() {
                       <span className="text-gray-900 dark:text-white font-mono -ml-8">[E{i + 1}] </span>
                       <span className="text-gray-900 dark:text-white font-medium">{item.title}</span>
                       <span className="text-gray-500 dark:text-gray-400"> (</span>
-                      <em className="text-teal-500 dark:text-teal-300">{item.duration}</em>
+                      <span className="text-teal-500 dark:text-teal-300">{item.duration}</span>
                       <span className="text-gray-500 dark:text-gray-400">, </span>
                       <a href={courseUrl} target="_blank" rel="noreferrer" className="text-teal-500 dark:text-teal-300 hover:underline">Link</a>
                       <span className="text-gray-500 dark:text-gray-400">)</span>
