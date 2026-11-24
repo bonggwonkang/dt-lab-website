@@ -33,7 +33,7 @@ function Hero() {
             We develop advanced digital transformation methodologies for{' '}
             <span className="text-indigo-400 font-semibold">modeling</span>,{' '}
             <span className="text-teal-400 font-semibold">optimizing</span>, and{' '}
-            <span className="text-violet-400 font-semibold">calibrating</span>{' '}
+            <span className="text-violet-400 font-semibold">calibrating</span><br />
             production and material handling system simulations.
           </motion.p>
         </motion.div>
