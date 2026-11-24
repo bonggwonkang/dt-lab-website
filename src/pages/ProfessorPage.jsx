@@ -29,6 +29,7 @@ const teaching = [
 const reviewJournals = [
   'Simulation Modelling Practice and Theory',
   'European Journal of Industrial Engineering',
+  'Technometrics',
 ]
 
 const links = [
