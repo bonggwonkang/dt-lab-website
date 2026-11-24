@@ -89,9 +89,9 @@ const patents = [
 // Courses for working professionals, in the program's own course order.
 const courseUrl = 'https://smartfactory.kumoh.ac.kr/28'
 const courses = [
-  { title: 'Layout 및 공정최적화를 위한 시뮬레이션', duration: '2박 3일' },
-  { title: '공정최적화를 위한 작업분석과 시뮬레이션', duration: '2박 3일' },
-  { title: 'CPS 기반 디지털 트윈', duration: '2박 3일' },
+  { title: 'Layout 및 공정최적화를 위한 시뮬레이션' },
+  { title: '공정최적화를 위한 작업분석과 시뮬레이션' },
+  { title: 'CPS 기반 디지털 트윈' },
 ]
 
 // details: [{ text, color? }] — a color renders the item italic in that color, like a journal name.
@@ -194,8 +194,6 @@ export default function ProjectsPage() {
                       <span className="text-gray-900 dark:text-white font-mono -ml-8">[E{i + 1}] </span>
                       <span className="text-gray-900 dark:text-white font-medium">{item.title}</span>
                       <span className="text-gray-500 dark:text-gray-400"> (</span>
-                      <span className="text-teal-500 dark:text-teal-300">{item.duration}</span>
-                      <span className="text-gray-500 dark:text-gray-400">, </span>
                       <a href={courseUrl} target="_blank" rel="noreferrer" className="text-teal-500 dark:text-teal-300 hover:underline">Link</a>
                       <span className="text-gray-500 dark:text-gray-400">)</span>
                     </p>
