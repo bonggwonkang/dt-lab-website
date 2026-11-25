@@ -13,6 +13,8 @@ const internationalJournals = [
     authors: 'B. Kang, T. Lee, Z. Sun, S. Hong',
     title: 'Uncertainty-aware simulation optimization for yard template planning in transshipment hubs',
     journal: 'International Journal of Production Research',
+    volume: '64(24)',
+    pages: '11019-11038',
     year: '2026',
     doi: 'https://doi.org/10.1080/00207543.2026.2696434',
     pdf: `${base}publications/kang-2026-yard-template-planning.pdf`,
